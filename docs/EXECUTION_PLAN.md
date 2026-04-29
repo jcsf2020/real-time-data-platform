@@ -65,6 +65,31 @@ Delivery standard:
 
 Build locally, validate objectively, document honestly, and make the production path credible.
 
+## Team Operating Model
+
+This project is executed by a three-part operating team:
+
+- Joao Fonseca: owner, local executor, final approver, and business context holder.
+- Mike: architect, technical auditor, recruiter-value strategist, branch planner, and acceptance gatekeeper.
+- Codex: implementation assistant for scoped technical tasks, code changes, test fixes, and branch-level execution support.
+
+Codex must be used deliberately, not randomly.
+
+Codex enters the workflow after the repository and CI foundation exist, because the project needs a remote repository, branch discipline, and automated checks before delegating implementation safely.
+
+Codex must not decide architecture independently. Mike defines the branch objective, constraints, acceptance criteria, and validation commands. Codex may implement only within that scope.
+
+The expected workflow is:
+
+1. Mike defines the next branch and exact objective.
+2. Mike writes a surgical Codex prompt when implementation support is useful.
+3. Codex implements within the branch scope.
+4. Joao runs the commands locally and shares outputs.
+5. Mike audits the diff, test results, and recruiter value.
+6. Only after validation does the work move toward commit, PR, merge, or rejection.
+
+This keeps the project aligned with B2B production delivery standards while using Codex as an executor, not as an uncontrolled decision-maker.
+
 ## Target Architecture
 
 Event Source
@@ -173,8 +198,8 @@ The project is portfolio-grade only when it has GitHub repository, clean README,
 
 ## Current Next Decision
 
-Current branch is feat/shared-event-contracts.
+Current branch is chore/github-ci-foundation.
 
-However, before more feature work, the correct priority is P0 — GitHub and CI foundation.
+The correct priority is P0 — GitHub and CI foundation.
 
 Reason: without GitHub and CI, improvements remain local and are weak career evidence.
