@@ -1,0 +1,22 @@
+[project]
+name = "rtdp-consumer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "João Fonseca", email = "jcsf2020@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "kafka-python>=2.3.1",
+    "psycopg[binary]>=3.3.3",
+    "pydantic>=2.13.3",
+    "python-snappy>=0.7.3",
+]
+
+[project.scripts]
+rtdp-consumer = "rtdp_consumer:main"
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"

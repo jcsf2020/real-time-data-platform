@@ -1,0 +1,26 @@
+[project]
+name = "real-time-data-platform"
+version = "0.1.0"
+description = "Production-grade real-time data platform with Redpanda, Postgres, dbt, FastAPI, and AI-ready pipelines."
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.0",
+    "pytest>=8.3.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.uv.workspace]
+members = [
+    "apps/consumer/rtdp-consumer",
+    "apps/consumer",
+]
