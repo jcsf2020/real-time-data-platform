@@ -1,0 +1,22 @@
+[project]
+name = "rtdp-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "João Fonseca", email = "jcsf2020@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.136.1",
+    "psycopg[binary]>=3.3.3",
+    "pydantic>=2.13.3",
+    "uvicorn[standard]>=0.46.0",
+]
+
+[project.scripts]
+rtdp-api = "rtdp_api:main"
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
