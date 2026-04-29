@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 members = [
     "real-time-data-platform",
     "rtdp-consumer",
+    "rtdp-producer",
 ]
 
 [[package]]
@@ -349,6 +350,23 @@ dependencies = [
 requires-dist = [
     { name = "kafka-python", specifier = ">=2.3.1" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3.3" },
+    { name = "pydantic", specifier = ">=2.13.3" },
+    { name = "python-snappy", specifier = ">=0.7.3" },
+]
+
+[[package]]
+name = "rtdp-producer"
+version = "0.1.0"
+source = { editable = "apps/producer" }
+dependencies = [
+    { name = "kafka-python" },
+    { name = "pydantic" },
+    { name = "python-snappy" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "kafka-python", specifier = ">=2.3.1" },
     { name = "pydantic", specifier = ">=2.13.3" },
     { name = "python-snappy", specifier = ">=0.7.3" },
 ]

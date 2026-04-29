@@ -23,4 +23,5 @@ pythonpath = ["."]
 members = [
     "apps/consumer/rtdp-consumer",
     "apps/consumer",
+    "apps/producer",
 ]

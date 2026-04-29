@@ -94,10 +94,7 @@ def main() -> None:
             }
         )
 
-        break
 
-    consumer.close()
-    print({"inserted": inserted})
 
 
 if __name__ == "__main__":
