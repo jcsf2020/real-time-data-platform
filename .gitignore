@@ -11,3 +11,6 @@ target/
 logs/
 *.log
 postgres_data/
+
+# Internal project planning
+/docs/EXECUTION_PLAN.md

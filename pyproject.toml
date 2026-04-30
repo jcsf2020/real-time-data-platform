@@ -21,7 +21,6 @@ pythonpath = ["."]
 
 [tool.uv.workspace]
 members = [
-    "apps/consumer/rtdp-consumer",
     "apps/consumer",
     "apps/producer",
     "apps/api",
