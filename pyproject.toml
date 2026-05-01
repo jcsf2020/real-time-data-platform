@@ -24,4 +24,8 @@ members = [
     "apps/consumer",
     "apps/producer",
     "apps/api",
+    "packages/contracts",
 ]
+
+[tool.uv.sources]
+rtdp-contracts = { workspace = true }

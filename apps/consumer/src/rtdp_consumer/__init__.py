@@ -1,12 +1,9 @@
 import json
 import os
 from datetime import UTC, datetime
-from decimal import Decimal
-from typing import Literal
-
 import psycopg
 from kafka import KafkaConsumer
-from pydantic import BaseModel, Field
+from rtdp_contracts import MarketEvent
 
 
 TOPIC = "market.events.raw"
@@ -16,15 +13,6 @@ DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "postgresql://rtdp:rtdp@localhost:15432/realtime_platform",
 )
-
-
-class MarketEvent(BaseModel):
-    event_id: str = Field(min_length=1)
-    symbol: str = Field(min_length=1)
-    event_type: Literal["trade"]
-    price: Decimal = Field(gt=0)
-    quantity: Decimal = Field(gt=0)
-    event_timestamp: datetime
 
 
 def insert_bronze_event(event: MarketEvent, raw_payload: dict) -> None:

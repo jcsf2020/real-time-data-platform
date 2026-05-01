@@ -6,20 +6,11 @@ from datetime import UTC, datetime
 from decimal import Decimal
 
 from kafka import KafkaProducer
-from pydantic import BaseModel, Field
+from rtdp_contracts import MarketEvent
 
 
 TOPIC = "market.events.raw"
 BOOTSTRAP_SERVERS = "localhost:19092"
-
-
-class MarketEvent(BaseModel):
-    event_id: str = Field(min_length=1)
-    symbol: str = Field(min_length=1)
-    event_type: str = "trade"
-    price: Decimal = Field(gt=0)
-    quantity: Decimal = Field(gt=0)
-    event_timestamp: datetime
 
 
 def build_market_event() -> dict:
