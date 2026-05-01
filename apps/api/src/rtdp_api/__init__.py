@@ -5,6 +5,10 @@ import psycopg
 from fastapi import FastAPI
 
 
+SERVICE_NAME = os.getenv("SERVICE_NAME", "rtdp-api")
+SERVICE_VERSION = os.getenv("SERVICE_VERSION", "0.1.0")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "local")
+
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "postgresql://rtdp:rtdp@localhost:15432/realtime_platform",
@@ -22,11 +26,28 @@ def fetch_all(query: str, params: tuple[Any, ...] = ()) -> list[dict[str, Any]]:
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    fetch_all("SELECT 1 AS ok")
     return {
         "status": "ok",
-        "service": "rtdp-api",
+        "service": SERVICE_NAME,
+    }
+
+
+@app.get("/readiness")
+def readiness() -> dict[str, str]:
+    fetch_all("SELECT 1 AS ok")
+    return {
+        "status": "ready",
+        "service": SERVICE_NAME,
         "database": "reachable",
+    }
+
+
+@app.get("/version")
+def version() -> dict[str, str]:
+    return {
+        "service": SERVICE_NAME,
+        "version": SERVICE_VERSION,
+        "environment": ENVIRONMENT,
     }
 
 
