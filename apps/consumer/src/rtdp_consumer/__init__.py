@@ -14,6 +14,19 @@ DATABASE_URL = os.getenv(
     "postgresql://rtdp:rtdp@localhost:15432/realtime_platform",
 )
 
+_DEFAULT_SILVER_REFRESH_INTERVAL = 25
+
+
+def parse_silver_refresh_interval() -> int:
+    raw = os.getenv("SILVER_REFRESH_EVERY_N_EVENTS", "")
+    try:
+        value = int(raw)
+        if value >= 1:
+            return value
+    except (ValueError, TypeError):
+        pass
+    return _DEFAULT_SILVER_REFRESH_INTERVAL
+
 
 def log_event(event: dict) -> None:
     print(json.dumps(event, default=str, sort_keys=True))
@@ -75,6 +88,15 @@ def insert_metric(metric_name: str, metric_value: float) -> None:
             cur.execute(query, (metric_name, metric_value))
 
 
+def refresh_silver_minute_aggregates() -> int:
+    query = "SELECT silver.refresh_market_event_minute_aggregates() AS affected_rows;"
+    with psycopg.connect(DATABASE_URL) as conn:
+        with conn.cursor() as cur:
+            cur.execute(query)
+            row = cur.fetchone()
+            return int(row[0]) if row and row[0] is not None else 0
+
+
 def main() -> None:
     consumer = KafkaConsumer(
         TOPIC,
@@ -87,6 +109,7 @@ def main() -> None:
     log_event({"status": "started"})
 
     processed = 0
+    silver_refresh_interval = parse_silver_refresh_interval()
 
     try:
         for message in consumer:
@@ -113,6 +136,16 @@ def main() -> None:
                         "processing_lag_seconds": round(processing_lag_seconds, 3),
                     }
                 )
+
+                if processed % silver_refresh_interval == 0:
+                    affected_rows = refresh_silver_minute_aggregates()
+                    log_event(
+                        {
+                            "status": "silver_refreshed",
+                            "affected_rows": affected_rows,
+                            "processed": processed,
+                        }
+                    )
 
             except Exception as exc:
                 insert_metric("consumer_errors_total", 1.0)
