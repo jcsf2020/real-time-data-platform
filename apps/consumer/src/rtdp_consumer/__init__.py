@@ -7,7 +7,7 @@ from rtdp_contracts import MarketEvent
 
 
 TOPIC = "market.events.raw"
-BOOTSTRAP_SERVERS = "localhost:19092"
+BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:19092")
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",

@@ -1,4 +1,5 @@
 import json
+import os
 import random
 import time
 import uuid
@@ -10,7 +11,7 @@ from rtdp_contracts import MarketEvent
 
 
 TOPIC = "market.events.raw"
-BOOTSTRAP_SERVERS = "localhost:19092"
+BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:19092")
 
 
 def build_market_event() -> dict:
