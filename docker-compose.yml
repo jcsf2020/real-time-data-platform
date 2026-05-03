@@ -32,5 +32,43 @@ services:
       - rtdp_postgres_data:/var/lib/postgresql/data
       - ./infra/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
 
+  api:
+    build:
+      context: .
+    container_name: rtdp-api
+    command: rtdp-api
+    environment:
+      DATABASE_URL: postgresql://rtdp:rtdp@postgres:5432/realtime_platform
+      SERVICE_NAME: rtdp-api
+      SERVICE_VERSION: 0.1.0
+      ENVIRONMENT: docker
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  producer:
+    build:
+      context: .
+    container_name: rtdp-producer
+    command: rtdp-producer
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+    depends_on:
+      - redpanda
+
+  consumer:
+    build:
+      context: .
+    container_name: rtdp-consumer
+    command: rtdp-consumer
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: redpanda:9092
+      DATABASE_URL: postgresql://rtdp:rtdp@postgres:5432/realtime_platform
+    depends_on:
+      - redpanda
+      - postgres
+
+
 volumes:
   rtdp_postgres_data:
