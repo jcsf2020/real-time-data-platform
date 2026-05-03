@@ -248,14 +248,14 @@ The `silver` layer is populated by calling `silver.refresh_market_event_minute_a
 
 ## GCP Target Architecture
 
-> **Status:** The FastAPI serving layer is deployed to Google Cloud Run. The broader GCP architecture below remains a target design: Pub/Sub, Cloud SQL, BigQuery, Dataflow, and Cloud Monitoring integration are planned but not yet implemented.
+> **Status:** The FastAPI serving layer is deployed to Google Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. Pub/Sub, BigQuery, Dataflow, and Cloud Monitoring integration remain target architecture items.
 
 | Local Component | GCP Target | Notes |
 |---|---|---|
 | Redpanda / Kafka | Pub/Sub | Managed event ingestion, fan-out, replay |
 | Python producer | Cloud Run job or external source | Stateless event publishing |
 | Python consumer | Cloud Run worker or Dataflow | Consumer or streaming enrichment pipeline |
-| PostgreSQL container | Cloud SQL for PostgreSQL | Operational store, idempotent writes |
+| PostgreSQL container | Cloud SQL for PostgreSQL | Implemented as managed operational store |
 | FastAPI container | Cloud Run service | Already containerised, Cloud Run-compatible |
 | `/metrics-prometheus` | Cloud Monitoring / Managed Prometheus | Metric scrape target |
 | `silver` / analytical layer | BigQuery | Long-horizon analytics over event history |
@@ -276,7 +276,7 @@ Event source
 
 See [docs/gcp-architecture.md](docs/gcp-architecture.md) for the full GCP architecture document.
 
-**Current Cloud Run MVP:**
+**Current GCP MVP:**
 
 ```text
 https://rtdp-api-892892382088.europe-west1.run.app
@@ -287,7 +287,21 @@ Validated public endpoints:
 ```bash
 curl https://rtdp-api-892892382088.europe-west1.run.app/health
 curl https://rtdp-api-892892382088.europe-west1.run.app/version
+curl https://rtdp-api-892892382088.europe-west1.run.app/readiness
+curl 'https://rtdp-api-892892382088.europe-west1.run.app/events?limit=3'
 ```
+
+Cloud SQL status:
+
+```text
+Instance: rtdp-postgres
+Database: realtime_platform
+PostgreSQL: 16
+Region: europe-west1
+Secret Manager: rtdp-database-url
+```
+
+The database is currently schema-ready but empty until cloud-side ingestion is added.
 
 ---
 

@@ -42,7 +42,7 @@ Implemented local components:
 | Redpanda / Kafka | Pub/Sub | Managed event ingestion and fan-out |
 | Python producer | Cloud Run job / external source | Event publishing |
 | Python consumer | Cloud Run worker or Dataflow | Event processing |
-| Postgres container | Cloud SQL for PostgreSQL | Operational storage |
+| Postgres container | Cloud SQL for PostgreSQL | Implemented managed operational storage |
 | FastAPI container | Cloud Run service | HTTP serving layer |
 | /metrics-prometheus | Cloud Monitoring / Managed Prometheus | Operational metrics |
 | Analytical extracts | BigQuery | Analytical querying |
@@ -198,8 +198,8 @@ The GCP target architecture must preserve the current production principles:
 | Dockerized full runtime | Implemented |
 | GitHub Actions CI | Implemented |
 | Pub/Sub deployment | Target architecture |
-| Cloud Run deployment | Target architecture |
-| Cloud SQL deployment | Target architecture |
+| Cloud Run deployment | Implemented |
+| Cloud SQL deployment | Implemented |
 | BigQuery analytical layer | Target architecture |
 | Dataflow streaming enrichment | Target architecture |
 | Cloud Monitoring dashboards | Target architecture |
