@@ -248,7 +248,7 @@ The `silver` layer is populated by calling `silver.refresh_market_event_minute_a
 
 ## GCP Target Architecture
 
-> **Disclaimer:** The GCP architecture below is a target design for production deployment. It is not yet implemented. All currently running components are local and Docker-based.
+> **Status:** The FastAPI serving layer is deployed to Google Cloud Run. The broader GCP architecture below remains a target design: Pub/Sub, Cloud SQL, BigQuery, Dataflow, and Cloud Monitoring integration are planned but not yet implemented.
 
 | Local Component | GCP Target | Notes |
 |---|---|---|
@@ -275,6 +275,19 @@ Event source
 ```
 
 See [docs/gcp-architecture.md](docs/gcp-architecture.md) for the full GCP architecture document.
+
+**Current Cloud Run MVP:**
+
+```text
+https://rtdp-api-892892382088.europe-west1.run.app
+```
+
+Validated public endpoints:
+
+```bash
+curl https://rtdp-api-892892382088.europe-west1.run.app/health
+curl https://rtdp-api-892892382088.europe-west1.run.app/version
+```
 
 ---
 
