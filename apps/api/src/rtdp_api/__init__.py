@@ -108,6 +108,29 @@ def metrics(limit: int = 50) -> list[dict[str, Any]]:
     )
 
 
+@app.get("/aggregates/minute")
+def minute_aggregates(limit: int = 20) -> list[dict[str, Any]]:
+    safe_limit = min(max(limit, 1), 200)
+
+    return fetch_all(
+        """
+        SELECT
+            symbol,
+            window_start,
+            event_count,
+            avg_price::float AS avg_price,
+            total_quantity::float AS total_quantity,
+            first_event_timestamp,
+            last_event_timestamp,
+            updated_at
+        FROM silver.market_event_minute_aggregates
+        ORDER BY window_start DESC, symbol
+        LIMIT %s;
+        """,
+        (safe_limit,),
+    )
+
+
 @app.get("/metrics-prometheus")
 def metrics_prometheus() -> Response:
     rows = fetch_all(
