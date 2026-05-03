@@ -14,6 +14,10 @@ TOPIC = "market.events.raw"
 BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:19092")
 
 
+def log_event(event: dict) -> None:
+    print(json.dumps(event, default=str, sort_keys=True))
+
+
 def build_market_event() -> dict:
     symbols = {
         "BTCUSDT": (62000, 72000),
@@ -42,24 +46,30 @@ def main() -> None:
         compression_type="snappy",
     )
 
-    print("producer started...")
+    log_event({"status": "started"})
 
-    while True:
-        event = build_market_event()
-        metadata = producer.send(TOPIC, value=event).get(timeout=10)
+    try:
+        while True:
+            event = build_market_event()
+            metadata = producer.send(TOPIC, value=event).get(timeout=10)
 
-        print(
-            {
-                "status": "produced",
-                "topic": metadata.topic,
-                "partition": metadata.partition,
-                "offset": metadata.offset,
-                "event_id": event["event_id"],
-                "symbol": event["symbol"],
-            }
-        )
+            log_event(
+                {
+                    "status": "produced",
+                    "topic": metadata.topic,
+                    "partition": metadata.partition,
+                    "offset": metadata.offset,
+                    "event_id": event["event_id"],
+                    "symbol": event["symbol"],
+                }
+            )
 
-        time.sleep(1)
+            time.sleep(1)
+    except KeyboardInterrupt:
+        log_event({"status": "shutting_down"})
+    finally:
+        producer.flush()
+        producer.close()
 
 
 if __name__ == "__main__":

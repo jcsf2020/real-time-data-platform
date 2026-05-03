@@ -15,6 +15,10 @@ DATABASE_URL = os.getenv(
 )
 
 
+def log_event(event: dict) -> None:
+    print(json.dumps(event, default=str, sort_keys=True))
+
+
 def insert_bronze_event(event: MarketEvent, raw_payload: dict) -> None:
     query = """
         INSERT INTO bronze.market_events (
@@ -80,38 +84,43 @@ def main() -> None:
         value_deserializer=lambda value: json.loads(value.decode("utf-8")),
     )
 
-    print("consumer started...")
+    log_event({"status": "started"})
 
     processed = 0
 
-    for message in consumer:
-        raw_payload = message.value
+    try:
+        for message in consumer:
+            raw_payload = message.value
 
-        try:
-            event = MarketEvent.model_validate(raw_payload)
-            insert_bronze_event(event, raw_payload)
+            try:
+                event = MarketEvent.model_validate(raw_payload)
+                insert_bronze_event(event, raw_payload)
 
-            processed += 1
-            processing_lag_seconds = (
-                datetime.now(UTC) - event.event_timestamp
-            ).total_seconds()
+                processed += 1
+                processing_lag_seconds = (
+                    datetime.now(UTC) - event.event_timestamp
+                ).total_seconds()
 
-            insert_metric("events_processed_total", float(processed))
-            insert_metric("latest_processed_offset", float(message.offset))
-            insert_metric("processing_lag_seconds", processing_lag_seconds)
+                insert_metric("events_processed_total", float(processed))
+                insert_metric("latest_processed_offset", float(message.offset))
+                insert_metric("processing_lag_seconds", processing_lag_seconds)
 
-            print(
-                {
-                    "status": "processed",
-                    "event_id": event.event_id,
-                    "offset": message.offset,
-                    "processing_lag_seconds": round(processing_lag_seconds, 3),
-                }
-            )
+                log_event(
+                    {
+                        "status": "processed",
+                        "event_id": event.event_id,
+                        "offset": message.offset,
+                        "processing_lag_seconds": round(processing_lag_seconds, 3),
+                    }
+                )
 
-        except Exception as exc:
-            insert_metric("consumer_errors_total", 1.0)
-            print({"status": "error", "error": str(exc)})
+            except Exception as exc:
+                insert_metric("consumer_errors_total", 1.0)
+                log_event({"status": "error", "error": str(exc)})
+    except KeyboardInterrupt:
+        log_event({"status": "shutting_down"})
+    finally:
+        consumer.close()
 
 
 if __name__ == "__main__":
