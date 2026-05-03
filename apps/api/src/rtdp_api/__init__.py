@@ -2,7 +2,7 @@ import os
 from typing import Any
 
 import psycopg
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "rtdp-api")
@@ -22,6 +22,22 @@ def fetch_all(query: str, params: tuple[Any, ...] = ()) -> list[dict[str, Any]]:
         with conn.cursor(row_factory=psycopg.rows.dict_row) as cur:
             cur.execute(query, params)
             return list(cur.fetchall())
+
+
+def format_prometheus_metrics(rows: list[dict[str, Any]]) -> str:
+    lines = [
+        "# HELP rtdp_pipeline_metric_value Latest observed pipeline metric value.",
+        "# TYPE rtdp_pipeline_metric_value gauge",
+    ]
+
+    for row in rows:
+        metric_name = str(row["metric_name"]).replace("\\", "\\\\").replace('"', '\\"')
+        metric_value = float(row["metric_value"])
+        lines.append(
+            f'rtdp_pipeline_metric_value{{metric_name="{metric_name}"}} {metric_value}'
+        )
+
+    return "\n".join(lines) + "\n"
 
 
 @app.get("/health")
@@ -89,6 +105,25 @@ def metrics(limit: int = 50) -> list[dict[str, Any]]:
         LIMIT %s;
         """,
         (safe_limit,),
+    )
+
+
+@app.get("/metrics-prometheus")
+def metrics_prometheus() -> Response:
+    rows = fetch_all(
+        """
+        SELECT DISTINCT ON (metric_name)
+            metric_name,
+            metric_value::float AS metric_value,
+            measured_at
+        FROM observability.pipeline_metrics
+        ORDER BY metric_name, measured_at DESC;
+        """
+    )
+
+    return Response(
+        content=format_prometheus_metrics(rows),
+        media_type="text/plain; version=0.0.4",
     )
 
 
