@@ -3,6 +3,7 @@ from typing import Any
 
 import psycopg
 from fastapi import FastAPI, Response
+from psycopg.rows import dict_row
 
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "rtdp-api")
@@ -19,8 +20,8 @@ app = FastAPI(title="Real-Time Data Platform API")
 
 def fetch_all(query: str, params: tuple[Any, ...] = ()) -> list[dict[str, Any]]:
     with psycopg.connect(DATABASE_URL) as conn:
-        with conn.cursor(row_factory=psycopg.rows.dict_row) as cur:
-            cur.execute(query, params)
+        with conn.cursor(row_factory=dict_row) as cur:
+            cur.execute(query, params)  # type: ignore[arg-type]
             return list(cur.fetchall())
 
 
@@ -33,9 +34,7 @@ def format_prometheus_metrics(rows: list[dict[str, Any]]) -> str:
     for row in rows:
         metric_name = str(row["metric_name"]).replace("\\", "\\\\").replace('"', '\\"')
         metric_value = float(row["metric_value"])
-        lines.append(
-            f'rtdp_pipeline_metric_value{{metric_name="{metric_name}"}} {metric_value}'
-        )
+        lines.append(f'rtdp_pipeline_metric_value{{metric_name="{metric_name}"}} {metric_value}')
 
     return "\n".join(lines) + "\n"
 
@@ -73,18 +72,18 @@ def events(limit: int = 20) -> list[dict[str, Any]]:
 
     return fetch_all(
         """
-        SELECT
-            event_id,
-            symbol,
-            event_type,
-            price::float AS price,
-            quantity::float AS quantity,
-            event_timestamp,
-            ingested_at,
-            source_topic
-        FROM bronze.market_events
-        ORDER BY ingested_at DESC
-        LIMIT %s;
+            SELECT
+                event_id,
+                symbol,
+                event_type,
+                price::float AS price,
+                quantity::float AS quantity,
+                event_timestamp,
+                ingested_at,
+                source_topic
+            FROM bronze.market_events
+            ORDER BY ingested_at DESC
+            LIMIT %s;
         """,
         (safe_limit,),
     )
@@ -96,13 +95,13 @@ def metrics(limit: int = 50) -> list[dict[str, Any]]:
 
     return fetch_all(
         """
-        SELECT
-            metric_name,
-            metric_value::float AS metric_value,
-            measured_at
-        FROM observability.pipeline_metrics
-        ORDER BY measured_at DESC
-        LIMIT %s;
+            SELECT
+                metric_name,
+                metric_value::float AS metric_value,
+                measured_at
+            FROM observability.pipeline_metrics
+            ORDER BY measured_at DESC
+            LIMIT %s;
         """,
         (safe_limit,),
     )
@@ -114,18 +113,18 @@ def minute_aggregates(limit: int = 20) -> list[dict[str, Any]]:
 
     return fetch_all(
         """
-        SELECT
-            symbol,
-            window_start,
-            event_count,
-            avg_price::float AS avg_price,
-            total_quantity::float AS total_quantity,
-            first_event_timestamp,
-            last_event_timestamp,
-            updated_at
-        FROM silver.market_event_minute_aggregates
-        ORDER BY window_start DESC, symbol
-        LIMIT %s;
+            SELECT
+                symbol,
+                window_start,
+                event_count,
+                avg_price::float AS avg_price,
+                total_quantity::float AS total_quantity,
+                first_event_timestamp,
+                last_event_timestamp,
+                updated_at
+            FROM silver.market_event_minute_aggregates
+            ORDER BY window_start DESC, symbol
+            LIMIT %s;
         """,
         (safe_limit,),
     )
@@ -135,12 +134,12 @@ def minute_aggregates(limit: int = 20) -> list[dict[str, Any]]:
 def metrics_prometheus() -> Response:
     rows = fetch_all(
         """
-        SELECT DISTINCT ON (metric_name)
-            metric_name,
-            metric_value::float AS metric_value,
-            measured_at
-        FROM observability.pipeline_metrics
-        ORDER BY metric_name, measured_at DESC;
+            SELECT DISTINCT ON (metric_name)
+                metric_name,
+                metric_value::float AS metric_value,
+                measured_at
+            FROM observability.pipeline_metrics
+            ORDER BY metric_name, measured_at DESC;
         """
     )
 
