@@ -3,6 +3,8 @@
 import json
 import os
 import sys
+import time
+from datetime import datetime, timezone
 
 import psycopg
 
@@ -40,6 +42,14 @@ _INSERT_SQL = """
 """
 
 
+def utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def emit_log(payload: dict) -> None:
+    print(json.dumps(payload, sort_keys=True), flush=True)
+
+
 def decode_message(data: bytes) -> dict:
     return json.loads(data.decode("utf-8"))
 
@@ -68,13 +78,42 @@ def insert_bronze_event(event: MarketEvent, raw_payload: dict, database_url: str
 
 def process_message(data: bytes, database_url: str = DATABASE_URL) -> dict:
     """Process one Pub/Sub message. Returns status dict; never raises."""
+    t0 = time.monotonic()
+    event_id = None
+    symbol = None
     try:
         payload = decode_message(data)
         event = validate_event(payload)
+        event_id = event.event_id
+        symbol = event.symbol
         insert_bronze_event(event, payload, database_url)
     except Exception as exc:
+        emit_log({
+            "component": "pubsub-worker",
+            "error_message": str(exc),
+            "error_type": type(exc).__name__,
+            "event_id": event_id,
+            "operation": "process_message",
+            "processing_time_ms": round((time.monotonic() - t0) * 1000, 3),
+            "service": "rtdp-pubsub-worker",
+            "source_topic": SOURCE_TOPIC,
+            "status": "error",
+            "symbol": symbol,
+            "timestamp_utc": utc_now_iso(),
+        })
         return {"status": "error", "error": str(exc)}
-    return {"status": "ok", "event_id": event.event_id}
+    emit_log({
+        "component": "pubsub-worker",
+        "event_id": event_id,
+        "operation": "process_message",
+        "processing_time_ms": round((time.monotonic() - t0) * 1000, 3),
+        "service": "rtdp-pubsub-worker",
+        "source_topic": SOURCE_TOPIC,
+        "status": "ok",
+        "symbol": symbol,
+        "timestamp_utc": utc_now_iso(),
+    })
+    return {"status": "ok", "event_id": event_id}
 
 
 def main(argv: list[str] | None = None) -> None:

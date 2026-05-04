@@ -196,3 +196,93 @@ def test_process_message_accepts_various_symbols(symbol):
 
     assert result["status"] == "ok"
     assert result["event_id"] == f"evt-{symbol}"
+
+
+# --- process_message structured logging ---
+
+
+def _capture_log(capsys) -> dict:
+    """Read the single JSON log line emitted to stdout."""
+    out = capsys.readouterr().out
+    lines = [ln for ln in out.splitlines() if ln.strip()]
+    assert len(lines) == 1, f"expected 1 log line, got {len(lines)}: {lines}"
+    return json.loads(lines[0])
+
+
+def test_log_valid_message_emits_one_line(capsys):
+    mock_conn, _ = _mock_conn()
+    data = json.dumps(_make_payload()).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", return_value=mock_conn):
+        process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "ok"
+    assert log["event_id"] == "test-evt-001"
+    assert log["symbol"] == "BTCUSDT"
+    assert log["service"] == "rtdp-pubsub-worker"
+    assert log["component"] == "pubsub-worker"
+    assert log["operation"] == "process_message"
+    assert log["source_topic"] == "market-events-raw"
+    assert log["processing_time_ms"] >= 0
+    assert "timestamp_utc" in log
+
+
+def test_log_invalid_json_emits_error_line(capsys):
+    process_message(b"not-json", "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "error"
+    assert "error_type" in log
+    assert log["service"] == "rtdp-pubsub-worker"
+
+
+def test_log_validation_failure_emits_error_line(capsys):
+    data = json.dumps(_make_payload(price="-1")).encode("utf-8")
+    process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "error"
+    assert "error_type" in log
+
+
+def test_log_db_failure_emits_error_line(capsys):
+    data = json.dumps(_make_payload()).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", side_effect=Exception("connection refused")):
+        process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "error"
+    assert log["error_type"] == "Exception"
+    assert "connection refused" in log["error_message"]
+
+
+def test_log_does_not_contain_raw_payload(capsys):
+    mock_conn, _ = _mock_conn()
+    data = json.dumps(_make_payload()).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", return_value=mock_conn):
+        process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert "payload" not in log
+    assert "raw_payload" not in log
+    assert "data" not in log
+
+
+def test_process_message_return_values_unchanged_by_logging(capsys):
+    mock_conn, _ = _mock_conn()
+    data = json.dumps(_make_payload()).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", return_value=mock_conn):
+        result = process_message(data, "postgresql://test")
+
+    assert result == {"status": "ok", "event_id": "test-evt-001"}
+
+
+def test_process_message_error_return_value_unchanged_by_logging(capsys):
+    result = process_message(b"not-json", "postgresql://test")
+
+    assert result["status"] == "error"
+    assert "error" in result
