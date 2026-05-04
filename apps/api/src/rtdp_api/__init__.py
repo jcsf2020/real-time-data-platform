@@ -1,9 +1,11 @@
 import os
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
 from typing import Any
 
-import psycopg
 from fastapi import FastAPI, Response
 from psycopg.rows import dict_row
+from psycopg_pool import ConnectionPool
 
 
 SERVICE_NAME = os.getenv("SERVICE_NAME", "rtdp-api")
@@ -15,11 +17,26 @@ DATABASE_URL = os.getenv(
     "postgresql://rtdp:rtdp@localhost:15432/realtime_platform",
 )
 
-app = FastAPI(title="Real-Time Data Platform API")
+DB_POOL = ConnectionPool(
+    conninfo=DATABASE_URL,
+    min_size=0,
+    max_size=int(os.getenv("DATABASE_POOL_MAX_SIZE", "5")),
+    open=False,
+)
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI) -> AsyncGenerator[None, None]:
+    DB_POOL.open(wait=False)
+    yield
+    DB_POOL.close()
+
+
+app = FastAPI(title="Real-Time Data Platform API", lifespan=lifespan)
 
 
 def fetch_all(query: str, params: tuple[Any, ...] = ()) -> list[dict[str, Any]]:
-    with psycopg.connect(DATABASE_URL) as conn:
+    with DB_POOL.connection() as conn:
         with conn.cursor(row_factory=dict_row) as cur:
             cur.execute(query, params)  # type: ignore[arg-type]
             return list(cur.fetchall())
