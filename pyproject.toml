@@ -26,6 +26,7 @@ members = [
     "apps/producer",
     "apps/api",
     "apps/pubsub-publisher",
+    "apps/pubsub-worker",
     "packages/contracts",
 ]
 

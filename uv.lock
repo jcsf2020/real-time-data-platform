@@ -15,6 +15,7 @@ members = [
     "rtdp-contracts",
     "rtdp-producer",
     "rtdp-pubsub-publisher",
+    "rtdp-pubsub-worker",
 ]
 
 [[package]]
@@ -1065,6 +1066,23 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "google-cloud-pubsub", specifier = ">=2.21.0" },
+    { name = "pydantic", specifier = ">=2.13.3" },
+    { name = "rtdp-contracts", editable = "packages/contracts" },
+]
+
+[[package]]
+name = "rtdp-pubsub-worker"
+version = "0.1.0"
+source = { editable = "apps/pubsub-worker" }
+dependencies = [
+    { name = "psycopg", extra = ["binary"] },
+    { name = "pydantic" },
+    { name = "rtdp-contracts" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.3.3" },
     { name = "pydantic", specifier = ">=2.13.3" },
     { name = "rtdp-contracts", editable = "packages/contracts" },
 ]
