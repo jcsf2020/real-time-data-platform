@@ -72,6 +72,24 @@ never written to logs.
 | Cloud Scheduler trigger | **Not included in this branch** |
 | Cloud SQL | Stopped (cost control) — no GCP commands executed |
 
+## Docker
+
+This image is intended for a future Cloud Run Job deployment. No deployment is included in this branch.
+
+Build the image from the repository root (the Docker context must be the root so `uv` workspace resolution can see all packages):
+
+```bash
+docker build -f apps/silver-refresh-job/Dockerfile -t rtdp-silver-refresh-job .
+```
+
+`DATABASE_URL` must be provided at runtime — it is not baked into the image:
+
+```bash
+docker run --rm \
+  -e DATABASE_URL="postgresql://user:pass@host/db" \
+  rtdp-silver-refresh-job
+```
+
 ## Tests
 
 ```bash
