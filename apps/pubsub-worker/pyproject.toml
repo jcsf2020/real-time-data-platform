@@ -4,13 +4,16 @@ version = "0.1.0"
 description = "GCP Pub/Sub worker: decode, validate, and persist MarketEvent messages."
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi>=0.115.0",
     "psycopg[binary]>=3.3.3",
     "pydantic>=2.13.3",
     "rtdp-contracts",
+    "uvicorn>=0.34.0",
 ]
 
 [project.scripts]
 rtdp-pubsub-worker = "rtdp_pubsub_worker:main"
+rtdp-pubsub-worker-http = "rtdp_pubsub_worker.http_app:main"
 
 [build-system]
 requires = ["uv_build>=0.9.17,<0.10.0"]

@@ -38,4 +38,4 @@ jobs:
         run: uv run pytest -q
 
       - name: Import smoke test
-        run: uv run python -c "import rtdp_api, rtdp_consumer, rtdp_producer, rtdp_pubsub_publisher; print('imports ok')"
+        run: uv run python -c "import rtdp_api, rtdp_consumer, rtdp_producer, rtdp_pubsub_publisher, rtdp_pubsub_worker; print('imports ok')"

@@ -1075,16 +1075,20 @@ name = "rtdp-pubsub-worker"
 version = "0.1.0"
 source = { editable = "apps/pubsub-worker" }
 dependencies = [
+    { name = "fastapi" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic" },
     { name = "rtdp-contracts" },
+    { name = "uvicorn" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "fastapi", specifier = ">=0.115.0" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3.3" },
     { name = "pydantic", specifier = ">=2.13.3" },
     { name = "rtdp-contracts", editable = "packages/contracts" },
+    { name = "uvicorn", specifier = ">=0.34.0" },
 ]
 
 [[package]]
