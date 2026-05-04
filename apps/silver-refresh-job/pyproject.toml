@@ -1,0 +1,15 @@
+[project]
+name = "rtdp-silver-refresh-job"
+version = "0.1.0"
+description = "Cloud Run Job: call silver.refresh_market_event_minute_aggregates() on demand."
+requires-python = ">=3.12"
+dependencies = [
+    "psycopg[binary]>=3.3.3",
+]
+
+[project.scripts]
+rtdp-silver-refresh-job = "rtdp_silver_refresh_job:main"
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"

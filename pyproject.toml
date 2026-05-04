@@ -27,6 +27,7 @@ members = [
     "apps/api",
     "apps/pubsub-publisher",
     "apps/pubsub-worker",
+    "apps/silver-refresh-job",
     "packages/contracts",
 ]
 
