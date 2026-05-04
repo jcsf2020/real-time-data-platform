@@ -40,6 +40,27 @@ Receives a Pub/Sub push subscription envelope:
 - Returns HTTP 400 for a malformed envelope or invalid base64 (message is dead-lettered rather than retried).
 - Returns HTTP 500 on worker/DB failure (Pub/Sub retries the message).
 
+## Docker packaging
+
+`apps/pubsub-worker/Dockerfile` packages the HTTP runtime for Cloud Run.
+**No Cloud Run deployment has occurred on this branch** — the Dockerfile prepares the image only.
+
+Build from the repository root (the workspace root is the required build context):
+
+```bash
+docker build -f apps/pubsub-worker/Dockerfile -t rtdp-pubsub-worker .
+```
+
+Run the image locally:
+
+```bash
+docker run --rm -p 8080:8080 \
+  -e DATABASE_URL="postgresql+psycopg://..." \
+  rtdp-pubsub-worker
+```
+
+Cloud Run reads `PORT` from the environment and the container binds to it via `$PORT` (default 8080).
+
 ## Running locally
 
 ```bash
