@@ -197,9 +197,9 @@ The GCP target architecture must preserve the current production principles:
 | Prometheus-style metrics endpoint | Implemented |
 | Dockerized full runtime | Implemented |
 | GitHub Actions CI | Implemented |
-| Pub/Sub deployment | Target architecture |
+| Pub/Sub publisher (local MVP) | Implemented — publishes MarketEvent to topic; cloud-side consumer not yet deployed |
 | Cloud Run deployment | Implemented |
-| Cloud SQL deployment | Implemented |
+| Cloud SQL deployment | Implemented (instance stopped; no cloud ingestion yet) |
 | BigQuery analytical layer | Target architecture |
 | Dataflow streaming enrichment | Target architecture |
 | Cloud Monitoring dashboards | Target architecture |
