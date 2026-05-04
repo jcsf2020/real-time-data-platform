@@ -16,6 +16,7 @@ members = [
     "rtdp-producer",
     "rtdp-pubsub-publisher",
     "rtdp-pubsub-worker",
+    "rtdp-silver-refresh-job",
 ]
 
 [[package]]
@@ -1104,6 +1105,17 @@ requires-dist = [
     { name = "rtdp-contracts", editable = "packages/contracts" },
     { name = "uvicorn", specifier = ">=0.34.0" },
 ]
+
+[[package]]
+name = "rtdp-silver-refresh-job"
+version = "0.1.0"
+source = { editable = "apps/silver-refresh-job" }
+dependencies = [
+    { name = "psycopg", extra = ["binary"] },
+]
+
+[package.metadata]
+requires-dist = [{ name = "psycopg", extras = ["binary"], specifier = ">=3.3.3" }]
 
 [[package]]
 name = "ruff"
