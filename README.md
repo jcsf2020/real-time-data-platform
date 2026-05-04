@@ -248,7 +248,7 @@ The `silver` layer is populated by calling `silver.refresh_market_event_minute_a
 
 ## GCP Target Architecture
 
-> **Status:** The FastAPI serving layer is deployed to Google Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. A Pub/Sub publisher MVP is implemented locally (`apps/pubsub-publisher`) and validates MarketEvent payloads before publishing — a cloud-side Pub/Sub consumer is not yet deployed. BigQuery, Dataflow, and Cloud Monitoring integration remain target architecture items.
+> **Status:** The FastAPI serving layer is deployed to Google Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. A Pub/Sub publisher MVP is implemented locally (`apps/pubsub-publisher`) and validates MarketEvent payloads before publishing. A Pub/Sub worker MVP is implemented locally (`apps/pubsub-worker`): it decodes message bytes, validates against `MarketEvent`, and inserts into `bronze.market_events` with `ON CONFLICT DO NOTHING` idempotency — fully tested with mocked DB. Cloud deployment of the worker (Cloud Run job or push subscription) is not yet executed; real end-to-end GCP validation requires Cloud SQL to be started and is planned as the next manual step. BigQuery, Dataflow, and Cloud Monitoring integration remain target architecture items.
 
 | Local Component | GCP Target | Notes |
 |---|---|---|
@@ -363,12 +363,13 @@ This project demonstrates practical Data Engineering skills relevant to streamin
 
 **Implemented (GCP MVP):**
 - FastAPI deployed to Cloud Run, connected to Cloud SQL via Secret Manager
-- Pub/Sub publisher (`apps/pubsub-publisher`): validates and publishes MarketEvent JSON to `market-events-raw` topic; no real GCP resources created yet
+- Pub/Sub publisher (`apps/pubsub-publisher`): validates and publishes MarketEvent JSON to `market-events-raw` topic
+- Pub/Sub worker (`apps/pubsub-worker`): decodes message bytes, validates `MarketEvent`, inserts into `bronze.market_events` (idempotent); fully tested locally with mocked DB — cloud deployment not yet executed
 
 **Planned (next phases):**
+- Deploy Pub/Sub worker to Cloud Run (push subscription or pull job); requires Cloud SQL to be started
 - Populate `gold` schema with business-level daily/weekly aggregates
 - Populate `ai.market_event_embeddings` with pgvector embeddings
 - Automate `silver.refresh_market_event_minute_aggregates()` execution so the silver layer refreshes continuously
-- GCP cloud-side Pub/Sub consumer (Cloud Run worker or Dataflow)
 - dbt models for `silver` and `gold` layers
 - Managed Prometheus scrape and Cloud Monitoring dashboard
