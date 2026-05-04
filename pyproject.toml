@@ -25,6 +25,7 @@ members = [
     "apps/consumer",
     "apps/producer",
     "apps/api",
+    "apps/pubsub-publisher",
     "packages/contracts",
 ]
 

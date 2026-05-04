@@ -1,0 +1,17 @@
+[project]
+name = "rtdp-pubsub-publisher"
+version = "0.1.0"
+description = "GCP Pub/Sub publisher for MarketEvent payloads."
+requires-python = ">=3.12"
+dependencies = [
+    "google-cloud-pubsub>=2.21.0",
+    "pydantic>=2.13.3",
+    "rtdp-contracts",
+]
+
+[project.scripts]
+rtdp-pubsub-publisher = "rtdp_pubsub_publisher:main"
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
