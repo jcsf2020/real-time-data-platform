@@ -294,6 +294,8 @@ See [docs/cloud-logs-based-metrics-datapoint-validation.md](docs/cloud-logs-base
 
 See [docs/cloud-error-counter-validation-plan.md](docs/cloud-error-counter-validation-plan.md) for the plan to safely validate error-counter datapoints for `worker_message_error_count` and `silver_refresh_error_count` (plan only — not yet executed).
 
+See [docs/pubsub-retry-dlq-inspection.md](docs/pubsub-retry-dlq-inspection.md) for the read-only Pub/Sub retry and DLQ configuration inspection performed before any malformed-message validation — establishes that no DLQ/deadLetterPolicy is configured on the production push subscription and blocks unsafe message publishing until an isolated bounded path exists.
+
 **Current GCP MVP:**
 
 ```text
