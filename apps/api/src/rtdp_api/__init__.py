@@ -3,7 +3,7 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from typing import Any
 
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Query, Response
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 
@@ -84,7 +84,10 @@ def version() -> dict[str, str]:
 
 
 @app.get("/events")
-def events(limit: int = 20) -> list[dict[str, Any]]:
+def events(
+    limit: int = 20,
+    offset: int = Query(default=0, ge=0),
+) -> list[dict[str, Any]]:
     safe_limit = min(max(limit, 1), 100)
 
     return fetch_all(
@@ -99,10 +102,11 @@ def events(limit: int = 20) -> list[dict[str, Any]]:
                 ingested_at,
                 source_topic
             FROM bronze.market_events
-            ORDER BY ingested_at DESC
-            LIMIT %s;
+            ORDER BY ingested_at DESC, event_id DESC
+            LIMIT %s
+            OFFSET %s;
         """,
-        (safe_limit,),
+        (safe_limit, offset),
     )
 
 

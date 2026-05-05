@@ -357,6 +357,10 @@ are confirmed via worker structured logs and Cloud Monitoring metric (both indep
 showing 1000). The top 100 API rows confirm the most recently ingested events are visible and
 correctly structured.
 
+**Fix:** Branch `fix/api-events-pagination` implements real `OFFSET` pagination for the
+`/events` endpoint. The `offset` query parameter is now passed to the SQL query, enabling
+correct page-by-page traversal of the full 1000-row result set.
+
 ### Sample rows (from first 100 returned)
 
 ```json
