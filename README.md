@@ -306,6 +306,8 @@ See [docs/load-test-100-cloud-evidence.md](docs/load-test-100-cloud-evidence.md)
 
 See [docs/load-test-1000-cloud-runbook.md](docs/load-test-1000-cloud-runbook.md) for the operational runbook for the next scale tier: exactly 1000 valid Pub/Sub messages through the deployed GCP pipeline (runbook only — not yet executed).
 
+See [docs/api-events-pagination-deploy-evidence.md](docs/api-events-pagination-deploy-evidence.md) for the production deployment and validation evidence for the `/events` pagination fix (PR #42): disjoint two-page readback confirmed on live data, Cloud SQL `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
