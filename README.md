@@ -286,6 +286,8 @@ See [docs/cloud-observability-evidence.md](docs/cloud-observability-evidence.md)
 
 See [docs/worker-structured-logs-validation.md](docs/worker-structured-logs-validation.md) for the worker structured `jsonPayload` log validation evidence (closes the known gap from the observability evidence doc).
 
+See [docs/cloud-observability-metrics-plan.md](docs/cloud-observability-metrics-plan.md) for the logs-based metrics, alerting policies, and Cloud Monitoring dashboard plan (plan only — not executed).
+
 **Current GCP MVP:**
 
 ```text
