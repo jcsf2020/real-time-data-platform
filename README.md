@@ -282,6 +282,8 @@ See [docs/silver-refresh-job-deployment-plan.md](docs/silver-refresh-job-deploym
 
 See [docs/silver-refresh-job-validation.md](docs/silver-refresh-job-validation.md) for the validated execution evidence.
 
+See [docs/cloud-observability-evidence.md](docs/cloud-observability-evidence.md) for Cloud Logging observability evidence across the deployed services and jobs.
+
 **Current GCP MVP:**
 
 ```text
