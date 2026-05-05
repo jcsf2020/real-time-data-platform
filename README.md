@@ -296,6 +296,8 @@ See [docs/cloud-error-counter-validation-plan.md](docs/cloud-error-counter-valid
 
 See [docs/pubsub-retry-dlq-inspection.md](docs/pubsub-retry-dlq-inspection.md) for the read-only Pub/Sub retry and DLQ configuration inspection performed before any malformed-message validation — establishes that no DLQ/deadLetterPolicy is configured on the production push subscription and blocks unsafe message publishing until an isolated bounded path exists.
 
+See [docs/load-test-plan.md](docs/load-test-plan.md) for the controlled load and throughput validation plan covering 100 / 1 000 / 5 000 event test sizes, deterministic event-ID prefixes, Cloud SQL start/stop protocol, Pub/Sub backlog observation, and acceptance criteria per test size (plan only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
