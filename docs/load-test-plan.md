@@ -131,6 +131,36 @@ uv run python scripts/generate_load_test_events.py \
 No Pub/Sub publish count, worker processing log, or Cloud SQL insert is produced by this tool.
 Evidence for those steps requires live publishing against the deployed pipeline (see below).
 
+### Local JSONL validator (pre-publish evidence only)
+
+`scripts/validate_load_test_events.py` validates a JSONL file produced by the dry-run generator
+before any live publishing occurs. It is **local-only**: it does not publish to Pub/Sub, access
+Cloud SQL, or mutate any GCP resource. Its output is a compact JSON report written to stdout (or
+to a file via `--report-output`).
+
+```bash
+# Validate 100-event file and print report to stdout
+uv run python scripts/validate_load_test_events.py \
+  --input /tmp/events-100.jsonl \
+  --size 100 \
+  --prefix-timestamp 20260601120000
+
+# Write report to a file
+uv run python scripts/validate_load_test_events.py \
+  --input /tmp/events-100.jsonl \
+  --size 100 \
+  --prefix-timestamp 20260601120000 \
+  --report-output /tmp/report-100.json
+```
+
+The validator checks: event count, JSON validity, `event_id` sequence and prefix, `schema_version`,
+`event_type`, allowed symbols, `event_timestamp` presence, duplicate `event_id` detection, and full
+schema compliance via the worker's `validate_event` function. It exits non-zero on any failure.
+
+This tool produces **pre-publish evidence only**. A passing report confirms that the generated
+events are schema-valid and correctly sequenced; it does not validate throughput, worker
+processing, or Cloud SQL ingestion. Those steps require live publishing (see below).
+
 ### Live publishing
 
 The future live-publish producer script or command sequence must implement the following
