@@ -487,6 +487,7 @@ After this execution:
 
 **Next steps enabled by this evidence:**
 
-- 1 000-event cloud load test (was blocked pending this run)
+- 1 000-event cloud load test (was blocked pending this run) — see
+  [docs/load-test-1000-cloud-runbook.md](load-test-1000-cloud-runbook.md)
 - Cloud Monitoring dashboard work (can reference actual load-test datapoints)
 - Refined acceptance criteria at higher event counts
