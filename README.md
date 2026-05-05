@@ -284,6 +284,8 @@ See [docs/silver-refresh-job-validation.md](docs/silver-refresh-job-validation.m
 
 See [docs/cloud-observability-evidence.md](docs/cloud-observability-evidence.md) for Cloud Logging observability evidence across the deployed services and jobs.
 
+See [docs/worker-structured-logs-validation.md](docs/worker-structured-logs-validation.md) for the worker structured `jsonPayload` log validation evidence (closes the known gap from the observability evidence doc).
+
 **Current GCP MVP:**
 
 ```text
