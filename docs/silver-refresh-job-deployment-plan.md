@@ -199,7 +199,7 @@ gcloud run jobs deploy rtdp-silver-refresh-job \
   --project=project-42987e01-2123-446b-ac7 \
   --service-account=rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com \
   --set-secrets=DATABASE_URL=rtdp-database-url:latest \
-  --add-cloudsql-instances=project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres \
+  --set-cloudsql-instances=project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres \
   --tasks=1 \
   --max-retries=0 \
   --task-timeout=300s

@@ -278,7 +278,9 @@ See [docs/gcp-architecture.md](docs/gcp-architecture.md) for the full GCP archit
 
 See [docs/gcp-worker-deployment-plan.md](docs/gcp-worker-deployment-plan.md) for the step-by-step worker deployment plan (not yet executed).
 
-See [docs/silver-refresh-job-deployment-plan.md](docs/silver-refresh-job-deployment-plan.md) for the silver refresh Cloud Run Job deployment plan (not yet executed).
+See [docs/silver-refresh-job-deployment-plan.md](docs/silver-refresh-job-deployment-plan.md) for the silver refresh Cloud Run Job deployment plan.
+
+See [docs/silver-refresh-job-validation.md](docs/silver-refresh-job-validation.md) for the validated execution evidence.
 
 **Current GCP MVP:**
 
