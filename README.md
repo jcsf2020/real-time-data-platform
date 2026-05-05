@@ -290,6 +290,8 @@ See [docs/cloud-observability-metrics-plan.md](docs/cloud-observability-metrics-
 
 See [docs/cloud-logs-based-metrics-validation.md](docs/cloud-logs-based-metrics-validation.md) for the creation and configuration-level validation of the first four Cloud Monitoring logs-based metrics.
 
+See [docs/cloud-logs-based-metrics-datapoint-validation.md](docs/cloud-logs-based-metrics-datapoint-validation.md) for the Cloud Monitoring API timeSeries datapoint evidence for the worker and silver refresh success counters.
+
 **Current GCP MVP:**
 
 ```text
