@@ -1,0 +1,1 @@
+{"errors":[],"expected_size":100,"first_event_id":"loadtest-100-20260505220122-00001","input":"docs/evidence/load-test-100-cloud/events-100.jsonl","last_event_id":"loadtest-100-20260505220122-00100","observed_count":100,"prefix":"loadtest-100-20260505220122-","status":"ok","symbols":["BTCUSDT","ETHUSDT","SOLUSDT"],"unique_event_ids":100,"worker_contract_validation":"passed"}
