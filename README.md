@@ -308,7 +308,9 @@ See [docs/load-test-1000-cloud-runbook.md](docs/load-test-1000-cloud-runbook.md)
 
 See [docs/api-events-pagination-deploy-evidence.md](docs/api-events-pagination-deploy-evidence.md) for the production deployment and validation evidence for the `/events` pagination fix (PR #42): disjoint two-page readback confirmed on live data, Cloud SQL `NEVER / STOPPED`.
 
-See [docs/cloud-monitoring-dashboard-runbook.md](docs/cloud-monitoring-dashboard-runbook.md) for the operational runbook to create the **RTDP Pipeline Overview** Cloud Monitoring dashboard using the four validated logs-based metrics (runbook only — not yet executed).
+See [docs/cloud-monitoring-dashboard-runbook.md](docs/cloud-monitoring-dashboard-runbook.md) for the operational runbook to create the **RTDP Pipeline Overview** Cloud Monitoring dashboard using the four validated logs-based metrics.
+
+See [docs/cloud-monitoring-dashboard-evidence.md](docs/cloud-monitoring-dashboard-evidence.md) for the dashboard creation and export evidence: 4-panel dashboard created in GCP, exported to `infra/monitoring/dashboards/rtdp-pipeline-overview.json`, Cloud SQL `NEVER / STOPPED`.
 
 **Current GCP MVP:**
 
