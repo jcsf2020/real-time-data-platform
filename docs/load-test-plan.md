@@ -112,8 +112,29 @@ still draining.
 
 ## 5. Producer Strategy
 
-The future producer script or command sequence must implement the following approach. No
-producer code is included in this branch.
+### Dry-run generator (local, no Pub/Sub)
+
+`scripts/generate_load_test_events.py` generates deterministic `MarketEvent`-compatible JSON
+Lines locally. It does not publish to Pub/Sub, access Cloud SQL, or mutate any GCP resource.
+Use it to inspect event shape and verify event IDs before a live publishing run.
+
+```bash
+# Write 100 events to stdout
+uv run python scripts/generate_load_test_events.py \
+  --size 100 --prefix-timestamp 20260601120000
+
+# Write 1 000 events to a file
+uv run python scripts/generate_load_test_events.py \
+  --size 1000 --prefix-timestamp 20260601130000 --output /tmp/events-1000.jsonl
+```
+
+No Pub/Sub publish count, worker processing log, or Cloud SQL insert is produced by this tool.
+Evidence for those steps requires live publishing against the deployed pipeline (see below).
+
+### Live publishing
+
+The future live-publish producer script or command sequence must implement the following
+approach.
 
 ### Event generation
 
