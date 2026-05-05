@@ -292,6 +292,8 @@ See [docs/cloud-logs-based-metrics-validation.md](docs/cloud-logs-based-metrics-
 
 See [docs/cloud-logs-based-metrics-datapoint-validation.md](docs/cloud-logs-based-metrics-datapoint-validation.md) for the Cloud Monitoring API timeSeries datapoint evidence for the worker and silver refresh success counters.
 
+See [docs/cloud-error-counter-validation-plan.md](docs/cloud-error-counter-validation-plan.md) for the plan to safely validate error-counter datapoints for `worker_message_error_count` and `silver_refresh_error_count` (plan only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
