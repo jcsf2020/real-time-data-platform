@@ -562,4 +562,6 @@ that has been built with operational discipline — not just connectivity.
 | [docs/cloud-error-counter-validation-plan.md](cloud-error-counter-validation-plan.md) | Error counter plan; abort conditions in this plan reference that work |
 | [docs/cloud-observability-metrics-plan.md](cloud-observability-metrics-plan.md) | Logs-based metrics context |
 | [docs/load-test-local-sample-evidence.md](load-test-local-sample-evidence.md) | Local pre-publish sample evidence: dry-run generator and validator output for the 100-event smoke-scale size (no Pub/Sub, no Cloud SQL) |
-| [docs/load-test-100-cloud-runbook.md](load-test-100-cloud-runbook.md) | Operational runbook for the first controlled live 100-event cloud load test (not yet executed) |
+| [docs/load-test-100-cloud-runbook.md](load-test-100-cloud-runbook.md) | Operational runbook for the first controlled live 100-event cloud load test |
+| [docs/load-test-100-cloud-evidence.md](load-test-100-cloud-evidence.md) | Accepted 100-event cloud evidence — all acceptance criteria met |
+| [docs/load-test-1000-cloud-runbook.md](load-test-1000-cloud-runbook.md) | Operational runbook for the 1000-event cloud load test (not yet executed) |

@@ -300,7 +300,11 @@ See [docs/load-test-plan.md](docs/load-test-plan.md) for the controlled load and
 
 See [docs/load-test-local-sample-evidence.md](docs/load-test-local-sample-evidence.md) for local pre-publish sample evidence: deterministic 100-event JSONL generated and validated locally with no Pub/Sub publishing and no Cloud SQL access.
 
-See [docs/load-test-100-cloud-runbook.md](docs/load-test-100-cloud-runbook.md) for the operational runbook for the first controlled live 100-event cloud load test (not yet executed — defines the exact sequence for a future execution branch).
+See [docs/load-test-100-cloud-runbook.md](docs/load-test-100-cloud-runbook.md) for the operational runbook for the first controlled live 100-event cloud load test.
+
+See [docs/load-test-100-cloud-evidence.md](docs/load-test-100-cloud-evidence.md) for the accepted 100-event cloud evidence (all acceptance criteria met: 100 publish acknowledgements, 100 worker status=ok logs, metric sum = 100, API readback 100/100, Cloud SQL NEVER / STOPPED).
+
+See [docs/load-test-1000-cloud-runbook.md](docs/load-test-1000-cloud-runbook.md) for the operational runbook for the next scale tier: exactly 1000 valid Pub/Sub messages through the deployed GCP pipeline (runbook only — not yet executed).
 
 **Current GCP MVP:**
 
