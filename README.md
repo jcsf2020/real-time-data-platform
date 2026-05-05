@@ -288,6 +288,8 @@ See [docs/worker-structured-logs-validation.md](docs/worker-structured-logs-vali
 
 See [docs/cloud-observability-metrics-plan.md](docs/cloud-observability-metrics-plan.md) for the logs-based metrics, alerting policies, and Cloud Monitoring dashboard plan (plan only — not executed).
 
+See [docs/cloud-logs-based-metrics-validation.md](docs/cloud-logs-based-metrics-validation.md) for the creation and configuration-level validation of the first four Cloud Monitoring logs-based metrics.
+
 **Current GCP MVP:**
 
 ```text
