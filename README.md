@@ -300,6 +300,8 @@ See [docs/load-test-plan.md](docs/load-test-plan.md) for the controlled load and
 
 See [docs/load-test-local-sample-evidence.md](docs/load-test-local-sample-evidence.md) for local pre-publish sample evidence: deterministic 100-event JSONL generated and validated locally with no Pub/Sub publishing and no Cloud SQL access.
 
+See [docs/load-test-100-cloud-runbook.md](docs/load-test-100-cloud-runbook.md) for the operational runbook for the first controlled live 100-event cloud load test (not yet executed — defines the exact sequence for a future execution branch).
+
 **Current GCP MVP:**
 
 ```text
