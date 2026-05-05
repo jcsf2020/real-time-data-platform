@@ -561,3 +561,4 @@ that has been built with operational discipline — not just connectivity.
 | [docs/pubsub-retry-dlq-inspection.md](pubsub-retry-dlq-inspection.md) | Confirms no DLQ on production subscription; informs valid-messages-only constraint |
 | [docs/cloud-error-counter-validation-plan.md](cloud-error-counter-validation-plan.md) | Error counter plan; abort conditions in this plan reference that work |
 | [docs/cloud-observability-metrics-plan.md](cloud-observability-metrics-plan.md) | Logs-based metrics context |
+| [docs/load-test-local-sample-evidence.md](load-test-local-sample-evidence.md) | Local pre-publish sample evidence: dry-run generator and validator output for the 100-event smoke-scale size (no Pub/Sub, no Cloud SQL) |

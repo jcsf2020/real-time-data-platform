@@ -298,6 +298,8 @@ See [docs/pubsub-retry-dlq-inspection.md](docs/pubsub-retry-dlq-inspection.md) f
 
 See [docs/load-test-plan.md](docs/load-test-plan.md) for the controlled load and throughput validation plan covering 100 / 1 000 / 5 000 event test sizes, deterministic event-ID prefixes, Cloud SQL start/stop protocol, Pub/Sub backlog observation, and acceptance criteria per test size (plan only — not yet executed).
 
+See [docs/load-test-local-sample-evidence.md](docs/load-test-local-sample-evidence.md) for local pre-publish sample evidence: deterministic 100-event JSONL generated and validated locally with no Pub/Sub publishing and no Cloud SQL access.
+
 **Current GCP MVP:**
 
 ```text
