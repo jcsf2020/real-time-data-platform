@@ -324,6 +324,8 @@ See [docs/cloud-alert-policies-runbook.md](docs/cloud-alert-policies-runbook.md)
 
 See [docs/cloud-alert-policies-evidence.md](docs/cloud-alert-policies-evidence.md) for the creation and validation evidence for the two Cloud Monitoring alert policies: RTDP Worker Message Error Alert and RTDP Silver Refresh Error Alert — both enabled, both referencing validated logs-based metrics, Cloud SQL `NEVER / STOPPED`.
 
+See [docs/production-pubsub-dlq-runbook.md](docs/production-pubsub-dlq-runbook.md) for the operational runbook to add a production dead-letter policy (`deadLetterPolicy`) to the `market-events-raw-worker-push` push subscription — bounding failed delivery attempts to 5, adding explicit retry backoff (10s/60s), and routing unprocessable messages to a new `market-events-raw-dlq` topic (runbook only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
