@@ -316,6 +316,8 @@ See [docs/isolated-error-counter-validation-runbook.md](docs/isolated-error-coun
 
 See [docs/isolated-error-counter-validation-evidence.md](docs/isolated-error-counter-validation-evidence.md) for the partial validation evidence: `worker_message_error_count` accepted with real Cloud Monitoring timeSeries datapoints (TOTAL=13); `silver_refresh_error_count` blocked by a hardcoded `job_name` condition in the metric filter — **partial validation only, not full acceptance**.
 
+See [docs/silver-refresh-error-metric-filter-runbook.md](docs/silver-refresh-error-metric-filter-runbook.md) for the runbook to safely fix the `silver_refresh_error_count` metric filter — removes the hardcoded `resource.labels.job_name` condition so an isolated temporary Cloud Run Job can produce a matching timeSeries datapoint (pending execution).
+
 **Current GCP MVP:**
 
 ```text
