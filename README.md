@@ -312,7 +312,9 @@ See [docs/cloud-monitoring-dashboard-runbook.md](docs/cloud-monitoring-dashboard
 
 See [docs/cloud-monitoring-dashboard-evidence.md](docs/cloud-monitoring-dashboard-evidence.md) for the dashboard creation and export evidence: 4-panel dashboard created in GCP, exported to `infra/monitoring/dashboards/rtdp-pipeline-overview.json`, Cloud SQL `NEVER / STOPPED`.
 
-See [docs/isolated-error-counter-validation-runbook.md](docs/isolated-error-counter-validation-runbook.md) for the operational runbook to safely validate `worker_message_error_count` and `silver_refresh_error_count` datapoints using isolated Pub/Sub resources and a temporary Cloud Run Job — avoiding any mutation of the production topic or push subscription (runbook only — not yet executed).
+See [docs/isolated-error-counter-validation-runbook.md](docs/isolated-error-counter-validation-runbook.md) for the operational runbook to safely validate `worker_message_error_count` and `silver_refresh_error_count` datapoints using isolated Pub/Sub resources and a temporary Cloud Run Job — avoiding any mutation of the production topic or push subscription.
+
+See [docs/isolated-error-counter-validation-evidence.md](docs/isolated-error-counter-validation-evidence.md) for the partial validation evidence: `worker_message_error_count` accepted with real Cloud Monitoring timeSeries datapoints (TOTAL=13); `silver_refresh_error_count` blocked by a hardcoded `job_name` condition in the metric filter — **partial validation only, not full acceptance**.
 
 **Current GCP MVP:**
 
