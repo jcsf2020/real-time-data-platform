@@ -312,6 +312,8 @@ See [docs/cloud-monitoring-dashboard-runbook.md](docs/cloud-monitoring-dashboard
 
 See [docs/cloud-monitoring-dashboard-evidence.md](docs/cloud-monitoring-dashboard-evidence.md) for the dashboard creation and export evidence: 4-panel dashboard created in GCP, exported to `infra/monitoring/dashboards/rtdp-pipeline-overview.json`, Cloud SQL `NEVER / STOPPED`.
 
+See [docs/isolated-error-counter-validation-runbook.md](docs/isolated-error-counter-validation-runbook.md) for the operational runbook to safely validate `worker_message_error_count` and `silver_refresh_error_count` datapoints using isolated Pub/Sub resources and a temporary Cloud Run Job — avoiding any mutation of the production topic or push subscription (runbook only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
