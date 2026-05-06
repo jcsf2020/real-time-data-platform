@@ -320,6 +320,8 @@ See [docs/silver-refresh-error-metric-filter-runbook.md](docs/silver-refresh-err
 
 See [docs/silver-refresh-error-metric-filter-evidence.md](docs/silver-refresh-error-metric-filter-evidence.md) for the validated execution evidence: metric filter updated, `silver_refresh_error_count` Cloud Monitoring timeSeries confirmed (`TOTAL=1`), all four logs-based metrics now have validated datapoints, Cloud SQL `NEVER / STOPPED`.
 
+See [docs/cloud-alert-policies-runbook.md](docs/cloud-alert-policies-runbook.md) for the operational runbook to create Cloud Monitoring alert policies on top of all four validated logs-based metrics — moving from passive observability to active operational alerting (runbook only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
