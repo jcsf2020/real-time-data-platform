@@ -318,6 +318,8 @@ See [docs/isolated-error-counter-validation-evidence.md](docs/isolated-error-cou
 
 See [docs/silver-refresh-error-metric-filter-runbook.md](docs/silver-refresh-error-metric-filter-runbook.md) for the runbook to safely fix the `silver_refresh_error_count` metric filter — removes the hardcoded `resource.labels.job_name` condition so an isolated temporary Cloud Run Job can produce a matching timeSeries datapoint (pending execution).
 
+See [docs/silver-refresh-error-metric-filter-evidence.md](docs/silver-refresh-error-metric-filter-evidence.md) for the validated execution evidence: metric filter updated, `silver_refresh_error_count` Cloud Monitoring timeSeries confirmed (`TOTAL=1`), all four logs-based metrics now have validated datapoints, Cloud SQL `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
