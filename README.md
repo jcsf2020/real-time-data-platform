@@ -328,6 +328,8 @@ See [docs/production-pubsub-dlq-runbook.md](docs/production-pubsub-dlq-runbook.m
 
 See [docs/production-pubsub-dlq-evidence.md](docs/production-pubsub-dlq-evidence.md) for the execution evidence: DLQ topic created, Pub/Sub service agent IAM granted, production subscription updated in-place with `deadLetterPolicy` (maxDeliveryAttempts=5, 10s/60s backoff), all fields validated, Cloud SQL `NEVER / STOPPED`.
 
+See [docs/silver-refresh-scheduler-runbook.md](docs/silver-refresh-scheduler-runbook.md) for the runbook to create a Cloud Scheduler job (`rtdp-silver-refresh-scheduler`) that triggers `rtdp-silver-refresh-job` on a `*/15 * * * *` UTC cadence — moving silver refresh from manual execution to scheduled automation (runbook only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
