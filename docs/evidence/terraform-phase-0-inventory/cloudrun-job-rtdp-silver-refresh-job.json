@@ -1,0 +1,87 @@
+{
+  "apiVersion": "run.googleapis.com/v1",
+  "kind": "Job",
+  "metadata": {
+    "annotations": {
+      "run.googleapis.com/client-name": "gcloud",
+      "run.googleapis.com/client-version": "566.0.0",
+      "run.googleapis.com/creator": "crsetsolutions@gmail.com",
+      "run.googleapis.com/lastModifier": "crsetsolutions@gmail.com",
+      "run.googleapis.com/operation-id": "f31a7e02-3eaa-4199-83e9-f75a1e2a8e0b"
+    },
+    "creationTimestamp": "2026-05-05T05:59:18.234811Z",
+    "generation": 1,
+    "labels": {
+      "cloud.googleapis.com/location": "europe-west1",
+      "run.googleapis.com/lastUpdatedTime": "2026-05-05T05:59:18.234811Z"
+    },
+    "name": "rtdp-silver-refresh-job",
+    "namespace": "892892382088",
+    "resourceVersion": "AAZRPIgX9wQ",
+    "selfLink": "/apis/run.googleapis.com/v1/namespaces/892892382088/jobs/rtdp-silver-refresh-job",
+    "uid": "f17e9179-119a-4209-8904-85a19c2ea16c"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "run.googleapis.com/client-name": "gcloud",
+          "run.googleapis.com/client-version": "566.0.0",
+          "run.googleapis.com/cloudsql-instances": "project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres",
+          "run.googleapis.com/execution-environment": "gen2"
+        },
+        "labels": {
+          "client.knative.dev/nonce": "pas_wib_ten"
+        }
+      },
+      "spec": {
+        "taskCount": 1,
+        "template": {
+          "spec": {
+            "containers": [
+              {
+                "env": [
+                  {
+                    "name": "DATABASE_URL",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "key": "latest",
+                        "name": "rtdp-database-url"
+                      }
+                    }
+                  }
+                ],
+                "image": "europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-silver-refresh-job:latest",
+                "resources": {
+                  "limits": {
+                    "cpu": "1000m",
+                    "memory": "512Mi"
+                  }
+                }
+              }
+            ],
+            "maxRetries": 0,
+            "serviceAccountName": "rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com",
+            "timeoutSeconds": "300"
+          }
+        }
+      }
+    }
+  },
+  "status": {
+    "conditions": [
+      {
+        "status": "True",
+        "type": "Ready"
+      }
+    ],
+    "executionCount": 6,
+    "latestCreatedExecution": {
+      "completionStatus": "EXECUTION_SUCCEEDED",
+      "completionTimestamp": "2026-05-07T16:11:22.992916Z",
+      "creationTimestamp": "2026-05-07T16:10:49.076774Z",
+      "name": "rtdp-silver-refresh-job-z676s"
+    },
+    "observedGeneration": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "email",
+  "displayName": "RTDP Operator Email Alerts",
+  "labels": {
+    "email_address": "crsetsolutions@gmail.com"
+  },
+  "name": "projects/project-42987e01-2123-446b-ac7/notificationChannels/1439157631105258885",
+  "enabled": true,
+  "creationRecord": {
+    "mutateTime": "2026-05-07T11:15:22.146374935Z"
+  },
+  "mutationRecords": [
+    {
+      "mutateTime": "2026-05-07T11:15:22.146374935Z"
+    }
+  ]
+}

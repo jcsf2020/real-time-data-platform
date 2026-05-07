@@ -1,0 +1,124 @@
+{
+  "apiVersion": "serving.knative.dev/v1",
+  "kind": "Service",
+  "metadata": {
+    "annotations": {
+      "run.googleapis.com/client-name": "gcloud",
+      "run.googleapis.com/client-version": "566.0.0",
+      "run.googleapis.com/ingress": "all",
+      "run.googleapis.com/ingress-status": "all",
+      "run.googleapis.com/maxScale": "20",
+      "run.googleapis.com/operation-id": "bf471fd3-dc9c-444d-851a-f16681cdca05",
+      "run.googleapis.com/urls": "[\"https://rtdp-pubsub-worker-892892382088.europe-west1.run.app\",\"https://rtdp-pubsub-worker-fpy4of3i5a-ew.a.run.app\"]",
+      "serving.knative.dev/creator": "crsetsolutions@gmail.com",
+      "serving.knative.dev/lastModifier": "crsetsolutions@gmail.com"
+    },
+    "creationTimestamp": "2026-05-04T18:11:23.354482Z",
+    "generation": 3,
+    "labels": {
+      "cloud.googleapis.com/location": "europe-west1"
+    },
+    "name": "rtdp-pubsub-worker",
+    "namespace": "892892382088",
+    "resourceVersion": "AAZRD1KhOdA",
+    "selfLink": "/apis/serving.knative.dev/v1/namespaces/892892382088/services/rtdp-pubsub-worker",
+    "uid": "64ac4225-611b-4931-aa29-5cbd344adbff"
+  },
+  "spec": {
+    "template": {
+      "metadata": {
+        "annotations": {
+          "autoscaling.knative.dev/maxScale": "1",
+          "run.googleapis.com/client-name": "gcloud",
+          "run.googleapis.com/client-version": "566.0.0",
+          "run.googleapis.com/cloudsql-instances": "project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres",
+          "run.googleapis.com/startup-cpu-boost": "true"
+        },
+        "labels": {
+          "client.knative.dev/nonce": "mhsvpimmmj",
+          "run.googleapis.com/startupProbeType": "Default"
+        }
+      },
+      "spec": {
+        "containerConcurrency": 1,
+        "containers": [
+          {
+            "env": [
+              {
+                "name": "DATABASE_URL",
+                "valueFrom": {
+                  "secretKeyRef": {
+                    "key": "latest",
+                    "name": "rtdp-database-url"
+                  }
+                }
+              }
+            ],
+            "image": "europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker:latest",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "name": "http1"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1000m",
+                "memory": "512Mi"
+              }
+            },
+            "startupProbe": {
+              "failureThreshold": 1,
+              "periodSeconds": 240,
+              "tcpSocket": {
+                "port": 8080
+              },
+              "timeoutSeconds": 240
+            }
+          }
+        ],
+        "serviceAccountName": "rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com",
+        "timeoutSeconds": 60
+      }
+    },
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100
+      }
+    ]
+  },
+  "status": {
+    "address": {
+      "url": "https://rtdp-pubsub-worker-fpy4of3i5a-ew.a.run.app"
+    },
+    "conditions": [
+      {
+        "lastTransitionTime": "2026-05-05T10:15:12.921040Z",
+        "status": "True",
+        "type": "Ready"
+      },
+      {
+        "lastTransitionTime": "2026-05-05T10:15:04.968978Z",
+        "status": "True",
+        "type": "ConfigurationsReady"
+      },
+      {
+        "lastTransitionTime": "2026-05-05T10:15:12.893828Z",
+        "status": "True",
+        "type": "RoutesReady"
+      }
+    ],
+    "latestCreatedRevisionName": "rtdp-pubsub-worker-00003-dh6",
+    "latestReadyRevisionName": "rtdp-pubsub-worker-00003-dh6",
+    "observedGeneration": 3,
+    "traffic": [
+      {
+        "latestRevision": true,
+        "percent": 100,
+        "revisionName": "rtdp-pubsub-worker-00003-dh6"
+      }
+    ],
+    "url": "https://rtdp-pubsub-worker-fpy4of3i5a-ew.a.run.app"
+  }
+}

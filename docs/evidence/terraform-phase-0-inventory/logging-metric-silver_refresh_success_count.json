@@ -1,0 +1,16 @@
+{
+  "createTime": "2026-05-05T13:56:40.103479698Z",
+  "description": "Count of successful silver refresh Cloud Run Job executions",
+  "filter": "resource.type=\"cloud_run_job\"\nresource.labels.job_name=\"rtdp-silver-refresh-job\"\njsonPayload.service=\"rtdp-silver-refresh-job\"\njsonPayload.operation=\"refresh_market_event_minute_aggregates\"\njsonPayload.status=\"ok\"",
+  "metricDescriptor": {
+    "description": "Count of successful silver refresh Cloud Run Job executions",
+    "metricKind": "DELTA",
+    "name": "projects/project-42987e01-2123-446b-ac7/metricDescriptors/logging.googleapis.com/user/silver_refresh_success_count",
+    "type": "logging.googleapis.com/user/silver_refresh_success_count",
+    "unit": "1",
+    "valueType": "INT64"
+  },
+  "name": "silver_refresh_success_count",
+  "resourceName": "projects/project-42987e01-2123-446b-ac7/metrics/silver_refresh_success_count",
+  "updateTime": "2026-05-05T13:56:40.103479698Z"
+}

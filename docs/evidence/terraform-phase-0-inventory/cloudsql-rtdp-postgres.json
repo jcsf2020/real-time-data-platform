@@ -1,0 +1,108 @@
+{
+  "backendType": "SECOND_GEN",
+  "connectionName": "project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres",
+  "createTime": "2026-05-03T21:13:17.485Z",
+  "databaseInstalledVersion": "POSTGRES_16_13",
+  "databaseVersion": "POSTGRES_16",
+  "etag": "d9176848082048e37c47fff09191561f2fc3ebcf3828eca16459b2a7f08bedff",
+  "gceZone": "europe-west1-b",
+  "geminiConfig": {
+    "activeQueryEnabled": false,
+    "entitled": false,
+    "googleVacuumMgmtEnabled": false,
+    "indexAdvisorEnabled": false,
+    "oomSessionCancelEnabled": true
+  },
+  "includeReplicasForMajorVersionUpgrade": false,
+  "instanceType": "CLOUD_SQL_INSTANCE",
+  "ipAddresses": [
+    {
+      "ipAddress": "34.140.96.253",
+      "type": "PRIMARY"
+    },
+    {
+      "ipAddress": "34.76.188.88",
+      "type": "OUTGOING"
+    }
+  ],
+  "kind": "sql#instance",
+  "maintenanceVersion": "POSTGRES_16_13.R20260319.00_11",
+  "name": "rtdp-postgres",
+  "project": "project-42987e01-2123-446b-ac7",
+  "region": "europe-west1",
+  "satisfiesPzi": true,
+  "selfLink": "https://sqladmin.googleapis.com/sql/v1beta4/projects/project-42987e01-2123-446b-ac7/instances/rtdp-postgres",
+  "serverCaCert": {
+    "cert": "-----BEGIN CERTIFICATE-----\nMIIDcTCCAlmgAwIBAgIBADANBgkqhkiG9w0BAQsFADBwMS0wKwYDVQQuEyRjZTk2\nYzdiYy03ZTk4LTRlZmItOWY1OC0yNDZiNzU2ZTYxZGExHDAaBgNVBAMTE0Nsb3Vk\nIFNRTCBTZXJ2ZXIgQ0ExFDASBgNVBAoTC0dvb2dsZSwgSW5jMQswCQYDVQQGEwJV\nUzAeFw0yNjA1MDMyMTEzNDVaFw0zNjA0MzAyMTE0NDVaMHAxLTArBgNVBC4TJGNl\nOTZjN2JjLTdlOTgtNGVmYi05ZjU4LTI0NmI3NTZlNjFkYTEcMBoGA1UEAxMTQ2xv\ndWQgU1FMIFNlcnZlciBDQTEUMBIGA1UEChMLR29vZ2xlLCBJbmMxCzAJBgNVBAYT\nAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0EweLyZi2cdVy+bh\nbC/pBtpgNQnACoNM1bRtVXjNK+3E7AoGEjytpmi0ZP9glRpmav0abbtyXVZgsAoI\nIq69gKAhvztrjlUrPoa9um+MbgVro/dP9nBCA2+sb2GbHyfOe8dK8+vvxnhTB+B6\n/t2O4XP0QYVPKzRo0ARb/BDSEoHsb0UlBRjXcJUQsnbK5BWGQGgxPcdvyz9hLs6C\nu9VN237o9X9yaiO/etkDtyOyOs2PE3vhjiipknZTVzy6BDX8COcgqkYZrj6mA6qi\ne5YHavVb2n+BXvhpjA4HVcyTKFEnKYv9dA7tAE31hVrcXxu4qpnVpHNt6A355Xow\nEJjVZQIDAQABoxYwFDASBgNVHRMBAf8ECDAGAQH/AgEAMA0GCSqGSIb3DQEBCwUA\nA4IBAQB9oK6CibKbslLGfVEhQZ1EFIGqmxE2nWRR09j6ddqYjiQUbGNDrl2U8dk+\n0I7PDuEfUMXOD9xvwr1oE1fekzvb/bMdZE0TFUWXZbUNBKAIi/5Hv+szhqZMsmRq\nzeUSDCod8aq7DctPIBp15MSISLjJlB0pdTQ8kLU5Zqs8F5SYHXGJ86X99jO8FbUt\nNGhIPbxaLvsPgs5EUSFjlLotUz9n0T7ODniCdE0Vg+muyAsNf73zwzJe51TfRnvc\nvHlP6ZlTn4oX/Tsa+bCViiDY+bEOew333G6UA66YUGnbWymC9T/tLuFFmN9GLnrJ\nOrIvFJflJE6VLCh4g4uTLm2oco7n\n-----END CERTIFICATE-----",
+    "certSerialNumber": "0",
+    "commonName": "C=US,O=Google\\, Inc,CN=Cloud SQL Server CA,dnQualifier=ce96c7bc-7e98-4efb-9f58-246b756e61da",
+    "createTime": "2026-05-03T21:13:45.629Z",
+    "expirationTime": "2036-04-30T21:14:45.629Z",
+    "instance": "rtdp-postgres",
+    "kind": "sql#sslCert",
+    "sha1Fingerprint": "928bfa09d6c719ca14593d4b7735018fd3af9240"
+  },
+  "serviceAccountEmailAddress": "p892892382088-3ks96f@gcp-sa-cloud-sql.iam.gserviceaccount.com",
+  "settings": {
+    "activationPolicy": "NEVER",
+    "availabilityType": "ZONAL",
+    "backupConfiguration": {
+      "backupRetentionSettings": {
+        "retainedBackups": 7,
+        "retentionUnit": "COUNT"
+      },
+      "backupTier": "STANDARD",
+      "enabled": false,
+      "kind": "sql#backupConfiguration",
+      "startTime": "00:00",
+      "transactionLogRetentionDays": 7,
+      "transactionalLogStorageState": "TRANSACTIONAL_LOG_STORAGE_STATE_UNSPECIFIED"
+    },
+    "connectorEnforcement": "NOT_REQUIRED",
+    "dataDiskSizeGb": "10",
+    "dataDiskType": "PD_HDD",
+    "deletionProtectionEnabled": false,
+    "edition": "ENTERPRISE",
+    "enableDataplexIntegration": true,
+    "ipConfiguration": {
+      "authorizedNetworks": [
+        {
+          "kind": "sql#aclEntry",
+          "name": "",
+          "value": "37.189.31.189/32"
+        }
+      ],
+      "ipv4Enabled": true,
+      "requireSsl": false,
+      "serverCaMode": "GOOGLE_MANAGED_INTERNAL_CA",
+      "serverCertificateRotationMode": "SERVER_CERTIFICATE_ROTATION_MODE_UNSPECIFIED",
+      "sslMode": "ALLOW_UNENCRYPTED_AND_ENCRYPTED"
+    },
+    "kind": "sql#settings",
+    "locationPreference": {
+      "kind": "sql#locationPreference",
+      "zone": "europe-west1-b"
+    },
+    "pricingPlan": "PER_USE",
+    "replicationLagMaxSeconds": 31536000,
+    "replicationType": "SYNCHRONOUS",
+    "settingsVersion": "81",
+    "storageAutoResize": false,
+    "storageAutoResizeLimit": "0",
+    "tier": "db-custom-1-3840"
+  },
+  "sqlNetworkArchitecture": "NEW_NETWORK_ARCHITECTURE",
+  "state": "STOPPED",
+  "upgradableDatabaseVersions": [
+    {
+      "displayName": "PostgreSQL 17",
+      "majorVersion": "POSTGRES_17",
+      "name": "POSTGRES_17"
+    },
+    {
+      "displayName": "PostgreSQL 18",
+      "majorVersion": "POSTGRES_18",
+      "name": "POSTGRES_18"
+    }
+  ]
+}

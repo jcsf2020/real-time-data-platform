@@ -1,0 +1,16 @@
+{
+  "createTime": "2026-05-05T13:58:57.438897529Z",
+  "description": "Count of failed silver refresh Cloud Run Job executions",
+  "filter": "resource.type=\"cloud_run_job\"\njsonPayload.service=\"rtdp-silver-refresh-job\"\njsonPayload.operation=\"refresh_market_event_minute_aggregates\"\njsonPayload.status=\"error\"",
+  "metricDescriptor": {
+    "description": "Count of failed silver refresh Cloud Run Job executions",
+    "metricKind": "DELTA",
+    "name": "projects/project-42987e01-2123-446b-ac7/metricDescriptors/logging.googleapis.com/user/silver_refresh_error_count",
+    "type": "logging.googleapis.com/user/silver_refresh_error_count",
+    "unit": "1",
+    "valueType": "INT64"
+  },
+  "name": "silver_refresh_error_count",
+  "resourceName": "projects/project-42987e01-2123-446b-ac7/metrics/silver_refresh_error_count",
+  "updateTime": "2026-05-06T10:22:58.512488085Z"
+}
