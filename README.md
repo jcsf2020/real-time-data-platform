@@ -334,6 +334,8 @@ See [docs/silver-refresh-scheduler-evidence.md](docs/silver-refresh-scheduler-ev
 
 See [docs/silver-refresh-scheduler-execution-proof-runbook.md](docs/silver-refresh-scheduler-execution-proof-runbook.md) for the controlled end-to-end scheduled execution proof runbook: a step-by-step plan to validate that `rtdp-silver-refresh-scheduler` can dispatch `rtdp-silver-refresh-job` successfully, confirm the success log and metric increment, and return Cloud SQL and the Scheduler to their safe resting states (runbook only — not yet executed).
 
+See [docs/silver-refresh-scheduler-execution-proof-evidence.md](docs/silver-refresh-scheduler-execution-proof-evidence.md) for the validated scheduled execution proof evidence: Scheduler dispatched `rtdp-silver-refresh-job` via fallback resume/run/pause path, execution `rtdp-silver-refresh-job-npcl6` succeeded (38.22s, run by `rtdp-scheduler-sa`), `silver_refresh_success_count` incremented (`TOTAL=1`), Scheduler final state `PAUSED`, Cloud SQL `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
