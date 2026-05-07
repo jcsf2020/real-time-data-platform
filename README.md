@@ -342,6 +342,8 @@ See [docs/notification-channels-evidence.md](docs/notification-channels-evidence
 
 See [docs/load-test-5000-cloud-runbook.md](docs/load-test-5000-cloud-runbook.md) for the operational runbook for the 5,000-event cloud load test: the final tier of the bounded throughput validation plan (runbook only — not yet executed).
 
+See [docs/load-test-5000-cloud-evidence.md](docs/load-test-5000-cloud-evidence.md) for the accepted 5,000-event cloud evidence: 5,000 publish acknowledgements, 5,000 worker `status=ok` logs, `worker_message_processed_count` metric sum 4,963, DLQ empty, API readback confirmed, silver refresh succeeded, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
+
 **Current GCP MVP:**
 
 ```text
