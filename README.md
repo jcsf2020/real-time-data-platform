@@ -248,7 +248,7 @@ The `silver` layer is populated by calling `silver.refresh_market_event_minute_a
 
 ## GCP Target Architecture
 
-> **Status:** The FastAPI serving layer is deployed to Google Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. A Pub/Sub publisher MVP is implemented locally (`apps/pubsub-publisher`) and validates MarketEvent payloads before publishing. A Pub/Sub worker MVP is implemented locally (`apps/pubsub-worker`): it decodes message bytes, validates against `MarketEvent`, and inserts into `bronze.market_events` with `ON CONFLICT DO NOTHING` idempotency — fully tested with mocked DB. Cloud deployment of the worker (Cloud Run job or push subscription) is not yet executed; real end-to-end GCP validation requires Cloud SQL to be started and is planned as the next manual step. BigQuery, Dataflow, and Cloud Monitoring integration remain target architecture items.
+> **Status:** The GCP MVP is operationally validated. The FastAPI serving layer is deployed to Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. Pub/Sub ingestion is validated through `market-events-raw`, the deployed Cloud Run worker, and idempotent writes into `bronze.market_events`. Observability is validated with logs-based metrics, a Cloud Monitoring dashboard, alert policies, an email notification channel, a production Pub/Sub DLQ, Cloud Scheduler configuration, scheduled silver refresh execution proof, and accepted 100 / 1,000 / 5,000-event cloud load tests. BigQuery, Dataflow, Terraform/IaC, and automated deployment remain open roadmap items.
 
 | Local Component | GCP Target | Notes |
 |---|---|---|
@@ -276,7 +276,7 @@ Event source
 
 See [docs/gcp-architecture.md](docs/gcp-architecture.md) for the full GCP architecture document.
 
-See [docs/gcp-worker-deployment-plan.md](docs/gcp-worker-deployment-plan.md) for the step-by-step worker deployment plan (not yet executed).
+See [docs/gcp-worker-deployment-plan.md](docs/gcp-worker-deployment-plan.md) for the original step-by-step worker deployment plan. The deployed worker path is now validated through the Pub/Sub push subscription, Cloud Run worker, Cloud SQL ingest, and accepted cloud load-test evidence.
 
 See [docs/silver-refresh-job-deployment-plan.md](docs/silver-refresh-job-deployment-plan.md) for the silver refresh Cloud Run Job deployment plan.
 
@@ -292,11 +292,11 @@ See [docs/cloud-logs-based-metrics-validation.md](docs/cloud-logs-based-metrics-
 
 See [docs/cloud-logs-based-metrics-datapoint-validation.md](docs/cloud-logs-based-metrics-datapoint-validation.md) for the Cloud Monitoring API timeSeries datapoint evidence for the worker and silver refresh success counters.
 
-See [docs/cloud-error-counter-validation-plan.md](docs/cloud-error-counter-validation-plan.md) for the plan to safely validate error-counter datapoints for `worker_message_error_count` and `silver_refresh_error_count` (plan only — not yet executed).
+See [docs/cloud-error-counter-validation-plan.md](docs/cloud-error-counter-validation-plan.md) for the original plan to safely validate error-counter datapoints for `worker_message_error_count` and `silver_refresh_error_count`. Follow-up evidence documents now validate the error-counter paths.
 
 See [docs/pubsub-retry-dlq-inspection.md](docs/pubsub-retry-dlq-inspection.md) for the read-only Pub/Sub retry and DLQ configuration inspection performed before any malformed-message validation — establishes that no DLQ/deadLetterPolicy is configured on the production push subscription and blocks unsafe message publishing until an isolated bounded path exists.
 
-See [docs/load-test-plan.md](docs/load-test-plan.md) for the controlled load and throughput validation plan covering 100 / 1 000 / 5 000 event test sizes, deterministic event-ID prefixes, Cloud SQL start/stop protocol, Pub/Sub backlog observation, and acceptance criteria per test size (plan only — not yet executed).
+See [docs/load-test-plan.md](docs/load-test-plan.md) for the controlled load and throughput validation plan covering 100 / 1 000 / 5 000 event test sizes, deterministic event-ID prefixes, Cloud SQL start/stop protocol, Pub/Sub backlog observation, and acceptance criteria per test size.
 
 See [docs/load-test-local-sample-evidence.md](docs/load-test-local-sample-evidence.md) for local pre-publish sample evidence: deterministic 100-event JSONL generated and validated locally with no Pub/Sub publishing and no Cloud SQL access.
 
@@ -304,7 +304,7 @@ See [docs/load-test-100-cloud-runbook.md](docs/load-test-100-cloud-runbook.md) f
 
 See [docs/load-test-100-cloud-evidence.md](docs/load-test-100-cloud-evidence.md) for the accepted 100-event cloud evidence (all acceptance criteria met: 100 publish acknowledgements, 100 worker status=ok logs, metric sum = 100, API readback 100/100, Cloud SQL NEVER / STOPPED).
 
-See [docs/load-test-1000-cloud-runbook.md](docs/load-test-1000-cloud-runbook.md) for the operational runbook for the next scale tier: exactly 1000 valid Pub/Sub messages through the deployed GCP pipeline (runbook only — not yet executed).
+See [docs/load-test-1000-cloud-runbook.md](docs/load-test-1000-cloud-runbook.md) for the operational runbook for the 1,000-event cloud load test.
 
 See [docs/api-events-pagination-deploy-evidence.md](docs/api-events-pagination-deploy-evidence.md) for the production deployment and validation evidence for the `/events` pagination fix (PR #42): disjoint two-page readback confirmed on live data, Cloud SQL `NEVER / STOPPED`.
 
@@ -332,7 +332,7 @@ See [docs/silver-refresh-scheduler-runbook.md](docs/silver-refresh-scheduler-run
 
 See [docs/silver-refresh-scheduler-evidence.md](docs/silver-refresh-scheduler-evidence.md) for the Cloud Scheduler configuration evidence: API enabled, dedicated service account created, `roles/run.invoker` granted, scheduler job created and paused intentionally (Cloud SQL `NEVER / STOPPED`, configuration only — scheduled execution not yet validated).
 
-See [docs/silver-refresh-scheduler-execution-proof-runbook.md](docs/silver-refresh-scheduler-execution-proof-runbook.md) for the controlled end-to-end scheduled execution proof runbook: a step-by-step plan to validate that `rtdp-silver-refresh-scheduler` can dispatch `rtdp-silver-refresh-job` successfully, confirm the success log and metric increment, and return Cloud SQL and the Scheduler to their safe resting states (runbook only — not yet executed).
+See [docs/silver-refresh-scheduler-execution-proof-runbook.md](docs/silver-refresh-scheduler-execution-proof-runbook.md) for the controlled end-to-end scheduled execution proof runbook: a step-by-step plan to validate that `rtdp-silver-refresh-scheduler` can dispatch `rtdp-silver-refresh-job` successfully, confirm the success log and metric increment, and return Cloud SQL and the Scheduler to their safe resting states.
 
 See [docs/silver-refresh-scheduler-execution-proof-evidence.md](docs/silver-refresh-scheduler-execution-proof-evidence.md) for the validated scheduled execution proof evidence: Scheduler dispatched `rtdp-silver-refresh-job` via fallback resume/run/pause path, execution `rtdp-silver-refresh-job-npcl6` succeeded (38.22s, run by `rtdp-scheduler-sa`), `silver_refresh_success_count` incremented (`TOTAL=1`), Scheduler final state `PAUSED`, Cloud SQL `NEVER / STOPPED`.
 
@@ -340,23 +340,23 @@ See [docs/notification-channels-runbook.md](docs/notification-channels-runbook.m
 
 See [docs/notification-channels-evidence.md](docs/notification-channels-evidence.md) for the validated execution evidence: email notification channel `RTDP Operator Email Alerts` created via Cloud Monitoring REST API, channel ID `1439157631105258885` attached to both RTDP Worker Message Error Alert and RTDP Silver Refresh Error Alert, both policies remain enabled with metric filters unchanged, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
 
-See [docs/load-test-5000-cloud-runbook.md](docs/load-test-5000-cloud-runbook.md) for the operational runbook for the 5,000-event cloud load test: the final tier of the bounded throughput validation plan (runbook only — not yet executed).
+See [docs/load-test-5000-cloud-runbook.md](docs/load-test-5000-cloud-runbook.md) for the operational runbook for the 5,000-event cloud load test: the final tier of the bounded throughput validation plan.
 
 See [docs/load-test-5000-cloud-evidence.md](docs/load-test-5000-cloud-evidence.md) for the accepted 5,000-event cloud evidence: 5,000 publish acknowledgements, 5,000 worker `status=ok` logs, `worker_message_processed_count` metric sum 4,963, DLQ empty, API readback confirmed, silver refresh succeeded, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
 
 **Current GCP MVP:**
 
 ```text
-https://rtdp-api-892892382088.europe-west1.run.app
+https://rtdp-api-fpy4of3i5a-ew.a.run.app
 ```
 
 Validated public endpoints:
 
 ```bash
-curl https://rtdp-api-892892382088.europe-west1.run.app/health
-curl https://rtdp-api-892892382088.europe-west1.run.app/version
-curl https://rtdp-api-892892382088.europe-west1.run.app/readiness
-curl 'https://rtdp-api-892892382088.europe-west1.run.app/events?limit=3'
+curl https://rtdp-api-fpy4of3i5a-ew.a.run.app/health
+curl https://rtdp-api-fpy4of3i5a-ew.a.run.app/version
+curl https://rtdp-api-fpy4of3i5a-ew.a.run.app/readiness
+curl 'https://rtdp-api-fpy4of3i5a-ew.a.run.app/events?limit=3'
 ```
 
 Cloud SQL status:
@@ -369,7 +369,7 @@ Region: europe-west1
 Secret Manager: rtdp-database-url
 ```
 
-The database is currently schema-ready but empty until cloud-side ingestion is added.
+The database contains validated cloud-ingested events from accepted 100 / 1,000 / 5,000-event load tests. Cloud SQL is normally kept `NEVER / STOPPED` for cost control and started only during bounded validation windows.
 
 ---
 
@@ -429,15 +429,25 @@ This project demonstrates practical Data Engineering skills relevant to streamin
 - Docker Compose full-stack runtime
 - GitHub Actions CI
 
-**Implemented (GCP MVP):**
+**Implemented and validated (GCP MVP):**
 - FastAPI deployed to Cloud Run, connected to Cloud SQL via Secret Manager
-- Pub/Sub publisher (`apps/pubsub-publisher`): validates and publishes MarketEvent JSON to `market-events-raw` topic
-- Pub/Sub worker (`apps/pubsub-worker`): decodes message bytes, validates `MarketEvent`, inserts into `bronze.market_events` (idempotent); fully tested locally with mocked DB — cloud deployment not yet executed
+- Pub/Sub publisher path to `market-events-raw`
+- Pub/Sub push subscription to deployed Cloud Run worker
+- Worker validation and idempotent writes into `bronze.market_events`
+- API readback from Cloud SQL
+- Cloud Logging structured logs
+- Logs-based Cloud Monitoring metrics with datapoints
+- Cloud Monitoring dashboard
+- Alert policies with email notification channel
+- Production Pub/Sub DLQ / `deadLetterPolicy`
+- Cloud Scheduler configuration for silver refresh
+- Scheduled execution proof for `rtdp-silver-refresh-job`
+- Accepted 100 / 1,000 / 5,000-event cloud load tests
 
 **Planned (next phases):**
-- Deploy Pub/Sub worker to Cloud Run (push subscription or pull job); requires Cloud SQL to be started
+- Add Terraform / IaC baseline for GCP resources
+- Add BigQuery or Dataflow analytical tier
+- Add CI/CD deployment automation to GCP
 - Populate `gold` schema with business-level daily/weekly aggregates
 - Populate `ai.market_event_embeddings` with pgvector embeddings
-- Automate `silver.refresh_market_event_minute_aggregates()` execution so the silver layer refreshes continuously
-- dbt models for `silver` and `gold` layers
-- Managed Prometheus scrape and Cloud Monitoring dashboard
+- Keep README and evidence docs aligned with execution state
