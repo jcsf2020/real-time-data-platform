@@ -372,4 +372,3 @@ All criteria met. Evidence status: **VALIDATED — SCHEDULED EXECUTION PROOF**.
 | BigQuery / Dataflow analytical tier | P1 | Silver layer is operational only; no analytical tier |
 | CI/CD deploy automation | P1/P2 | All deployments are manual; no automated pipeline |
 | README stale GCP wording cleanup | P2 | GCP target architecture section wording predates several completed execution branches |
-| Normalize status wording in docs/runbooks | P2 | Some runbooks reference `status="success"`; application emits `status="ok"` — documentation should reflect the actual field value |
