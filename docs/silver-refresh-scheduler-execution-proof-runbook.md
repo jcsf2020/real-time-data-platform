@@ -21,7 +21,7 @@ end-to-end under scheduled invocation.
 
 - Validate that the scheduler dispatch path reaches the Cloud Run Job.
 - Validate that the Cloud Run Job executes successfully when triggered by the Scheduler.
-- Validate that the success log (`jsonPayload.status="success"`) appears in Cloud Logging.
+- Validate that the success log (`jsonPayload.status="ok"`) appears in Cloud Logging.
 - Validate that `silver_refresh_success_count` increments after the Scheduler dispatch.
 - Preserve the cost-control invariant by starting Cloud SQL only for a short, bounded window.
 - Pause the Scheduler again immediately after validation.
@@ -368,18 +368,18 @@ gcloud logging read \
   'resource.type="cloud_run_job"
    AND resource.labels.job_name="rtdp-silver-refresh-job"
    AND jsonPayload.operation="refresh_market_event_minute_aggregates"
-   AND jsonPayload.status="success"' \
+   AND jsonPayload.status="ok"' \
   --project=project-42987e01-2123-446b-ac7 \
   --freshness=30m \
   --limit=5 \
   --format=json
-# Required: at least one log entry with jsonPayload.status="success"
+# Required: at least one log entry with jsonPayload.status="ok"
 # Confirm jsonPayload.service="rtdp-silver-refresh-job"
 # Confirm the timestamp is after the scheduler dispatch time.
 ```
 
 If the success log is absent after 10 minutes: capture the full log output (remove the
-`jsonPayload.status="success"` filter to see all entries for the job), stop Cloud SQL, and do
+`jsonPayload.status="ok"` filter to see all entries for the job), stop Cloud SQL, and do
 not proceed.
 
 ---
@@ -547,7 +547,7 @@ The evidence document (`docs/silver-refresh-scheduler-execution-proof-evidence.m
 - [ ] `gcloud scheduler jobs run` output
 - [ ] New execution ID from `gcloud run jobs executions list` after dispatch
 - [ ] `gcloud run jobs executions describe <EXECUTION_ID>` output (must show SUCCEEDED)
-- [ ] `gcloud logging read` output — success log entry (jsonPayload.status="success")
+- [ ] `gcloud logging read` output — success log entry (jsonPayload.status="ok")
 - [ ] `silver_refresh_success_count` metric after run (TOTAL > pre-run baseline)
 - [ ] Scheduler final state (`PAUSED`) — `describe` output
 - [ ] Cloud SQL stop command output
@@ -571,7 +571,7 @@ The execution branch is accepted when **all** of the following are true:
 | Scheduler dispatched Cloud Run Job | `gcloud scheduler jobs run` succeeded |
 | New execution appeared after dispatch | Execution ID not present in pre-run baseline |
 | Execution succeeded | SUCCEEDED condition confirmed in `describe` output |
-| Success log confirmed | `jsonPayload.status="success"` entry exists in Cloud Logging |
+| Success log confirmed | `jsonPayload.status="ok"` entry exists in Cloud Logging |
 | Log timestamp after dispatch | Log entry is newer than the scheduler dispatch time |
 | `silver_refresh_success_count` incremented | TOTAL > pre-run baseline from Check 9 |
 | Scheduler final state | `PAUSED` |
@@ -597,7 +597,7 @@ Abort execution immediately if any of the following occur:
 - The Scheduler remains or transitions to `ENABLED` unexpectedly and cannot be paused.
 - No new Cloud Run Job execution appears within 5 minutes of the dispatch command.
 - The Cloud Run Job execution fails (non-SUCCEEDED status in `describe`).
-- The success log (`jsonPayload.status="success"`) is absent after 10 minutes.
+- The success log (`jsonPayload.status="ok"`) is absent after 10 minutes.
 - `silver_refresh_success_count` does not increment after a 15-minute propagation window.
 - Cloud SQL fails to stop — do not leave the session without resolving this.
 - Any command would mutate Pub/Sub resources (`market-events-raw`, `market-events-raw-worker-push`,
