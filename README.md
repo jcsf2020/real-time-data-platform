@@ -344,6 +344,8 @@ See [docs/load-test-5000-cloud-runbook.md](docs/load-test-5000-cloud-runbook.md)
 
 See [docs/load-test-5000-cloud-evidence.md](docs/load-test-5000-cloud-evidence.md) for the accepted 5,000-event cloud evidence: 5,000 publish acknowledgements, 5,000 worker `status=ok` logs, `worker_message_processed_count` metric sum 4,963, DLQ empty, API readback confirmed, silver refresh succeeded, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
 
+See [docs/terraform-iac-baseline-runbook.md](docs/terraform-iac-baseline-runbook.md) for the Terraform / IaC baseline runbook: a phased, safety-first migration strategy for bringing existing validated GCP resources under Terraform state management without destroying or drifting live infrastructure (runbook only — no Terraform files created, no GCP writes performed).
+
 **Current GCP MVP:**
 
 ```text
