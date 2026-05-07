@@ -340,6 +340,8 @@ See [docs/notification-channels-runbook.md](docs/notification-channels-runbook.m
 
 See [docs/notification-channels-evidence.md](docs/notification-channels-evidence.md) for the validated execution evidence: email notification channel `RTDP Operator Email Alerts` created via Cloud Monitoring REST API, channel ID `1439157631105258885` attached to both RTDP Worker Message Error Alert and RTDP Silver Refresh Error Alert, both policies remain enabled with metric filters unchanged, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
 
+See [docs/load-test-5000-cloud-runbook.md](docs/load-test-5000-cloud-runbook.md) for the operational runbook for the 5,000-event cloud load test: the final tier of the bounded throughput validation plan (runbook only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
