@@ -336,7 +336,9 @@ See [docs/silver-refresh-scheduler-execution-proof-runbook.md](docs/silver-refre
 
 See [docs/silver-refresh-scheduler-execution-proof-evidence.md](docs/silver-refresh-scheduler-execution-proof-evidence.md) for the validated scheduled execution proof evidence: Scheduler dispatched `rtdp-silver-refresh-job` via fallback resume/run/pause path, execution `rtdp-silver-refresh-job-npcl6` succeeded (38.22s, run by `rtdp-scheduler-sa`), `silver_refresh_success_count` incremented (`TOTAL=1`), Scheduler final state `PAUSED`, Cloud SQL `NEVER / STOPPED`.
 
-See [docs/notification-channels-runbook.md](docs/notification-channels-runbook.md) for the operational runbook to create an email notification channel and attach it to both existing Cloud Monitoring alert policies — moving from alerts visible only in the console to operator-delivered email notifications (runbook only — not yet executed).
+See [docs/notification-channels-runbook.md](docs/notification-channels-runbook.md) for the operational runbook to create an email notification channel and attach it to both existing Cloud Monitoring alert policies — moving from alerts visible only in the console to operator-delivered email notifications.
+
+See [docs/notification-channels-evidence.md](docs/notification-channels-evidence.md) for the validated execution evidence: email notification channel `RTDP Operator Email Alerts` created via Cloud Monitoring REST API, channel ID `1439157631105258885` attached to both RTDP Worker Message Error Alert and RTDP Silver Refresh Error Alert, both policies remain enabled with metric filters unchanged, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
 
 **Current GCP MVP:**
 
