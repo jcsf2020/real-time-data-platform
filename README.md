@@ -336,6 +336,8 @@ See [docs/silver-refresh-scheduler-execution-proof-runbook.md](docs/silver-refre
 
 See [docs/silver-refresh-scheduler-execution-proof-evidence.md](docs/silver-refresh-scheduler-execution-proof-evidence.md) for the validated scheduled execution proof evidence: Scheduler dispatched `rtdp-silver-refresh-job` via fallback resume/run/pause path, execution `rtdp-silver-refresh-job-npcl6` succeeded (38.22s, run by `rtdp-scheduler-sa`), `silver_refresh_success_count` incremented (`TOTAL=1`), Scheduler final state `PAUSED`, Cloud SQL `NEVER / STOPPED`.
 
+See [docs/notification-channels-runbook.md](docs/notification-channels-runbook.md) for the operational runbook to create an email notification channel and attach it to both existing Cloud Monitoring alert policies — moving from alerts visible only in the console to operator-delivered email notifications (runbook only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
