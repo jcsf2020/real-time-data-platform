@@ -332,6 +332,8 @@ See [docs/silver-refresh-scheduler-runbook.md](docs/silver-refresh-scheduler-run
 
 See [docs/silver-refresh-scheduler-evidence.md](docs/silver-refresh-scheduler-evidence.md) for the Cloud Scheduler configuration evidence: API enabled, dedicated service account created, `roles/run.invoker` granted, scheduler job created and paused intentionally (Cloud SQL `NEVER / STOPPED`, configuration only — scheduled execution not yet validated).
 
+See [docs/silver-refresh-scheduler-execution-proof-runbook.md](docs/silver-refresh-scheduler-execution-proof-runbook.md) for the controlled end-to-end scheduled execution proof runbook: a step-by-step plan to validate that `rtdp-silver-refresh-scheduler` can dispatch `rtdp-silver-refresh-job` successfully, confirm the success log and metric increment, and return Cloud SQL and the Scheduler to their safe resting states (runbook only — not yet executed).
+
 **Current GCP MVP:**
 
 ```text
