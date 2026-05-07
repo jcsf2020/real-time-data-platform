@@ -14,3 +14,12 @@ postgres_data/
 
 # Internal project planning
 /docs/EXECUTION_PLAN.md
+
+# Terraform — state, provider cache, and secrets must never be committed
+infra/terraform/gcp/.terraform/
+infra/terraform/gcp/.terraform.lock.hcl
+infra/terraform/gcp/terraform.tfstate
+infra/terraform/gcp/terraform.tfstate.backup
+infra/terraform/gcp/*.tfvars
+infra/terraform/gcp/override.tf
+infra/terraform/gcp/override.tf.json

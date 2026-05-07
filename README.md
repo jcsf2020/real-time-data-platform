@@ -346,6 +346,8 @@ See [docs/load-test-5000-cloud-evidence.md](docs/load-test-5000-cloud-evidence.m
 
 See [docs/terraform-iac-baseline-runbook.md](docs/terraform-iac-baseline-runbook.md) for the Terraform / IaC baseline runbook: a phased, safety-first migration strategy for bringing existing validated GCP resources under Terraform state management without destroying or drifting live infrastructure (runbook only — no Terraform files created, no GCP writes performed).
 
+See [infra/terraform/gcp/README.md](infra/terraform/gcp/README.md) for the initial Terraform GCP skeleton covering low-risk Pub/Sub and Scheduler resources. Skeleton only — no terraform init/plan/apply/import executed.
+
 **Current GCP MVP:**
 
 ```text
