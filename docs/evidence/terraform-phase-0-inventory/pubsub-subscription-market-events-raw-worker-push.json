@@ -1,0 +1,24 @@
+{
+  "ackDeadlineSeconds": 30,
+  "deadLetterPolicy": {
+    "deadLetterTopic": "projects/project-42987e01-2123-446b-ac7/topics/market-events-raw-dlq",
+    "maxDeliveryAttempts": 5
+  },
+  "expirationPolicy": {
+    "ttl": "2678400s"
+  },
+  "messageRetentionDuration": "600s",
+  "name": "projects/project-42987e01-2123-446b-ac7/subscriptions/market-events-raw-worker-push",
+  "pushConfig": {
+    "oidcToken": {
+      "serviceAccountEmail": "rtdp-pubsub-push-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+    },
+    "pushEndpoint": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push"
+  },
+  "retryPolicy": {
+    "maximumBackoff": "60s",
+    "minimumBackoff": "10s"
+  },
+  "state": "ACTIVE",
+  "topic": "projects/project-42987e01-2123-446b-ac7/topics/market-events-raw"
+}

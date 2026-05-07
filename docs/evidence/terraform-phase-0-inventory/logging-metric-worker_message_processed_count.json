@@ -1,0 +1,16 @@
+{
+  "createTime": "2026-05-05T13:56:37.668908204Z",
+  "description": "Count of successfully processed Pub/Sub messages by the RTDP worker",
+  "filter": "resource.type=\"cloud_run_revision\"\nresource.labels.service_name=\"rtdp-pubsub-worker\"\njsonPayload.service=\"rtdp-pubsub-worker\"\njsonPayload.operation=\"process_message\"\njsonPayload.status=\"ok\"",
+  "metricDescriptor": {
+    "description": "Count of successfully processed Pub/Sub messages by the RTDP worker",
+    "metricKind": "DELTA",
+    "name": "projects/project-42987e01-2123-446b-ac7/metricDescriptors/logging.googleapis.com/user/worker_message_processed_count",
+    "type": "logging.googleapis.com/user/worker_message_processed_count",
+    "unit": "1",
+    "valueType": "INT64"
+  },
+  "name": "worker_message_processed_count",
+  "resourceName": "projects/project-42987e01-2123-446b-ac7/metrics/worker_message_processed_count",
+  "updateTime": "2026-05-05T13:56:37.668908204Z"
+}
