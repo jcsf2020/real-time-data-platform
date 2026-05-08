@@ -8,8 +8,8 @@ terraform {
     }
   }
 
-  # Backend is intentionally local-only until a GCS backend strategy is approved.
-  # A remote backend (GCS bucket, IAM permissions, locking strategy) must be
-  # explicitly decided and documented before this block is populated.
-  # See docs/terraform-iac-baseline-runbook.md §9 for the state strategy.
+  backend "gcs" {
+    bucket = "rtdp-terraform-state-project-42987e01-2123-446b-ac7"
+    prefix = "real-time-data-platform/gcp/prod"
+  }
 }
