@@ -103,3 +103,4 @@ The following must **never** occur on this skeleton branch:
 ## Links
 
 - [docs/terraform-iac-baseline-runbook.md](../../../docs/terraform-iac-baseline-runbook.md) — Full phased IaC strategy, safety constraints, import commands, stop conditions, and acceptance criteria.
+- [docs/terraform-remote-backend-strategy.md](../../../docs/terraform-remote-backend-strategy.md) — GCS remote backend strategy: how to migrate local state to GCS safely before high-risk imports. Strategy only — no backend created, no GCP writes.
