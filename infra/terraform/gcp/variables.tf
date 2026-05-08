@@ -18,7 +18,7 @@ variable "environment" {
 
 variable "pubsub_push_oidc_service_account_email" {
   type        = string
-  default     = null
-  nullable    = true
-  description = "Optional OIDC service account email for the Pub/Sub push subscription. Must be confirmed during Phase 0 inventory before import/plan."
+  default     = "rtdp-pubsub-push-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+  nullable    = false
+  description = "OIDC service account email for the Pub/Sub push subscription, confirmed by Terraform Phase 0 inventory."
 }
