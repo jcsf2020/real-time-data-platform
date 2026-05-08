@@ -356,6 +356,8 @@ See [infra/terraform/gcp/monitoring.tf](infra/terraform/gcp/monitoring.tf) for t
 
 See [docs/terraform-monitoring-import-plan-evidence.md](docs/terraform-monitoring-import-plan-evidence.md) for the validated Terraform monitoring import/plan evidence: logs-based metrics, Cloud Monitoring dashboard, and alert policies imported into local Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
 
+See [docs/terraform-remote-backend-strategy.md](docs/terraform-remote-backend-strategy.md) for the GCS remote backend strategy: how to migrate local Terraform state to a GCS bucket safely before high-risk imports (Cloud Run, Cloud SQL, IAM, Secret Manager). Strategy only — no backend created, no state migrated, no GCP writes.
+
 **Current GCP MVP:**
 
 ```text
