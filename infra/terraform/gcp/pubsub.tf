@@ -15,15 +15,15 @@ resource "google_pubsub_topic" "market_events_raw_dlq" {
 }
 
 resource "google_pubsub_subscription" "market_events_raw_worker_push" {
-  name  = local.pubsub_subscription_worker_push
-  topic = google_pubsub_topic.market_events_raw.name
+  name                       = local.pubsub_subscription_worker_push
+  topic                      = google_pubsub_topic.market_events_raw.name
+  message_retention_duration = "600s"
 
   push_config {
     push_endpoint = local.cloud_run_worker_url
 
-    # OIDC may already be configured on the live push subscription.
-    # Keep this optional until Phase 0 inventory confirms the exact service account.
-    # Do not invent service account values.
+    # OIDC service account confirmed by Terraform Phase 0 inventory.
+    # Keep aligned with the live Pub/Sub push subscription before import/plan.
     dynamic "oidc_token" {
       for_each = var.pubsub_push_oidc_service_account_email == null ? [] : [var.pubsub_push_oidc_service_account_email]
 
