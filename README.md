@@ -348,6 +348,8 @@ See [docs/terraform-iac-baseline-runbook.md](docs/terraform-iac-baseline-runbook
 
 See [infra/terraform/gcp/README.md](infra/terraform/gcp/README.md) for the initial Terraform GCP skeleton covering low-risk Pub/Sub and Scheduler resources. Skeleton only — no terraform init/plan/apply/import executed.
 
+See [docs/terraform-pubsub-scheduler-import-plan-evidence.md](docs/terraform-pubsub-scheduler-import-plan-evidence.md) for the validated Terraform import/plan evidence: low-risk Pub/Sub topics, Pub/Sub push subscription, and Cloud Scheduler imported into local Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
