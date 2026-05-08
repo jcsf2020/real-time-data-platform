@@ -354,6 +354,8 @@ See [docs/terraform-monitoring-import-runbook.md](docs/terraform-monitoring-impo
 
 See [infra/terraform/gcp/monitoring.tf](infra/terraform/gcp/monitoring.tf) for the monitoring Terraform skeleton: `google_logging_metric` (×4), `google_monitoring_dashboard`, and `google_monitoring_alert_policy` (×2) aligned to Phase 0 inventory. Skeleton only — must be imported and zero-diff planned before any apply.
 
+See [docs/terraform-monitoring-import-plan-evidence.md](docs/terraform-monitoring-import-plan-evidence.md) for the validated Terraform monitoring import/plan evidence: logs-based metrics, Cloud Monitoring dashboard, and alert policies imported into local Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
