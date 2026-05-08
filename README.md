@@ -350,6 +350,8 @@ See [infra/terraform/gcp/README.md](infra/terraform/gcp/README.md) for the initi
 
 See [docs/terraform-pubsub-scheduler-import-plan-evidence.md](docs/terraform-pubsub-scheduler-import-plan-evidence.md) for the validated Terraform import/plan evidence: low-risk Pub/Sub topics, Pub/Sub push subscription, and Cloud Scheduler imported into local Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
 
+See [docs/terraform-monitoring-import-runbook.md](docs/terraform-monitoring-import-runbook.md) for the Terraform monitoring import runbook: a safety-first strategy for bringing logs-based metrics, the Cloud Monitoring dashboard, alert policies, and the email notification channel under Terraform state management after the Pub/Sub and Scheduler import succeeded (runbook only — not executed).
+
 **Current GCP MVP:**
 
 ```text
