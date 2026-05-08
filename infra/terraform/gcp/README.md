@@ -35,12 +35,14 @@ infra/terraform/gcp/
 ├── locals.tf       # Stable resource names and URLs used across modules
 ├── pubsub.tf       # google_pubsub_topic (×2) and google_pubsub_subscription
 ├── scheduler.tf    # google_cloud_scheduler_job (PAUSED)
+├── monitoring.tf   # logs-based metrics, dashboard, alert policies — SKELETON ONLY
 └── README.md       # This file
 ```
 
+> **`monitoring.tf` is a skeleton aligned to Phase 0 inventory.** It must not be applied before each resource is individually imported (`terraform import`) and validated with a zero-diff `terraform plan`. See [docs/terraform-monitoring-import-runbook.md](../../../docs/terraform-monitoring-import-runbook.md) for the step-by-step import procedure and stop conditions.
+
 **Not included in this skeleton** (deferred — see runbook §7):
 
-- `monitoring.tf` — logs-based metrics, dashboard, alert policies (medium-risk)
 - `cloud_run.tf` — Cloud Run services and jobs (image drift strategy required)
 - `sql.tf` — Cloud SQL instance (deletion protection guardrails required)
 - `iam.tf` — IAM bindings (full audit required)

@@ -352,6 +352,8 @@ See [docs/terraform-pubsub-scheduler-import-plan-evidence.md](docs/terraform-pub
 
 See [docs/terraform-monitoring-import-runbook.md](docs/terraform-monitoring-import-runbook.md) for the Terraform monitoring import runbook: a safety-first strategy for bringing logs-based metrics, the Cloud Monitoring dashboard, alert policies, and the email notification channel under Terraform state management after the Pub/Sub and Scheduler import succeeded (runbook only — not executed).
 
+See [infra/terraform/gcp/monitoring.tf](infra/terraform/gcp/monitoring.tf) for the monitoring Terraform skeleton: `google_logging_metric` (×4), `google_monitoring_dashboard`, and `google_monitoring_alert_policy` (×2) aligned to Phase 0 inventory. Skeleton only — must be imported and zero-diff planned before any apply.
+
 **Current GCP MVP:**
 
 ```text
