@@ -8,13 +8,14 @@
 resource "google_logging_metric" "worker_message_processed_count" {
   name        = "worker_message_processed_count"
   description = "Count of successfully processed Pub/Sub messages by the RTDP worker"
-  filter      = <<-EOT
+  filter = trimspace(<<-EOT
     resource.type="cloud_run_revision"
     resource.labels.service_name="rtdp-pubsub-worker"
     jsonPayload.service="rtdp-pubsub-worker"
     jsonPayload.operation="process_message"
     jsonPayload.status="ok"
   EOT
+  )
 
   metric_descriptor {
     metric_kind = "DELTA"
@@ -30,13 +31,14 @@ resource "google_logging_metric" "worker_message_processed_count" {
 resource "google_logging_metric" "worker_message_error_count" {
   name        = "worker_message_error_count"
   description = "Count of failed Pub/Sub message processing attempts by the RTDP worker"
-  filter      = <<-EOT
+  filter = trimspace(<<-EOT
     resource.type="cloud_run_revision"
     resource.labels.service_name="rtdp-pubsub-worker"
     jsonPayload.service="rtdp-pubsub-worker"
     jsonPayload.operation="process_message"
     jsonPayload.status="error"
   EOT
+  )
 
   metric_descriptor {
     metric_kind = "DELTA"
@@ -52,13 +54,14 @@ resource "google_logging_metric" "worker_message_error_count" {
 resource "google_logging_metric" "silver_refresh_success_count" {
   name        = "silver_refresh_success_count"
   description = "Count of successful silver refresh Cloud Run Job executions"
-  filter      = <<-EOT
+  filter = trimspace(<<-EOT
     resource.type="cloud_run_job"
     resource.labels.job_name="rtdp-silver-refresh-job"
     jsonPayload.service="rtdp-silver-refresh-job"
     jsonPayload.operation="refresh_market_event_minute_aggregates"
     jsonPayload.status="ok"
   EOT
+  )
 
   metric_descriptor {
     metric_kind = "DELTA"
@@ -76,12 +79,13 @@ resource "google_logging_metric" "silver_refresh_success_count" {
 resource "google_logging_metric" "silver_refresh_error_count" {
   name        = "silver_refresh_error_count"
   description = "Count of failed silver refresh Cloud Run Job executions"
-  filter      = <<-EOT
+  filter = trimspace(<<-EOT
     resource.type="cloud_run_job"
     jsonPayload.service="rtdp-silver-refresh-job"
     jsonPayload.operation="refresh_market_event_minute_aggregates"
     jsonPayload.status="error"
   EOT
+  )
 
   metric_descriptor {
     metric_kind = "DELTA"
