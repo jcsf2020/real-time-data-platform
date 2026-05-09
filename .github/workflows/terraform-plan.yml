@@ -1,0 +1,77 @@
+name: Terraform Plan
+
+"on":
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "infra/terraform/gcp/**"
+      - ".github/workflows/terraform-plan.yml"
+  push:
+    branches:
+      - main
+      - "feat/**"
+    paths:
+      - "infra/terraform/gcp/**"
+      - ".github/workflows/terraform-plan.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform-plan:
+    name: Terraform plan
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
+      GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_TERRAFORM_PLAN_SERVICE_ACCOUNT }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform init
+        run: terraform -chdir=infra/terraform/gcp init -input=false
+
+      - name: Terraform format check
+        run: terraform fmt -check -recursive infra/terraform/gcp
+
+      - name: Terraform validate
+        run: terraform -chdir=infra/terraform/gcp validate
+
+      - name: Terraform plan
+        run: |
+          set +e
+          terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false
+          exit_code=$?
+          set -e
+
+          if [ "$exit_code" -eq 0 ]; then
+            echo "Terraform plan returned zero diff."
+            exit 0
+          fi
+
+          if [ "$exit_code" -eq 2 ]; then
+            echo "Terraform plan detected infrastructure drift or pending changes."
+            exit 1
+          fi
+
+          echo "Terraform plan failed with exit code ${exit_code}."
+          exit "$exit_code"
