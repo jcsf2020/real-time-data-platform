@@ -358,6 +358,8 @@ See [docs/terraform-monitoring-import-plan-evidence.md](docs/terraform-monitorin
 
 See [docs/terraform-remote-backend-strategy.md](docs/terraform-remote-backend-strategy.md) for the GCS remote backend strategy: how to migrate local Terraform state to a GCS bucket safely before high-risk imports (Cloud Run, Cloud SQL, IAM, Secret Manager). Strategy only — no backend created, no state migrated, no GCP writes.
 
+See [docs/cloud-run-terraform-import-runbook.md](docs/cloud-run-terraform-import-runbook.md) for the Cloud Run Terraform import runbook: a safety-first plan for importing the existing `rtdp-api`, `rtdp-pubsub-worker`, and `rtdp-silver-refresh-job` resources into Terraform without replacing revisions, changing traffic, leaking secrets, or mutating production behavior. Runbook only — no imports executed, no `terraform apply`, no Cloud Run resources modified.
+
 **Current GCP MVP:**
 
 ```text
