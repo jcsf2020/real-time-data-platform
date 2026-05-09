@@ -3,6 +3,7 @@ locals {
   rtdp_worker_service_account     = "serviceAccount:rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
   rtdp_scheduler_service_account  = "serviceAccount:rtdp-scheduler-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
   terraform_plan_ci_member        = "serviceAccount:rtdp-terraform-plan-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+  cloud_run_deploy_ci_member      = "serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
   github_actions_principal        = "principalSet://iam.googleapis.com/projects/892892382088/locations/global/workloadIdentityPools/github-actions/attribute.repository/jcsf2020/real-time-data-platform"
 }
 
@@ -52,4 +53,40 @@ resource "google_service_account_iam_member" "terraform_plan_ci_workload_identit
   service_account_id = google_service_account.rtdp_terraform_plan_ci.name
   role               = "roles/iam.workloadIdentityUser"
   member             = local.github_actions_principal
+}
+
+resource "google_project_iam_member" "cloud_run_deploy_ci_artifactregistry_writer" {
+  project = var.project_id
+  role    = "roles/artifactregistry.writer"
+  member  = local.cloud_run_deploy_ci_member
+
+  depends_on = [
+    google_service_account.rtdp_cloud_run_deploy_ci,
+  ]
+}
+
+resource "google_project_iam_member" "cloud_run_deploy_ci_run_developer" {
+  project = var.project_id
+  role    = "roles/run.developer"
+  member  = local.cloud_run_deploy_ci_member
+
+  depends_on = [
+    google_service_account.rtdp_cloud_run_deploy_ci,
+  ]
+}
+
+resource "google_service_account_iam_member" "cloud_run_deploy_ci_workload_identity_user" {
+  service_account_id = google_service_account.rtdp_cloud_run_deploy_ci.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = local.github_actions_principal
+}
+
+resource "google_service_account_iam_member" "cloud_run_deploy_ci_worker_service_account_user" {
+  service_account_id = google_service_account.rtdp_worker_sa.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = local.cloud_run_deploy_ci_member
+
+  depends_on = [
+    google_service_account.rtdp_cloud_run_deploy_ci,
+  ]
 }

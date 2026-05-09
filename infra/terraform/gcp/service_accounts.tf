@@ -37,3 +37,13 @@ resource "google_service_account" "rtdp_terraform_plan_ci" {
     prevent_destroy = true
   }
 }
+
+resource "google_service_account" "rtdp_cloud_run_deploy_ci" {
+  account_id   = "rtdp-cloud-run-deploy-ci"
+  project      = var.project_id
+  display_name = "RTDP Cloud Run Deploy CI"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
