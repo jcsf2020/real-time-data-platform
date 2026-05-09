@@ -370,6 +370,8 @@ See [docs/secret-manager-terraform-import-plan-evidence.md](docs/secret-manager-
 
 See [docs/service-accounts-terraform-import-plan-evidence.md](docs/service-accounts-terraform-import-plan-evidence.md) for the validated Service Accounts Terraform import evidence: custom RTDP service accounts imported into GCS-backed Terraform state with final zero-diff plan, no IAM bindings imported, no default compute service account import, and no `terraform apply`.
 
+See [docs/iam-members-terraform-import-plan-evidence.md](docs/iam-members-terraform-import-plan-evidence.md) for the validated IAM member-level Terraform import evidence: project and service-account IAM members imported into GCS-backed Terraform state with final zero-diff plan, no authoritative IAM policy or binding resources, no IAM mutation, and no `terraform apply`.
+
 **Current GCP MVP:**
 
 ```text
