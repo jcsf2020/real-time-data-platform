@@ -376,6 +376,8 @@ See [docs/cloud-resource-manager-api-enablement-evidence.md](docs/cloud-resource
 
 See [docs/workload-identity-terraform-import-plan-evidence.md](docs/workload-identity-terraform-import-plan-evidence.md) for the Workload Identity Federation Terraform import evidence: GitHub Actions Workload Identity Pool and OIDC Provider imported into GCS-backed Terraform state with zero-diff plan, no IAM permission mutation, no GitHub Actions workflow change, and no `terraform apply`.
 
+See [docs/artifact-registry-terraform-import-plan-evidence.md](docs/artifact-registry-terraform-import-plan-evidence.md) for the Artifact Registry Terraform import evidence: project-specific Docker repository `rtdp` imported into GCS-backed Terraform state with zero-diff plan, no IAM mutation, no Container Scanning enablement, and no `terraform apply`.
+
 **Current GCP MVP:**
 
 ```text
