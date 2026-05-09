@@ -372,6 +372,8 @@ See [docs/service-accounts-terraform-import-plan-evidence.md](docs/service-accou
 
 See [docs/iam-members-terraform-import-plan-evidence.md](docs/iam-members-terraform-import-plan-evidence.md) for the validated IAM member-level Terraform import evidence: project and service-account IAM members imported into GCS-backed Terraform state with final zero-diff plan, no authoritative IAM policy or binding resources, no IAM mutation, and no `terraform apply`.
 
+See [docs/cloud-resource-manager-api-enablement-evidence.md](docs/cloud-resource-manager-api-enablement-evidence.md) for the Cloud Resource Manager API enablement evidence: `cloudresourcemanager.googleapis.com` enabled after Terraform Plan CI failed to refresh IAM member resources, with CI rerun green, no IAM permission mutation, and Cloud SQL preserved as `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
