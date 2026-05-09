@@ -364,6 +364,8 @@ See [docs/cloud-run-terraform-import-plan-evidence.md](docs/cloud-run-terraform-
 
 See [docs/cloud-sql-secret-iam-terraform-import-runbook.md](docs/cloud-sql-secret-iam-terraform-import-runbook.md) for the Cloud SQL, Secret Manager, and IAM Terraform import runbook: a safety-first plan for importing `rtdp-postgres`, `rtdp-database-url`, service accounts, and member-level IAM bindings without starting Cloud SQL, exposing secrets, replacing identities, or mutating live permissions. Runbook only — no imports executed, no `terraform apply`, no GCP resources modified.
 
+See [docs/cloud-sql-terraform-import-plan-evidence.md](docs/cloud-sql-terraform-import-plan-evidence.md) for the validated Cloud SQL Terraform import evidence: `rtdp-postgres` imported into GCS-backed Terraform state with final zero-diff plan, no `terraform apply`, and Cloud SQL preserved as `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
