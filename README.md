@@ -360,6 +360,8 @@ See [docs/terraform-remote-backend-strategy.md](docs/terraform-remote-backend-st
 
 See [docs/cloud-run-terraform-import-runbook.md](docs/cloud-run-terraform-import-runbook.md) for the Cloud Run Terraform import runbook: a safety-first plan for importing the existing `rtdp-api`, `rtdp-pubsub-worker`, and `rtdp-silver-refresh-job` resources into Terraform without replacing revisions, changing traffic, leaking secrets, or mutating production behavior. Runbook only — no imports executed, no `terraform apply`, no Cloud Run resources modified.
 
+See [docs/cloud-run-terraform-import-plan-evidence.md](docs/cloud-run-terraform-import-plan-evidence.md) for the validated Cloud Run Terraform import evidence: `rtdp-api`, `rtdp-pubsub-worker`, and `rtdp-silver-refresh-job` imported into GCS-backed Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
+
 **Current GCP MVP:**
 
 ```text
