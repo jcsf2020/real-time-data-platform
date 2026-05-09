@@ -374,6 +374,8 @@ See [docs/iam-members-terraform-import-plan-evidence.md](docs/iam-members-terraf
 
 See [docs/cloud-resource-manager-api-enablement-evidence.md](docs/cloud-resource-manager-api-enablement-evidence.md) for the Cloud Resource Manager API enablement evidence: `cloudresourcemanager.googleapis.com` enabled after Terraform Plan CI failed to refresh IAM member resources, with CI rerun green, no IAM permission mutation, and Cloud SQL preserved as `NEVER / STOPPED`.
 
+See [docs/workload-identity-terraform-import-plan-evidence.md](docs/workload-identity-terraform-import-plan-evidence.md) for the Workload Identity Federation Terraform import evidence: GitHub Actions Workload Identity Pool and OIDC Provider imported into GCS-backed Terraform state with zero-diff plan, no IAM permission mutation, no GitHub Actions workflow change, and no `terraform apply`.
+
 **Current GCP MVP:**
 
 ```text
