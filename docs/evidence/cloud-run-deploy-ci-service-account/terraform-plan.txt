@@ -1,0 +1,57 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_project_iam_member.cloud_run_deploy_ci_artifactregistry_writer will be created
+  + resource "google_project_iam_member" "cloud_run_deploy_ci_artifactregistry_writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+      + project = "project-42987e01-2123-446b-ac7"
+      + role    = "roles/artifactregistry.writer"
+    }
+
+  # google_project_iam_member.cloud_run_deploy_ci_run_developer will be created
+  + resource "google_project_iam_member" "cloud_run_deploy_ci_run_developer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + member  = "serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+      + project = "project-42987e01-2123-446b-ac7"
+      + role    = "roles/run.developer"
+    }
+
+  # google_service_account.rtdp_cloud_run_deploy_ci will be created
+  + resource "google_service_account" "rtdp_cloud_run_deploy_ci" {
+      + account_id   = "rtdp-cloud-run-deploy-ci"
+      + disabled     = false
+      + display_name = "RTDP Cloud Run Deploy CI"
+      + email        = "rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+      + id           = (known after apply)
+      + member       = "serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+      + name         = (known after apply)
+      + project      = "project-42987e01-2123-446b-ac7"
+      + unique_id    = (known after apply)
+    }
+
+  # google_service_account_iam_member.cloud_run_deploy_ci_worker_service_account_user will be created
+  + resource "google_service_account_iam_member" "cloud_run_deploy_ci_worker_service_account_user" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = "serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+      + role               = "roles/iam.serviceAccountUser"
+      + service_account_id = "projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+    }
+
+  # google_service_account_iam_member.cloud_run_deploy_ci_workload_identity_user will be created
+  + resource "google_service_account_iam_member" "cloud_run_deploy_ci_workload_identity_user" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = "principalSet://iam.googleapis.com/projects/892892382088/locations/global/workloadIdentityPools/github-actions/attribute.repository/jcsf2020/real-time-data-platform"
+      + role               = "roles/iam.workloadIdentityUser"
+      + service_account_id = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
