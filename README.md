@@ -366,6 +366,8 @@ See [docs/cloud-sql-secret-iam-terraform-import-runbook.md](docs/cloud-sql-secre
 
 See [docs/cloud-sql-terraform-import-plan-evidence.md](docs/cloud-sql-terraform-import-plan-evidence.md) for the validated Cloud SQL Terraform import evidence: `rtdp-postgres` imported into GCS-backed Terraform state with final zero-diff plan, no `terraform apply`, and Cloud SQL preserved as `NEVER / STOPPED`.
 
+See [docs/secret-manager-terraform-import-plan-evidence.md](docs/secret-manager-terraform-import-plan-evidence.md) for the validated Secret Manager Terraform import evidence: `rtdp-database-url` metadata imported into GCS-backed Terraform state with final zero-diff plan, no secret payload read, no secret versions managed, and no `terraform apply`.
+
 **Current GCP MVP:**
 
 ```text
