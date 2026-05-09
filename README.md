@@ -368,6 +368,8 @@ See [docs/cloud-sql-terraform-import-plan-evidence.md](docs/cloud-sql-terraform-
 
 See [docs/secret-manager-terraform-import-plan-evidence.md](docs/secret-manager-terraform-import-plan-evidence.md) for the validated Secret Manager Terraform import evidence: `rtdp-database-url` metadata imported into GCS-backed Terraform state with final zero-diff plan, no secret payload read, no secret versions managed, and no `terraform apply`.
 
+See [docs/service-accounts-terraform-import-plan-evidence.md](docs/service-accounts-terraform-import-plan-evidence.md) for the validated Service Accounts Terraform import evidence: custom RTDP service accounts imported into GCS-backed Terraform state with final zero-diff plan, no IAM bindings imported, no default compute service account import, and no `terraform apply`.
+
 **Current GCP MVP:**
 
 ```text
