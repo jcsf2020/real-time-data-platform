@@ -378,6 +378,8 @@ See [docs/workload-identity-terraform-import-plan-evidence.md](docs/workload-ide
 
 See [docs/artifact-registry-terraform-import-plan-evidence.md](docs/artifact-registry-terraform-import-plan-evidence.md) for the Artifact Registry Terraform import evidence: project-specific Docker repository `rtdp` imported into GCS-backed Terraform state with zero-diff plan, no IAM mutation, no Container Scanning enablement, and no `terraform apply`.
 
+See [docs/cloud-run-deploy-ci-runbook.md](docs/cloud-run-deploy-ci-runbook.md) for the Cloud Run deploy CI runbook: a controlled plan for adding manual GitHub Actions deployment of the Pub/Sub worker using commit-SHA image tags in Artifact Registry, while preserving existing Cloud Run runtime configuration.
+
 **Current GCP MVP:**
 
 ```text
