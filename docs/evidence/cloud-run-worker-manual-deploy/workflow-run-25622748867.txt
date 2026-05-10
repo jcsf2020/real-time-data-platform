@@ -1,0 +1,498 @@
+--- WORKFLOW RUN SUMMARY ---
+
+✓ main Deploy Worker to Cloud Run · 25622748867
+Triggered via workflow_dispatch about 3 minutes ago
+
+JOBS
+✓ Deploy Pub/Sub worker in 1m18s (ID 75212296065)
+
+ANNOTATIONS
+! Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, google-github-actions/auth@v2, google-github-actions/setup-gcloud@v2. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Deploy Pub/Sub worker: .github#2
+
+
+For more information about the job, try: gh run view --job=75212296065
+View this run on GitHub: https://github.com/jcsf2020/real-time-data-platform/actions/runs/25622748867
+
+--- WORKFLOW RUN LOG ---
+Deploy Pub/Sub worker	UNKNOWN STEP	﻿2026-05-10T07:19:09.6516380Z Current runner version: '2.334.0'
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6542888Z ##[group]Runner Image Provisioner
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6543768Z Hosted Compute Agent
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6544330Z Version: 20260213.493
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6544938Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6545637Z Build Date: 2026-02-13T00:28:41Z
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6546242Z Worker ID: {b3ff4ad5-5f08-4f53-bc2e-c88ca114b4a3}
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6546944Z Azure Region: westus3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6547461Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6548936Z ##[group]Operating System
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6549478Z Ubuntu
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6550034Z 24.04.4
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6550694Z LTS
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6551195Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6551762Z ##[group]Runner Image
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6552263Z Image: ubuntu-24.04
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6552779Z Version: 20260413.86.1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6554007Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6555378Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6556338Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6557344Z ##[group]GITHUB_TOKEN Permissions
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6559557Z Contents: read
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6560059Z Metadata: read
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6560824Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6563205Z Secret source: Actions
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6564011Z Prepare workflow directory
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.6990145Z Prepare all required actions
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:09.7029076Z Getting action download info
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:10.1465835Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:10.2867192Z Download action repository 'google-github-actions/auth@v2' (SHA:c200f3691d83b41bf9bbd8638997a462592937ed)
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:10.8726960Z Download action repository 'google-github-actions/setup-gcloud@v2' (SHA:e427ad8a34f8676edf47cf7d7925499adf3eb74f)
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.5958863Z Complete job name: Deploy Pub/Sub worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6886146Z ##[group]Run actions/checkout@v4
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6887513Z with:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6888359Z   repository: jcsf2020/real-time-data-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6889844Z   token: ***
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6890795Z   ssh-strict: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6891589Z   ssh-user: git
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6892378Z   persist-credentials: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6893277Z   clean: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6894078Z   sparse-checkout-cone-mode: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6895038Z   fetch-depth: 1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6895799Z   fetch-tags: false
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6896593Z   show-progress: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6897403Z   lfs: false
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6898143Z   submodules: false
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6898964Z   set-safe-directory: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6900124Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6901092Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6902170Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6903176Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6904483Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6905511Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6906517Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.6907524Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8076854Z Syncing repository: jcsf2020/real-time-data-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8079715Z ##[group]Getting Git version info
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8081631Z Working directory is '/home/runner/work/real-time-data-platform/real-time-data-platform'
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8083906Z [command]/usr/bin/git version
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8126794Z git version 2.53.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8154785Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8171363Z Temporarily overriding HOME='/home/runner/work/_temp/0b3bb4f1-3a45-480f-94ae-cc219ded640b' before making global git config changes
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8185106Z Adding repository directory to the temporary git global config as a safe directory
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8187806Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/real-time-data-platform/real-time-data-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8223424Z Deleting the contents of '/home/runner/work/real-time-data-platform/real-time-data-platform'
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8226470Z ##[group]Initializing the repository
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8231497Z [command]/usr/bin/git init /home/runner/work/real-time-data-platform/real-time-data-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8331935Z hint: Using 'master' as the name for the initial branch. This default branch name
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8335363Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8338678Z hint: to use in all of your new repositories, which will suppress this warning,
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8341741Z hint: call:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8343065Z hint:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8344590Z hint: 	git config --global init.defaultBranch <name>
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8346789Z hint:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8348660Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8351907Z hint: 'development'. The just-created branch can be renamed via this command:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8354307Z hint:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8355579Z hint: 	git branch -m <name>
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8356463Z hint:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8357630Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8359949Z Initialized empty Git repository in /home/runner/work/real-time-data-platform/real-time-data-platform/.git/
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8366463Z [command]/usr/bin/git remote add origin https://github.com/jcsf2020/real-time-data-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8391829Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8394140Z ##[group]Disabling automatic garbage collection
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8396543Z [command]/usr/bin/git config --local gc.auto 0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8429933Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8432433Z ##[group]Setting up auth
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8438758Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8475157Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8788357Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.8823944Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.9051125Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.9096339Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.9332497Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.9371587Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.9373014Z ##[group]Fetching the repository
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:11.9381453Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b9752c02b4ba0eec827aebe2420c2fdb92b5640b:refs/remotes/origin/main
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6314489Z From https://github.com/jcsf2020/real-time-data-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6315025Z  * [new ref]         b9752c02b4ba0eec827aebe2420c2fdb92b5640b -> origin/main
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6342745Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6343298Z ##[group]Determining the checkout info
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6345254Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6351226Z [command]/usr/bin/git sparse-checkout disable
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6388585Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6415209Z ##[group]Checking out the ref
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6419605Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6593514Z Switched to a new branch 'main'
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6594164Z branch 'main' set up to track 'origin/main'.
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6602998Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6640997Z [command]/usr/bin/git log -1 --format=%H
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6663059Z b9752c02b4ba0eec827aebe2420c2fdb92b5640b
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6910933Z ##[group]Run google-github-actions/auth@v2
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6911291Z with:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6911799Z   workload_identity_provider: projects/892892382088/locations/global/workloadIdentityPools/github-actions/providers/github
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6912591Z   service_account: rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6913078Z   create_credentials_file: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6913337Z   export_environment_variables: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6913589Z   universe: googleapis.com
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6913814Z   cleanup_credentials: true
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6914030Z   access_token_lifetime: 3600s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6914375Z   access_token_scopes: https://www.googleapis.com/auth/cloud-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6914743Z   id_token_include_email: false
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6914977Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6915160Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6915422Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6915705Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6916040Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6916345Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6916587Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:12.6916827Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.0264046Z Created credentials file at "/home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1466709Z ##[group]Run google-github-actions/setup-gcloud@v2
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1537992Z with:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1538469Z   version: latest
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1538791Z   skip_install: false
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1539011Z   skip_tool_cache: false
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1539246Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1539466Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1539811Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1540105Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1540839Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1541114Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1541358Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1541996Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1542960Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1543796Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1544370Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1544694Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1545011Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1545298Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1545597Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:13.1545872Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:14.6994041Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/9b254739-85b7-489c-9138-95033bfd2b05 -f /home/runner/work/_temp/4fdb53fb-f8da-4b0e-9d2a-adb433a1f39d
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9005786Z Successfully authenticated
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9179138Z ##[group]Run gcloud auth configure-docker "${ARTIFACT_REGISTRY_HOST}" --quiet
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9179711Z ^[[36;1mgcloud auth configure-docker "${ARTIFACT_REGISTRY_HOST}" --quiet^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9206051Z shell: /usr/bin/bash -e {0}
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9206280Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9206482Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9206763Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9207028Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9207571Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9207817Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9208053Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9208651Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9209584Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9210752Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9211334Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9211647Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9211939Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9212210Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9212506Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9212849Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9213170Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:35.9213425Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.3968628Z Adding credentials for: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.4149514Z Docker configuration file updated.
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5326062Z ##[group]Run IMAGE_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:${GITHUB_SHA}"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5326914Z ^[[36;1mIMAGE_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:${GITHUB_SHA}"^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5327460Z ^[[36;1mecho "IMAGE_URI=${IMAGE_URI}" >> "${GITHUB_ENV}"^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5327751Z ^[[36;1mdocker build \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5328004Z ^[[36;1m  --file apps/pubsub-worker/Dockerfile \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5328294Z ^[[36;1m  --tag "${IMAGE_URI}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5328536Z ^[[36;1m  .^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5349328Z shell: /usr/bin/bash -e {0}
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5349548Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5349749Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5350014Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5350272Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5350886Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5351182Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5351426Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5352026Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5352923Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5353739Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5354326Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5354644Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5354938Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5355214Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5355515Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5355875Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5356209Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:36.5356462Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.4509160Z #0 building with "default" instance using docker driver
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.4509462Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.4509608Z #1 [internal] load build definition from Dockerfile
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.4510078Z #1 transferring dockerfile: 416B done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.4510721Z #1 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.4510920Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.4511230Z #2 [internal] load metadata for docker.io/library/python:3.12-slim
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.6577649Z #2 ...
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.6577983Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.6578274Z #3 [auth] library/python:pull token for registry-1.docker.io
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.6578809Z #3 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.8075216Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:37.8075905Z #4 [internal] load metadata for ghcr.io/astral-sh/uv:0.5.31
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.1104750Z #4 ...
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.1104944Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.1105364Z #2 [internal] load metadata for docker.io/library/python:3.12-slim
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.1105841Z #2 DONE 0.8s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2636334Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2637231Z #4 [internal] load metadata for ghcr.io/astral-sh/uv:0.5.31
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2637789Z #4 DONE 0.8s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2641445Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2641754Z #5 [internal] load .dockerignore
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2642268Z #5 transferring context: 118B done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2642728Z #5 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2642894Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2643031Z #6 [internal] load build context
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2643403Z #6 transferring context: 255.70kB 0.0s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2643802Z #6 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2643949Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2644541Z #7 [stage-0 1/7] FROM docker.io/library/python:3.12-slim@sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2646645Z #7 resolve docker.io/library/python:3.12-slim@sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2648574Z #7 sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe 10.37kB / 10.37kB done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2650049Z #7 sha256:bf73779de6dbd030f3d189eeeb246286965832761ace318c1518300f76c0840d 1.75kB / 1.75kB done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2651578Z #7 sha256:c8e887bbf3b6fec95a5ff97435d611119ac6e55491cd077db9fdc6b7637bdd47 5.66kB / 5.66kB done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.2652714Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 0B / 29.78MB 0.1s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.3659637Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 3.15MB / 29.78MB 0.2s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.5539986Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 19.92MB / 29.78MB 0.3s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.5543416Z #7 sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65 0B / 1.29MB 0.3s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.5544674Z #7 extracting sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.6577055Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 29.78MB / 29.78MB 0.3s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.6578462Z #7 sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65 1.29MB / 1.29MB 0.4s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.6579724Z #7 sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 0B / 12.11MB 0.4s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.6581577Z #7 sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684 0B / 250B 0.4s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.7618037Z #7 sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 12.11MB / 12.11MB 0.5s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.7620592Z #7 sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684 250B / 250B 0.5s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:38.8671370Z #7 sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684 250B / 250B 0.5s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4865648Z #7 ...
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4865929Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4866506Z #8 FROM ghcr.io/astral-sh/uv:0.5.31@sha256:7bff3c3776ec467fc1437960f2c469d8beb30f536a6465a3350c647ccd260ec2
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4867689Z #8 resolve ghcr.io/astral-sh/uv:0.5.31@sha256:7bff3c3776ec467fc1437960f2c469d8beb30f536a6465a3350c647ccd260ec2 done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4868837Z #8 sha256:445a1141bad0a95d3158ac0b62bdb14464d1846c1185ec87605f5700c71ec844 94B / 94B 0.3s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4869847Z #8 sha256:7bff3c3776ec467fc1437960f2c469d8beb30f536a6465a3350c647ccd260ec2 2.19kB / 2.19kB done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4871180Z #8 sha256:ae26c2d3fb967f937b8afa373a47c43bccca1bc12dc12ecc98a91f9663af69a9 669B / 669B done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4872220Z #8 sha256:bc75993475699ef71eac2a1b9b16d2906ce5e38e900b376ed79f703af9a67893 1.30kB / 1.30kB done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4873576Z #8 sha256:4cd5c84a79cdf61fb1af855a90f3e96ed29fdd5a2275723d1b0539c89ac91363 16.20MB / 16.20MB 0.5s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4874683Z #8 extracting sha256:4cd5c84a79cdf61fb1af855a90f3e96ed29fdd5a2275723d1b0539c89ac91363 0.2s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4875722Z #8 extracting sha256:445a1141bad0a95d3158ac0b62bdb14464d1846c1185ec87605f5700c71ec844 done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.4876437Z #8 DONE 1.3s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.6502014Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:39.6503248Z #7 [stage-0 1/7] FROM docker.io/library/python:3.12-slim@sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:40.0634245Z #7 extracting sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 1.4s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:40.1368884Z #7 extracting sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:40.4141669Z #7 extracting sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65 0.1s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:40.4142447Z #7 extracting sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 0.1s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:40.8971650Z #7 extracting sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 0.5s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:40.8973500Z #7 extracting sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0005921Z #7 extracting sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684 done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0006742Z #7 DONE 2.8s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0006930Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0007075Z #9 [stage-0 2/7] WORKDIR /app
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0007453Z #9 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0007616Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0007945Z #10 [stage-0 3/7] COPY --from=ghcr.io/astral-sh/uv:0.5.31 /uv /uvx /bin/
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0008468Z #10 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0008637Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0008810Z #11 [stage-0 4/7] COPY pyproject.toml uv.lock ./
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0009252Z #11 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0009400Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0009554Z #12 [stage-0 5/7] COPY apps ./apps
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.0009909Z #12 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.1613023Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.1613684Z #13 [stage-0 6/7] COPY packages ./packages
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.1614321Z #13 DONE 0.0s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.1614554Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.1614973Z #14 [stage-0 7/7] RUN uv sync --package rtdp-pubsub-worker --frozen --no-dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.3105702Z #14 0.300 Using CPython 3.12.13 interpreter at: /usr/local/bin/python3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.3106709Z #14 0.300 Creating virtual environment at: .venv
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.5061819Z #14 0.314    Building rtdp-contracts @ file:///app/packages/contracts
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.5062812Z #14 0.314    Building rtdp-pubsub-worker @ file:///app/apps/pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.5063284Z #14 0.359 Downloading psycopg-binary (4.9MiB)
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.5063609Z #14 0.360 Downloading pydantic-core (2.0MiB)
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.5064050Z #14 0.495  Downloaded pydantic-core
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.6891887Z #14 0.526  Downloaded psycopg-binary
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.7015784Z #14 0.691       Built rtdp-contracts @ file:///app/packages/contracts
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.8872678Z #14 0.691       Built rtdp-pubsub-worker @ file:///app/apps/pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.8873574Z #14 0.692 Prepared 17 packages in 384ms
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:41.8874324Z #14 0.726 Installed 17 packages in 33ms
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.1945043Z #14 1.184 Bytecode compiled 402 files in 457ms
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4013965Z #14 1.184  + annotated-doc==0.0.4
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4014450Z #14 1.184  + annotated-types==0.7.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4014818Z #14 1.184  + anyio==4.13.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4015140Z #14 1.184  + click==8.3.3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4015455Z #14 1.184  + fastapi==0.136.1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4015771Z #14 1.184  + h11==0.16.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4016076Z #14 1.184  + idna==3.13
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4016369Z #14 1.184  + psycopg==3.3.3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4016785Z #14 1.184  + psycopg-binary==3.3.3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4017137Z #14 1.184  + pydantic==2.13.3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4017971Z #14 1.184  + pydantic-core==2.46.3
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4018500Z #14 1.184  + rtdp-contracts==0.1.0 (from file:///app/packages/contracts)
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4019208Z #14 1.184  + rtdp-pubsub-worker==0.1.0 (from file:///app/apps/pubsub-worker)
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4019760Z #14 1.184  + starlette==1.0.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4020110Z #14 1.184  + typing-extensions==4.15.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4020937Z #14 1.184  + typing-inspection==0.4.2
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4021300Z #14 1.184  + uvicorn==0.46.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4021607Z #14 DONE 1.2s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4021766Z 
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4021878Z #15 exporting to image
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:42.4022179Z #15 exporting layers
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0273641Z #15 exporting layers 0.8s done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0479898Z #15 writing image sha256:339230b1a3ad2085e225a43db69f1e2858a16cd15e5ce02104b10e8702f41990 done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0481549Z #15 naming to europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker:b9752c02b4ba0eec827aebe2420c2fdb92b5640b done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0482377Z #15 DONE 0.8s
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0560149Z ##[group]Run docker push "${IMAGE_URI}"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0560817Z ^[[36;1mdocker push "${IMAGE_URI}"^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0581655Z shell: /usr/bin/bash -e {0}
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0581883Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0582086Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0582361Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0582616Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0582916Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0583165Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0583406Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0584000Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0584947Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0585837Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0586401Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0586729Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0587024Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0587297Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0587586Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0587933Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0588258Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0588833Z   IMAGE_URI: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker:b9752c02b4ba0eec827aebe2420c2fdb92b5640b
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:43.0589397Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.1821359Z The push refers to repository [europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3846246Z a2facc2ef464: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3846899Z 0846d09d3471: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3847245Z ba257ba98471: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3847637Z baef7ebbd5ed: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3848014Z ca969c519b9b: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3848372Z 684ca78b33bc: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3848598Z 23ed4b6439ad: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3848798Z fae8529c7ef7: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3849146Z 1361e0a963c6: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3849500Z 79dd1f4c855c: Preparing
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3849776Z 684ca78b33bc: Waiting
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3850024Z 23ed4b6439ad: Waiting
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3850268Z fae8529c7ef7: Waiting
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3850909Z 1361e0a963c6: Waiting
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:44.3851151Z 79dd1f4c855c: Waiting
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:47.9300034Z 0846d09d3471: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:48.0189610Z ba257ba98471: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:48.9040914Z baef7ebbd5ed: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:51.6982331Z ca969c519b9b: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:51.7864605Z a2facc2ef464: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:51.9412229Z 684ca78b33bc: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:52.9444734Z 23ed4b6439ad: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:55.1962929Z 1361e0a963c6: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:55.5189911Z fae8529c7ef7: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:19:58.4178110Z 79dd1f4c855c: Pushed
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5385786Z b9752c02b4ba0eec827aebe2420c2fdb92b5640b: digest: sha256:739a225723d0f6c9576dc0a00dff681ca34dcba4f99c9a2fc4236029b304fb1c size: 2413
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5437576Z ##[group]Run gcloud run deploy "${CLOUD_RUN_SERVICE}" \
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5437981Z ^[[36;1mgcloud run deploy "${CLOUD_RUN_SERVICE}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5438277Z ^[[36;1m  --project="${PROJECT_ID}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5438524Z ^[[36;1m  --region="${REGION}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5438756Z ^[[36;1m  --image="${IMAGE_URI}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5439135Z ^[[36;1m  --service-account="rtdp-worker-sa@${PROJECT_ID}.iam.gserviceaccount.com" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5439622Z ^[[36;1m  --set-secrets="DATABASE_URL=rtdp-database-url:latest" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5440076Z ^[[36;1m  --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5441154Z ^[[36;1m  --concurrency=1 \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5441398Z ^[[36;1m  --max-instances=1 \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5441613Z ^[[36;1m  --quiet^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5462342Z shell: /usr/bin/bash -e {0}
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5462567Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5462791Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5463059Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5463310Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5463612Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5463854Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5464094Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5464697Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5465626Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5466470Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5467075Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5467397Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5467691Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5467971Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5468261Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5468597Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5468924Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5469510Z   IMAGE_URI: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker:b9752c02b4ba0eec827aebe2420c2fdb92b5640b
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:01.5470083Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:05.1654294Z Skipped validating Cloud SQL API and Cloud SQL Admin API enablement due to an issue contacting the Service Usage  API. Please ensure the Cloud SQL API and Cloud SQL Admin API are activated (see https://console.cloud.google.com/apis/dashboard).
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:05.1665139Z Deploying container to Cloud Run service [rtdp-pubsub-worker] in project [project-42987e01-2123-446b-ac7] region [europe-west1]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:05.1666170Z Deploying...
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:19.3737618Z Creating Revision.....................................................................................................................................done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:19.3738554Z Routing traffic.....done
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.5396508Z Done.
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.5924326Z Service [rtdp-pubsub-worker] revision [rtdp-pubsub-worker-00004-cld] has been deployed and is serving 100 percent of traffic.
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.5925239Z Service URL: https://rtdp-pubsub-worker-892892382088.europe-west1.run.app
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8353966Z ##[group]Run gcloud run services describe "${CLOUD_RUN_SERVICE}" \
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8354441Z ^[[36;1mgcloud run services describe "${CLOUD_RUN_SERVICE}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8354774Z ^[[36;1m  --project="${PROJECT_ID}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8355027Z ^[[36;1m  --region="${REGION}" \^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8356152Z ^[[36;1m  --format="yaml(metadata.name,status.latestReadyRevisionName,spec.template.spec.serviceAccountName,spec.template.spec.containers[0].image,spec.template.spec.containers[0].env,spec.template.spec.containerConcurrency,spec.template.metadata.annotations)"^[[0m
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8377513Z shell: /usr/bin/bash -e {0}
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8377748Z env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8377952Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8378216Z   REGION: europe-west1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8378479Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8378783Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8379076Z   IMAGE_NAME: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8379333Z   CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8379935Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8381335Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8382161Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8382723Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8383061Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8383367Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8383654Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8383945Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8384301Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8384640Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8385227Z   IMAGE_URI: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker:b9752c02b4ba0eec827aebe2420c2fdb92b5640b
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:20.8385799Z ##[endgroup]
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5109235Z metadata:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5109824Z   name: rtdp-pubsub-worker
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5110249Z spec:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5110864Z   template:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5111154Z     metadata:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5111455Z       annotations:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5111826Z         autoscaling.knative.dev/maxScale: '1'
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5112331Z         run.googleapis.com/client-name: gcloud
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5112862Z         run.googleapis.com/client-version: 564.0.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5113733Z         run.googleapis.com/cloudsql-instances: project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5114662Z         run.googleapis.com/startup-cpu-boost: 'true'
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5115150Z     spec:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5115453Z       containerConcurrency: 1
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5115824Z       containers:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5116132Z       - env:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5116468Z         - name: DATABASE_URL
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5116831Z           valueFrom:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5117153Z             secretKeyRef:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5117492Z               key: latest
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5117845Z               name: rtdp-database-url
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5118872Z         image: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker:b9752c02b4ba0eec827aebe2420c2fdb92b5640b
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5120203Z       serviceAccountName: rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5121082Z status:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.5121405Z   latestReadyRevisionName: rtdp-pubsub-worker-00004-cld
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.6737954Z Post job cleanup.
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.7595455Z Removed exported credentials at "/home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-dc104d62b897ddce.json".
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.7718511Z Post job cleanup.
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.8720523Z [command]/usr/bin/git version
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.8775850Z git version 2.53.0
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.8841174Z Temporarily overriding HOME='/home/runner/work/_temp/a4803737-973e-4685-94db-3f42fe42a639' before making global git config changes
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.8842299Z Adding repository directory to the temporary git global config as a safe directory
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.8859980Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/real-time-data-platform/real-time-data-platform
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.8905931Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.8948753Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.9201682Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.9227131Z http.https://github.com/.extraheader
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.9241457Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.9277410Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.9526288Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.9565608Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:22.9942714Z Cleaning up orphan processes
+Deploy Pub/Sub worker	UNKNOWN STEP	2026-05-10T07:20:23.0340880Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, google-github-actions/auth@v2, google-github-actions/setup-gcloud@v2. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
