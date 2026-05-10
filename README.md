@@ -440,6 +440,8 @@ uv run pytest -q
 
 See [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) for a curated map of all project evidence by category: architecture, infrastructure-as-code, CI/CD, observability, load testing, and production-readiness.
 
+See [docs/ARCHITECTURE_REVIEW.md](docs/ARCHITECTURE_REVIEW.md) for the consolidated architecture review: implemented capabilities, operational controls, trade-offs, and remaining gaps.
+
 This project demonstrates practical Data Engineering skills relevant to streaming platform and cloud data roles in 2026/2027:
 
 | Skill Area | Evidence |
