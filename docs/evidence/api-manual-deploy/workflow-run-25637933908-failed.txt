@@ -1,0 +1,502 @@
+Deploy API	Set up job	﻿2026-05-10T19:40:16.4389884Z Current runner version: '2.334.0'
+Deploy API	Set up job	2026-05-10T19:40:16.4416573Z ##[group]Runner Image Provisioner
+Deploy API	Set up job	2026-05-10T19:40:16.4417987Z Hosted Compute Agent
+Deploy API	Set up job	2026-05-10T19:40:16.4418884Z Version: 20260213.493
+Deploy API	Set up job	2026-05-10T19:40:16.4419793Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Deploy API	Set up job	2026-05-10T19:40:16.4420931Z Build Date: 2026-02-13T00:28:41Z
+Deploy API	Set up job	2026-05-10T19:40:16.4421846Z Worker ID: {eda05248-e47c-4d24-b4b3-49d2dcb41177}
+Deploy API	Set up job	2026-05-10T19:40:16.4422982Z Azure Region: centralus
+Deploy API	Set up job	2026-05-10T19:40:16.4423744Z ##[endgroup]
+Deploy API	Set up job	2026-05-10T19:40:16.4426007Z ##[group]Operating System
+Deploy API	Set up job	2026-05-10T19:40:16.4426826Z Ubuntu
+Deploy API	Set up job	2026-05-10T19:40:16.4427278Z 24.04.4
+Deploy API	Set up job	2026-05-10T19:40:16.4427827Z LTS
+Deploy API	Set up job	2026-05-10T19:40:16.4428674Z ##[endgroup]
+Deploy API	Set up job	2026-05-10T19:40:16.4429391Z ##[group]Runner Image
+Deploy API	Set up job	2026-05-10T19:40:16.4430023Z Image: ubuntu-24.04
+Deploy API	Set up job	2026-05-10T19:40:16.4430647Z Version: 20260413.86.1
+Deploy API	Set up job	2026-05-10T19:40:16.4431627Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Deploy API	Set up job	2026-05-10T19:40:16.4433345Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Deploy API	Set up job	2026-05-10T19:40:16.4434196Z ##[endgroup]
+Deploy API	Set up job	2026-05-10T19:40:16.4435406Z ##[group]GITHUB_TOKEN Permissions
+Deploy API	Set up job	2026-05-10T19:40:16.4437656Z Contents: read
+Deploy API	Set up job	2026-05-10T19:40:16.4438211Z Metadata: read
+Deploy API	Set up job	2026-05-10T19:40:16.4438809Z ##[endgroup]
+Deploy API	Set up job	2026-05-10T19:40:16.4440828Z Secret source: Actions
+Deploy API	Set up job	2026-05-10T19:40:16.4441528Z Prepare workflow directory
+Deploy API	Set up job	2026-05-10T19:40:16.4830752Z Prepare all required actions
+Deploy API	Set up job	2026-05-10T19:40:16.4869595Z Getting action download info
+Deploy API	Set up job	2026-05-10T19:40:16.8430794Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+Deploy API	Set up job	2026-05-10T19:40:16.9576897Z Download action repository 'google-github-actions/auth@v2' (SHA:c200f3691d83b41bf9bbd8638997a462592937ed)
+Deploy API	Set up job	2026-05-10T19:40:17.2646047Z Download action repository 'google-github-actions/setup-gcloud@v2' (SHA:e427ad8a34f8676edf47cf7d7925499adf3eb74f)
+Deploy API	Set up job	2026-05-10T19:40:17.6860507Z Complete job name: Deploy API
+Deploy API	Checkout repository	﻿2026-05-10T19:40:17.7696816Z ##[group]Run actions/checkout@v4
+Deploy API	Checkout repository	2026-05-10T19:40:17.7698076Z with:
+Deploy API	Checkout repository	2026-05-10T19:40:17.7698892Z   repository: jcsf2020/real-time-data-platform
+Deploy API	Checkout repository	2026-05-10T19:40:17.7700252Z   token: ***
+Deploy API	Checkout repository	2026-05-10T19:40:17.7700965Z   ssh-strict: true
+Deploy API	Checkout repository	2026-05-10T19:40:17.7701712Z   ssh-user: git
+Deploy API	Checkout repository	2026-05-10T19:40:17.7702467Z   persist-credentials: true
+Deploy API	Checkout repository	2026-05-10T19:40:17.7703313Z   clean: true
+Deploy API	Checkout repository	2026-05-10T19:40:17.7704080Z   sparse-checkout-cone-mode: true
+Deploy API	Checkout repository	2026-05-10T19:40:17.7705005Z   fetch-depth: 1
+Deploy API	Checkout repository	2026-05-10T19:40:17.7705996Z   fetch-tags: false
+Deploy API	Checkout repository	2026-05-10T19:40:17.7706781Z   show-progress: true
+Deploy API	Checkout repository	2026-05-10T19:40:17.7707551Z   lfs: false
+Deploy API	Checkout repository	2026-05-10T19:40:17.7708251Z   submodules: false
+Deploy API	Checkout repository	2026-05-10T19:40:17.7709031Z   set-safe-directory: true
+Deploy API	Checkout repository	2026-05-10T19:40:17.7710053Z env:
+Deploy API	Checkout repository	2026-05-10T19:40:17.7710825Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy API	Checkout repository	2026-05-10T19:40:17.7711839Z   REGION: europe-west1
+Deploy API	Checkout repository	2026-05-10T19:40:17.7712781Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy API	Checkout repository	2026-05-10T19:40:17.7713971Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy API	Checkout repository	2026-05-10T19:40:17.7714969Z   IMAGE_NAME: rtdp-api
+Deploy API	Checkout repository	2026-05-10T19:40:17.7715946Z   CLOUD_RUN_SERVICE: rtdp-api
+Deploy API	Checkout repository	2026-05-10T19:40:17.7716839Z   SERVICE_NAME: rtdp-api
+Deploy API	Checkout repository	2026-05-10T19:40:17.7717689Z   SERVICE_VERSION: 0.1.0-pagination-fix
+Deploy API	Checkout repository	2026-05-10T19:40:17.7718679Z   ENVIRONMENT: gcp-cloud-run
+Deploy API	Checkout repository	2026-05-10T19:40:17.7719538Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:17.8821028Z Syncing repository: jcsf2020/real-time-data-platform
+Deploy API	Checkout repository	2026-05-10T19:40:17.8823819Z ##[group]Getting Git version info
+Deploy API	Checkout repository	2026-05-10T19:40:17.8825654Z Working directory is '/home/runner/work/real-time-data-platform/real-time-data-platform'
+Deploy API	Checkout repository	2026-05-10T19:40:17.8827840Z [command]/usr/bin/git version
+Deploy API	Checkout repository	2026-05-10T19:40:17.8858310Z git version 2.53.0
+Deploy API	Checkout repository	2026-05-10T19:40:17.8882522Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:17.8904772Z Temporarily overriding HOME='/home/runner/work/_temp/97a3b115-c1b3-47d5-990b-a9880f810145' before making global git config changes
+Deploy API	Checkout repository	2026-05-10T19:40:17.8910236Z Adding repository directory to the temporary git global config as a safe directory
+Deploy API	Checkout repository	2026-05-10T19:40:17.8913088Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/real-time-data-platform/real-time-data-platform
+Deploy API	Checkout repository	2026-05-10T19:40:17.8943219Z Deleting the contents of '/home/runner/work/real-time-data-platform/real-time-data-platform'
+Deploy API	Checkout repository	2026-05-10T19:40:17.8946354Z ##[group]Initializing the repository
+Deploy API	Checkout repository	2026-05-10T19:40:17.8950963Z [command]/usr/bin/git init /home/runner/work/real-time-data-platform/real-time-data-platform
+Deploy API	Checkout repository	2026-05-10T19:40:17.9030472Z hint: Using 'master' as the name for the initial branch. This default branch name
+Deploy API	Checkout repository	2026-05-10T19:40:17.9033490Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Deploy API	Checkout repository	2026-05-10T19:40:17.9036528Z hint: to use in all of your new repositories, which will suppress this warning,
+Deploy API	Checkout repository	2026-05-10T19:40:17.9038782Z hint: call:
+Deploy API	Checkout repository	2026-05-10T19:40:17.9039814Z hint:
+Deploy API	Checkout repository	2026-05-10T19:40:17.9041121Z hint: 	git config --global init.defaultBranch <name>
+Deploy API	Checkout repository	2026-05-10T19:40:17.9042901Z hint:
+Deploy API	Checkout repository	2026-05-10T19:40:17.9044570Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Deploy API	Checkout repository	2026-05-10T19:40:17.9047476Z hint: 'development'. The just-created branch can be renamed via this command:
+Deploy API	Checkout repository	2026-05-10T19:40:17.9049626Z hint:
+Deploy API	Checkout repository	2026-05-10T19:40:17.9050835Z hint: 	git branch -m <name>
+Deploy API	Checkout repository	2026-05-10T19:40:17.9051686Z hint:
+Deploy API	Checkout repository	2026-05-10T19:40:17.9052823Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Deploy API	Checkout repository	2026-05-10T19:40:17.9055095Z Initialized empty Git repository in /home/runner/work/real-time-data-platform/real-time-data-platform/.git/
+Deploy API	Checkout repository	2026-05-10T19:40:17.9060585Z [command]/usr/bin/git remote add origin https://github.com/jcsf2020/real-time-data-platform
+Deploy API	Checkout repository	2026-05-10T19:40:17.9077691Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:17.9079748Z ##[group]Disabling automatic garbage collection
+Deploy API	Checkout repository	2026-05-10T19:40:17.9081689Z [command]/usr/bin/git config --local gc.auto 0
+Deploy API	Checkout repository	2026-05-10T19:40:17.9112319Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:17.9114304Z ##[group]Setting up auth
+Deploy API	Checkout repository	2026-05-10T19:40:17.9120019Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Deploy API	Checkout repository	2026-05-10T19:40:17.9151316Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Deploy API	Checkout repository	2026-05-10T19:40:17.9441572Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Deploy API	Checkout repository	2026-05-10T19:40:17.9473727Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Deploy API	Checkout repository	2026-05-10T19:40:17.9705914Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Deploy API	Checkout repository	2026-05-10T19:40:17.9738991Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Deploy API	Checkout repository	2026-05-10T19:40:17.9970789Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Deploy API	Checkout repository	2026-05-10T19:40:18.0005956Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:18.0007278Z ##[group]Fetching the repository
+Deploy API	Checkout repository	2026-05-10T19:40:18.0015064Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ba4be48e819026a5c200825f9c906a2a225d9349:refs/remotes/origin/main
+Deploy API	Checkout repository	2026-05-10T19:40:18.4624085Z From https://github.com/jcsf2020/real-time-data-platform
+Deploy API	Checkout repository	2026-05-10T19:40:18.4627077Z  * [new ref]         ba4be48e819026a5c200825f9c906a2a225d9349 -> origin/main
+Deploy API	Checkout repository	2026-05-10T19:40:18.4658209Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:18.4660166Z ##[group]Determining the checkout info
+Deploy API	Checkout repository	2026-05-10T19:40:18.4662673Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:18.4664420Z [command]/usr/bin/git sparse-checkout disable
+Deploy API	Checkout repository	2026-05-10T19:40:18.4704866Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Deploy API	Checkout repository	2026-05-10T19:40:18.4733723Z ##[group]Checking out the ref
+Deploy API	Checkout repository	2026-05-10T19:40:18.4736727Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Deploy API	Checkout repository	2026-05-10T19:40:18.4920816Z Switched to a new branch 'main'
+Deploy API	Checkout repository	2026-05-10T19:40:18.4922981Z branch 'main' set up to track 'origin/main'.
+Deploy API	Checkout repository	2026-05-10T19:40:18.4932218Z ##[endgroup]
+Deploy API	Checkout repository	2026-05-10T19:40:18.4971285Z [command]/usr/bin/git log -1 --format=%H
+Deploy API	Checkout repository	2026-05-10T19:40:18.4997340Z ba4be48e819026a5c200825f9c906a2a225d9349
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	﻿2026-05-10T19:40:18.5335715Z ##[group]Run google-github-actions/auth@v2
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5336730Z with:
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5338381Z   workload_identity_provider: projects/892892382088/locations/global/workloadIdentityPools/github-actions/providers/github
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5340966Z   service_account: rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5342598Z   create_credentials_file: true
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5343478Z   export_environment_variables: true
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5344379Z   universe: googleapis.com
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5345404Z   cleanup_credentials: true
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5346231Z   access_token_lifetime: 3600s
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5347429Z   access_token_scopes: https://www.googleapis.com/auth/cloud-platform
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5348697Z   id_token_include_email: false
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5349508Z env:
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5350271Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5351230Z   REGION: europe-west1
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5352140Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5353279Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5354186Z   IMAGE_NAME: rtdp-api
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5354964Z   CLOUD_RUN_SERVICE: rtdp-api
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5355940Z   SERVICE_NAME: rtdp-api
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5356755Z   SERVICE_VERSION: 0.1.0-pagination-fix
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5357694Z   ENVIRONMENT: gcp-cloud-run
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.5358489Z ##[endgroup]
+Deploy API	Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:40:18.7899029Z Created credentials file at "/home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json"
+Deploy API	Set up Google Cloud SDK	﻿2026-05-10T19:40:18.9747268Z ##[group]Run google-github-actions/setup-gcloud@v2
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9748526Z with:
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9749211Z   version: latest
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9749958Z   skip_install: false
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9750748Z   skip_tool_cache: false
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9751527Z env:
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9752266Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9753246Z   REGION: europe-west1
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9754192Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9755563Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9756505Z   IMAGE_NAME: rtdp-api
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9757316Z   CLOUD_RUN_SERVICE: rtdp-api
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9758180Z   SERVICE_NAME: rtdp-api
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9759031Z   SERVICE_VERSION: 0.1.0-pagination-fix
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9760002Z   ENVIRONMENT: gcp-cloud-run
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9761999Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9765383Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9768344Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9770398Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9771625Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9772781Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9773903Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9775070Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:18.9776348Z ##[endgroup]
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:21.0224784Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/0cb7ef7e-92c5-4a84-b317-68c20d54e2d0 -f /home/runner/work/_temp/b879b167-1ebd-4d81-b49f-6a5cc93594ec
+Deploy API	Set up Google Cloud SDK	2026-05-10T19:40:39.7232313Z Successfully authenticated
+Deploy API	Configure Docker for Artifact Registry	﻿2026-05-10T19:40:39.7411906Z ##[group]Run gcloud auth configure-docker "${ARTIFACT_REGISTRY_HOST}" --quiet
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7412541Z ^[[36;1mgcloud auth configure-docker "${ARTIFACT_REGISTRY_HOST}" --quiet^[[0m
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7441953Z shell: /usr/bin/bash -e {0}
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7442248Z env:
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7442474Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7442783Z   REGION: europe-west1
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7443060Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7443375Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7443630Z   IMAGE_NAME: rtdp-api
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7443856Z   CLOUD_RUN_SERVICE: rtdp-api
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7444089Z   SERVICE_NAME: rtdp-api
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7444337Z   SERVICE_VERSION: 0.1.0-pagination-fix
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7444612Z   ENVIRONMENT: gcp-cloud-run
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7445507Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7446514Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7447341Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7447915Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7448251Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7448556Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7448854Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7449160Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7449526Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7449873Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:39.7450145Z ##[endgroup]
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:40.1767549Z Adding credentials for: europe-west1-docker.pkg.dev
+Deploy API	Configure Docker for Artifact Registry	2026-05-10T19:40:40.1942244Z Docker configuration file updated.
+Deploy API	Build API image	﻿2026-05-10T19:40:40.2851252Z ##[group]Run IMAGE_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:${GITHUB_SHA}"
+Deploy API	Build API image	2026-05-10T19:40:40.2852158Z ^[[36;1mIMAGE_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:${GITHUB_SHA}"^[[0m
+Deploy API	Build API image	2026-05-10T19:40:40.2852786Z ^[[36;1mecho "IMAGE_URI=${IMAGE_URI}" >> "${GITHUB_ENV}"^[[0m
+Deploy API	Build API image	2026-05-10T19:40:40.2853119Z ^[[36;1mdocker build \^[[0m
+Deploy API	Build API image	2026-05-10T19:40:40.2853390Z ^[[36;1m  --file Dockerfile \^[[0m
+Deploy API	Build API image	2026-05-10T19:40:40.2853669Z ^[[36;1m  --tag "${IMAGE_URI}" \^[[0m
+Deploy API	Build API image	2026-05-10T19:40:40.2853934Z ^[[36;1m  .^[[0m
+Deploy API	Build API image	2026-05-10T19:40:40.2877678Z shell: /usr/bin/bash -e {0}
+Deploy API	Build API image	2026-05-10T19:40:40.2877945Z env:
+Deploy API	Build API image	2026-05-10T19:40:40.2878185Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy API	Build API image	2026-05-10T19:40:40.2878494Z   REGION: europe-west1
+Deploy API	Build API image	2026-05-10T19:40:40.2878780Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy API	Build API image	2026-05-10T19:40:40.2879115Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy API	Build API image	2026-05-10T19:40:40.2879437Z   IMAGE_NAME: rtdp-api
+Deploy API	Build API image	2026-05-10T19:40:40.2879717Z   CLOUD_RUN_SERVICE: rtdp-api
+Deploy API	Build API image	2026-05-10T19:40:40.2879968Z   SERVICE_NAME: rtdp-api
+Deploy API	Build API image	2026-05-10T19:40:40.2880224Z   SERVICE_VERSION: 0.1.0-pagination-fix
+Deploy API	Build API image	2026-05-10T19:40:40.2880503Z   ENVIRONMENT: gcp-cloud-run
+Deploy API	Build API image	2026-05-10T19:40:40.2881094Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Build API image	2026-05-10T19:40:40.2881990Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Build API image	2026-05-10T19:40:40.2882802Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Build API image	2026-05-10T19:40:40.2883383Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Build API image	2026-05-10T19:40:40.2883728Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Build API image	2026-05-10T19:40:40.2884060Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Build API image	2026-05-10T19:40:40.2884560Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Build API image	2026-05-10T19:40:40.2884898Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Build API image	2026-05-10T19:40:40.2885401Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy API	Build API image	2026-05-10T19:40:40.2885765Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy API	Build API image	2026-05-10T19:40:40.2886053Z ##[endgroup]
+Deploy API	Build API image	2026-05-10T19:40:41.2360920Z #0 building with "default" instance using docker driver
+Deploy API	Build API image	2026-05-10T19:40:41.2361561Z 
+Deploy API	Build API image	2026-05-10T19:40:41.2361770Z #1 [internal] load build definition from Dockerfile
+Deploy API	Build API image	2026-05-10T19:40:41.2362316Z #1 transferring dockerfile: 374B done
+Deploy API	Build API image	2026-05-10T19:40:41.2362704Z #1 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:41.2362904Z 
+Deploy API	Build API image	2026-05-10T19:40:41.2363145Z #2 [auth] library/python:pull token for registry-1.docker.io
+Deploy API	Build API image	2026-05-10T19:40:41.3862612Z #2 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:41.3862853Z 
+Deploy API	Build API image	2026-05-10T19:40:41.3863043Z #3 [internal] load metadata for ghcr.io/astral-sh/uv:0.5.31
+Deploy API	Build API image	2026-05-10T19:40:41.6394189Z #3 DONE 0.5s
+Deploy API	Build API image	2026-05-10T19:40:41.6394415Z 
+Deploy API	Build API image	2026-05-10T19:40:41.6394674Z #4 [internal] load metadata for docker.io/library/python:3.12-slim
+Deploy API	Build API image	2026-05-10T19:40:41.7972399Z #4 DONE 0.7s
+Deploy API	Build API image	2026-05-10T19:40:41.9127263Z 
+Deploy API	Build API image	2026-05-10T19:40:41.9128867Z #5 [internal] load .dockerignore
+Deploy API	Build API image	2026-05-10T19:40:41.9129241Z #5 transferring context: 118B done
+Deploy API	Build API image	2026-05-10T19:40:41.9129650Z #5 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:41.9129800Z 
+Deploy API	Build API image	2026-05-10T19:40:41.9129911Z #6 [internal] load build context
+Deploy API	Build API image	2026-05-10T19:40:41.9130184Z #6 transferring context: 255.70kB 0.0s done
+Deploy API	Build API image	2026-05-10T19:40:41.9130455Z #6 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:41.9130566Z 
+Deploy API	Build API image	2026-05-10T19:40:41.9130981Z #7 [stage-0 1/7] FROM docker.io/library/python:3.12-slim@sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe
+Deploy API	Build API image	2026-05-10T19:40:41.9131832Z #7 resolve docker.io/library/python:3.12-slim@sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe done
+Deploy API	Build API image	2026-05-10T19:40:41.9132551Z #7 sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe 10.37kB / 10.37kB done
+Deploy API	Build API image	2026-05-10T19:40:41.9133734Z #7 sha256:bf73779de6dbd030f3d189eeeb246286965832761ace318c1518300f76c0840d 1.75kB / 1.75kB done
+Deploy API	Build API image	2026-05-10T19:40:41.9135080Z #7 sha256:c8e887bbf3b6fec95a5ff97435d611119ac6e55491cd077db9fdc6b7637bdd47 5.66kB / 5.66kB done
+Deploy API	Build API image	2026-05-10T19:40:41.9135962Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 0B / 29.78MB 0.1s
+Deploy API	Build API image	2026-05-10T19:40:41.9136541Z #7 sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65 0B / 1.29MB 0.1s
+Deploy API	Build API image	2026-05-10T19:40:41.9137113Z #7 sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 0B / 12.11MB 0.1s
+Deploy API	Build API image	2026-05-10T19:40:42.1117782Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 4.19MB / 29.78MB 0.3s
+Deploy API	Build API image	2026-05-10T19:40:42.1118594Z #7 sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65 1.29MB / 1.29MB 0.2s done
+Deploy API	Build API image	2026-05-10T19:40:42.1119274Z #7 sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 7.34MB / 12.11MB 0.3s
+Deploy API	Build API image	2026-05-10T19:40:42.1119922Z #7 sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684 250B / 250B 0.2s done
+Deploy API	Build API image	2026-05-10T19:40:42.2122364Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 27.26MB / 29.78MB 0.4s
+Deploy API	Build API image	2026-05-10T19:40:42.2124009Z #7 sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 12.11MB / 12.11MB 0.3s done
+Deploy API	Build API image	2026-05-10T19:40:42.3129038Z #7 sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 29.78MB / 29.78MB 0.4s done
+Deploy API	Build API image	2026-05-10T19:40:42.3130301Z #7 extracting sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61
+Deploy API	Build API image	2026-05-10T19:40:43.1677383Z #7 ...
+Deploy API	Build API image	2026-05-10T19:40:43.1678982Z 
+Deploy API	Build API image	2026-05-10T19:40:43.1679890Z #8 FROM ghcr.io/astral-sh/uv:0.5.31@sha256:7bff3c3776ec467fc1437960f2c469d8beb30f536a6465a3350c647ccd260ec2
+Deploy API	Build API image	2026-05-10T19:40:43.1706444Z #8 resolve ghcr.io/astral-sh/uv:0.5.31@sha256:7bff3c3776ec467fc1437960f2c469d8beb30f536a6465a3350c647ccd260ec2 done
+Deploy API	Build API image	2026-05-10T19:40:43.1735994Z #8 sha256:7bff3c3776ec467fc1437960f2c469d8beb30f536a6465a3350c647ccd260ec2 2.19kB / 2.19kB done
+Deploy API	Build API image	2026-05-10T19:40:43.1737694Z #8 sha256:ae26c2d3fb967f937b8afa373a47c43bccca1bc12dc12ecc98a91f9663af69a9 669B / 669B done
+Deploy API	Build API image	2026-05-10T19:40:43.1765998Z #8 sha256:bc75993475699ef71eac2a1b9b16d2906ce5e38e900b376ed79f703af9a67893 1.30kB / 1.30kB done
+Deploy API	Build API image	2026-05-10T19:40:43.1776570Z #8 sha256:4cd5c84a79cdf61fb1af855a90f3e96ed29fdd5a2275723d1b0539c89ac91363 16.20MB / 16.20MB 0.5s done
+Deploy API	Build API image	2026-05-10T19:40:43.1778632Z #8 sha256:445a1141bad0a95d3158ac0b62bdb14464d1846c1185ec87605f5700c71ec844 94B / 94B 0.4s done
+Deploy API	Build API image	2026-05-10T19:40:43.1779890Z #8 extracting sha256:4cd5c84a79cdf61fb1af855a90f3e96ed29fdd5a2275723d1b0539c89ac91363 0.3s done
+Deploy API	Build API image	2026-05-10T19:40:43.1781103Z #8 extracting sha256:445a1141bad0a95d3158ac0b62bdb14464d1846c1185ec87605f5700c71ec844 done
+Deploy API	Build API image	2026-05-10T19:40:43.1782008Z #8 DONE 1.3s
+Deploy API	Build API image	2026-05-10T19:40:43.1782360Z 
+Deploy API	Build API image	2026-05-10T19:40:43.1783162Z #7 [stage-0 1/7] FROM docker.io/library/python:3.12-slim@sha256:ec948fa5f90f4f8907e89f4800cfd2d2e91e391a4bce4a6afa77ba265bc3a2fe
+Deploy API	Build API image	2026-05-10T19:40:43.2973103Z #7 extracting sha256:57fb71246055257a374deb7564ceca10f43c2352572b501efc08add5d24ebb61 1.0s done
+Deploy API	Build API image	2026-05-10T19:40:43.2978771Z #7 extracting sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65
+Deploy API	Build API image	2026-05-10T19:40:43.7055923Z #7 extracting sha256:797809503061a7d1332e7b5c3df030896846f0a6a179f90060e85564dca1cf65 0.3s done
+Deploy API	Build API image	2026-05-10T19:40:45.5060752Z #7 extracting sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9
+Deploy API	Build API image	2026-05-10T19:40:46.0783445Z #7 extracting sha256:759e0c85a86e6d82ceccf351143d3f4a17e4ba196c9684240898abe3b8ec13a9 0.5s done
+Deploy API	Build API image	2026-05-10T19:40:46.0784499Z #7 extracting sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684
+Deploy API	Build API image	2026-05-10T19:40:46.3139962Z #7 extracting sha256:b33ff618953dcb6177e78bc33883a49817e571a1d9f0a3aa039e3228e0f21684 done
+Deploy API	Build API image	2026-05-10T19:40:46.3140703Z #7 DONE 4.3s
+Deploy API	Build API image	2026-05-10T19:40:46.3140817Z 
+Deploy API	Build API image	2026-05-10T19:40:46.3140916Z #9 [stage-0 2/7] WORKDIR /app
+Deploy API	Build API image	2026-05-10T19:40:46.3141151Z #9 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:46.3141289Z 
+Deploy API	Build API image	2026-05-10T19:40:46.3141491Z #10 [stage-0 3/7] COPY --from=ghcr.io/astral-sh/uv:0.5.31 /uv /uvx /bin/
+Deploy API	Build API image	2026-05-10T19:40:46.3142143Z #10 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:46.3142262Z 
+Deploy API	Build API image	2026-05-10T19:40:46.3142385Z #11 [stage-0 4/7] COPY pyproject.toml uv.lock ./
+Deploy API	Build API image	2026-05-10T19:40:46.3142660Z #11 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:46.3142766Z 
+Deploy API	Build API image	2026-05-10T19:40:46.3142862Z #12 [stage-0 5/7] COPY apps ./apps
+Deploy API	Build API image	2026-05-10T19:40:46.3143118Z #12 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:46.3143219Z 
+Deploy API	Build API image	2026-05-10T19:40:46.3143561Z #13 [stage-0 6/7] COPY packages ./packages
+Deploy API	Build API image	2026-05-10T19:40:46.3143894Z #13 DONE 0.0s
+Deploy API	Build API image	2026-05-10T19:40:46.3144038Z 
+Deploy API	Build API image	2026-05-10T19:40:46.3144244Z #14 [stage-0 7/7] RUN uv sync --all-packages --frozen --no-dev
+Deploy API	Build API image	2026-05-10T19:40:46.4452076Z #14 0.282 Using CPython 3.12.13 interpreter at: /usr/local/bin/python3
+Deploy API	Build API image	2026-05-10T19:40:46.4452776Z #14 0.282 Creating virtual environment at: .venv
+Deploy API	Build API image	2026-05-10T19:40:46.6841552Z #14 0.302    Building rtdp-consumer @ file:///app/apps/consumer
+Deploy API	Build API image	2026-05-10T19:40:46.6842579Z #14 0.303    Building rtdp-contracts @ file:///app/packages/contracts
+Deploy API	Build API image	2026-05-10T19:40:46.6843509Z #14 0.305    Building rtdp-producer @ file:///app/apps/producer
+Deploy API	Build API image	2026-05-10T19:40:46.6844460Z #14 0.306    Building rtdp-pubsub-publisher @ file:///app/apps/pubsub-publisher
+Deploy API	Build API image	2026-05-10T19:40:46.6845592Z #14 0.313    Building rtdp-pubsub-worker @ file:///app/apps/pubsub-worker
+Deploy API	Build API image	2026-05-10T19:40:46.6846570Z #14 0.313    Building rtdp-silver-refresh-job @ file:///app/apps/silver-refresh-job
+Deploy API	Build API image	2026-05-10T19:40:46.6847472Z #14 0.314    Building rtdp-api @ file:///app/apps/api
+Deploy API	Build API image	2026-05-10T19:40:46.6848169Z #14 0.368 Downloading grpcio (6.5MiB)
+Deploy API	Build API image	2026-05-10T19:40:46.6848544Z #14 0.369 Downloading psycopg-binary (4.9MiB)
+Deploy API	Build API image	2026-05-10T19:40:46.6848898Z #14 0.369 Downloading uvloop (4.2MiB)
+Deploy API	Build API image	2026-05-10T19:40:46.6849322Z #14 0.370 Downloading cryptography (4.5MiB)
+Deploy API	Build API image	2026-05-10T19:40:46.6849723Z #14 0.370 Downloading cramjam (1.9MiB)
+Deploy API	Build API image	2026-05-10T19:40:46.6850008Z #14 0.370 Downloading pydantic-core (2.0MiB)
+Deploy API	Build API image	2026-05-10T19:40:47.0228641Z #14 0.715  Downloaded cramjam
+Deploy API	Build API image	2026-05-10T19:40:47.0229733Z #14 0.859  Downloaded pydantic-core
+Deploy API	Build API image	2026-05-10T19:40:47.1251922Z #14 0.935  Downloaded psycopg-binary
+Deploy API	Build API image	2026-05-10T19:40:47.3060406Z #14 0.961  Downloaded uvloop
+Deploy API	Build API image	2026-05-10T19:40:47.3061213Z #14 0.972  Downloaded grpcio
+Deploy API	Build API image	2026-05-10T19:40:47.3061857Z #14 0.992  Downloaded cryptography
+Deploy API	Build API image	2026-05-10T19:40:47.3470613Z #14 1.183       Built rtdp-pubsub-publisher @ file:///app/apps/pubsub-publisher
+Deploy API	Build API image	2026-05-10T19:40:47.4558359Z #14 1.184       Built rtdp-contracts @ file:///app/packages/contracts
+Deploy API	Build API image	2026-05-10T19:40:47.4559643Z #14 1.191       Built rtdp-producer @ file:///app/apps/producer
+Deploy API	Build API image	2026-05-10T19:40:47.4560492Z #14 1.192       Built rtdp-pubsub-worker @ file:///app/apps/pubsub-worker
+Deploy API	Build API image	2026-05-10T19:40:47.4561513Z #14 1.192       Built rtdp-silver-refresh-job @ file:///app/apps/silver-refresh-job
+Deploy API	Build API image	2026-05-10T19:40:47.4562379Z #14 1.192       Built rtdp-api @ file:///app/apps/api
+Deploy API	Build API image	2026-05-10T19:40:47.4563082Z #14 1.195       Built rtdp-consumer @ file:///app/apps/consumer
+Deploy API	Build API image	2026-05-10T19:40:47.4563787Z #14 1.196 Prepared 55 packages in 905ms
+Deploy API	Build API image	2026-05-10T19:40:47.4564363Z #14 1.292 Installed 55 packages in 95ms
+Deploy API	Build API image	2026-05-10T19:40:48.4796180Z #14 2.316 Bytecode compiled 1673 files in 1.02s
+Deploy API	Build API image	2026-05-10T19:40:48.6316971Z #14 2.316  + annotated-doc==0.0.4
+Deploy API	Build API image	2026-05-10T19:40:48.6317554Z #14 2.316  + annotated-types==0.7.0
+Deploy API	Build API image	2026-05-10T19:40:48.6317931Z #14 2.316  + anyio==4.13.0
+Deploy API	Build API image	2026-05-10T19:40:48.6318274Z #14 2.316  + certifi==2026.4.22
+Deploy API	Build API image	2026-05-10T19:40:48.6318621Z #14 2.316  + cffi==2.0.0
+Deploy API	Build API image	2026-05-10T19:40:48.6318961Z #14 2.316  + charset-normalizer==3.4.7
+Deploy API	Build API image	2026-05-10T19:40:48.6319351Z #14 2.316  + click==8.3.3
+Deploy API	Build API image	2026-05-10T19:40:48.6319686Z #14 2.316  + cramjam==2.11.0
+Deploy API	Build API image	2026-05-10T19:40:48.6320038Z #14 2.316  + cryptography==47.0.0
+Deploy API	Build API image	2026-05-10T19:40:48.6320417Z #14 2.316  + fastapi==0.136.1
+Deploy API	Build API image	2026-05-10T19:40:48.6320786Z #14 2.316  + google-api-core==2.30.3
+Deploy API	Build API image	2026-05-10T19:40:48.6321167Z #14 2.316  + google-auth==2.50.0
+Deploy API	Build API image	2026-05-10T19:40:48.6321581Z #14 2.316  + google-cloud-pubsub==2.37.0
+Deploy API	Build API image	2026-05-10T19:40:48.6321928Z #14 2.316  + googleapis-common-protos==1.74.0
+Deploy API	Build API image	2026-05-10T19:40:48.6322579Z #14 2.316  + grpc-google-iam-v1==0.14.4
+Deploy API	Build API image	2026-05-10T19:40:48.6322849Z #14 2.316  + grpcio==1.80.0
+Deploy API	Build API image	2026-05-10T19:40:48.6323100Z #14 2.316  + grpcio-status==1.80.0
+Deploy API	Build API image	2026-05-10T19:40:48.6323346Z #14 2.317  + h11==0.16.0
+Deploy API	Build API image	2026-05-10T19:40:48.6323584Z #14 2.317  + httptools==0.7.1
+Deploy API	Build API image	2026-05-10T19:40:48.6323826Z #14 2.317  + idna==3.13
+Deploy API	Build API image	2026-05-10T19:40:48.6324059Z #14 2.317  + importlib-metadata==8.7.1
+Deploy API	Build API image	2026-05-10T19:40:48.6324339Z #14 2.317  + kafka-python==2.3.1
+Deploy API	Build API image	2026-05-10T19:40:48.6324612Z #14 2.317  + opentelemetry-api==1.41.1
+Deploy API	Build API image	2026-05-10T19:40:48.6324873Z #14 2.317  + opentelemetry-sdk==1.41.1
+Deploy API	Build API image	2026-05-10T19:40:48.6325423Z #14 2.317  + opentelemetry-semantic-conventions==0.62b1
+Deploy API	Build API image	2026-05-10T19:40:48.6325767Z #14 2.317  + proto-plus==1.27.2
+Deploy API	Build API image	2026-05-10T19:40:48.6326062Z #14 2.317  + protobuf==6.33.6
+Deploy API	Build API image	2026-05-10T19:40:48.6326313Z #14 2.317  + psycopg==3.3.3
+Deploy API	Build API image	2026-05-10T19:40:48.6326560Z #14 2.317  + psycopg-binary==3.3.3
+Deploy API	Build API image	2026-05-10T19:40:48.6326827Z #14 2.317  + psycopg-pool==3.3.1
+Deploy API	Build API image	2026-05-10T19:40:48.6327079Z #14 2.317  + pyasn1==0.6.3
+Deploy API	Build API image	2026-05-10T19:40:48.6327314Z #14 2.317  + pyasn1-modules==0.4.2
+Deploy API	Build API image	2026-05-10T19:40:48.6327572Z #14 2.317  + pycparser==3.0
+Deploy API	Build API image	2026-05-10T19:40:48.6327823Z #14 2.317  + pydantic==2.13.3
+Deploy API	Build API image	2026-05-10T19:40:48.6328078Z #14 2.317  + pydantic-core==2.46.3
+Deploy API	Build API image	2026-05-10T19:40:48.6328334Z #14 2.317  + python-dotenv==1.2.2
+Deploy API	Build API image	2026-05-10T19:40:48.6328588Z #14 2.317  + python-snappy==0.7.3
+Deploy API	Build API image	2026-05-10T19:40:48.6328841Z #14 2.317  + pyyaml==6.0.3
+Deploy API	Build API image	2026-05-10T19:40:48.6329066Z #14 2.317  + requests==2.33.1
+Deploy API	Build API image	2026-05-10T19:40:48.6329367Z #14 2.317  + rtdp-api==0.1.0 (from file:///app/apps/api)
+Deploy API	Build API image	2026-05-10T19:40:48.6329775Z #14 2.317  + rtdp-consumer==0.1.0 (from file:///app/apps/consumer)
+Deploy API	Build API image	2026-05-10T19:40:48.6330200Z #14 2.317  + rtdp-contracts==0.1.0 (from file:///app/packages/contracts)
+Deploy API	Build API image	2026-05-10T19:40:48.6330606Z #14 2.317  + rtdp-producer==0.1.0 (from file:///app/apps/producer)
+Deploy API	Build API image	2026-05-10T19:40:48.6331057Z #14 2.317  + rtdp-pubsub-publisher==0.1.0 (from file:///app/apps/pubsub-publisher)
+Deploy API	Build API image	2026-05-10T19:40:48.6331738Z #14 2.317  + rtdp-pubsub-worker==0.1.0 (from file:///app/apps/pubsub-worker)
+Deploy API	Build API image	2026-05-10T19:40:48.6332222Z #14 2.317  + rtdp-silver-refresh-job==0.1.0 (from file:///app/apps/silver-refresh-job)
+Deploy API	Build API image	2026-05-10T19:40:48.6332621Z #14 2.317  + starlette==1.0.0
+Deploy API	Build API image	2026-05-10T19:40:48.6332876Z #14 2.317  + typing-extensions==4.15.0
+Deploy API	Build API image	2026-05-10T19:40:48.6333141Z #14 2.318  + typing-inspection==0.4.2
+Deploy API	Build API image	2026-05-10T19:40:48.6333403Z #14 2.318  + urllib3==2.6.3
+Deploy API	Build API image	2026-05-10T19:40:48.6333640Z #14 2.318  + uvicorn==0.46.0
+Deploy API	Build API image	2026-05-10T19:40:48.6333866Z #14 2.318  + uvloop==0.22.1
+Deploy API	Build API image	2026-05-10T19:40:48.6334104Z #14 2.318  + watchfiles==1.1.1
+Deploy API	Build API image	2026-05-10T19:40:48.6334341Z #14 2.318  + websockets==16.0
+Deploy API	Build API image	2026-05-10T19:40:48.6334563Z #14 2.318  + zipp==3.23.1
+Deploy API	Build API image	2026-05-10T19:40:48.8537366Z #14 DONE 2.7s
+Deploy API	Build API image	2026-05-10T19:40:49.0052299Z 
+Deploy API	Build API image	2026-05-10T19:40:49.0052933Z #15 exporting to image
+Deploy API	Build API image	2026-05-10T19:40:49.0053691Z #15 exporting layers
+Deploy API	Build API image	2026-05-10T19:40:50.3859570Z #15 exporting layers 1.5s done
+Deploy API	Build API image	2026-05-10T19:40:50.4023749Z #15 writing image sha256:dd2269ba97c2b0890989410a92f747e13e6e10c6951c7983516f2e048cef2ffb done
+Deploy API	Build API image	2026-05-10T19:40:50.4025077Z #15 naming to europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-api:ba4be48e819026a5c200825f9c906a2a225d9349 done
+Deploy API	Build API image	2026-05-10T19:40:50.4026323Z #15 DONE 1.5s
+Deploy API	Push API image	﻿2026-05-10T19:40:50.4101874Z ##[group]Run docker push "${IMAGE_URI}"
+Deploy API	Push API image	2026-05-10T19:40:50.4102192Z ^[[36;1mdocker push "${IMAGE_URI}"^[[0m
+Deploy API	Push API image	2026-05-10T19:40:50.4124580Z shell: /usr/bin/bash -e {0}
+Deploy API	Push API image	2026-05-10T19:40:50.4124826Z env:
+Deploy API	Push API image	2026-05-10T19:40:50.4125039Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy API	Push API image	2026-05-10T19:40:50.4125542Z   REGION: europe-west1
+Deploy API	Push API image	2026-05-10T19:40:50.4125813Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy API	Push API image	2026-05-10T19:40:50.4126120Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy API	Push API image	2026-05-10T19:40:50.4126381Z   IMAGE_NAME: rtdp-api
+Deploy API	Push API image	2026-05-10T19:40:50.4126603Z   CLOUD_RUN_SERVICE: rtdp-api
+Deploy API	Push API image	2026-05-10T19:40:50.4126832Z   SERVICE_NAME: rtdp-api
+Deploy API	Push API image	2026-05-10T19:40:50.4127083Z   SERVICE_VERSION: 0.1.0-pagination-fix
+Deploy API	Push API image	2026-05-10T19:40:50.4127354Z   ENVIRONMENT: gcp-cloud-run
+Deploy API	Push API image	2026-05-10T19:40:50.4127924Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Push API image	2026-05-10T19:40:50.4128804Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Push API image	2026-05-10T19:40:50.4129677Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Push API image	2026-05-10T19:40:50.4130249Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Push API image	2026-05-10T19:40:50.4130580Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Push API image	2026-05-10T19:40:50.4130891Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Push API image	2026-05-10T19:40:50.4131182Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Push API image	2026-05-10T19:40:50.4131488Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Push API image	2026-05-10T19:40:50.4131856Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy API	Push API image	2026-05-10T19:40:50.4132192Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy API	Push API image	2026-05-10T19:40:50.4132742Z   IMAGE_URI: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-api:ba4be48e819026a5c200825f9c906a2a225d9349
+Deploy API	Push API image	2026-05-10T19:40:50.4133257Z ##[endgroup]
+Deploy API	Push API image	2026-05-10T19:40:51.3631907Z The push refers to repository [europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-api]
+Deploy API	Push API image	2026-05-10T19:40:52.0744970Z 9094c023c9ec: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0745855Z 6452dd47ad39: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0746264Z 62b75dcb8dab: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0746581Z 0d98113d8fc2: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0746895Z c20d50f45e15: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0747209Z 79598fc7b6dd: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0747543Z 23ed4b6439ad: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0747895Z fae8529c7ef7: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0748195Z 1361e0a963c6: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0748454Z 79dd1f4c855c: Preparing
+Deploy API	Push API image	2026-05-10T19:40:52.0749194Z 79598fc7b6dd: Waiting
+Deploy API	Push API image	2026-05-10T19:40:52.0749508Z 23ed4b6439ad: Waiting
+Deploy API	Push API image	2026-05-10T19:40:52.0749837Z fae8529c7ef7: Waiting
+Deploy API	Push API image	2026-05-10T19:40:52.0750097Z 1361e0a963c6: Waiting
+Deploy API	Push API image	2026-05-10T19:40:52.0750341Z 79dd1f4c855c: Waiting
+Deploy API	Push API image	2026-05-10T19:40:56.2021575Z 62b75dcb8dab: Pushed
+Deploy API	Push API image	2026-05-10T19:40:56.2096618Z 0d98113d8fc2: Pushed
+Deploy API	Push API image	2026-05-10T19:40:56.2556813Z 6452dd47ad39: Pushed
+Deploy API	Push API image	2026-05-10T19:40:56.9904495Z 23ed4b6439ad: Layer already exists
+Deploy API	Push API image	2026-05-10T19:40:57.0521558Z fae8529c7ef7: Layer already exists
+Deploy API	Push API image	2026-05-10T19:40:57.7566108Z 1361e0a963c6: Layer already exists
+Deploy API	Push API image	2026-05-10T19:40:59.1049459Z c20d50f45e15: Pushed
+Deploy API	Push API image	2026-05-10T19:40:59.3843391Z 79598fc7b6dd: Pushed
+Deploy API	Push API image	2026-05-10T19:41:04.3816845Z 79dd1f4c855c: Pushed
+Deploy API	Push API image	2026-05-10T19:41:05.9550064Z 9094c023c9ec: Pushed
+Deploy API	Push API image	2026-05-10T19:41:09.7251982Z ba4be48e819026a5c200825f9c906a2a225d9349: digest: sha256:d4ee572700107a17ddd437201eaf59253bd4a85fce5d88d079f90e0f661c025d size: 2413
+Deploy API	Deploy API to Cloud Run	﻿2026-05-10T19:41:09.7314851Z ##[group]Run gcloud run deploy "${CLOUD_RUN_SERVICE}" \
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7315828Z ^[[36;1mgcloud run deploy "${CLOUD_RUN_SERVICE}" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7316329Z ^[[36;1m  --project="${PROJECT_ID}" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7316762Z ^[[36;1m  --region="${REGION}" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7317154Z ^[[36;1m  --image="${IMAGE_URI}" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7317798Z ^[[36;1m  --service-account="892892382088-compute@${PROJECT_ID}.iam.gserviceaccount.com" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7318594Z ^[[36;1m  --set-secrets="DATABASE_URL=rtdp-database-url:latest" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7319474Z ^[[36;1m  --set-env-vars="SERVICE_NAME=${SERVICE_NAME},SERVICE_VERSION=${SERVICE_VERSION},ENVIRONMENT=${ENVIRONMENT}" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7320515Z ^[[36;1m  --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7321112Z ^[[36;1m  --concurrency=80 \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7321469Z ^[[36;1m  --max-instances=20 \^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7321866Z ^[[36;1m  --quiet^[[0m
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7354609Z shell: /usr/bin/bash -e {0}
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7355004Z env:
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7355599Z   PROJECT_ID: project-42987e01-2123-446b-ac7
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7356061Z   REGION: europe-west1
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7356476Z   ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7356987Z   ARTIFACT_REGISTRY_REPOSITORY: rtdp
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7357388Z   IMAGE_NAME: rtdp-api
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7357713Z   CLOUD_RUN_SERVICE: rtdp-api
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7358084Z   SERVICE_NAME: rtdp-api
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7358449Z   SERVICE_VERSION: 0.1.0-pagination-fix
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7358860Z   ENVIRONMENT: gcp-cloud-run
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7359827Z   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7361382Z   GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7362770Z   GOOGLE_GHA_CREDS_PATH: /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7363726Z   CLOUDSDK_CORE_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7364269Z   CLOUDSDK_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7364776Z   GCLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7365455Z   GCP_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7365945Z   GOOGLE_CLOUD_PROJECT: project-42987e01-2123-446b-ac7
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7366523Z   CLOUDSDK_METRICS_ENVIRONMENT: github-actions-setup-gcloud
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7367078Z   CLOUDSDK_METRICS_ENVIRONMENT_VERSION: 2.2.1
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7367981Z   IMAGE_URI: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-api:ba4be48e819026a5c200825f9c906a2a225d9349
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:09.7368873Z ##[endgroup]
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:12.6310189Z Skipped validating Cloud SQL API and Cloud SQL Admin API enablement due to an issue contacting the Service Usage  API. Please ensure the Cloud SQL API and Cloud SQL Admin API are activated (see https://console.cloud.google.com/apis/dashboard).
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:12.6320301Z Deploying container to Cloud Run service [rtdp-api] in project [project-42987e01-2123-446b-ac7] region [europe-west1]
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:12.6320992Z Deploying...
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:13.5992455Z failed
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:13.5992885Z Deployment failed
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:13.6414909Z ERROR: (gcloud.run.deploy) PERMISSION_DENIED: Permission 'iam.serviceaccounts.actAs' denied on service account 892892382088-compute@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com (or it may not exist). This command is authenticated as rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com using the credentials in /home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json, specified by the [auth/credential_file_override] property.
+Deploy API	Deploy API to Cloud Run	2026-05-10T19:41:13.7934123Z ##[error]Process completed with exit code 1.
+Deploy API	Post Authenticate to Google Cloud via Workload Identity Federation	﻿2026-05-10T19:41:13.8073856Z Post job cleanup.
+Deploy API	Post Authenticate to Google Cloud via Workload Identity Federation	2026-05-10T19:41:13.8934157Z Removed exported credentials at "/home/runner/work/real-time-data-platform/real-time-data-platform/gha-creds-0c13308aae9cee21.json".
+Deploy API	Post Checkout repository	﻿2026-05-10T19:41:13.9056084Z Post job cleanup.
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0027873Z [command]/usr/bin/git version
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0063900Z git version 2.53.0
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0104013Z Temporarily overriding HOME='/home/runner/work/_temp/c0feea5b-8386-4d53-8519-90a96b28ffa5' before making global git config changes
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0104940Z Adding repository directory to the temporary git global config as a safe directory
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0117523Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/real-time-data-platform/real-time-data-platform
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0152624Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0186165Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0424231Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0446275Z http.https://github.com/.extraheader
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0458846Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0490305Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0721874Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Deploy API	Post Checkout repository	2026-05-10T19:41:14.0753459Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Deploy API	Complete job	﻿2026-05-10T19:41:14.1111375Z Cleaning up orphan processes
+Deploy API	Complete job	2026-05-10T19:41:14.1403739Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, google-github-actions/auth@v2, google-github-actions/setup-gcloud@v2. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
