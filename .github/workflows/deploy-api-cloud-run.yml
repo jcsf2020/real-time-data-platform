@@ -57,7 +57,7 @@ jobs:
             --project="${PROJECT_ID}" \
             --region="${REGION}" \
             --image="${IMAGE_URI}" \
-            --service-account="892892382088-compute@${PROJECT_ID}.iam.gserviceaccount.com" \
+            --service-account="892892382088-compute@developer.gserviceaccount.com" \
             --set-secrets="DATABASE_URL=rtdp-database-url:latest" \
             --set-env-vars="SERVICE_NAME=${SERVICE_NAME},SERVICE_VERSION=${SERVICE_VERSION},ENVIRONMENT=${ENVIRONMENT}" \
             --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \
@@ -87,7 +87,7 @@ jobs:
           env = container.get("env", [])
 
           expected_image = os.environ["IMAGE_URI"]
-          expected_service_account = f"892892382088-compute@{os.environ['PROJECT_ID']}.iam.gserviceaccount.com"
+          expected_service_account = "892892382088-compute@developer.gserviceaccount.com"
           expected_cloud_sql = f"{os.environ['PROJECT_ID']}:{os.environ['REGION']}:rtdp-postgres"
 
           actual_image = container["image"]
