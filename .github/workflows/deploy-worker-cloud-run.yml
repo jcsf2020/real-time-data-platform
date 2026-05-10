@@ -61,9 +61,77 @@ jobs:
             --max-instances=1 \
             --quiet
 
-      - name: Confirm deployed revision
+      - name: Verify deployed worker configuration
         run: |
           gcloud run services describe "${CLOUD_RUN_SERVICE}" \
             --project="${PROJECT_ID}" \
             --region="${REGION}" \
-            --format="yaml(metadata.name,status.latestReadyRevisionName,spec.template.spec.serviceAccountName,spec.template.spec.containers[0].image,spec.template.spec.containers[0].env,spec.template.spec.containerConcurrency,spec.template.metadata.annotations)"
+            --format=json > /tmp/cloud-run-worker-service.json
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          service = json.loads(Path("/tmp/cloud-run-worker-service.json").read_text())
+
+          template = service["spec"]["template"]
+          spec = template["spec"]
+          metadata = template.get("metadata", {})
+          annotations = metadata.get("annotations", {})
+          container = spec["containers"][0]
+          env = container.get("env", [])
+
+          expected_image = os.environ["IMAGE_URI"]
+          expected_service_account = f"rtdp-worker-sa@{os.environ['PROJECT_ID']}.iam.gserviceaccount.com"
+          expected_cloud_sql = f"{os.environ['PROJECT_ID']}:{os.environ['REGION']}:rtdp-postgres"
+
+          actual_image = container["image"]
+          actual_service_account = spec["serviceAccountName"]
+          actual_concurrency = int(spec["containerConcurrency"])
+          actual_cloud_sql = annotations.get("run.googleapis.com/cloudsql-instances")
+          actual_max_scale = annotations.get("autoscaling.knative.dev/maxScale")
+          latest_revision = service["status"]["latestReadyRevisionName"]
+
+          secret_refs = {
+              item.get("name"): item.get("valueFrom", {}).get("secretKeyRef", {})
+              for item in env
+          }
+          database_url_ref = secret_refs.get("DATABASE_URL", {})
+
+          checks = {
+              "image": actual_image == expected_image,
+              "service_account": actual_service_account == expected_service_account,
+              "database_url_secret_name": database_url_ref.get("name") == "rtdp-database-url",
+              "database_url_secret_key": database_url_ref.get("key") == "latest",
+              "cloud_sql_instance": actual_cloud_sql == expected_cloud_sql,
+              "container_concurrency": actual_concurrency == 1,
+              "max_scale": actual_max_scale == "1",
+          }
+
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print("POST_DEPLOY_CHECKS_FAILED=" + ",".join(failed))
+              print(json.dumps({
+                  "latest_revision": latest_revision,
+                  "actual_image": actual_image,
+                  "expected_image": expected_image,
+                  "actual_service_account": actual_service_account,
+                  "expected_service_account": expected_service_account,
+                  "database_url_ref": database_url_ref,
+                  "actual_cloud_sql": actual_cloud_sql,
+                  "expected_cloud_sql": expected_cloud_sql,
+                  "actual_concurrency": actual_concurrency,
+                  "actual_max_scale": actual_max_scale,
+              }, indent=2, sort_keys=True))
+              raise SystemExit(1)
+
+          print("POST_DEPLOY_CHECKS_OK=true")
+          print("LATEST_READY_REVISION=" + latest_revision)
+          print("DEPLOYED_IMAGE=" + actual_image)
+          print("RUNTIME_SERVICE_ACCOUNT=" + actual_service_account)
+          print("DATABASE_URL_SECRET=rtdp-database-url:latest")
+          print("CLOUD_SQL_INSTANCE=" + actual_cloud_sql)
+          print("CONTAINER_CONCURRENCY=1")
+          print("MAX_SCALE=1")
+          PY
