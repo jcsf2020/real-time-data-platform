@@ -1,0 +1,17 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_service_account_iam_member.cloud_run_deploy_ci_api_service_account_user will be created
+  + resource "google_service_account_iam_member" "cloud_run_deploy_ci_api_service_account_user" {
+      + etag               = (known after apply)
+      + id                 = (known after apply)
+      + member             = "serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+      + role               = "roles/iam.serviceAccountUser"
+      + service_account_id = "projects/project-42987e01-2123-446b-ac7/serviceAccounts/892892382088-compute@developer.gserviceaccount.com"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.

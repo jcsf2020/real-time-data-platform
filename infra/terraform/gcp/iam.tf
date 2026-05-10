@@ -90,3 +90,13 @@ resource "google_service_account_iam_member" "cloud_run_deploy_ci_worker_service
     google_service_account.rtdp_cloud_run_deploy_ci,
   ]
 }
+
+resource "google_service_account_iam_member" "cloud_run_deploy_ci_api_service_account_user" {
+  service_account_id = "projects/${var.project_id}/serviceAccounts/892892382088-compute@developer.gserviceaccount.com"
+  role               = "roles/iam.serviceAccountUser"
+  member             = local.cloud_run_deploy_ci_member
+
+  depends_on = [
+    google_service_account.rtdp_cloud_run_deploy_ci,
+  ]
+}
