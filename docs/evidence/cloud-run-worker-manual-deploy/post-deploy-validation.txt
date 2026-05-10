@@ -1,0 +1,85 @@
+--- WORKER AFTER DEPLOY ---
+metadata:
+  name: rtdp-pubsub-worker
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '1'
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 564.0.0
+        run.googleapis.com/cloudsql-instances: project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres
+        run.googleapis.com/startup-cpu-boost: 'true'
+    spec:
+      containerConcurrency: 1
+      containers:
+      - env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: latest
+              name: rtdp-database-url
+        image: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker:b9752c02b4ba0eec827aebe2420c2fdb92b5640b
+      serviceAccountName: rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com
+status:
+  latestReadyRevisionName: rtdp-pubsub-worker-00004-cld
+
+--- ARTIFACT REGISTRY IMAGES ---
+IMAGE                                                                               DIGEST                                                                   TAGS                                      CREATE_TIME          UPDATE_TIME          SIZE
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:0ea733d0c07275b10fd109cac88cf75be07ce0389ee4eb765ed82ebfe3dfb476                                            2026-05-05T11:11:15  2026-05-05T11:11:15  81213351
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:13e47a4f95730808b7bfe514b117a60284811a6f2b6c8ccb1f3296da44508a6e                                            2026-05-04T19:20:16  2026-05-04T19:20:16  1594
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:3ab0d473494be644ce150584bc9096348157b8af095d72d693d8553bd3fece4e                                            2026-05-04T19:20:16  2026-05-05T11:11:16
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:739a225723d0f6c9576dc0a00dff681ca34dcba4f99c9a2fc4236029b304fb1c  b9752c02b4ba0eec827aebe2420c2fdb92b5640b  2026-05-10T08:20:01  2026-05-10T08:20:01  82216443
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:74a541abe379c94b2c6eaba8b69ba79a2866f9c49a269b7cc0280e91fcda1413  latest                                    2026-05-05T11:11:16  2026-05-05T11:11:16
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:922b77abae3201af8b211a709475c67834fc707b4e1529b7edb7cc353024ca11                                            2026-05-04T19:20:15  2026-05-04T19:20:15  81201530
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:93167dcc0b158693ba4ba7f50900ca2ca4bcb8f120168ae9c6096beb821ae427                                            2026-05-05T11:11:15  2026-05-05T11:11:15  1594
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:96ba3acb410e3bd2229d37e866df610147877d51e1536230c6d02959bdfad194                                            2026-05-04T18:20:50  2026-05-04T18:20:50  83818539
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:f681d42fb6382425e4c1294ce463d7ad420a47eff69887817c888e690a13409f                                            2026-05-04T18:20:50  2026-05-04T18:20:50  1594
+europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-pubsub-worker  sha256:feab7d762b8c82884289fa2920d56da71bf94ec0c6f09f62a419aa67503478ab                                            2026-05-04T18:20:50  2026-05-04T19:20:16
+
+--- TERRAFORM FINAL PLAN ---
+[0m[1mgoogle_logging_metric.silver_refresh_error_count: Refreshing state... [id=silver_refresh_error_count][0m
+[0m[1mgoogle_logging_metric.worker_message_error_count: Refreshing state... [id=worker_message_error_count][0m
+[0m[1mgoogle_project_iam_member.compute_cloudsql_client: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/cloudsql.client/serviceAccount:892892382088-compute@developer.gserviceaccount.com][0m
+[0m[1mgoogle_project_iam_member.scheduler_run_invoker: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/run.invoker/serviceAccount:rtdp-scheduler-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_project_iam_member.terraform_plan_ci_viewer: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/viewer/serviceAccount:rtdp-terraform-plan-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_service_account.rtdp_scheduler_sa: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-scheduler-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_service_account.rtdp_pubsub_push_sa: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-pubsub-push-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_monitoring_alert_policy.worker_error: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/alertPolicies/5769368960767699129][0m
+[0m[1mgoogle_sql_database_instance.rtdp_postgres: Refreshing state... [id=rtdp-postgres][0m
+[0m[1mgoogle_cloud_run_v2_service.rtdp_api: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/locations/europe-west1/services/rtdp-api][0m
+[0m[1mgoogle_artifact_registry_repository.rtdp: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/locations/europe-west1/repositories/rtdp][0m
+[0m[1mgoogle_cloud_run_v2_job.rtdp_silver_refresh_job: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/locations/europe-west1/jobs/rtdp-silver-refresh-job][0m
+[0m[1mgoogle_project_iam_member.compute_artifactregistry_writer: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/artifactregistry.writer/serviceAccount:892892382088-compute@developer.gserviceaccount.com][0m
+[0m[1mgoogle_cloud_run_v2_service.rtdp_pubsub_worker: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/locations/europe-west1/services/rtdp-pubsub-worker][0m
+[0m[1mgoogle_project_iam_member.compute_logging_log_writer: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/logging.logWriter/serviceAccount:892892382088-compute@developer.gserviceaccount.com][0m
+[0m[1mgoogle_logging_metric.worker_message_processed_count: Refreshing state... [id=worker_message_processed_count][0m
+[0m[1mgoogle_project_iam_member.compute_storage_object_viewer: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/storage.objectViewer/serviceAccount:892892382088-compute@developer.gserviceaccount.com][0m
+[0m[1mgoogle_service_account.rtdp_worker_sa: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_cloud_scheduler_job.silver_refresh_scheduler: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/locations/europe-west1/jobs/rtdp-silver-refresh-scheduler][0m
+[0m[1mgoogle_monitoring_dashboard.rtdp_pipeline_overview: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/dashboards/1277f289-1f9a-4983-944f-913ce0f92622][0m
+[0m[1mgoogle_service_account.rtdp_cloud_run_deploy_ci: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_pubsub_topic.market_events_raw_dlq: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/topics/market-events-raw-dlq][0m
+[0m[1mgoogle_monitoring_alert_policy.silver_refresh_error: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/alertPolicies/10553646324755759042][0m
+[0m[1mgoogle_pubsub_topic.market_events_raw: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/topics/market-events-raw][0m
+[0m[1mgoogle_logging_metric.silver_refresh_success_count: Refreshing state... [id=silver_refresh_success_count][0m
+[0m[1mgoogle_secret_manager_secret.rtdp_database_url: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/secrets/rtdp-database-url][0m
+[0m[1mgoogle_iam_workload_identity_pool.github_actions: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/locations/global/workloadIdentityPools/github-actions][0m
+[0m[1mgoogle_project_iam_member.worker_cloudsql_client: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/cloudsql.client/serviceAccount:rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_service_account.rtdp_terraform_plan_ci: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-terraform-plan-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_project_iam_member.cloud_run_deploy_ci_run_developer: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/run.developer/serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_service_account_iam_member.cloud_run_deploy_ci_worker_service_account_user: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-worker-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com/roles/iam.serviceAccountUser/serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_service_account_iam_member.cloud_run_deploy_ci_workload_identity_user: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/principalSet://iam.googleapis.com/projects/892892382088/locations/global/workloadIdentityPools/github-actions/attribute.repository/jcsf2020/real-time-data-platform][0m
+[0m[1mgoogle_project_iam_member.cloud_run_deploy_ci_artifactregistry_writer: Refreshing state... [id=project-42987e01-2123-446b-ac7/roles/artifactregistry.writer/serviceAccount:rtdp-cloud-run-deploy-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com][0m
+[0m[1mgoogle_pubsub_subscription.market_events_raw_worker_push: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/subscriptions/market-events-raw-worker-push][0m
+[0m[1mgoogle_iam_workload_identity_pool_provider.github: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/locations/global/workloadIdentityPools/github-actions/providers/github][0m
+[0m[1mgoogle_service_account_iam_member.terraform_plan_ci_workload_identity_user: Refreshing state... [id=projects/project-42987e01-2123-446b-ac7/serviceAccounts/rtdp-terraform-plan-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com/roles/iam.workloadIdentityUser/principalSet://iam.googleapis.com/projects/892892382088/locations/global/workloadIdentityPools/github-actions/attribute.repository/jcsf2020/real-time-data-platform][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+terraform_plan_exit_code=0
+
+--- CLOUD SQL AFTER DEPLOY ---
+NEVER	STOPPED
