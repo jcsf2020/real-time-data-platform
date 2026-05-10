@@ -89,3 +89,67 @@ BEGIN
 END;
 $$;
 
+CREATE TABLE IF NOT EXISTS gold.market_event_daily_aggregates (
+    symbol TEXT NOT NULL,
+    event_date DATE NOT NULL,
+    event_count BIGINT NOT NULL,
+    avg_price NUMERIC(18, 8) NOT NULL,
+    min_price NUMERIC(18, 8) NOT NULL,
+    max_price NUMERIC(18, 8) NOT NULL,
+    total_quantity NUMERIC(18, 8) NOT NULL,
+    first_event_timestamp TIMESTAMPTZ NOT NULL,
+    last_event_timestamp TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (symbol, event_date)
+);
+
+CREATE OR REPLACE FUNCTION gold.refresh_market_event_daily_aggregates()
+RETURNS BIGINT
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    affected_rows BIGINT;
+BEGIN
+    INSERT INTO gold.market_event_daily_aggregates (
+        symbol,
+        event_date,
+        event_count,
+        avg_price,
+        min_price,
+        max_price,
+        total_quantity,
+        first_event_timestamp,
+        last_event_timestamp,
+        updated_at
+    )
+    SELECT
+        symbol,
+        event_timestamp::date AS event_date,
+        COUNT(*) AS event_count,
+        AVG(price)::NUMERIC(18, 8) AS avg_price,
+        MIN(price)::NUMERIC(18, 8) AS min_price,
+        MAX(price)::NUMERIC(18, 8) AS max_price,
+        SUM(quantity)::NUMERIC(18, 8) AS total_quantity,
+        MIN(event_timestamp) AS first_event_timestamp,
+        MAX(event_timestamp) AS last_event_timestamp,
+        NOW() AS updated_at
+    FROM bronze.market_events
+    GROUP BY
+        symbol,
+        event_timestamp::date
+    ON CONFLICT (symbol, event_date)
+    DO UPDATE SET
+        event_count = EXCLUDED.event_count,
+        avg_price = EXCLUDED.avg_price,
+        min_price = EXCLUDED.min_price,
+        max_price = EXCLUDED.max_price,
+        total_quantity = EXCLUDED.total_quantity,
+        first_event_timestamp = EXCLUDED.first_event_timestamp,
+        last_event_timestamp = EXCLUDED.last_event_timestamp,
+        updated_at = NOW();
+
+    GET DIAGNOSTICS affected_rows = ROW_COUNT;
+    RETURN affected_rows;
+END;
+$$;
+

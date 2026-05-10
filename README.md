@@ -125,6 +125,7 @@ silver.refresh_market_event_minute_aggregates()
 FastAPI
   → /events          → queries bronze.market_events
   → /aggregates/minute → queries silver.market_event_minute_aggregates
+  → /aggregates/daily  → queries gold.market_event_daily_aggregates
   → /metrics         → queries observability.pipeline_metrics
   → /metrics-prometheus → formats latest metrics as Prometheus gauge text
 ```
@@ -187,6 +188,7 @@ docker exec -it rtdp-postgres psql -U rtdp -d realtime_platform \
 | GET | `/metrics` | Pipeline metric time-series (default: 50, max: 200) |
 | GET | `/metrics-prometheus` | Latest metrics as Prometheus gauge text (MIME: `text/plain`) |
 | GET | `/aggregates/minute` | Per-symbol per-minute rollups from `silver` (default: 20, max: 200) |
+| GET | `/aggregates/daily` | Per-symbol per-day rollups from `gold` (default: 20, max: 200) |
 
 ---
 
@@ -238,7 +240,7 @@ class MarketEvent(BaseModel):
 |---|---|---|
 | `bronze` | Raw validated events — append-only, full fidelity | Implemented |
 | `silver` | Cleaned, aggregated — minute-level rollups by symbol | Implemented |
-| `gold` | Business-level aggregates (e.g. daily, weekly summaries) | Planned |
+| `gold` | Business-level aggregates (e.g. daily, weekly summaries) | Local implementation |
 | `observability` | Pipeline health metrics time-series | Implemented |
 | `ai` | Embedding storage for vector search (pgvector) | Schema created |
 
@@ -484,10 +486,14 @@ This project demonstrates practical Data Engineering skills relevant to streamin
 - Scheduled execution proof for `rtdp-silver-refresh-job`
 - Accepted 100 / 1,000 / 5,000-event cloud load tests
 
+**Implemented (local, pending cloud deployment):**
+
+- `gold.market_event_daily_aggregates` table, refresh function, and `/aggregates/daily` endpoint
+
 **Planned (next phases):**
-- Add Terraform / IaC baseline for GCP resources
+
 - Add BigQuery or Dataflow analytical tier
-- Add CI/CD deployment automation to GCP
-- Populate `gold` schema with business-level daily/weekly aggregates
+- Add automatic deploy-on-merge only if later required
+- Deploy gold layer to Cloud SQL
 - Populate `ai.market_event_embeddings` with pgvector embeddings
 - Keep README and evidence docs aligned with execution state

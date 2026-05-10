@@ -151,6 +151,31 @@ def minute_aggregates(limit: int = 20) -> list[dict[str, Any]]:
     )
 
 
+@app.get("/aggregates/daily")
+def daily_aggregates(limit: int = 20) -> list[dict[str, Any]]:
+    safe_limit = min(max(limit, 1), 200)
+
+    return fetch_all(
+        """
+            SELECT
+                symbol,
+                event_date,
+                event_count,
+                avg_price::float AS avg_price,
+                min_price::float AS min_price,
+                max_price::float AS max_price,
+                total_quantity::float AS total_quantity,
+                first_event_timestamp,
+                last_event_timestamp,
+                updated_at
+            FROM gold.market_event_daily_aggregates
+            ORDER BY event_date DESC, symbol
+            LIMIT %s;
+        """,
+        (safe_limit,),
+    )
+
+
 @app.get("/metrics-prometheus")
 def metrics_prometheus() -> Response:
     rows = fetch_all(

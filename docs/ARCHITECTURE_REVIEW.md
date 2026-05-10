@@ -98,7 +98,8 @@ The PostgreSQL database (`realtime_platform`) uses a medallion schema layout:
 - `bronze.market_events` -- raw validated events; append-only, full fidelity.
 - `silver.market_event_minute_aggregates` -- per-symbol per-minute rollup aggregates,
   populated by `silver.refresh_market_event_minute_aggregates()`.
-- `gold` -- schema defined; no business-level aggregates populated.
+- `gold` -- `gold.market_event_daily_aggregates` table and `gold.refresh_market_event_daily_aggregates()`
+  function implemented locally; cloud deployment evidence is pending.
 - `observability.pipeline_metrics` -- consumer metric time-series (local consumer only).
 - `ai.market_event_embeddings` -- pgvector-enabled table; schema created, not populated.
 
@@ -190,7 +191,8 @@ continuously running production service.
 
 ## Known Remaining Gaps
 
-- **Gold analytics layer**: `gold` schema defined; no business-level aggregates populated.
+- **Gold analytics layer**: gold daily aggregates are implemented locally and documented;
+  cloud deployment evidence is pending.
 - **dbt / transformation governance**: no SQL transformation framework or lineage tracking.
 - **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
   sustained streaming performance is not validated.
