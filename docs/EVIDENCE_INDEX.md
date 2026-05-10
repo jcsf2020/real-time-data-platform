@@ -157,7 +157,9 @@ are verified across the evidence base:
 
 ## Known Remaining Gaps
 
-- Gold analytics layer: schema is defined; no business-level aggregates have been populated.
+- Gold analytics layer: `gold.market_event_daily_aggregates` table and refresh function are
+  implemented locally (branch: feat/gold-daily-aggregates); cloud deployment evidence is pending.
+  See [docs/gold-daily-aggregates-evidence.md](gold-daily-aggregates-evidence.md).
 - dbt or SQL transformation governance is not implemented.
 - Sustained throughput validation above 5,000 events is pending.
 - BigQuery and Dataflow remain target architecture items; neither is implemented.
