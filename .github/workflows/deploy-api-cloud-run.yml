@@ -1,0 +1,144 @@
+name: Deploy API to Cloud Run
+
+"on":
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy-api:
+    name: Deploy API
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: project-42987e01-2123-446b-ac7
+      REGION: europe-west1
+      ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+      ARTIFACT_REGISTRY_REPOSITORY: rtdp
+      IMAGE_NAME: rtdp-api
+      CLOUD_RUN_SERVICE: rtdp-api
+      SERVICE_NAME: rtdp-api
+      SERVICE_VERSION: 0.1.0-pagination-fix
+      ENVIRONMENT: gcp-cloud-run
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_CLOUD_RUN_DEPLOY_SERVICE_ACCOUNT }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker "${ARTIFACT_REGISTRY_HOST}" --quiet
+
+      - name: Build API image
+        run: |
+          IMAGE_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:${GITHUB_SHA}"
+          echo "IMAGE_URI=${IMAGE_URI}" >> "${GITHUB_ENV}"
+          docker build \
+            --file Dockerfile \
+            --tag "${IMAGE_URI}" \
+            .
+
+      - name: Push API image
+        run: docker push "${IMAGE_URI}"
+
+      - name: Deploy API to Cloud Run
+        run: |
+          gcloud run deploy "${CLOUD_RUN_SERVICE}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --image="${IMAGE_URI}" \
+            --service-account="892892382088-compute@${PROJECT_ID}.iam.gserviceaccount.com" \
+            --set-secrets="DATABASE_URL=rtdp-database-url:latest" \
+            --set-env-vars="SERVICE_NAME=${SERVICE_NAME},SERVICE_VERSION=${SERVICE_VERSION},ENVIRONMENT=${ENVIRONMENT}" \
+            --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \
+            --concurrency=80 \
+            --max-instances=20 \
+            --quiet
+
+      - name: Verify deployed API configuration
+        run: |
+          gcloud run services describe "${CLOUD_RUN_SERVICE}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --format=json > /tmp/cloud-run-api-service.json
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          service = json.loads(Path("/tmp/cloud-run-api-service.json").read_text())
+
+          template = service["spec"]["template"]
+          spec = template["spec"]
+          metadata = template.get("metadata", {})
+          annotations = metadata.get("annotations", {})
+          container = spec["containers"][0]
+          env = container.get("env", [])
+
+          expected_image = os.environ["IMAGE_URI"]
+          expected_service_account = f"892892382088-compute@{os.environ['PROJECT_ID']}.iam.gserviceaccount.com"
+          expected_cloud_sql = f"{os.environ['PROJECT_ID']}:{os.environ['REGION']}:rtdp-postgres"
+
+          actual_image = container["image"]
+          actual_service_account = spec["serviceAccountName"]
+          actual_concurrency = int(spec["containerConcurrency"])
+          actual_cloud_sql = annotations.get("run.googleapis.com/cloudsql-instances")
+          actual_max_scale = annotations.get("autoscaling.knative.dev/maxScale")
+          latest_revision = service["status"]["latestReadyRevisionName"]
+
+          env_map = {item.get("name"): item for item in env}
+          database_url_ref = env_map.get("DATABASE_URL", {}).get("valueFrom", {}).get("secretKeyRef", {})
+
+          checks = {
+              "image": actual_image == expected_image,
+              "service_account": actual_service_account == expected_service_account,
+              "database_url_secret_name": database_url_ref.get("name") == "rtdp-database-url",
+              "database_url_secret_key": database_url_ref.get("key") == "latest",
+              "service_name": env_map.get("SERVICE_NAME", {}).get("value") == os.environ["SERVICE_NAME"],
+              "service_version": env_map.get("SERVICE_VERSION", {}).get("value") == os.environ["SERVICE_VERSION"],
+              "environment": env_map.get("ENVIRONMENT", {}).get("value") == os.environ["ENVIRONMENT"],
+              "cloud_sql_instance": actual_cloud_sql == expected_cloud_sql,
+              "container_concurrency": actual_concurrency == 80,
+              "max_scale": actual_max_scale == "20",
+          }
+
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print("POST_DEPLOY_API_CHECKS_FAILED=" + ".".join(failed))
+              print(json.dumps({
+                  "latest_revision": latest_revision,
+                  "actual_image": actual_image,
+                  "expected_image": expected_image,
+                  "actual_service_account": actual_service_account,
+                  "expected_service_account": expected_service_account,
+                  "database_url_ref": database_url_ref,
+                  "actual_cloud_sql": actual_cloud_sql,
+                  "expected_cloud_sql": expected_cloud_sql,
+                  "actual_concurrency": actual_concurrency,
+                  "actual_max_scale": actual_max_scale,
+              }, indent=2, sort_keys=True))
+              raise SystemExit(1)
+
+          print("POST_DEPLOY_API_CHECKS_OK=true")
+          print("LATEST_READY_REVISION=", latest_revision)
+          print("DEPLOYED_IMAGE=" + actual_image)
+          print("RUNTIME_SERVICE_ACCOUNT=" + actual_service_account)
+          print("DATABASE_URL_SECRET=rtdp-database-url:latest")
+          print("SERVICE_NAME=" + os.environ["SERVICE_NAME"])
+          print("SERVICE_VERSION=" + os.environ["SERVICE_VERSION"])
+          print("ENVIRONMENT=" + os.environ["ENVIRONMENT"])
+          print("CLOUD_SQL_INSTANCE=" + actual_cloud_sql)
+          print("CONTAINER_CONCURRENCY=80")
+          print("MAX_SCALE=20")
+          PY
