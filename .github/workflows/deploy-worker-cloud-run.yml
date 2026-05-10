@@ -1,0 +1,69 @@
+name: Deploy Worker to Cloud Run
+
+"on":
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy-worker:
+    name: Deploy Pub/Sub worker
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: project-42987e01-2123-446b-ac7
+      REGION: europe-west1
+      ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+      ARTIFACT_REGISTRY_REPOSITORY: rtdp
+      IMAGE_NAME: rtdp-pubsub-worker
+      CLOUD_RUN_SERVICE: rtdp-pubsub-worker
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_CLOUD_RUN_DEPLOY_SERVICE_ACCOUNT }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker "${ARTIFACT_REGISTRY_HOST}" --quiet
+
+      - name: Build worker image
+        run: |
+          IMAGE_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:${GITHUB_SHA}"
+          echo "IMAGE_URI=${IMAGE_URI}" >> "${GITHUB_ENV}"
+          docker build \
+            --file apps/pubsub-worker/Dockerfile \
+            --tag "${IMAGE_URI}" \
+            .
+
+      - name: Push worker image
+        run: docker push "${IMAGE_URI}"
+
+      - name: Deploy worker to Cloud Run
+        run: |
+          gcloud run deploy "${CLOUD_RUN_SERVICE}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --image="${IMAGE_URI}" \
+            --service-account="rtdp-worker-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+            --set-secrets="DATABASE_URL=rtdp-database-url:latest" \
+            --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \
+            --concurrency=1 \
+            --max-instances=1 \
+            --quiet
+
+      - name: Confirm deployed revision
+        run: |
+          gcloud run services describe "${CLOUD_RUN_SERVICE}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --format="yaml(metadata.name,status.latestReadyRevisionName,spec.template.spec.serviceAccountName,spec.template.spec.containers[0].image,spec.template.spec.containers[0].env,spec.template.spec.containerConcurrency,spec.template.metadata.annotations)"
