@@ -1,0 +1,10 @@
+--- API ROUTE DEPLOYED BEFORE SQL ---
+Manual API deploy completed successfully.
+Cloud Run revision changed from rtdp-api-00007-9gd to rtdp-api-00008-hk7.
+Cloud Run image changed to commit SHA tag 1922a55de0112c69cc6b16c31691dc38899620c2.
+GET /aggregates/daily no longer returns HTTP 404 after API deploy.
+GET /aggregates/daily timed out while Cloud SQL remained NEVER / STOPPED.
+Conclusion: route is deployed; database validation requires controlled Cloud SQL start.
+
+--- CURRENT CLOUD SQL STATE ---
+NEVER	STOPPED

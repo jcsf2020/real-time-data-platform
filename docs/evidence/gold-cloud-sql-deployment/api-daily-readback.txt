@@ -1,0 +1,14 @@
+--- API DAILY READBACK AFTER GOLD SQL ---
+timestamp_utc=2026-05-12T19:33:53Z
+
+HTTP/2 200 
+content-type: application/json
+x-cloud-trace-context: 71cc6e8c46df983b3583b2db9f13b146;o=1
+date: Tue, 12 May 2026 19:33:57 GMT
+server: Google Frontend
+content-length: 1981
+alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+
+[{"symbol":"ADAUSDT","event_date":"2026-05-05","event_count":1,"avg_price":0.45,"min_price":0.45,"max_price":0.45,"total_quantity":100.0,"first_event_timestamp":"2026-05-05T14:00:00Z","last_event_timestamp":"2026-05-05T14:00:00Z","updated_at":"2026-05-12T19:32:37.148808Z"},{"symbol":"SOLUSDT","event_date":"2026-05-05","event_count":1,"avg_price":145.5,"min_price":145.5,"max_price":145.5,"total_quantity":2.0,"first_event_timestamp":"2026-05-05T06:30:00Z","last_event_timestamp":"2026-05-05T06:30:00Z","updated_at":"2026-05-12T19:32:37.148808Z"},{"symbol":"BTCUSDT","event_date":"2026-05-04","event_count":1,"avg_price":67500.0,"min_price":67500.0,"max_price":67500.0,"total_quantity":0.01,"first_event_timestamp":"2026-05-04T06:30:00Z","last_event_timestamp":"2026-05-04T06:30:00Z","updated_at":"2026-05-12T19:32:37.148808Z"},{"symbol":"ETHUSDT","event_date":"2026-05-04","event_count":1,"avg_price":3200.0,"min_price":3200.0,"max_price":3200.0,"total_quantity":0.1,"first_event_timestamp":"2026-05-04T09:05:00Z","last_event_timestamp":"2026-05-04T09:05:00Z","updated_at":"2026-05-12T19:32:37.148808Z"},{"symbol":"BTCUSDT","event_date":"2026-01-01","event_count":2035,"avg_price":67500.49508108,"min_price":67500.0,"max_price":67500.99,"total_quantity":121.099,"first_event_timestamp":"2026-01-01T00:00:00Z","last_event_timestamp":"2026-01-01T01:23:18Z","updated_at":"2026-05-12T19:32:37.148808Z"},{"symbol":"ETHUSDT","event_date":"2026-01-01","event_count":2033,"avg_price":3200.49475652,"min_price":3200.0,"max_price":3200.99,"total_quantity":120.914,"first_event_timestamp":"2026-01-01T00:00:01Z","last_event_timestamp":"2026-01-01T01:23:19Z","updated_at":"2026-05-12T19:32:37.148808Z"},{"symbol":"SOLUSDT","event_date":"2026-01-01","event_count":2032,"avg_price":150.4951624,"min_price":150.0,"max_price":150.99,"total_quantity":120.937,"first_event_timestamp":"2026-01-01T00:00:02Z","last_event_timestamp":"2026-01-01T01:23:17Z","updated_at":"2026-05-12T19:32:37.148808Z"}]
+--- CLOUD SQL STATE DURING API READBACK ---
+ALWAYS	RUNNABLE

@@ -1,0 +1,18 @@
+--- STOP CLOUD SQL AFTER MISSING PROXY ---
+timestamp_utc=2026-05-12T19:21:34Z
+
+--- REASON ---
+Cloud SQL Auth Proxy is not installed locally.
+SQL deployment cannot proceed safely from local terminal.
+Stopping Cloud SQL before continuing.
+
+--- BEFORE STOP ---
+ALWAYS	RUNNABLE
+
+--- STOP COMMAND ---
+
+--- WAIT FOR STOPPED ---
+attempt=1 activationPolicy=NEVER state=STOPPED
+
+--- AFTER STOP ---
+NEVER	STOPPED

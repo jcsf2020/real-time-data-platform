@@ -1,0 +1,135 @@
+--- BRANCH ---
+## evidence/gold-cloud-sql-deployment
+?? docs/evidence/gold-cloud-sql-deployment/
+
+--- CLOUD SQL BASELINE ---
+NEVER	STOPPED
+
+--- API CURRENT REVISION ---
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '20'
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 564.0.0
+        run.googleapis.com/cloudsql-instances: project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres
+        run.googleapis.com/startup-cpu-boost: 'true'
+    spec:
+      containerConcurrency: 80
+      containers:
+      - image: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-api:66ac7fef54496bc11635f946928d4a9afe8ecfcb
+      serviceAccountName: 892892382088-compute@developer.gserviceaccount.com
+status:
+  latestReadyRevisionName: rtdp-api-00007-9gd
+
+--- GOLD RUNBOOK CONFIRMATION ---
+1:# Gold Cloud SQL Deployment Runbook
+3:This is a future execution runbook. It does not prove deployment has occurred.
+5:Cloud SQL default resting state remains `NEVER / STOPPED`.
+62:## SQL To Apply
+164:## Acceptance Criteria
+
+--- LOCAL GOLD SQL CONFIRMATION ---
+87-    GET DIAGNOSTICS affected_rows = ROW_COUNT;
+88-    RETURN affected_rows;
+89-END;
+90-$$;
+91-
+92:CREATE TABLE IF NOT EXISTS gold.market_event_daily_aggregates (
+93-    symbol TEXT NOT NULL,
+94-    event_date DATE NOT NULL,
+95-    event_count BIGINT NOT NULL,
+96-    avg_price NUMERIC(18, 8) NOT NULL,
+97-    min_price NUMERIC(18, 8) NOT NULL,
+98-    max_price NUMERIC(18, 8) NOT NULL,
+99-    total_quantity NUMERIC(18, 8) NOT NULL,
+100-    first_event_timestamp TIMESTAMPTZ NOT NULL,
+101-    last_event_timestamp TIMESTAMPTZ NOT NULL,
+102-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+103-    PRIMARY KEY (symbol, event_date)
+104-);
+105-
+106:CREATE OR REPLACE FUNCTION gold.refresh_market_event_daily_aggregates()
+107-RETURNS BIGINT
+108-LANGUAGE plpgsql
+109-AS $$
+110-DECLARE
+111-    affected_rows BIGINT;
+112-BEGIN
+113:    INSERT INTO gold.market_event_daily_aggregates (
+114-        symbol,
+115-        event_date,
+116-        event_count,
+117-        avg_price,
+118-        min_price,
+119-        max_price,
+120-        total_quantity,
+121-        first_event_timestamp,
+122-        last_event_timestamp,
+123-        updated_at
+124-    )
+125-    SELECT
+126-        symbol,
+127-        event_timestamp::date AS event_date,
+128-        COUNT(*) AS event_count,
+129-        AVG(price)::NUMERIC(18, 8) AS avg_price,
+130-        MIN(price)::NUMERIC(18, 8) AS min_price,
+131-        MAX(price)::NUMERIC(18, 8) AS max_price,
+132-        SUM(quantity)::NUMERIC(18, 8) AS total_quantity,
+133-        MIN(event_timestamp) AS first_event_timestamp,
+134-        MAX(event_timestamp) AS last_event_timestamp,
+135-        NOW() AS updated_at
+136-    FROM bronze.market_events
+137-    GROUP BY
+138-        symbol,
+139-        event_timestamp::date
+140-    ON CONFLICT (symbol, event_date)
+141-    DO UPDATE SET
+142-        event_count = EXCLUDED.event_count,
+143-        avg_price = EXCLUDED.avg_price,
+144-        min_price = EXCLUDED.min_price,
+145-        max_price = EXCLUDED.max_price,
+146-        total_quantity = EXCLUDED.total_quantity,
+147-        first_event_timestamp = EXCLUDED.first_event_timestamp,
+148-        last_event_timestamp = EXCLUDED.last_event_timestamp,
+149-        updated_at = NOW();
+150-
+151-    GET DIAGNOSTICS affected_rows = ROW_COUNT;
+152-    RETURN affected_rows;
+153-END;
+154-$$;
+155-
+
+--- API DAILY ENDPOINT CONFIRMATION ---
+154:@app.get("/aggregates/daily")
+155-def daily_aggregates(limit: int = 20) -> list[dict[str, Any]]:
+156-    safe_limit = min(max(limit, 1), 200)
+157-
+158-    return fetch_all(
+159-        """
+160-            SELECT
+161-                symbol,
+162-                event_date,
+163-                event_count,
+164-                avg_price::float AS avg_price,
+165-                min_price::float AS min_price,
+166-                max_price::float AS max_price,
+167-                total_quantity::float AS total_quantity,
+168-                first_event_timestamp,
+169-                last_event_timestamp,
+170-                updated_at
+171-            FROM gold.market_event_daily_aggregates
+172-            ORDER BY event_date DESC, symbol
+173-            LIMIT %s;
+174-        """,
+175-        (safe_limit,),
+176-    )
+177-
+178-
+179-@app.get("/metrics-prometheus")
+180-def metrics_prometheus() -> Response:
+181-    rows = fetch_all(
+182-        """
+183-            SELECT DISTINCT ON (metric_name)
+184-                metric_name,

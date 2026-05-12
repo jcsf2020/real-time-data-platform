@@ -137,7 +137,8 @@ not a claim of enterprise-scale throughput.
 | [docs/silver-refresh-scheduler-execution-proof-evidence.md](silver-refresh-scheduler-execution-proof-evidence.md) | Scheduler dispatched silver refresh job; execution succeeded; success metric confirmed |
 | [docs/silver-refresh-job-validation.md](silver-refresh-job-validation.md) | Cloud Run Job silver refresh execution validated |
 | [docs/SLO_AND_INCIDENT_RESPONSE.md](SLO_AND_INCIDENT_RESPONSE.md) | Production-light SLO targets, error budget definition, incident severity levels, and incident response runbooks for all RTDP components |
-| [docs/gold-cloud-sql-deployment-runbook.md](gold-cloud-sql-deployment-runbook.md) | Future execution runbook for deploying the gold daily aggregates layer to Cloud SQL -- not yet executed; cloud deployment evidence is pending |
+| [docs/gold-cloud-sql-deployment-evidence.md](gold-cloud-sql-deployment-evidence.md) | Cloud SQL deployment evidence for gold daily aggregates: SQL applied, refresh returned 7 rows, API /aggregates/daily returned HTTP 200, Cloud SQL returned to NEVER / STOPPED |
+| [docs/gold-cloud-sql-deployment-runbook.md](gold-cloud-sql-deployment-runbook.md) | Controlled runbook used to deploy the gold daily aggregates layer to Cloud SQL |
 
 ---
 
@@ -159,9 +160,7 @@ are verified across the evidence base:
 
 ## Known Remaining Gaps
 
-- Gold analytics layer: `gold.market_event_daily_aggregates` table and refresh function are
-  implemented locally (branch: feat/gold-daily-aggregates); cloud deployment evidence is pending.
-  See [docs/gold-daily-aggregates-evidence.md](gold-daily-aggregates-evidence.md).
+- Gold analytics layer: `gold.market_event_daily_aggregates` table and refresh function are implemented and cloud-validated. See [docs/gold-cloud-sql-deployment-evidence.md](gold-cloud-sql-deployment-evidence.md).
 - dbt or SQL transformation governance is not implemented.
 - Sustained throughput validation above 5,000 events is pending.
 - BigQuery and Dataflow remain target architecture items; neither is implemented.

@@ -488,11 +488,11 @@ This project demonstrates practical Data Engineering skills relevant to streamin
 - Scheduled execution proof for `rtdp-silver-refresh-job`
 - Accepted 100 / 1,000 / 5,000-event cloud load tests
 
-**Implemented (local, pending cloud deployment):**
+**Implemented and cloud-validated:**
 
 - `gold.market_event_daily_aggregates` table, refresh function, and `/aggregates/daily` endpoint
 
-See [docs/gold-cloud-sql-deployment-runbook.md](docs/gold-cloud-sql-deployment-runbook.md) for the controlled deployment runbook (future execution; cloud deployment evidence is pending).
+See [docs/gold-cloud-sql-deployment-evidence.md](docs/gold-cloud-sql-deployment-evidence.md) for Cloud SQL deployment evidence and API readback validation. See [docs/gold-cloud-sql-deployment-runbook.md](docs/gold-cloud-sql-deployment-runbook.md) for the controlled deployment runbook.
 
 **Planned (next phases):**
 
