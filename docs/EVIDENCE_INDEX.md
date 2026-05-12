@@ -136,6 +136,7 @@ not a claim of enterprise-scale throughput.
 | [docs/silver-refresh-scheduler-evidence.md](silver-refresh-scheduler-evidence.md) | Cloud Scheduler job configured and paused; service account and invoker role validated |
 | [docs/silver-refresh-scheduler-execution-proof-evidence.md](silver-refresh-scheduler-execution-proof-evidence.md) | Scheduler dispatched silver refresh job; execution succeeded; success metric confirmed |
 | [docs/silver-refresh-job-validation.md](silver-refresh-job-validation.md) | Cloud Run Job silver refresh execution validated |
+| [docs/SLO_AND_INCIDENT_RESPONSE.md](SLO_AND_INCIDENT_RESPONSE.md) | Production-light SLO targets, error budget definition, incident severity levels, and incident response runbooks for all RTDP components |
 
 ---
 
