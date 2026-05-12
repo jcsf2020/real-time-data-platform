@@ -444,7 +444,9 @@ See [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) for a curated map of all pr
 
 See [docs/ARCHITECTURE_REVIEW.md](docs/ARCHITECTURE_REVIEW.md) for the consolidated architecture review: implemented capabilities, operational controls, trade-offs, and remaining gaps.
 
-See [docs/dbt-transformation-governance-plan.md](docs/dbt-transformation-governance-plan.md) for the dbt transformation governance plan: proposed project structure, model mapping, tests, and migration strategy from stored functions to dbt-managed models (plan only — implementation pending).
+See [docs/dbt-transformation-governance-plan.md](docs/dbt-transformation-governance-plan.md) for the dbt transformation governance plan: proposed project structure, model mapping, tests, and migration strategy from stored functions to dbt-managed models.
+
+See [docs/dbt-ci-validation-evidence.md](docs/dbt-ci-validation-evidence.md) for the dbt implementation and CI validation evidence: silver and gold models, 22 dbt tests, 117 pytest, ruff clean, ephemeral pgvector CI container; Cloud SQL not touched.
 
 See [docs/SLO_AND_INCIDENT_RESPONSE.md](docs/SLO_AND_INCIDENT_RESPONSE.md) for production-light SLOs and incident response procedures.
 
