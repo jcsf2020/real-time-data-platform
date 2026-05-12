@@ -10,6 +10,11 @@ __pycache__/
 target/
 logs/
 *.log
+
+# dbt generated artifacts and installed packages
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
 postgres_data/
 
 # Internal project planning
@@ -23,3 +28,9 @@ infra/terraform/gcp/terraform.tfstate.backup
 infra/terraform/gcp/*.tfvars
 infra/terraform/gcp/override.tf
 infra/terraform/gcp/override.tf.json
+
+# dbt local user state
+dbt/.user.yml
+
+# dbt local profile with credentials
+dbt/profiles.yml

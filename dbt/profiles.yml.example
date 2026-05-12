@@ -1,0 +1,35 @@
+# profiles.yml.example — copy to profiles.yml and fill in your credentials.
+#
+# Local Docker Compose (default): no env vars needed; defaults point to localhost:15432.
+# Cloud SQL: set the env vars below to the values from Secret Manager (rtdp-database-url).
+#
+# Usage:
+#   dbt run --profiles-dir dbt
+#   DBT_PROFILES_DIR=dbt dbt run
+
+rtdp:
+  target: local
+  outputs:
+    # ── Local Docker Postgres ──────────────────────────────────────────────────
+    local:
+      type: postgres
+      host: "{{ env_var('DBT_POSTGRES_HOST', 'localhost') }}"
+      port: "{{ env_var('DBT_POSTGRES_PORT', '15432') | int }}"
+      user: "{{ env_var('DBT_POSTGRES_USER') }}"
+      password: "{{ env_var('DBT_POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('DBT_POSTGRES_DBNAME') }}"
+      schema: public
+      threads: 1
+
+    # ── Cloud SQL (via Cloud SQL Auth Proxy) ───────────────────────────────────
+    # Start the proxy:  cloud-sql-proxy <PROJECT>:europe-west1:rtdp-postgres
+    # then set the env vars below and run:  dbt run --target cloudsql --profiles-dir dbt
+    cloudsql:
+      type: postgres
+      host: "{{ env_var('DBT_CLOUDSQL_HOST', '127.0.0.1') }}"
+      port: "{{ env_var('DBT_CLOUDSQL_PORT', '5432') | int }}"
+      user: "{{ env_var('DBT_CLOUDSQL_USER') }}"
+      password: "{{ env_var('DBT_CLOUDSQL_PASSWORD') }}"
+      dbname: realtime_platform
+      schema: public
+      threads: 1
