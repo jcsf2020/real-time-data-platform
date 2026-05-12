@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: silver_market_event_minute_aggregates
+    description: >
+      Per-symbol per-minute price and volume aggregates over bronze.market_events.
+      Reproduces the logic of silver.refresh_market_event_minute_aggregates() defined
+      in infra/postgres/init.sql. Materialized as a table; the stored function remains
+      authoritative until dbt CI is established (see migration plan in
+      docs/dbt-transformation-governance-plan.md section 10).
+    config:
+      schema: silver
+      materialized: table
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - symbol
+              - window_start
+    columns:
+      - name: symbol
+        description: "Trading symbol (e.g. AAPL, GOOGL)."
+        tests:
+          - not_null
+      - name: window_start
+        description: "Start of the one-minute aggregation window (DATE_TRUNC('minute', event_timestamp))."
+        tests:
+          - not_null
+      - name: event_count
+        description: "Number of trade events within this symbol/window."
+        tests:
+          - not_null
+      - name: avg_price
+        description: "Average trade price within the window. NUMERIC(18,8)."
+        tests:
+          - not_null
+      - name: total_quantity
+        description: "Sum of quantities traded within the window. NUMERIC(18,8)."
+        tests:
+          - not_null
+      - name: first_event_timestamp
+        description: "Earliest event_timestamp within the window."
+      - name: last_event_timestamp
+        description: "Latest event_timestamp within the window."
+      - name: updated_at
+        description: "Timestamp when dbt last materialized this row (NOW() at run time)."
