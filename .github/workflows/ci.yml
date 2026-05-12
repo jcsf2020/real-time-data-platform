@@ -39,3 +39,74 @@ jobs:
 
       - name: Import smoke test
         run: uv run python -c "import rtdp_api, rtdp_consumer, rtdp_producer, rtdp_pubsub_publisher, rtdp_pubsub_worker, rtdp_silver_refresh_job; print('imports ok')"
+
+  dbt:
+    name: dbt compile, run, and test
+    runs-on: ubuntu-latest
+    needs: validate
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: rtdp
+          POSTGRES_DB: realtime_platform
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    env:
+      DBT_POSTGRES_HOST: localhost
+      DBT_POSTGRES_PORT: "5432"
+      DBT_POSTGRES_USER: rtdp
+      DBT_POSTGRES_DBNAME: realtime_platform
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install workspace
+        run: uv sync --all-packages
+
+      - name: Initialize database
+        run: psql -h localhost -U rtdp -d realtime_platform -f infra/postgres/init.sql
+
+      - name: Generate dbt profiles.yml
+        run: |
+          cat > dbt/profiles.yml <<'DBTEOF'
+          rtdp:
+            target: ci
+            outputs:
+              ci:
+                type: postgres
+                host: "{{ env_var('DBT_POSTGRES_HOST') }}"
+                port: "{{ env_var('DBT_POSTGRES_PORT') | int }}"
+                user: "{{ env_var('DBT_POSTGRES_USER') }}"
+                password: ""
+                dbname: "{{ env_var('DBT_POSTGRES_DBNAME') }}"
+                schema: public
+                threads: 1
+          DBTEOF
+
+      - name: Install dbt packages
+        run: uv run dbt deps --project-dir dbt --profiles-dir dbt
+
+      - name: dbt compile
+        run: uv run dbt compile --project-dir dbt --profiles-dir dbt
+
+      - name: dbt run
+        run: uv run dbt run --project-dir dbt --profiles-dir dbt
+
+      - name: dbt test
+        run: uv run dbt test --project-dir dbt --profiles-dir dbt

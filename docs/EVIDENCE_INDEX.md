@@ -83,7 +83,7 @@ separate evidence branches, are documented in their specific evidence files.
 
 | Workflow | Trigger | Scope |
 |---|---|---|
-| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | Push to main / PR | Lint (ruff), tests (pytest), import smoke test |
+| [.github/workflows/ci.yml](../.github/workflows/ci.yml) | Push to main / PR | Lint (ruff), tests (pytest), import smoke test; dbt compile/run/test against ephemeral Postgres service container |
 | [.github/workflows/terraform-plan.yml](../.github/workflows/terraform-plan.yml) | PR / push to main (infra path) | Terraform plan via Workload Identity; no apply |
 | [.github/workflows/deploy-worker-cloud-run.yml](../.github/workflows/deploy-worker-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys worker image to Cloud Run |
 | [.github/workflows/deploy-api-cloud-run.yml](../.github/workflows/deploy-api-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys API image to Cloud Run |
@@ -161,7 +161,7 @@ are verified across the evidence base:
 ## Known Remaining Gaps
 
 - Gold analytics layer: `gold.market_event_daily_aggregates` table and refresh function are implemented and cloud-validated. See [docs/gold-cloud-sql-deployment-evidence.md](gold-cloud-sql-deployment-evidence.md).
-- dbt transformation governance plan: see [docs/dbt-transformation-governance-plan.md](dbt-transformation-governance-plan.md). Implementation is pending.
+- dbt CI validation is implemented (`feat/dbt-ci-validation`). Cloud SQL automated run remains pending (governance plan section 10).
 - Sustained throughput validation above 5,000 events is pending.
 - BigQuery and Dataflow remain target architecture items; neither is implemented.
 - A consolidated architecture review document beyond gcp-architecture.md has not been written.
