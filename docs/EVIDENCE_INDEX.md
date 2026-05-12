@@ -161,7 +161,7 @@ are verified across the evidence base:
 ## Known Remaining Gaps
 
 - Gold analytics layer: `gold.market_event_daily_aggregates` table and refresh function are implemented and cloud-validated. See [docs/gold-cloud-sql-deployment-evidence.md](gold-cloud-sql-deployment-evidence.md).
-- dbt or SQL transformation governance is not implemented.
+- dbt transformation governance plan: see [docs/dbt-transformation-governance-plan.md](dbt-transformation-governance-plan.md). Implementation is pending.
 - Sustained throughput validation above 5,000 events is pending.
 - BigQuery and Dataflow remain target architecture items; neither is implemented.
 - A consolidated architecture review document beyond gcp-architecture.md has not been written.

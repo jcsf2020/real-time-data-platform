@@ -444,6 +444,8 @@ See [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) for a curated map of all pr
 
 See [docs/ARCHITECTURE_REVIEW.md](docs/ARCHITECTURE_REVIEW.md) for the consolidated architecture review: implemented capabilities, operational controls, trade-offs, and remaining gaps.
 
+See [docs/dbt-transformation-governance-plan.md](docs/dbt-transformation-governance-plan.md) for the dbt transformation governance plan: proposed project structure, model mapping, tests, and migration strategy from stored functions to dbt-managed models (plan only — implementation pending).
+
 See [docs/SLO_AND_INCIDENT_RESPONSE.md](docs/SLO_AND_INCIDENT_RESPONSE.md) for production-light SLOs and incident response procedures.
 
 This project demonstrates practical Data Engineering skills relevant to streaming platform and cloud data roles in 2026/2027:
