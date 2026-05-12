@@ -200,8 +200,9 @@ continuously running production service.
   in the current runtime.
 - **Automatic deploy-on-merge**: both deploy workflows require explicit manual dispatch;
   CI/CD pipeline automation is a planned next step.
-- **SLO / incident response documentation**: no formal SLO targets or incident runbooks
-  are defined for the current MVP deployment.
+- **SLO / incident response documentation**: SLO targets and incident response runbooks
+  are defined in docs/SLO_AND_INCIDENT_RESPONSE.md; operational validation remains
+  production-light and scoped to controlled validation windows.
 - **API pagination behavior**: pagination should remain validated as part of future API
   evidence updates.
 
