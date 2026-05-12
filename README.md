@@ -492,6 +492,8 @@ This project demonstrates practical Data Engineering skills relevant to streamin
 
 - `gold.market_event_daily_aggregates` table, refresh function, and `/aggregates/daily` endpoint
 
+See [docs/gold-cloud-sql-deployment-runbook.md](docs/gold-cloud-sql-deployment-runbook.md) for the controlled deployment runbook (future execution; cloud deployment evidence is pending).
+
 **Planned (next phases):**
 
 - Add BigQuery or Dataflow analytical tier

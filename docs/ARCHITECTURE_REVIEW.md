@@ -192,7 +192,8 @@ continuously running production service.
 ## Known Remaining Gaps
 
 - **Gold analytics layer**: gold daily aggregates are implemented locally and documented;
-  cloud deployment evidence is pending.
+  cloud deployment evidence is pending. A controlled deployment runbook is available at
+  `docs/gold-cloud-sql-deployment-runbook.md`; execution has not yet occurred.
 - **dbt / transformation governance**: no SQL transformation framework or lineage tracking.
 - **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
   sustained streaming performance is not validated.
