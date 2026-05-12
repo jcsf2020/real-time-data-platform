@@ -1,0 +1,42 @@
+--- PRE-DEPLOY CONCLUSION ---
+GET /aggregates/daily returned HTTP 404 before Cloud SQL gold deployment.
+Cloud SQL remained NEVER / STOPPED.
+Conclusion: production Cloud Run API revision does not yet include the /aggregates/daily route.
+Next required action before SQL apply: deploy current main API image via manual workflow.
+
+--- CURRENT LOCAL MAIN CONTAINS ENDPOINT ---
+154:@app.get("/aggregates/daily")
+155-def daily_aggregates(limit: int = 20) -> list[dict[str, Any]]:
+156-    safe_limit = min(max(limit, 1), 200)
+157-
+158-    return fetch_all(
+159-        """
+160-            SELECT
+161-                symbol,
+162-                event_date,
+163-                event_count,
+164-                avg_price::float AS avg_price,
+165-                min_price::float AS min_price,
+166-                max_price::float AS max_price,
+167-                total_quantity::float AS total_quantity,
+168-                first_event_timestamp,
+169-                last_event_timestamp,
+170-                updated_at
+171-            FROM gold.market_event_daily_aggregates
+172-            ORDER BY event_date DESC, symbol
+173-            LIMIT %s;
+174-        """,
+175-        (safe_limit,),
+176-    )
+177-
+178-
+179-@app.get("/metrics-prometheus")
+
+--- CURRENT CLOUD RUN REVISION ---
+spec:
+  template:
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-api:66ac7fef54496bc11635f946928d4a9afe8ecfcb
+status:
+  latestReadyRevisionName: rtdp-api-00007-9gd

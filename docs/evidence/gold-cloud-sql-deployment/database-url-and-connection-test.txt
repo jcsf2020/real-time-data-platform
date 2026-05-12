@@ -1,0 +1,10 @@
+--- DATABASE_URL SAFE CHECK ---
+DATABASE_URL_SET=true
+scheme=postgresql
+user=rtdp
+password=***
+host=None
+database=realtime_platform
+query=host=/cloudsql/project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres
+
+--- READ ONLY CONNECTION TEST ---

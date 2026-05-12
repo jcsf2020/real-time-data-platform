@@ -1,0 +1,38 @@
+--- API DEPLOY RUN SUMMARY ---
+
+✓ main Deploy API to Cloud Run · 25752320444
+Triggered via workflow_dispatch about 7 minutes ago
+
+JOBS
+✓ Deploy API in 1m5s (ID 75631613474)
+
+ANNOTATIONS
+! Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, google-github-actions/auth@v2, google-github-actions/setup-gcloud@v2. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Deploy API: .github#2
+
+
+For more information about the job, try: gh run view --job=75631613474
+View this run on GitHub: https://github.com/jcsf2020/real-time-data-platform/actions/runs/25752320444
+
+--- API AFTER DEPLOY ---
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '20'
+        run.googleapis.com/client-name: gcloud
+        run.googleapis.com/client-version: 568.0.0
+        run.googleapis.com/cloudsql-instances: project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres
+        run.googleapis.com/startup-cpu-boost: 'true'
+    spec:
+      containerConcurrency: 80
+      containers:
+      - image: europe-west1-docker.pkg.dev/project-42987e01-2123-446b-ac7/rtdp/rtdp-api:1922a55de0112c69cc6b16c31691dc38899620c2
+      serviceAccountName: 892892382088-compute@developer.gserviceaccount.com
+status:
+  latestReadyRevisionName: rtdp-api-00008-hk7
+
+--- API DAILY AFTER API DEPLOY BEFORE SQL ---
+
+--- CLOUD SQL STATE AFTER API DEPLOY ---
+NEVER	STOPPED

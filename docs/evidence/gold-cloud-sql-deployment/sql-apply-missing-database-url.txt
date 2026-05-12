@@ -1,0 +1,9 @@
+--- SQL APPLY FAILED DUE TO MISSING DATABASE_URL ---
+psql attempted local socket connection because DATABASE_URL was not set in the shell.
+No gold SQL was applied.
+
+--- DATABASE_URL SHELL CHECK ---
+DATABASE_URL_SET=false
+
+--- CLOUD SQL STATE AFTER FAILED SQL APPLY ---
+ALWAYS	RUNNABLE

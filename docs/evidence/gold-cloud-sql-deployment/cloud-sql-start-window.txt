@@ -1,0 +1,13 @@
+--- START CLOUD SQL WINDOW ---
+timestamp_utc=2026-05-12T19:15:08Z
+
+--- BEFORE START ---
+ALWAYS	RUNNABLE
+
+--- START COMMAND ---
+
+--- WAIT FOR RUNNABLE ---
+attempt=1 activationPolicy=ALWAYS state=RUNNABLE
+
+--- AFTER START ---
+ALWAYS	RUNNABLE

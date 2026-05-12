@@ -1,0 +1,12 @@
+--- API DAILY PRE-DEPLOY READBACK ---
+HTTP/2 404 
+content-type: application/json
+x-cloud-trace-context: 200767d2aec61d7bb74752713181bdc2;o=1
+date: Tue, 12 May 2026 17:50:05 GMT
+server: Google Frontend
+content-length: 22
+alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+
+{"detail":"Not Found"}
+--- CLOUD SQL STATE AFTER PRE-DEPLOY READBACK ---
+NEVER	STOPPED
