@@ -191,7 +191,7 @@ continuously running production service.
 ## Known Remaining Gaps
 
 - **Gold analytics layer**: gold daily aggregates are deployed to Cloud SQL and validated through `GET /aggregates/daily`; evidence is available at `docs/gold-cloud-sql-deployment-evidence.md`.
-- **dbt / transformation governance**: no SQL transformation framework or lineage tracking.
+- **dbt / transformation governance**: a governance plan exists at [docs/dbt-transformation-governance-plan.md](dbt-transformation-governance-plan.md); implementation is pending on a dedicated feature branch.
 - **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
   sustained streaming performance is not validated.
 - **BigQuery and Dataflow**: documented as target architecture items; neither is implemented
