@@ -169,3 +169,4 @@ are verified across the evidence base:
 - A consolidated architecture review document beyond gcp-architecture.md has not been written.
 
 | [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md) | Evidence that dbt compile/run/test succeeded against Cloud SQL, matched stored-function outputs, and API readback returned HTTP 200. |
+| [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) | Plan only — not executed. Phases, decision matrix (Option A/B/C), credential strategy, rollback paths, and acceptance criteria for migrating the Cloud Run Job from stored functions to dbt. |

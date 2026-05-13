@@ -452,6 +452,8 @@ See [docs/dbt-cloud-sql-migration-runbook.md](docs/dbt-cloud-sql-migration-runbo
 
 See [docs/dbt-cloud-sql-validation-evidence.md](docs/dbt-cloud-sql-validation-evidence.md) for executed Cloud SQL validation evidence proving dbt output parity with stored functions and API readback through `/aggregates/minute` and `/aggregates/daily`.
 
+See [docs/dbt-operational-migration-plan.md](docs/dbt-operational-migration-plan.md) for the plan to migrate the Cloud Run Job refresh path from stored functions to dbt — phases, decision matrix, credential strategy, rollback paths, and acceptance criteria (plan only — not executed).
+
 See [docs/SLO_AND_INCIDENT_RESPONSE.md](docs/SLO_AND_INCIDENT_RESPONSE.md) for production-light SLOs and incident response procedures.
 
 This project demonstrates practical Data Engineering skills relevant to streaming platform and cloud data roles in 2026/2027:

@@ -191,7 +191,7 @@ continuously running production service.
 ## Known Remaining Gaps
 
 - **Gold analytics layer**: gold daily aggregates are deployed to Cloud SQL and validated through `GET /aggregates/daily`; evidence is available at `docs/gold-cloud-sql-deployment-evidence.md`.
-- **dbt / transformation governance**: CI validation is implemented, and dbt has been validated against Cloud SQL with output parity versus stored functions. Evidence: [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md). Cloud Run Job migration to dbt remains pending.
+- **dbt / transformation governance**: dbt has been validated against Cloud SQL with output parity versus stored functions (silver 256/256, gold 7/7; 22 dbt tests passed; API readback HTTP 200). Evidence: [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md). Operational migration of the Cloud Run Job from stored functions to dbt is still pending; a phased migration plan with decision matrix, credential strategy, rollback paths, and acceptance criteria is documented in [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) (plan only — not executed).
 - **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
   sustained streaming performance is not validated.
 - **BigQuery and Dataflow**: documented as target architecture items; neither is implemented
