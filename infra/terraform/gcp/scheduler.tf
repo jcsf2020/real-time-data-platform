@@ -6,6 +6,7 @@ resource "google_cloud_scheduler_job" "silver_refresh_scheduler" {
   paused    = true
 
   http_target {
+    # TODO: after dbt job deployment evidence is accepted, switch scheduler URI to rtdp-dbt-refresh-job:run in a separate branch.
     uri         = "https://europe-west1-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/project-42987e01-2123-446b-ac7/jobs/rtdp-silver-refresh-job:run"
     http_method = "POST"
 
