@@ -2,9 +2,9 @@
 
 **Status: SCAFFOLD ONLY — NOT DEPLOYED**
 
-This document records the Terraform and deployment scaffolding added for `rtdp-dbt-refresh-job`
-in branch `feat/dbt-refresh-cloud-run-job`. No `terraform apply` has been run, no Cloud Run Job
-has been deployed, and no GCP state has been mutated.
+This document records the Terraform and deployment scaffolding added for `rtdp-dbt-refresh-job`.
+No `terraform apply` has been run, no Cloud Run Job has been deployed, and no GCP state has
+been mutated.
 
 ---
 
@@ -15,7 +15,26 @@ has been deployed, and no GCP state has been mutated.
 | Terraform Cloud Run Job resource | `infra/terraform/gcp/cloud_run_jobs.tf` | `google_cloud_run_v2_job.rtdp_dbt_refresh_job` — scaffold definition |
 | Scheduler TODO comment | `infra/terraform/gcp/scheduler.tf` | Reminder to switch URI after deployment evidence is accepted |
 | Deploy workflow | `.github/workflows/deploy-dbt-refresh-cloud-run.yml` | `workflow_dispatch`-only build/push/deploy pipeline |
-| This document | `docs/dbt-refresh-cloud-run-job-plan.md` | Scaffold plan and credential contract warning |
+| This document | `docs/dbt-refresh-cloud-run-job-plan.md` | Scaffold plan |
+
+---
+
+## Credential Contract
+
+**Resolved** (branch `feat/dbt-refresh-database-url-runtime`).
+
+The `rtdp-database-url` Secret Manager secret stores a full PostgreSQL connection URL
+(`postgresql://user:password@host/dbname`), not a raw password string.
+
+Resolution: the runtime now accepts `DATABASE_URL` and parses it to derive connection
+fields. Explicit `DBT_POSTGRES_*` env vars override any field parsed from the URL.
+
+On Cloud Run, `DBT_POSTGRES_HOST=/cloudsql/...` is kept as a plain env var so the Unix
+socket mount is used instead of the TCP host in the URL.
+
+Before this fix, `DBT_POSTGRES_PASSWORD` was wired to `rtdp-database-url:latest`, which
+would have caused the dbt connection to receive a full URL as the password value and fail.
+That wiring has been removed from both the Terraform scaffold and the deploy workflow.
 
 ---
 
@@ -49,9 +68,12 @@ Plain environment variables:
 
 Secret environment variable:
 
-| Name | Secret | Version |
-|---|---|---|
-| `DBT_POSTGRES_PASSWORD` | `rtdp-database-url` | `latest` |
+| Name | Secret | Version | Notes |
+|---|---|---|---|
+| `DATABASE_URL` | `rtdp-database-url` | `latest` | Full connection URL; runtime parses it |
+
+`DBT_POSTGRES_PASSWORD` is no longer wired to a secret — password is derived from `DATABASE_URL`.
+`DBT_POSTGRES_HOST` overrides the URL host to use the Cloud SQL Unix socket mount.
 
 Cloud SQL volume: `project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres` mounted at `/cloudsql`.
 
@@ -69,35 +91,13 @@ File: `.github/workflows/deploy-dbt-refresh-cloud-run.yml`
 - Uses the same Workload Identity Federation / `GCP_WORKLOAD_IDENTITY_PROVIDER` /
   `GCP_CLOUD_RUN_DEPLOY_SERVICE_ACCOUNT` vars as existing deploy workflows.
 - Deploys via `gcloud run jobs deploy` (Cloud Run Jobs syntax, not `gcloud run deploy`).
+- Sets `--set-secrets="DATABASE_URL=rtdp-database-url:latest"`.
+- Keeps `DBT_POSTGRES_HOST=/cloudsql/...` in `--set-env-vars`.
 - Runs a post-deploy verification step that reads `gcloud run jobs describe` JSON and
-  asserts image, service account, timeout, max_retries, env vars, and secret ref.
+  asserts image, service account, timeout, max_retries, env vars, `DATABASE_URL` secret ref,
+  and `DBT_POSTGRES_HOST` value.
 - Does NOT execute the job after deploy — execution requires a separate
   `gcloud run jobs execute rtdp-dbt-refresh-job` command or scheduler trigger.
-
----
-
-## Credential Contract Warning
-
-**This is the primary blocker before deployment.**
-
-The existing `rtdp-database-url` Secret Manager secret almost certainly stores a full
-`postgresql://user:password@host/dbname` connection URL — not a raw password string.
-
-The Terraform resource and the deploy workflow wire `DBT_POSTGRES_PASSWORD` directly from
-`rtdp-database-url:latest`. If the secret value is a full URL, the runtime will receive the
-entire URL as the password value and the dbt connection will fail.
-
-Before running `terraform apply` or dispatching the deploy workflow:
-
-1. Confirm the format of the `rtdp-database-url` secret value (full URL vs raw password).
-2. Choose a resolution:
-   - **Option A (preferred):** Create a new `rtdp-dbt-postgres-password` secret containing
-     only the raw password, then update the Terraform resource and workflow to reference it.
-   - **Option B:** Update the `apps/dbt-refresh-job` runtime to accept `DATABASE_URL` and
-     parse the password from it, then adjust the env var mapping.
-3. Update this document and the Terraform resource once the credential contract is resolved.
-
-The TODO comment in `cloud_run_jobs.tf` and in the deploy workflow records this blocker inline.
 
 ---
 
@@ -133,16 +133,14 @@ Scheduler switch steps (separate branch, after deployment evidence is accepted):
 
 ## Next Steps
 
-1. **Resolve credential contract** — confirm `rtdp-database-url` format; create a dedicated
-   raw-password secret or update the runtime to parse `DATABASE_URL`.
-2. **Execute controlled deployment validation** — once the credential is resolved:
+1. **Execute controlled deployment validation** — credential contract resolved; proceed when ready:
    a. Start Cloud SQL (`NEVER → RUNNABLE`).
    b. Dispatch the `deploy-dbt-refresh-cloud-run.yml` workflow.
    c. Manually execute the job: `gcloud run jobs execute rtdp-dbt-refresh-job --region=europe-west1`.
    d. Confirm dbt run + test success in Cloud Logging.
    e. Stop Cloud SQL (`RUNNABLE → NEVER`).
    f. Document evidence in a new branch.
-3. **Switch scheduler** — in a separate branch after deployment evidence is accepted, update
+2. **Switch scheduler** — in a separate branch after deployment evidence is accepted, update
    the scheduler URI from `rtdp-silver-refresh-job:run` to `rtdp-dbt-refresh-job:run`.
-4. **Decommission silver refresh job** — only after the dbt path is fully validated and
+3. **Decommission silver refresh job** — only after the dbt path is fully validated and
    the scheduler switch is confirmed in production.

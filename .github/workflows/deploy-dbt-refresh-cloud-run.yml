@@ -58,16 +58,16 @@ jobs:
       - name: Deploy dbt refresh job to Cloud Run Jobs
         # NOTE: gcloud run jobs deploy creates/updates the job definition only.
         # It does NOT execute the job. Manual gcloud run jobs execute is required.
-        # CREDENTIAL WARNING: DBT_POSTGRES_PASSWORD is sourced from rtdp-database-url,
-        # which may be a full DATABASE_URL, not a raw password. Do not run this job
-        # until the credential contract is resolved. See docs/dbt-refresh-cloud-run-job-plan.md.
+        # DATABASE_URL is sourced from rtdp-database-url; the runtime parses it to derive
+        # connection fields. DBT_POSTGRES_HOST overrides the URL host to use the Cloud SQL
+        # Unix socket mount.
         run: |
           gcloud run jobs deploy "${CLOUD_RUN_JOB}" \
             --project="${PROJECT_ID}" \
             --region="${REGION}" \
             --image="${IMAGE_URI}" \
             --service-account="rtdp-worker-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
-            --set-secrets="DBT_POSTGRES_PASSWORD=rtdp-database-url:latest" \
+            --set-secrets="DATABASE_URL=rtdp-database-url:latest" \
             --set-env-vars="DBT_REFRESH_MODE=run-and-test,DBT_POSTGRES_HOST=/cloudsql/${PROJECT_ID}:${REGION}:rtdp-postgres,DBT_POSTGRES_PORT=5432,DBT_POSTGRES_USER=rtdp,DBT_POSTGRES_DBNAME=realtime_platform,DBT_TARGET=cloudsql,DBT_PROJECT_DIR=/app/dbt,DBT_PROFILES_DIR=/tmp/rtdp-dbt-profiles" \
             --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \
             --task-timeout=600 \
@@ -95,14 +95,15 @@ jobs:
 
           expected_image = os.environ["IMAGE_URI"]
           expected_service_account = f"rtdp-worker-sa@{os.environ['PROJECT_ID']}.iam.gserviceaccount.com"
+          expected_cloudsql_host = f"/cloudsql/{os.environ['PROJECT_ID']}:{os.environ['REGION']}:rtdp-postgres"
 
           actual_image = container["image"]
           actual_service_account = template.get("serviceAccount")
           actual_timeout = template.get("timeout")
           actual_max_retries = template.get("maxRetries")
 
-          password_ref = (
-              env_map.get("DBT_POSTGRES_PASSWORD", {})
+          database_url_ref = (
+              env_map.get("DATABASE_URL", {})
               .get("valueSource", {})
               .get("secretKeyRef", {})
           )
@@ -114,8 +115,9 @@ jobs:
               "max_retries": actual_max_retries == 0,
               "dbt_refresh_mode": env_map.get("DBT_REFRESH_MODE", {}).get("value") == "run-and-test",
               "dbt_target": env_map.get("DBT_TARGET", {}).get("value") == "cloudsql",
-              "password_secret_name": password_ref.get("secret") == "rtdp-database-url",
-              "password_secret_version": password_ref.get("version") == "latest",
+              "database_url_secret_name": database_url_ref.get("secret") == "rtdp-database-url",
+              "database_url_secret_version": database_url_ref.get("version") == "latest",
+              "dbt_postgres_host": env_map.get("DBT_POSTGRES_HOST", {}).get("value") == expected_cloudsql_host,
           }
 
           failed = [name for name, ok in checks.items() if not ok]
@@ -128,7 +130,8 @@ jobs:
                   "expected_service_account": expected_service_account,
                   "actual_timeout": actual_timeout,
                   "actual_max_retries": actual_max_retries,
-                  "password_ref": password_ref,
+                  "database_url_ref": database_url_ref,
+                  "dbt_postgres_host": env_map.get("DBT_POSTGRES_HOST", {}).get("value"),
                   "env_keys": list(env_map.keys()),
               }, indent=2, sort_keys=True))
               raise SystemExit(1)
@@ -139,5 +142,6 @@ jobs:
           print("TIMEOUT=" + (actual_timeout or ""))
           print("MAX_RETRIES=" + str(actual_max_retries))
           print("DBT_REFRESH_MODE=" + (env_map.get("DBT_REFRESH_MODE", {}).get("value") or ""))
-          print("PASSWORD_SECRET=rtdp-database-url:latest")
+          print("DATABASE_URL_SECRET=rtdp-database-url:latest")
+          print("DBT_POSTGRES_HOST=" + (env_map.get("DBT_POSTGRES_HOST", {}).get("value") or ""))
           PY

@@ -7,6 +7,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import unquote, urlparse
 
 _SERVICE = "rtdp-dbt-refresh-job"
 _COMPONENT = "dbt-refresh"
@@ -22,6 +23,31 @@ def emit_log(payload: dict) -> None:
     print(json.dumps(payload, sort_keys=True), flush=True)
 
 
+def _parse_database_url(database_url: str) -> dict:
+    """Parse a PostgreSQL connection URL. Returns host, port, user, password, dbname."""
+    try:
+        parsed = urlparse(database_url)
+    except Exception as exc:
+        raise ValueError(f"Invalid DATABASE_URL: {exc}") from exc
+
+    if parsed.scheme not in ("postgres", "postgresql"):
+        raise ValueError(
+            f"Invalid DATABASE_URL: unsupported scheme {parsed.scheme!r};"
+            " expected 'postgres' or 'postgresql'"
+        )
+
+    if not parsed.hostname:
+        raise ValueError("Invalid DATABASE_URL: missing host")
+
+    return {
+        "host": parsed.hostname,
+        "port": parsed.port if parsed.port is not None else 5432,
+        "user": unquote(parsed.username or ""),
+        "password": unquote(parsed.password or ""),
+        "dbname": unquote(parsed.path.lstrip("/")) if parsed.path else "",
+    }
+
+
 def _resolve_config() -> dict:
     """Read and validate env vars. Raises ValueError on missing or invalid values."""
     mode = os.getenv("DBT_REFRESH_MODE", "run-and-test")
@@ -30,15 +56,25 @@ def _resolve_config() -> dict:
             f"Invalid DBT_REFRESH_MODE={mode!r}. Valid modes: {sorted(VALID_MODES)}"
         )
 
-    try:
-        port = int(os.getenv("DBT_POSTGRES_PORT", "5432"))
-    except ValueError:
-        raw = os.getenv("DBT_POSTGRES_PORT")
-        raise ValueError(f"DBT_POSTGRES_PORT must be an integer, got: {raw!r}")
+    # Parse DATABASE_URL as credential defaults; explicit DBT_POSTGRES_* vars override.
+    url_defaults: dict = {}
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        url_defaults = _parse_database_url(database_url)
 
-    host = os.getenv("DBT_POSTGRES_HOST", "")
-    user = os.getenv("DBT_POSTGRES_USER", "")
-    dbname = os.getenv("DBT_POSTGRES_DBNAME", "")
+    host = os.getenv("DBT_POSTGRES_HOST") or url_defaults.get("host", "")
+    user = os.getenv("DBT_POSTGRES_USER") or url_defaults.get("user", "")
+    dbname = os.getenv("DBT_POSTGRES_DBNAME") or url_defaults.get("dbname", "")
+    password = os.getenv("DBT_POSTGRES_PASSWORD") or url_defaults.get("password", "")
+
+    raw_port = os.getenv("DBT_POSTGRES_PORT")
+    if raw_port is not None:
+        try:
+            port = int(raw_port)
+        except ValueError:
+            raise ValueError(f"DBT_POSTGRES_PORT must be an integer, got: {raw_port!r}")
+    else:
+        port = url_defaults.get("port", 5432)
 
     missing = [k for k, v in {
         "DBT_POSTGRES_HOST": host,
@@ -61,7 +97,7 @@ def _resolve_config() -> dict:
         "host": host,
         "port": port,
         "user": user,
-        "password": os.getenv("DBT_POSTGRES_PASSWORD", ""),
+        "password": password,
         "dbname": dbname,
         "target": os.getenv("DBT_TARGET", "cloudsql"),
         "project_dir": os.getenv("DBT_PROJECT_DIR", "/app/dbt"),
@@ -175,6 +211,7 @@ def run(cfg: dict) -> int:
         if mode == "compile":
             steps.append(("compile", "dbt compile", "dbt_compile", []))
         elif mode == "run":
+            steps.append(("compile", "dbt compile", "dbt_compile", []))
             steps.append(("run", "dbt run", "dbt_run", ["--select", "silver,gold"]))
         elif mode == "test":
             steps.append(("test", "dbt test", "dbt_test", []))
