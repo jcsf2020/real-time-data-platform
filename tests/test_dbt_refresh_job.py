@@ -538,3 +538,55 @@ def test_invalid_database_url_raises_clear_error(monkeypatch, tmp_path):
 
     with pytest.raises(ValueError, match="DATABASE_URL"):
         _resolve_config()
+
+
+# --- Cloud SQL Unix socket DATABASE_URL (host in query string) ---
+
+
+def test_parse_database_url_socket_query_host():
+    result = _parse_database_url(
+        "postgresql://rtdp:pw@/realtime_platform?host=/cloudsql/project:region:instance"
+    )
+    assert result["host"] == "/cloudsql/project:region:instance"
+    assert result["user"] == "rtdp"
+    assert result["password"] == "pw"
+    assert result["dbname"] == "realtime_platform"
+    assert result["port"] == 5432
+
+
+def test_resolve_config_accepts_database_url_without_hostname_when_query_host_exists(
+    monkeypatch, tmp_path
+):
+    monkeypatch.setenv(
+        "DATABASE_URL",
+        "postgresql://rtdp:pw@/realtime_platform?host=/cloudsql/project:region:instance",
+    )
+    monkeypatch.delenv("DBT_POSTGRES_HOST", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_USER", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_DBNAME", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PASSWORD", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PORT", raising=False)
+    monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path))
+
+    cfg = _resolve_config()
+
+    assert cfg["host"] == "/cloudsql/project:region:instance"
+    assert cfg["user"] == "rtdp"
+    assert cfg["dbname"] == "realtime_platform"
+
+
+def test_resolve_config_explicit_host_overrides_socket_query_host(monkeypatch, tmp_path):
+    monkeypatch.setenv(
+        "DATABASE_URL",
+        "postgresql://rtdp:pw@/realtime_platform?host=/cloudsql/project:region:instance",
+    )
+    monkeypatch.setenv("DBT_POSTGRES_HOST", "/cloudsql/other-project:us-central1:other-db")
+    monkeypatch.delenv("DBT_POSTGRES_USER", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_DBNAME", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PASSWORD", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PORT", raising=False)
+    monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path))
+
+    cfg = _resolve_config()
+
+    assert cfg["host"] == "/cloudsql/other-project:us-central1:other-db"
