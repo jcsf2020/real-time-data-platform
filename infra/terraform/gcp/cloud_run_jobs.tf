@@ -1,5 +1,5 @@
 # DATABASE_URL is used as the credential source; DBT_POSTGRES_HOST overrides the URL host to use the Cloud SQL Unix socket mount.
-# This resource is SCAFFOLD ONLY — do not run terraform apply until controlled deployment validation is complete.
+# Deployed: terraform apply executed on feat/dbt-refresh-cloud-run-deploy; zero-diff plan confirmed. Cloud Run Job exists in GCP.
 resource "google_cloud_run_v2_job" "rtdp_dbt_refresh_job" {
   name     = "rtdp-dbt-refresh-job"
   location = var.region
@@ -90,11 +90,6 @@ resource "google_cloud_run_v2_job" "rtdp_dbt_refresh_job" {
         }
       }
     }
-
-    annotations = {
-      "run.googleapis.com/cloudsql-instances"    = "project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres"
-      "run.googleapis.com/execution-environment" = "gen2"
-    }
   }
 
   lifecycle {
@@ -160,7 +155,6 @@ resource "google_cloud_run_v2_job" "rtdp_silver_refresh_job" {
     }
 
     annotations = {
-      "run.googleapis.com/cloudsql-instances"    = "project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres"
       "run.googleapis.com/execution-environment" = "gen2"
     }
   }
