@@ -1,0 +1,5 @@
+--- DBT DEPS CLOUD SQL ---
+[0m12:24:46  Running with dbt=1.11.9
+[0m12:24:47  Installing dbt-labs/dbt_utils
+[0m12:24:47  Installed from version 1.3.3
+[0m12:24:47  Up to date!

@@ -1,0 +1,48 @@
+--- STORED FUNCTION BASELINE ---
+--- CONNECTION IDENTITY ---
+   database_name   | user_name 
+-------------------+-----------
+ realtime_platform | rtdp
+(1 row)
+
+--- REFRESH SILVER USING STORED FUNCTION ---
+ silver_affected_rows 
+----------------------
+                  256
+(1 row)
+
+--- REFRESH GOLD USING STORED FUNCTION ---
+ gold_affected_rows 
+--------------------
+                  7
+(1 row)
+
+--- BASELINE COUNTS AND SAMPLES ---
+ silver_row_count 
+------------------
+              256
+(1 row)
+
+ gold_row_count 
+----------------
+              7
+(1 row)
+
+ symbol  |      window_start      | event_count |   avg_price    
+---------+------------------------+-------------+----------------
+ ADAUSDT | 2026-05-05 14:00:00+00 |           1 |     0.45000000
+ SOLUSDT | 2026-05-05 06:30:00+00 |           1 |   145.50000000
+ ETHUSDT | 2026-05-04 09:05:00+00 |           1 |  3200.00000000
+ BTCUSDT | 2026-05-04 06:30:00+00 |           1 | 67500.00000000
+ BTCUSDT | 2026-01-01 01:23:00+00 |           7 | 67500.89000000
+(5 rows)
+
+ symbol  | event_date | event_count |   avg_price    |   min_price    |   max_price    
+---------+------------+-------------+----------------+----------------+----------------
+ ADAUSDT | 2026-05-05 |           1 |     0.45000000 |     0.45000000 |     0.45000000
+ SOLUSDT | 2026-05-05 |           1 |   145.50000000 |   145.50000000 |   145.50000000
+ BTCUSDT | 2026-05-04 |           1 | 67500.00000000 | 67500.00000000 | 67500.00000000
+ ETHUSDT | 2026-05-04 |           1 |  3200.00000000 |  3200.00000000 |  3200.00000000
+ BTCUSDT | 2026-01-01 |        2035 | 67500.49508108 | 67500.00000000 | 67500.99000000
+(5 rows)
+
