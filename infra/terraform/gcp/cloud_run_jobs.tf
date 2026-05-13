@@ -1,5 +1,5 @@
-# TODO: replace DBT_POSTGRES_PASSWORD source with a dedicated raw DB password secret or update runtime to parse DATABASE_URL before deployment.
-# This resource is SCAFFOLD ONLY — do not run terraform apply until the credential contract is resolved.
+# DATABASE_URL is used as the credential source; DBT_POSTGRES_HOST overrides the URL host to use the Cloud SQL Unix socket mount.
+# This resource is SCAFFOLD ONLY — do not run terraform apply until controlled deployment validation is complete.
 resource "google_cloud_run_v2_job" "rtdp_dbt_refresh_job" {
   name     = "rtdp-dbt-refresh-job"
   location = var.region
@@ -57,7 +57,7 @@ resource "google_cloud_run_v2_job" "rtdp_dbt_refresh_job" {
         }
 
         env {
-          name = "DBT_POSTGRES_PASSWORD"
+          name = "DATABASE_URL"
 
           value_source {
             secret_key_ref {

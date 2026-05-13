@@ -34,29 +34,41 @@ Controlled via `DBT_REFRESH_MODE`:
 
 ---
 
+## Credential contract
+
+**Resolved.** The runtime accepts a full `DATABASE_URL` secret and derives dbt connection
+fields from it. Explicit `DBT_POSTGRES_*` env vars override any field parsed from the URL.
+
+On Cloud Run the scaffold keeps `DBT_POSTGRES_HOST=/cloudsql/...` as a plain env var so the
+Unix socket mount is used instead of the TCP host embedded in the URL.
+
 ## Environment variables
 
 | Variable | Required | Default | Description |
 |---|---|---|---|
-| `DBT_POSTGRES_HOST` | Yes | — | PostgreSQL host |
-| `DBT_POSTGRES_PORT` | No | `5432` | PostgreSQL port |
-| `DBT_POSTGRES_USER` | Yes | — | PostgreSQL user |
-| `DBT_POSTGRES_PASSWORD` | No | `""` | PostgreSQL password (never logged) |
-| `DBT_POSTGRES_DBNAME` | Yes | — | PostgreSQL database name |
+| `DATABASE_URL` | No | — | Full PostgreSQL URL (`postgresql://user:pw@host:port/db`); fields used as defaults for `DBT_POSTGRES_*` when set |
+| `DBT_POSTGRES_HOST` | Yes* | — | PostgreSQL host; overrides host parsed from `DATABASE_URL` |
+| `DBT_POSTGRES_PORT` | No | `5432` | PostgreSQL port; overrides port parsed from `DATABASE_URL` |
+| `DBT_POSTGRES_USER` | Yes* | — | PostgreSQL user; overrides user parsed from `DATABASE_URL` |
+| `DBT_POSTGRES_PASSWORD` | No | `""` | PostgreSQL password (never logged); overrides password parsed from `DATABASE_URL` |
+| `DBT_POSTGRES_DBNAME` | Yes* | — | PostgreSQL database name; overrides dbname parsed from `DATABASE_URL` |
 | `DBT_TARGET` | No | `cloudsql` | dbt target name in profiles.yml |
 | `DBT_PROJECT_DIR` | No | `/app/dbt` | Path to the dbt project directory |
 | `DBT_PROFILES_DIR` | No | `/tmp/rtdp-dbt-profiles` | Directory for generated profiles.yml |
 | `DBT_REFRESH_MODE` | No | `run-and-test` | One of: compile, run, test, run-and-test |
+
+\* Required unless `DATABASE_URL` provides the value.
 
 ---
 
 ## Safety
 
 - `dbt/profiles.yml` is never committed to the repository.
-- `DBT_POSTGRES_PASSWORD` is never written to logs or stdout.
+- Passwords (whether from `DBT_POSTGRES_PASSWORD` or parsed from `DATABASE_URL`) are never written to logs or stdout.
 - The profiles.yml is generated at runtime into `/tmp/rtdp-dbt-profiles/` (outside the repo tree)
   and deleted after the job completes.
 - The generated file is on the container filesystem and is not persisted after the container exits.
+- `DBT_PROFILES_DIR` must not point inside the repository `dbt/` directory; `_resolve_config` raises `ValueError` if it does.
 
 ---
 
@@ -182,16 +194,26 @@ All tests run without a real database connection (subprocess is mocked).
 
 ---
 
-## Future Cloud Run Job deployment
+## Cloud Run Job deployment status
 
-This package will be used in a future branch to create a new Cloud Run Job
-(`rtdp-dbt-refresh-job`) with a dedicated Terraform resource and deployment workflow.
+**Not yet deployed.** The Terraform scaffold (`infra/terraform/gcp/cloud_run_jobs.tf`) and
+deploy workflow (`.github/workflows/deploy-dbt-refresh-cloud-run.yml`) exist but have not
+been applied or dispatched.
 
-That branch will:
+Credential contract resolved (this branch):
+- `DATABASE_URL` secret from `rtdp-database-url` is the credential source.
+- Runtime parses `DATABASE_URL` to derive host, port, user, password, dbname.
+- `DBT_POSTGRES_HOST=/cloudsql/...` overrides the URL host to use the Cloud SQL Unix socket mount.
+- `DBT_POSTGRES_PASSWORD` secret is no longer wired to `rtdp-database-url`.
 
-1. Add `google_cloud_run_v2_job.rtdp_dbt_refresh_job` to `infra/terraform/gcp/cloud_run_jobs.tf`
-2. Update `rtdp-silver-refresh-scheduler` to point to the new job
-3. Deploy and run `dbt compile`, `dbt run --select silver,gold`, and `dbt test` against Cloud SQL
-4. Confirm API readback and return Cloud SQL to `NEVER / STOPPED`
+Still pending (controlled deployment branch):
+1. Start Cloud SQL (`NEVER → RUNNABLE`).
+2. Dispatch `deploy-dbt-refresh-cloud-run.yml`.
+3. Execute the job manually and confirm dbt run + test success in Cloud Logging.
+4. Return Cloud SQL to `NEVER / STOPPED`.
+5. Document evidence.
+
+Scheduler switch (`rtdp-silver-refresh-scheduler` → `rtdp-dbt-refresh-job`) is a separate
+branch after deployment evidence is accepted.
 
 **This branch does not deploy anything and does not mutate GCP.**

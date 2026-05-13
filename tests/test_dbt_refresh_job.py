@@ -8,6 +8,7 @@ import pytest
 
 from rtdp_dbt_refresh_job import (
     VALID_MODES,
+    _parse_database_url,
     _resolve_config,
     _write_profiles,
     main,
@@ -34,6 +35,7 @@ def _base_env(monkeypatch, tmp_path: Path, mode: str = "run-and-test") -> None:
     monkeypatch.setenv("DBT_TARGET", "ci")
     monkeypatch.setenv("DBT_PROJECT_DIR", "/tmp/fake-dbt-project")
     monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path / "rtdp-dbt-profiles"))
+    monkeypatch.delenv("DATABASE_URL", raising=False)
 
 
 def _capture_logs(capsys) -> list[dict]:
@@ -115,6 +117,28 @@ def test_compile_mode_does_not_invoke_run_or_test(monkeypatch, tmp_path):
 
     assert "run" not in calls
     assert "test" not in calls
+
+
+# --- mode: run ---
+
+
+def test_run_mode_invokes_deps_compile_run(monkeypatch, tmp_path):
+    _base_env(monkeypatch, tmp_path, mode="run")
+
+    calls = []
+
+    def capturing_run(cmd, **kwargs):
+        calls.append(cmd[1])
+        m = MagicMock()
+        m.returncode = 0
+        return m
+
+    with patch("rtdp_dbt_refresh_job.subprocess.run", side_effect=capturing_run):
+        cfg = _resolve_config()
+        rc = run(cfg)
+
+    assert rc == 0
+    assert calls == ["deps", "compile", "run"]
 
 
 # --- mode: run-and-test ---
@@ -284,6 +308,7 @@ def test_generated_profile_is_removed_after_success(monkeypatch, tmp_path):
 
 def test_missing_host_exits_nonzero(monkeypatch, capsys, tmp_path):
     monkeypatch.delenv("DBT_POSTGRES_HOST", raising=False)
+    monkeypatch.delenv("DATABASE_URL", raising=False)
     monkeypatch.setenv("DBT_POSTGRES_USER", "rtdp")
     monkeypatch.setenv("DBT_POSTGRES_DBNAME", "realtime_platform")
     monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path))
@@ -386,3 +411,130 @@ def test_step_log_command_field_is_name_only(monkeypatch, capsys, tmp_path):
     for lg in step_logs:
         # command field is "dbt deps" or "dbt compile" etc., never a full CLI string
         assert lg["command"] in ("dbt deps", "dbt compile", "dbt run", "dbt test")
+
+
+# --- DATABASE_URL parsing ---
+
+
+def test_parse_database_url_postgresql_scheme():
+    result = _parse_database_url("postgresql://rtdp:password@myhost:5432/realtime_platform")
+    assert result["host"] == "myhost"
+    assert result["port"] == 5432
+    assert result["user"] == "rtdp"
+    assert result["password"] == "password"
+    assert result["dbname"] == "realtime_platform"
+
+
+def test_parse_database_url_postgres_scheme():
+    result = _parse_database_url("postgres://rtdp:password@myhost/realtime_platform")
+    assert result["host"] == "myhost"
+    assert result["dbname"] == "realtime_platform"
+
+
+def test_parse_database_url_default_port_when_absent():
+    result = _parse_database_url("postgres://rtdp:pw@host/db")
+    assert result["port"] == 5432
+
+
+def test_parse_database_url_explicit_port_preserved():
+    result = _parse_database_url("postgresql://rtdp:pw@host:5433/db")
+    assert result["port"] == 5433
+
+
+def test_parse_database_url_url_decoded_password():
+    result = _parse_database_url("postgres://rtdp:p%40ssword@host/db")
+    assert result["password"] == "p@ssword"
+
+
+def test_parse_database_url_url_decoded_username():
+    result = _parse_database_url("postgres://rt%2Fdp:pw@host/db")
+    assert result["user"] == "rt/dp"
+
+
+def test_parse_database_url_invalid_scheme_raises():
+    with pytest.raises(ValueError, match="DATABASE_URL"):
+        _parse_database_url("mysql://rtdp:pw@host/db")
+
+
+def test_parse_database_url_missing_host_raises():
+    with pytest.raises(ValueError, match="DATABASE_URL"):
+        _parse_database_url("postgresql:///db")
+
+
+# --- DATABASE_URL integration with _resolve_config ---
+
+
+def test_resolve_config_uses_database_url_as_defaults(monkeypatch, tmp_path):
+    monkeypatch.setenv("DATABASE_URL", "postgresql://rtdp:urlpw@urlhost:5433/urldb")
+    monkeypatch.delenv("DBT_POSTGRES_HOST", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_USER", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_DBNAME", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PASSWORD", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PORT", raising=False)
+    monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path))
+
+    cfg = _resolve_config()
+
+    assert cfg["host"] == "urlhost"
+    assert cfg["port"] == 5433
+    assert cfg["user"] == "rtdp"
+    assert cfg["password"] == "urlpw"
+    assert cfg["dbname"] == "urldb"
+
+
+def test_resolve_config_explicit_host_overrides_database_url(monkeypatch, tmp_path):
+    monkeypatch.setenv("DATABASE_URL", "postgresql://rtdp:pw@somehost:5432/realtime_platform")
+    monkeypatch.setenv("DBT_POSTGRES_HOST", "/cloudsql/project:region:instance")
+    monkeypatch.delenv("DBT_POSTGRES_USER", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_DBNAME", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PASSWORD", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PORT", raising=False)
+    monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path))
+
+    cfg = _resolve_config()
+
+    assert cfg["host"] == "/cloudsql/project:region:instance"
+
+
+def test_resolve_config_explicit_password_overrides_database_url(monkeypatch, tmp_path):
+    monkeypatch.setenv("DATABASE_URL", "postgresql://rtdp:url_password@host:5432/realtime_platform")
+    monkeypatch.setenv("DBT_POSTGRES_HOST", "host")
+    monkeypatch.delenv("DBT_POSTGRES_USER", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_DBNAME", raising=False)
+    monkeypatch.setenv("DBT_POSTGRES_PASSWORD", "explicit_password")
+    monkeypatch.delenv("DBT_POSTGRES_PORT", raising=False)
+    monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path))
+
+    cfg = _resolve_config()
+
+    assert cfg["password"] == "explicit_password"
+
+
+def test_database_url_password_not_in_logs(monkeypatch, capsys, tmp_path):
+    monkeypatch.setenv("DATABASE_URL", "postgresql://rtdp:url_secret_pw@localhost:5432/realtime_platform")
+    monkeypatch.setenv("DBT_POSTGRES_HOST", "localhost")
+    monkeypatch.delenv("DBT_POSTGRES_USER", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_DBNAME", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PASSWORD", raising=False)
+    monkeypatch.delenv("DBT_POSTGRES_PORT", raising=False)
+    monkeypatch.setenv("DBT_TARGET", "ci")
+    monkeypatch.setenv("DBT_PROJECT_DIR", "/tmp/fake-dbt-project")
+    monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path / "profiles"))
+    monkeypatch.setenv("DBT_REFRESH_MODE", "run-and-test")
+
+    mock_run = _make_subprocess_mock(0)
+    with patch("rtdp_dbt_refresh_job.subprocess.run", mock_run):
+        cfg = _resolve_config()
+        run(cfg)
+
+    out = capsys.readouterr().out
+    assert "url_secret_pw" not in out
+
+
+def test_invalid_database_url_raises_clear_error(monkeypatch, tmp_path):
+    monkeypatch.setenv("DATABASE_URL", "not-a-url")
+    monkeypatch.delenv("DBT_POSTGRES_HOST", raising=False)
+    monkeypatch.setenv("DBT_PROFILES_DIR", str(tmp_path))
+
+    with pytest.raises(ValueError, match="DATABASE_URL"):
+        _resolve_config()
