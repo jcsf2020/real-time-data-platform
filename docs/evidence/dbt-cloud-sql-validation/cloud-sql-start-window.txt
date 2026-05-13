@@ -1,0 +1,8 @@
+--- START CLOUD SQL VALIDATION WINDOW ---
+The following message will be used for the patch API method.
+{"name": "rtdp-postgres", "project": "project-42987e01-2123-446b-ac7", "settings": {"activationPolicy": "ALWAYS"}}
+Patching Cloud SQL instance...
+................done.
+Updated [https://sqladmin.googleapis.com/sql/v1beta4/projects/project-42987e01-2123-446b-ac7/instances/rtdp-postgres].
+--- POLL CLOUD SQL STATE ---
+ALWAYS	RUNNABLE

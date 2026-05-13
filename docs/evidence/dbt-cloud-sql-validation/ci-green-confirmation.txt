@@ -1,0 +1,6 @@
+--- CI GREEN CONFIRMATION ---
+completed	success	Add dbt Cloud SQL migration runbook (#107)	CI	main	push	25798026010	1m23s	2026-05-13T12:06:14Z
+completed	success	Document dbt CI validation evidence (#106)	CI	main	push	25767830787	1m25s	2026-05-12T23:15:57Z
+completed	success	Add dbt CI validation (#105)	CI	main	push	25767285803	1m26s	2026-05-12T23:01:18Z
+completed	success	Add local dbt transformation layer (#104)	CI	main	push	25765410890	22s	2026-05-12T22:15:27Z
+completed	success	Add dbt transformation governance plan (#103)	CI	main	push	25761918933	22s	2026-05-12T21:00:07Z

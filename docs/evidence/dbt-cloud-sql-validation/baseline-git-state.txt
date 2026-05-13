@@ -1,0 +1,8 @@
+--- BASELINE GIT STATE ---
+## evidence/dbt-cloud-sql-validation
+?? docs/evidence/dbt-cloud-sql-validation/
+284a061 Add dbt Cloud SQL migration runbook (#107)
+6510339 Document dbt CI validation evidence (#106)
+194d34e Add dbt CI validation (#105)
+dee7b7d Add local dbt transformation layer (#104)
+4820004 Add dbt transformation governance plan (#103)

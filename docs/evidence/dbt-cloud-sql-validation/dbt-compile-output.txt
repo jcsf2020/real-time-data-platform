@@ -1,0 +1,8 @@
+--- DBT COMPILE CLOUD SQL ---
+[0m12:24:49  Running with dbt=1.11.9
+[0m12:24:49  Registered adapter: postgres=1.10.0
+[0m12:24:49  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:24:50  Found 2 models, 22 data tests, 1 source, 584 macros
+[0m12:24:50  
+[0m12:24:50  Concurrency: 1 threads (target='cloudsql')
+[0m12:24:50  

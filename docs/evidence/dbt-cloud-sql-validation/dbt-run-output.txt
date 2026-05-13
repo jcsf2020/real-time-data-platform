@@ -1,0 +1,28 @@
+--- DBT RUN CLOUD SQL ---
+[0m12:29:43  Running with dbt=1.11.9
+[0m12:29:43  Registered adapter: postgres=1.10.0
+[0m12:29:43  Found 2 models, 22 data tests, 1 source, 584 macros
+[0m12:29:43  
+[0m12:29:43  Concurrency: 1 threads (target='cloudsql')
+[0m12:29:43  
+[0m12:29:46  1 of 2 START sql table model gold.market_event_daily_aggregates ................ [RUN]
+[0m12:29:47  1 of 2 OK created sql table model gold.market_event_daily_aggregates ........... [[32mSELECT 7[0m in 1.21s]
+[0m12:29:47  2 of 2 START sql table model silver.market_event_minute_aggregates ............. [RUN]
+[0m12:29:47  2 of 2 OK created sql table model silver.market_event_minute_aggregates ........ [[32mSELECT 256[0m in 0.57s]
+[0m12:29:48  
+[0m12:29:48  Finished running 2 table models in 0 hours 0 minutes and 4.37 seconds (4.37s).
+[0m12:29:48  
+[0m12:29:48  [32mCompleted successfully[0m
+[0m12:29:48  
+[0m12:29:48  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=2
+--- POST-DBT RUN TABLE COUNTS ---
+ silver_row_count_after_dbt_run 
+--------------------------------
+                            256
+(1 row)
+
+ gold_row_count_after_dbt_run 
+------------------------------
+                            7
+(1 row)
+

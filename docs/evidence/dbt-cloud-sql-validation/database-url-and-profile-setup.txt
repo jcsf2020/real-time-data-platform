@@ -1,0 +1,11 @@
+--- RETRIEVE DATABASE_URL SAFELY ---
+DATABASE_URL_RETRIEVED=true
+PASSWORD_EXTRACTED=true
+TEMP_PROFILE_CREATED=true
+TEMP_PROFILE_PATH=/tmp/rtdp-dbt-cloudsql/profiles.yml
+--- CONNECTION TEST ---
+   database_name   | user_name 
+-------------------+-----------
+ realtime_platform | rtdp
+(1 row)
+
