@@ -13,6 +13,7 @@ members = [
     "rtdp-api",
     "rtdp-consumer",
     "rtdp-contracts",
+    "rtdp-dbt-refresh-job",
     "rtdp-producer",
     "rtdp-pubsub-publisher",
     "rtdp-pubsub-worker",
@@ -1659,6 +1660,17 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [{ name = "pydantic", specifier = ">=2.13.3" }]
+
+[[package]]
+name = "rtdp-dbt-refresh-job"
+version = "0.1.0"
+source = { editable = "apps/dbt-refresh-job" }
+dependencies = [
+    { name = "dbt-postgres" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "dbt-postgres", specifier = ">=1.9.0" }]
 
 [[package]]
 name = "rtdp-producer"

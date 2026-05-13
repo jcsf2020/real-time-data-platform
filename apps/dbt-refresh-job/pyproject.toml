@@ -1,0 +1,15 @@
+[project]
+name = "rtdp-dbt-refresh-job"
+version = "0.1.0"
+description = "Cloud Run Job: run dbt compile/run/test against Cloud SQL via environment variables."
+requires-python = ">=3.12"
+dependencies = [
+    "dbt-postgres>=1.9.0",
+]
+
+[project.scripts]
+rtdp-dbt-refresh-job = "rtdp_dbt_refresh_job:main"
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
