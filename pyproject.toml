@@ -30,6 +30,7 @@ members = [
     "apps/pubsub-publisher",
     "apps/pubsub-worker",
     "apps/silver-refresh-job",
+    "apps/dbt-refresh-job",
     "packages/contracts",
 ]
 

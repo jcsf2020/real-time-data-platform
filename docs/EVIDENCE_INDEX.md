@@ -170,3 +170,4 @@ are verified across the evidence base:
 
 | [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md) | Evidence that dbt compile/run/test succeeded against Cloud SQL, matched stored-function outputs, and API readback returned HTTP 200. |
 | [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) | Plan only — not executed. Phases, decision matrix (Option A/B/C), credential strategy, rollback paths, and acceptance criteria for migrating the Cloud Run Job from stored functions to dbt. |
+| [apps/dbt-refresh-job/](../apps/dbt-refresh-job/) | Local dbt refresh runtime package (`rtdp-dbt-refresh-job` CLI): env-var-driven profiles.yml generation, subprocess dbt execution (deps / compile / run / test), structured JSON logs, 20 unit tests. Not deployed — Cloud Run Job deployment is the next branch. |
