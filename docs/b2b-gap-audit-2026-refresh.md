@@ -15,11 +15,11 @@ This is a production-light, evidence-driven GCP data platform. It demonstrates:
 
 - A complete real-time ingestion path: Pub/Sub → Cloud Run worker → Cloud SQL → FastAPI API, validated end-to-end with 100 / 1,000 / 5,000-event bounded load tests.
 - A medallion data architecture (bronze / silver / gold / observability / ai schemas) in PostgreSQL, with a governed dbt transformation layer covering silver and gold models.
-- Full Terraform IaC coverage across every deployed GCP resource, backed by a GCS remote state, validated with zero-diff plans. A new Cloud Run Job scaffold for the dbt refresh path is committed but not yet applied.
+- Full Terraform IaC coverage across every deployed GCP resource, backed by a GCS remote state, validated with zero-diff plans. `rtdp-dbt-refresh-job` (Cloud Run Job for the dbt refresh path) now exists in GCP under Terraform management with a confirmed zero-diff plan; execution evidence is pending.
 - Operational observability: 4 logs-based Cloud Monitoring metrics with confirmed timeSeries datapoints, a 4-panel dashboard, 2 enabled alert policies with email notification, and a production DLQ with `deadLetterPolicy`.
 - A two-job CI pipeline: pytest (153 tests), ruff lint, import smoke test, and a full dbt compile/run/test run on every push — including an ephemeral pgvector container.
 - Principled cost control: Cloud SQL is `NEVER / STOPPED` outside bounded validation windows. No resource has been mutated without a scoped, runbook-backed evidence branch.
-- dbt models validated against real Cloud SQL data with parity vs. stored functions confirmed (silver 256/256, gold 7/7). API readback verified. Operational execution pending Terraform apply of the new Cloud Run Job.
+- dbt models validated against real Cloud SQL data with parity vs. stored functions confirmed (silver 256/256, gold 7/7). API readback verified. `rtdp-dbt-refresh-job` Cloud Run Job deployed via Terraform; execution evidence pending.
 
 ### What is production-light versus not production-grade
 
@@ -95,7 +95,7 @@ Ranked by B2B value impact, technical risk, and recommended priority.
 
 | # | Gap | Description | B2B Value Impact | Technical Risk | Priority |
 |---|---|---|---|---|---|
-| 1 | dbt operational deployment | `terraform apply` for `rtdp-dbt-refresh-job`, execute the job against Cloud SQL, validate dbt run + test success, confirm API readback | High | Medium | P0 |
+| 1 | dbt job execution proof | Execute `rtdp-dbt-refresh-job` against Cloud SQL, validate dbt compile/run/test success in Cloud Logging, confirm API readback, stop Cloud SQL | High | Medium | P0 |
 | 2 | Scheduler switch to dbt job | Update scheduler URI from `rtdp-silver-refresh-job:run` to `rtdp-dbt-refresh-job:run`; validate one scheduled execution | High | Low | P1 |
 | 3 | BigQuery analytical tier | Stream or batch-export bronze events to BigQuery; demonstrate long-horizon analytical queries separate from the operational store | High | Medium | P1 |
 | 4 | Automatic deploy-on-merge | Convert at least one deploy workflow from `workflow_dispatch` to `push` trigger on `main`, with a meaningful rollback path | Medium | Low | P1 |
