@@ -448,6 +448,8 @@ See [docs/dbt-transformation-governance-plan.md](docs/dbt-transformation-governa
 
 See [docs/dbt-ci-validation-evidence.md](docs/dbt-ci-validation-evidence.md) for the dbt implementation and CI validation evidence: silver and gold models, 22 dbt tests, 117 pytest, ruff clean, ephemeral pgvector CI container; Cloud SQL not touched.
 
+See [docs/dbt-cloud-sql-migration-runbook.md](docs/dbt-cloud-sql-migration-runbook.md) for the controlled runbook for validating dbt silver and gold models against Cloud SQL and reconciling output with the stored-function baseline (runbook only — not yet executed).
+
 See [docs/SLO_AND_INCIDENT_RESPONSE.md](docs/SLO_AND_INCIDENT_RESPONSE.md) for production-light SLOs and incident response procedures.
 
 This project demonstrates practical Data Engineering skills relevant to streaming platform and cloud data roles in 2026/2027:
