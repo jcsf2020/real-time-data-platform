@@ -1,0 +1,143 @@
+name: Deploy dbt Refresh Job to Cloud Run
+
+"on":
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy-dbt-refresh-job:
+    name: Deploy dbt refresh Cloud Run Job
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: project-42987e01-2123-446b-ac7
+      REGION: europe-west1
+      ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
+      ARTIFACT_REGISTRY_REPOSITORY: rtdp
+      IMAGE_NAME: rtdp-dbt-refresh-job
+      CLOUD_RUN_JOB: rtdp-dbt-refresh-job
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_CLOUD_RUN_DEPLOY_SERVICE_ACCOUNT }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker "${ARTIFACT_REGISTRY_HOST}" --quiet
+
+      - name: Build dbt refresh job image
+        run: |
+          IMAGE_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:${GITHUB_SHA}"
+          echo "IMAGE_URI=${IMAGE_URI}" >> "${GITHUB_ENV}"
+          docker build \
+            --file apps/dbt-refresh-job/Dockerfile \
+            --tag "${IMAGE_URI}" \
+            .
+
+      - name: Push dbt refresh job image
+        run: docker push "${IMAGE_URI}"
+
+      - name: Tag image as latest in Artifact Registry
+        run: |
+          LATEST_URI="${ARTIFACT_REGISTRY_HOST}/${PROJECT_ID}/${ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}:latest"
+          echo "LATEST_URI=${LATEST_URI}" >> "${GITHUB_ENV}"
+          docker tag "${IMAGE_URI}" "${LATEST_URI}"
+          docker push "${LATEST_URI}"
+
+      - name: Deploy dbt refresh job to Cloud Run Jobs
+        # NOTE: gcloud run jobs deploy creates/updates the job definition only.
+        # It does NOT execute the job. Manual gcloud run jobs execute is required.
+        # CREDENTIAL WARNING: DBT_POSTGRES_PASSWORD is sourced from rtdp-database-url,
+        # which may be a full DATABASE_URL, not a raw password. Do not run this job
+        # until the credential contract is resolved. See docs/dbt-refresh-cloud-run-job-plan.md.
+        run: |
+          gcloud run jobs deploy "${CLOUD_RUN_JOB}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --image="${IMAGE_URI}" \
+            --service-account="rtdp-worker-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
+            --set-secrets="DBT_POSTGRES_PASSWORD=rtdp-database-url:latest" \
+            --set-env-vars="DBT_REFRESH_MODE=run-and-test,DBT_POSTGRES_HOST=/cloudsql/${PROJECT_ID}:${REGION}:rtdp-postgres,DBT_POSTGRES_PORT=5432,DBT_POSTGRES_USER=rtdp,DBT_POSTGRES_DBNAME=realtime_platform,DBT_TARGET=cloudsql,DBT_PROJECT_DIR=/app/dbt,DBT_PROFILES_DIR=/tmp/rtdp-dbt-profiles" \
+            --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \
+            --task-timeout=600 \
+            --max-retries=0 \
+            --quiet
+
+      - name: Verify deployed job configuration
+        run: |
+          gcloud run jobs describe "${CLOUD_RUN_JOB}" \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --format=json > /tmp/cloud-run-dbt-refresh-job.json
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          job = json.loads(Path("/tmp/cloud-run-dbt-refresh-job.json").read_text())
+
+          template = job["template"]["template"]
+          container = template["containers"][0]
+          env_list = container.get("env", [])
+          env_map = {e.get("name"): e for e in env_list}
+
+          expected_image = os.environ["IMAGE_URI"]
+          expected_service_account = f"rtdp-worker-sa@{os.environ['PROJECT_ID']}.iam.gserviceaccount.com"
+
+          actual_image = container["image"]
+          actual_service_account = template.get("serviceAccount")
+          actual_timeout = template.get("timeout")
+          actual_max_retries = template.get("maxRetries")
+
+          password_ref = (
+              env_map.get("DBT_POSTGRES_PASSWORD", {})
+              .get("valueSource", {})
+              .get("secretKeyRef", {})
+          )
+
+          checks = {
+              "image": actual_image == expected_image,
+              "service_account": actual_service_account == expected_service_account,
+              "timeout": actual_timeout == "600s",
+              "max_retries": actual_max_retries == 0,
+              "dbt_refresh_mode": env_map.get("DBT_REFRESH_MODE", {}).get("value") == "run-and-test",
+              "dbt_target": env_map.get("DBT_TARGET", {}).get("value") == "cloudsql",
+              "password_secret_name": password_ref.get("secret") == "rtdp-database-url",
+              "password_secret_version": password_ref.get("version") == "latest",
+          }
+
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              print("POST_DEPLOY_JOB_CHECKS_FAILED=" + ",".join(failed))
+              print(json.dumps({
+                  "actual_image": actual_image,
+                  "expected_image": expected_image,
+                  "actual_service_account": actual_service_account,
+                  "expected_service_account": expected_service_account,
+                  "actual_timeout": actual_timeout,
+                  "actual_max_retries": actual_max_retries,
+                  "password_ref": password_ref,
+                  "env_keys": list(env_map.keys()),
+              }, indent=2, sort_keys=True))
+              raise SystemExit(1)
+
+          print("POST_DEPLOY_JOB_CHECKS_OK=true")
+          print("DEPLOYED_IMAGE=" + actual_image)
+          print("RUNTIME_SERVICE_ACCOUNT=" + (actual_service_account or ""))
+          print("TIMEOUT=" + (actual_timeout or ""))
+          print("MAX_RETRIES=" + str(actual_max_retries))
+          print("DBT_REFRESH_MODE=" + (env_map.get("DBT_REFRESH_MODE", {}).get("value") or ""))
+          print("PASSWORD_SECRET=rtdp-database-url:latest")
+          PY
