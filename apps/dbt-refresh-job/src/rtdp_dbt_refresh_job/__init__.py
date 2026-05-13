@@ -7,7 +7,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 _SERVICE = "rtdp-dbt-refresh-job"
 _COMPONENT = "dbt-refresh"
@@ -36,11 +36,18 @@ def _parse_database_url(database_url: str) -> dict:
             " expected 'postgres' or 'postgresql'"
         )
 
-    if not parsed.hostname:
-        raise ValueError("Invalid DATABASE_URL: missing host")
+    if parsed.hostname:
+        host = parsed.hostname
+    else:
+        # Cloud SQL Unix socket URLs carry the host in the query string:
+        # postgresql://user:pw@/dbname?host=/cloudsql/project:region:instance
+        query_host = parse_qs(parsed.query).get("host", [None])[0]
+        if not query_host:
+            raise ValueError("Invalid DATABASE_URL: missing host")
+        host = query_host
 
     return {
-        "host": parsed.hostname,
+        "host": host,
         "port": parsed.port if parsed.port is not None else 5432,
         "user": unquote(parsed.username or ""),
         "password": unquote(parsed.password or ""),
