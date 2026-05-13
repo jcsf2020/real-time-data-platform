@@ -454,7 +454,7 @@ See [docs/dbt-cloud-sql-validation-evidence.md](docs/dbt-cloud-sql-validation-ev
 
 See [docs/dbt-operational-migration-plan.md](docs/dbt-operational-migration-plan.md) for the plan to migrate the Cloud Run Job refresh path from stored functions to dbt — phases, decision matrix, credential strategy, rollback paths, and acceptance criteria (plan only — not executed).
 
-See [docs/dbt-refresh-cloud-run-job-plan.md](docs/dbt-refresh-cloud-run-job-plan.md) for the Terraform and deploy workflow scaffold for `rtdp-dbt-refresh-job` — scaffold only, not deployed; credential contract and scheduler switch pending.
+See [docs/dbt-refresh-cloud-run-job-plan.md](docs/dbt-refresh-cloud-run-job-plan.md) for the `rtdp-dbt-refresh-job` scaffold: Terraform resource definition (`google_cloud_run_v2_job.rtdp_dbt_refresh_job`) as source of truth, image build/push workflow only (no Cloud Run deployment), credential contract resolved, scheduler switch pending a future controlled evidence branch.
 
 See [docs/SLO_AND_INCIDENT_RESPONSE.md](docs/SLO_AND_INCIDENT_RESPONSE.md) for production-light SLOs and incident response procedures.
 

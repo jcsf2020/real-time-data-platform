@@ -1,4 +1,10 @@
-name: Deploy dbt Refresh Job to Cloud Run
+name: Build dbt Refresh Job Image
+
+# Terraform owns google_cloud_run_v2_job.rtdp_dbt_refresh_job.
+# This workflow only builds and pushes the container image to Artifact Registry.
+# No Cloud Run Job is created, updated, or executed here.
+# Cloud Run Job deployment/execution must be handled in a controlled Terraform
+# apply and evidence branch after Terraform resource ownership is accepted.
 
 "on":
   workflow_dispatch:
@@ -8,8 +14,8 @@ permissions:
   id-token: write
 
 jobs:
-  deploy-dbt-refresh-job:
-    name: Deploy dbt refresh Cloud Run Job
+  build-dbt-refresh-job-image:
+    name: Build and push dbt refresh job image
     runs-on: ubuntu-latest
 
     env:
@@ -18,7 +24,6 @@ jobs:
       ARTIFACT_REGISTRY_HOST: europe-west1-docker.pkg.dev
       ARTIFACT_REGISTRY_REPOSITORY: rtdp
       IMAGE_NAME: rtdp-dbt-refresh-job
-      CLOUD_RUN_JOB: rtdp-dbt-refresh-job
 
     steps:
       - name: Checkout repository
@@ -55,93 +60,13 @@ jobs:
           docker tag "${IMAGE_URI}" "${LATEST_URI}"
           docker push "${LATEST_URI}"
 
-      - name: Deploy dbt refresh job to Cloud Run Jobs
-        # NOTE: gcloud run jobs deploy creates/updates the job definition only.
-        # It does NOT execute the job. Manual gcloud run jobs execute is required.
-        # DATABASE_URL is sourced from rtdp-database-url; the runtime parses it to derive
-        # connection fields. DBT_POSTGRES_HOST overrides the URL host to use the Cloud SQL
-        # Unix socket mount.
+      - name: Report image build result
+        # No Cloud Run mutation occurs in this workflow.
+        # Terraform owns google_cloud_run_v2_job.rtdp_dbt_refresh_job.
+        # Cloud Run Job apply/deploy/execution must be handled in a dedicated
+        # controlled Terraform evidence branch.
         run: |
-          gcloud run jobs deploy "${CLOUD_RUN_JOB}" \
-            --project="${PROJECT_ID}" \
-            --region="${REGION}" \
-            --image="${IMAGE_URI}" \
-            --service-account="rtdp-worker-sa@${PROJECT_ID}.iam.gserviceaccount.com" \
-            --set-secrets="DATABASE_URL=rtdp-database-url:latest" \
-            --set-env-vars="DBT_REFRESH_MODE=run-and-test,DBT_POSTGRES_HOST=/cloudsql/${PROJECT_ID}:${REGION}:rtdp-postgres,DBT_POSTGRES_PORT=5432,DBT_POSTGRES_USER=rtdp,DBT_POSTGRES_DBNAME=realtime_platform,DBT_TARGET=cloudsql,DBT_PROJECT_DIR=/app/dbt,DBT_PROFILES_DIR=/tmp/rtdp-dbt-profiles" \
-            --add-cloudsql-instances="${PROJECT_ID}:${REGION}:rtdp-postgres" \
-            --task-timeout=600 \
-            --max-retries=0 \
-            --quiet
-
-      - name: Verify deployed job configuration
-        run: |
-          gcloud run jobs describe "${CLOUD_RUN_JOB}" \
-            --project="${PROJECT_ID}" \
-            --region="${REGION}" \
-            --format=json > /tmp/cloud-run-dbt-refresh-job.json
-
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-
-          job = json.loads(Path("/tmp/cloud-run-dbt-refresh-job.json").read_text())
-
-          template = job["template"]["template"]
-          container = template["containers"][0]
-          env_list = container.get("env", [])
-          env_map = {e.get("name"): e for e in env_list}
-
-          expected_image = os.environ["IMAGE_URI"]
-          expected_service_account = f"rtdp-worker-sa@{os.environ['PROJECT_ID']}.iam.gserviceaccount.com"
-          expected_cloudsql_host = f"/cloudsql/{os.environ['PROJECT_ID']}:{os.environ['REGION']}:rtdp-postgres"
-
-          actual_image = container["image"]
-          actual_service_account = template.get("serviceAccount")
-          actual_timeout = template.get("timeout")
-          actual_max_retries = template.get("maxRetries")
-
-          database_url_ref = (
-              env_map.get("DATABASE_URL", {})
-              .get("valueSource", {})
-              .get("secretKeyRef", {})
-          )
-
-          checks = {
-              "image": actual_image == expected_image,
-              "service_account": actual_service_account == expected_service_account,
-              "timeout": actual_timeout == "600s",
-              "max_retries": actual_max_retries == 0,
-              "dbt_refresh_mode": env_map.get("DBT_REFRESH_MODE", {}).get("value") == "run-and-test",
-              "dbt_target": env_map.get("DBT_TARGET", {}).get("value") == "cloudsql",
-              "database_url_secret_name": database_url_ref.get("secret") == "rtdp-database-url",
-              "database_url_secret_version": database_url_ref.get("version") == "latest",
-              "dbt_postgres_host": env_map.get("DBT_POSTGRES_HOST", {}).get("value") == expected_cloudsql_host,
-          }
-
-          failed = [name for name, ok in checks.items() if not ok]
-          if failed:
-              print("POST_DEPLOY_JOB_CHECKS_FAILED=" + ",".join(failed))
-              print(json.dumps({
-                  "actual_image": actual_image,
-                  "expected_image": expected_image,
-                  "actual_service_account": actual_service_account,
-                  "expected_service_account": expected_service_account,
-                  "actual_timeout": actual_timeout,
-                  "actual_max_retries": actual_max_retries,
-                  "database_url_ref": database_url_ref,
-                  "dbt_postgres_host": env_map.get("DBT_POSTGRES_HOST", {}).get("value"),
-                  "env_keys": list(env_map.keys()),
-              }, indent=2, sort_keys=True))
-              raise SystemExit(1)
-
-          print("POST_DEPLOY_JOB_CHECKS_OK=true")
-          print("DEPLOYED_IMAGE=" + actual_image)
-          print("RUNTIME_SERVICE_ACCOUNT=" + (actual_service_account or ""))
-          print("TIMEOUT=" + (actual_timeout or ""))
-          print("MAX_RETRIES=" + str(actual_max_retries))
-          print("DBT_REFRESH_MODE=" + (env_map.get("DBT_REFRESH_MODE", {}).get("value") or ""))
-          print("DATABASE_URL_SECRET=rtdp-database-url:latest")
-          print("DBT_POSTGRES_HOST=" + (env_map.get("DBT_POSTGRES_HOST", {}).get("value") or ""))
-          PY
+          echo "IMAGE_URI=${IMAGE_URI}"
+          echo "LATEST_URI=${LATEST_URI}"
+          echo "IMAGE_PUSHED=true"
+          echo "CLOUD_RUN_JOB_NOT_DEPLOYED_BY_THIS_WORKFLOW=true"
