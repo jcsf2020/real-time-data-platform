@@ -2,9 +2,23 @@
 
 **Status: SCAFFOLD ONLY — NOT DEPLOYED**
 
-This document records the Terraform and deployment scaffolding added for `rtdp-dbt-refresh-job`.
+This document records the Terraform and image-build scaffolding added for `rtdp-dbt-refresh-job`.
 No `terraform apply` has been run, no Cloud Run Job has been deployed, and no GCP state has
 been mutated.
+
+---
+
+## IaC / Deploy Boundary
+
+**Terraform is the source of truth for the Cloud Run Job definition.**
+
+- `google_cloud_run_v2_job.rtdp_dbt_refresh_job` is declared in
+  `infra/terraform/gcp/cloud_run_jobs.tf` and managed exclusively by Terraform.
+- The GitHub Actions workflow (`deploy-dbt-refresh-cloud-run.yml`) builds and pushes the
+  container image only. It does not create, update, or execute the Cloud Run Job.
+- No Cloud Run mutation occurs in the workflow.
+- Cloud Run Job deployment and execution must be handled in a dedicated controlled Terraform
+  apply and evidence branch, only after Terraform resource ownership is accepted.
 
 ---
 
@@ -12,9 +26,9 @@ been mutated.
 
 | Artifact | Path | Description |
 |---|---|---|
-| Terraform Cloud Run Job resource | `infra/terraform/gcp/cloud_run_jobs.tf` | `google_cloud_run_v2_job.rtdp_dbt_refresh_job` — scaffold definition |
+| Terraform Cloud Run Job resource | `infra/terraform/gcp/cloud_run_jobs.tf` | `google_cloud_run_v2_job.rtdp_dbt_refresh_job` — Terraform-owned scaffold definition |
 | Scheduler TODO comment | `infra/terraform/gcp/scheduler.tf` | Reminder to switch URI after deployment evidence is accepted |
-| Deploy workflow | `.github/workflows/deploy-dbt-refresh-cloud-run.yml` | `workflow_dispatch`-only build/push/deploy pipeline |
+| Image build/push workflow | `.github/workflows/deploy-dbt-refresh-cloud-run.yml` | `workflow_dispatch`-only build/push pipeline — no Cloud Run deployment |
 | This document | `docs/dbt-refresh-cloud-run-job-plan.md` | Scaffold plan |
 
 ---
@@ -41,6 +55,9 @@ That wiring has been removed from both the Terraform scaffold and the deploy wor
 ## Terraform Resource Summary
 
 Resource: `google_cloud_run_v2_job.rtdp_dbt_refresh_job`
+
+**Terraform is the authoritative owner of this resource. No workflow or manual gcloud command
+creates or updates it.**
 
 | Field | Value |
 |---|---|
@@ -81,23 +98,22 @@ Lifecycle: image, annotations, labels, client, client_version changes ignored (m
 
 ---
 
-## Deploy Workflow Summary
+## Image Build/Push Workflow Summary
 
 File: `.github/workflows/deploy-dbt-refresh-cloud-run.yml`
+Workflow name: `Build dbt Refresh Job Image`
 
 - Trigger: `workflow_dispatch` only — does NOT auto-run on push or merge.
 - Builds `apps/dbt-refresh-job/Dockerfile` with the repo root as build context.
 - Tags image with `GITHUB_SHA` and also pushes `:latest` to Artifact Registry.
 - Uses the same Workload Identity Federation / `GCP_WORKLOAD_IDENTITY_PROVIDER` /
   `GCP_CLOUD_RUN_DEPLOY_SERVICE_ACCOUNT` vars as existing deploy workflows.
-- Deploys via `gcloud run jobs deploy` (Cloud Run Jobs syntax, not `gcloud run deploy`).
-- Sets `--set-secrets="DATABASE_URL=rtdp-database-url:latest"`.
-- Keeps `DBT_POSTGRES_HOST=/cloudsql/...` in `--set-env-vars`.
-- Runs a post-deploy verification step that reads `gcloud run jobs describe` JSON and
-  asserts image, service account, timeout, max_retries, env vars, `DATABASE_URL` secret ref,
-  and `DBT_POSTGRES_HOST` value.
-- Does NOT execute the job after deploy — execution requires a separate
-  `gcloud run jobs execute rtdp-dbt-refresh-job` command or scheduler trigger.
+- **Does NOT run `gcloud run jobs deploy`.**
+- **Does NOT run `gcloud run jobs describe`.**
+- **Does NOT run `gcloud run jobs execute`.**
+- **No Cloud Run Job is created, updated, or executed by this workflow.**
+- Outputs: `IMAGE_URI`, `LATEST_URI`, `IMAGE_PUSHED=true`,
+  `CLOUD_RUN_JOB_NOT_DEPLOYED_BY_THIS_WORKFLOW=true`.
 
 ---
 
@@ -106,6 +122,9 @@ File: `.github/workflows/deploy-dbt-refresh-cloud-run.yml`
 The Cloud Scheduler (`rtdp-silver-refresh-scheduler`) still targets `rtdp-silver-refresh-job:run`.
 The URI has not been changed in this branch. A TODO comment in `scheduler.tf` marks the
 pending switch. The scheduler remains `paused = true`.
+
+The scheduler URI will not be switched until the dbt refresh path is fully deployed,
+validated, and the switch is executed in a dedicated controlled evidence branch.
 
 Scheduler switch steps (separate branch, after deployment evidence is accepted):
 
@@ -131,15 +150,31 @@ Scheduler switch steps (separate branch, after deployment evidence is accepted):
 
 ---
 
+## Controlled Deployment Path (Future Branch)
+
+The following steps must be executed in a dedicated controlled evidence branch, only after
+Terraform resource ownership is confirmed:
+
+1. **Build/push image** — dispatch `Build dbt Refresh Job Image` workflow to push the image
+   to Artifact Registry.
+2. **Terraform plan** — run `terraform plan` against `infra/terraform/gcp/` and confirm
+   the Cloud Run Job resource is in the expected state.
+3. **Terraform apply** — apply only in a dedicated controlled evidence branch/window, after
+   plan review and explicit approval.
+4. **Execute job manually** — only after Terraform ownership is accepted:
+   `gcloud run jobs execute rtdp-dbt-refresh-job --region=europe-west1`.
+5. **Validate dbt logs and API readback** — confirm dbt run + test success in Cloud Logging;
+   confirm silver and gold aggregates are populated.
+6. **Stop Cloud SQL** — return Cloud SQL to `NEVER / STOPPED`.
+7. **Document evidence** — record all outputs, log excerpts, and API responses in an
+   evidence document.
+
+---
+
 ## Next Steps
 
-1. **Execute controlled deployment validation** — credential contract resolved; proceed when ready:
-   a. Start Cloud SQL (`NEVER → RUNNABLE`).
-   b. Dispatch the `deploy-dbt-refresh-cloud-run.yml` workflow.
-   c. Manually execute the job: `gcloud run jobs execute rtdp-dbt-refresh-job --region=europe-west1`.
-   d. Confirm dbt run + test success in Cloud Logging.
-   e. Stop Cloud SQL (`RUNNABLE → NEVER`).
-   f. Document evidence in a new branch.
+1. **Execute controlled deployment validation** — credential contract resolved; proceed when ready
+   using the controlled deployment path above.
 2. **Switch scheduler** — in a separate branch after deployment evidence is accepted, update
    the scheduler URI from `rtdp-silver-refresh-job:run` to `rtdp-dbt-refresh-job:run`.
 3. **Decommission silver refresh job** — only after the dbt path is fully validated and

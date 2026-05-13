@@ -86,8 +86,12 @@ CI/CD workflows:
   Cloud Run.
 - `deploy-api-cloud-run.yml` -- manual `workflow_dispatch`; builds and pushes `rtdp-api`
   to Artifact Registry with a commit-SHA image tag, then deploys to Cloud Run.
+- `deploy-dbt-refresh-cloud-run.yml` -- manual `workflow_dispatch`; builds and pushes the
+  `rtdp-dbt-refresh-job` image to Artifact Registry only. Terraform scaffold exists for
+  `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; workflow now only builds/pushes the image.
+  Terraform apply/deployment evidence and scheduler switch remain pending.
 
-Neither deploy workflow triggers automatically on merge to main.
+No deploy workflow triggers automatically on merge to main.
 
 ---
 
@@ -191,7 +195,7 @@ continuously running production service.
 ## Known Remaining Gaps
 
 - **Gold analytics layer**: gold daily aggregates are deployed to Cloud SQL and validated through `GET /aggregates/daily`; evidence is available at `docs/gold-cloud-sql-deployment-evidence.md`.
-- **dbt / transformation governance**: dbt has been validated against Cloud SQL with output parity versus stored functions (silver 256/256, gold 7/7; 22 dbt tests passed; API readback HTTP 200). Evidence: [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md). The local dbt refresh runtime package (`apps/dbt-refresh-job`, CLI `rtdp-dbt-refresh-job`) is implemented and tested locally. Terraform and deploy workflow scaffolding for `rtdp-dbt-refresh-job` (Cloud Run Job) exists — see [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md). Credential contract resolved: runtime parses `DATABASE_URL` secret to derive connection fields; `DBT_POSTGRES_HOST` overrides the URL host to use the Cloud SQL Unix socket mount; `DBT_POSTGRES_PASSWORD` is no longer wired to `rtdp-database-url`. Controlled deployment validation and scheduler switch from `rtdp-silver-refresh-job` to `rtdp-dbt-refresh-job` remain pending for a subsequent branch. Stored functions remain the authoritative refresh path until deployment evidence is accepted. Migration plan: [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md).
+- **dbt / transformation governance**: dbt has been validated against Cloud SQL with output parity versus stored functions (silver 256/256, gold 7/7; 22 dbt tests passed; API readback HTTP 200). Evidence: [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md). The local dbt refresh runtime package (`apps/dbt-refresh-job`, CLI `rtdp-dbt-refresh-job`) is implemented and tested locally. Terraform scaffold exists for `google_cloud_run_v2_job.rtdp_dbt_refresh_job` (`infra/terraform/gcp/cloud_run_jobs.tf`); Terraform is the source of truth for the Cloud Run Job definition. The GitHub Actions workflow (`deploy-dbt-refresh-cloud-run.yml`) builds and pushes the image only — it does not create, update, or execute the Cloud Run Job. Terraform apply/deployment evidence and scheduler switch remain pending for a subsequent controlled evidence branch. Stored functions remain the authoritative refresh path until deployment evidence is accepted. See [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md). Migration plan: [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md).
 - **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
   sustained streaming performance is not validated.
 - **BigQuery and Dataflow**: documented as target architecture items; neither is implemented
