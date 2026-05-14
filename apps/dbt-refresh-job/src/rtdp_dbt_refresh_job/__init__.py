@@ -219,12 +219,12 @@ def run(cfg: dict) -> int:
             steps.append(("compile", "dbt compile", "dbt_compile", []))
         elif mode == "run":
             steps.append(("compile", "dbt compile", "dbt_compile", []))
-            steps.append(("run", "dbt run", "dbt_run", ["--select", "silver,gold"]))
+            steps.append(("run", "dbt run", "dbt_run", ["--select", "silver_market_event_minute_aggregates", "gold_market_event_daily_aggregates"]))
         elif mode == "test":
             steps.append(("test", "dbt test", "dbt_test", []))
         elif mode == "run-and-test":
             steps.append(("compile", "dbt compile", "dbt_compile", []))
-            steps.append(("run", "dbt run", "dbt_run", ["--select", "silver,gold"]))
+            steps.append(("run", "dbt run", "dbt_run", ["--select", "silver_market_event_minute_aggregates", "gold_market_event_daily_aggregates"]))
             steps.append(("test", "dbt test", "dbt_test", []))
 
         for dbt_name, cmd_name, operation, extra in steps:

@@ -181,7 +181,10 @@ def test_run_and_test_passes_select_to_dbt_run(monkeypatch, tmp_path):
 
     assert len(run_cmds) == 1
     assert "--select" in run_cmds[0]
-    assert "silver,gold" in run_cmds[0]
+    
+    assert "silver_market_event_minute_aggregates" in run_cmds[0]
+    assert "gold_market_event_daily_aggregates" in run_cmds[0]
+    assert "silver,gold" not in run_cmds[0]
 
 
 # --- subprocess failure ---
