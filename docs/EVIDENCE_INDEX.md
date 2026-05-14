@@ -40,6 +40,9 @@ Recommended 3-minute entry path for reviewers:
 | Load test evidence | load-test-100/1000/5000-cloud-evidence.md | 100 / 1,000 / 5,000 events accepted |
 | DLQ and retry configuration | production-pubsub-dlq-evidence.md | deadLetterPolicy, maxDeliveryAttempts=5 |
 | Scheduler and silver refresh | silver-refresh-scheduler-execution-proof-evidence.md | Scheduled execution validated |
+| dbt Cloud Run Job deployment | dbt-refresh-cloud-run-deploy-evidence.md | Terraform apply confirmed; zero-diff plan |
+| dbt refresh job execution | dbt-refresh-job-execution-proof-evidence.md | dbt run PASS=2, dbt test PASS=22, API readback HTTP 200 |
+| Scheduler switch to dbt job | dbt-scheduler-switch-evidence.md | Scheduler-triggered dbt execution accepted; PAUSED by default |
 | Cost-control state | Cloud SQL NEVER/STOPPED, Scheduler PAUSED (multiple docs) | Verified throughout |
 
 ---
@@ -87,14 +90,16 @@ separate evidence branches, are documented in their specific evidence files.
 | [.github/workflows/terraform-plan.yml](../.github/workflows/terraform-plan.yml) | PR / push to main (infra path) | Terraform plan via Workload Identity; no apply |
 | [.github/workflows/deploy-worker-cloud-run.yml](../.github/workflows/deploy-worker-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys worker image to Cloud Run |
 | [.github/workflows/deploy-api-cloud-run.yml](../.github/workflows/deploy-api-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys API image to Cloud Run |
-| [.github/workflows/deploy-dbt-refresh-cloud-run.yml](../.github/workflows/deploy-dbt-refresh-cloud-run.yml) | workflow_dispatch (manual) | Builds and pushes dbt refresh job image to Artifact Registry only — no Cloud Run mutation; Terraform owns `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; job deployed via Terraform apply; execution evidence pending |
+| [.github/workflows/deploy-dbt-refresh-cloud-run.yml](../.github/workflows/deploy-dbt-refresh-cloud-run.yml) | workflow_dispatch (manual) | Builds and pushes dbt refresh job image to Artifact Registry only — no Cloud Run mutation; Terraform owns `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; job deployed via Terraform apply; execution evidence accepted |
 
 Supporting evidence:
 
 - [docs/cloud-run-worker-manual-deploy-evidence.md](cloud-run-worker-manual-deploy-evidence.md) -- validated worker manual deploy run
 - [docs/api-deploy-ci-runbook.md](api-deploy-ci-runbook.md) -- API deploy CI runbook
 - [docs/api-manual-deploy-evidence.md](api-manual-deploy-evidence.md) -- validated API manual deploy run
-- [docs/dbt-refresh-cloud-run-deploy-evidence.md](dbt-refresh-cloud-run-deploy-evidence.md) -- `rtdp-dbt-refresh-job` deployed via Terraform apply; zero-diff plan confirmed; execution pending
+- [docs/dbt-refresh-cloud-run-deploy-evidence.md](dbt-refresh-cloud-run-deploy-evidence.md) -- `rtdp-dbt-refresh-job` deployed via Terraform apply; zero-diff plan confirmed
+- [docs/dbt-refresh-job-execution-proof-evidence.md](dbt-refresh-job-execution-proof-evidence.md) -- `rtdp-dbt-refresh-job` executed against Cloud SQL; dbt run PASS=2, dbt test PASS=22, API readback HTTP 200; accepted
+- [docs/dbt-scheduler-switch-evidence.md](dbt-scheduler-switch-evidence.md) -- scheduler switched to `rtdp-dbt-refresh-job:run`; scheduler-triggered execution (`rtdp-dbt-refresh-job-6zb52`) accepted; scheduler PAUSED by default
 
 Neither deploy workflow triggers automatically on merge to main; both require explicit manual dispatch.
 
@@ -154,9 +159,9 @@ are verified across the evidence base:
 - Cloud SQL (`rtdp-postgres`) is kept at activation policy `NEVER / STOPPED` and started only
   during bounded validation windows. This state is confirmed in every load test and Terraform
   import evidence document.
-- Cloud Scheduler (`rtdp-silver-refresh-scheduler`) is kept `PAUSED` by default and resumed
-  only during controlled execution proofs. Final state is confirmed as `PAUSED` in
-  [docs/silver-refresh-scheduler-execution-proof-evidence.md](silver-refresh-scheduler-execution-proof-evidence.md).
+- Cloud Scheduler (`rtdp-silver-refresh-scheduler`) targets `rtdp-dbt-refresh-job:run` and is
+  kept `PAUSED` by default; resumed only during controlled execution proofs. Final state
+  confirmed as `PAUSED` in [docs/dbt-scheduler-switch-evidence.md](dbt-scheduler-switch-evidence.md).
 - Terraform state uses a GCS-backed remote backend. No `terraform apply` was executed during
   import operations; all changes were import-only with verified zero-diff plans.
 
@@ -164,13 +169,12 @@ are verified across the evidence base:
 
 ## Known Remaining Gaps
 
-- Gold analytics layer: `gold.market_event_daily_aggregates` table and refresh function are implemented and cloud-validated. See [docs/gold-cloud-sql-deployment-evidence.md](gold-cloud-sql-deployment-evidence.md).
-- dbt CI validation is implemented (`feat/dbt-ci-validation`). Cloud SQL automated run remains pending (governance plan section 10).
+- BigQuery and Dataflow remain target architecture items; neither is implemented. BigQuery is the highest-priority remaining structural gap.
+- dbt is now the operational scheduled transformation path (accepted as of `docs/post-dbt-scheduler-audit-refresh`). Remaining dbt work: incremental model materialization; dbt-specific observability metrics.
 - Sustained throughput validation above 5,000 events is pending.
-- BigQuery and Dataflow remain target architecture items; neither is implemented.
-- A consolidated architecture review document beyond gcp-architecture.md has not been written.
+- Automatic deploy-on-merge: both deploy workflows require manual dispatch.
 
 | [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md) | Evidence that dbt compile/run/test succeeded against Cloud SQL, matched stored-function outputs, and API readback returned HTTP 200. |
-| [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) | Plan only — not executed. Phases, decision matrix (Option A/B/C), credential strategy, rollback paths, and acceptance criteria for migrating the Cloud Run Job from stored functions to dbt. |
-| [apps/dbt-refresh-job/](../apps/dbt-refresh-job/) | Local dbt refresh runtime package (`rtdp-dbt-refresh-job` CLI): parses `DATABASE_URL` secret to derive dbt connection fields; explicit `DBT_POSTGRES_*` vars override; `DBT_POSTGRES_HOST` override used for Cloud SQL Unix socket; structured JSON logs; profiles.yml deleted after each run. Not deployed — Cloud Run Job credential contract resolved; controlled deployment validation pending. |
-| [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md) | Terraform resource definition (`google_cloud_run_v2_job.rtdp_dbt_refresh_job`) as source of truth; image build/push workflow only — no Cloud Run mutation. Credential contract resolved: `DATABASE_URL` secret from `rtdp-database-url`; `DBT_POSTGRES_PASSWORD` secret removed. Scheduler still targets `rtdp-silver-refresh-job`. Cloud SQL still NEVER / STOPPED. Terraform apply/deployment evidence pending a future controlled branch. |
+| [apps/dbt-refresh-job/](../apps/dbt-refresh-job/) | Local dbt refresh runtime package (`rtdp-dbt-refresh-job` CLI): parses `DATABASE_URL` secret to derive dbt connection fields; explicit `DBT_POSTGRES_*` vars override; `DBT_POSTGRES_HOST` override used for Cloud SQL Unix socket; structured JSON logs; profiles.yml deleted after each run. Deployed as `rtdp-dbt-refresh-job` Cloud Run Job (Terraform-managed); execution evidence accepted. |
+| [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md) | Terraform resource definition (`google_cloud_run_v2_job.rtdp_dbt_refresh_job`) as source of truth; image build/push workflow only — no Cloud Run mutation. Credential contract resolved: `DATABASE_URL` secret from `rtdp-database-url`; `DBT_POSTGRES_PASSWORD` secret removed. Scheduler now targets `rtdp-dbt-refresh-job:run`. Cloud SQL `NEVER / STOPPED` by default. Terraform apply and execution evidence accepted. |
+| [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) | Migration plan executed. dbt is now the operational scheduled transformation path. See `docs/dbt-refresh-job-execution-proof-evidence.md` and `docs/dbt-scheduler-switch-evidence.md`. |
