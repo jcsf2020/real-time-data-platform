@@ -39,8 +39,13 @@ Pub/Sub topic (market-events-raw)
                     --> Cloud Run API (rtdp-api)
 
 Cloud Scheduler (rtdp-silver-refresh-scheduler)
-  --> Cloud Run Job (rtdp-silver-refresh-job)
-        --> silver.market_event_minute_aggregates
+  --> Cloud Run Job (rtdp-dbt-refresh-job)  [accepted operational scheduled path]
+        --> dbt run: silver_market_event_minute_aggregates
+                     gold_market_event_daily_aggregates
+        --> dbt test (22 tests)
+
+Cloud Run Job (rtdp-silver-refresh-job)  [legacy rollback path; not actively scheduled]
+  --> silver.refresh_market_event_minute_aggregates()
 
 Cloud Logging --> logs-based metrics --> alert policies / dashboard
 ```
@@ -55,8 +60,9 @@ Cloud Logging --> logs-based metrics --> alert policies / dashboard
 | Local consumer | Local Docker Compose | Validates and persists events; writes observability metrics | README.md |
 | FastAPI API | Cloud Run (rtdp-api) | Serves /health /readiness /events /aggregates/minute /metrics | gcp-end-to-end-validation.md |
 | Pub/Sub worker | Cloud Run (rtdp-pubsub-worker) | Receives push messages, validates MarketEvent, writes to bronze | gcp-worker-cloud-validation.md |
-| Silver refresh job | Cloud Run Job (rtdp-silver-refresh-job) | Calls silver.refresh_market_event_minute_aggregates() | silver-refresh-scheduler-execution-proof-evidence.md |
-| Cloud Scheduler | GCP Managed | Dispatches silver refresh job on */15 * * * * UTC (PAUSED by default) | silver-refresh-scheduler-execution-proof-evidence.md |
+| dbt refresh job | Cloud Run Job (rtdp-dbt-refresh-job) | Runs dbt deps → dbt run (silver + gold models) → dbt test (22 tests) against Cloud SQL; accepted operational scheduled transformation path | dbt-refresh-job-execution-proof-evidence.md, dbt-scheduler-switch-evidence.md |
+| Silver refresh job (legacy) | Cloud Run Job (rtdp-silver-refresh-job) | Calls silver.refresh_market_event_minute_aggregates(); preserved as rollback path; not actively scheduled | silver-refresh-scheduler-execution-proof-evidence.md |
+| Cloud Scheduler | GCP Managed | Dispatches dbt refresh job (rtdp-dbt-refresh-job:run) on */15 * * * * UTC (PAUSED by default) | dbt-scheduler-switch-evidence.md |
 | Cloud SQL | GCP Managed PostgreSQL 16 (rtdp-postgres) | Durable operational store for medallion schemas | cloud-sql-terraform-import-plan-evidence.md |
 | Pub/Sub topic / subscription / DLQ | GCP Managed | market-events-raw topic; push subscription with deadLetterPolicy | production-pubsub-dlq-evidence.md |
 | Cloud Monitoring | GCP Managed | 4 logs-based metrics, 4-panel dashboard, 2 alert policies, email channel | cloud-alert-policies-evidence.md |
@@ -90,7 +96,9 @@ CI/CD workflows:
   `rtdp-dbt-refresh-job` image to Artifact Registry only. Terraform owns
   `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; the Cloud Run Job was deployed via
   `terraform apply` on `feat/dbt-refresh-cloud-run-deploy` (zero-diff plan confirmed;
-  `CREATE_TIME=2026-05-13T19:16:23Z`). Execution evidence and scheduler switch remain pending.
+  `CREATE_TIME=2026-05-13T19:16:23Z`). Execution evidence accepted
+  (`docs/dbt-refresh-job-execution-proof-evidence.md`). Scheduler switched to target
+  `rtdp-dbt-refresh-job:run` (`docs/dbt-scheduler-switch-evidence.md`).
 
 No deploy workflow triggers automatically on merge to main.
 
@@ -128,9 +136,11 @@ enables forward-compatible contract evolution.
 - **Pub/Sub DLQ**: production push subscription has `deadLetterPolicy` with
   `maxDeliveryAttempts=5`, 10s/60s backoff, routing failed deliveries to
   `market-events-raw-dlq`.
-- **Scheduler execution proof**: `rtdp-silver-refresh-scheduler` dispatched
-  `rtdp-silver-refresh-job` via `rtdp-scheduler-sa`; `silver_refresh_success_count`
-  confirmed TOTAL=1 in Cloud Monitoring.
+- **Scheduler execution proof**: `rtdp-silver-refresh-scheduler` previously dispatched
+  `rtdp-silver-refresh-job` (silver_refresh_success_count confirmed TOTAL=1 in Cloud
+  Monitoring). Scheduler has since been switched to target `rtdp-dbt-refresh-job:run`; a
+  controlled scheduler-triggered execution (`rtdp-dbt-refresh-job-6zb52`) completed with
+  `dbt run` PASS=2 and `dbt test` PASS=22. Scheduler remains PAUSED by default.
 - **Cloud SQL cost control**: `rtdp-postgres` is kept `NEVER / STOPPED` outside bounded
   validation windows; confirmed in every evidence document.
 
@@ -140,9 +150,9 @@ enables forward-compatible contract evolution.
 
 Cloud SQL (`rtdp-postgres`) is kept `NEVER / STOPPED` by default, started only during
 bounded validation windows and stopped immediately afterwards. Cloud Scheduler
-(`rtdp-silver-refresh-scheduler`) is kept `PAUSED` by default, resumed only for controlled
-execution proofs. All deployments are manually triggered; no continuous pipeline incurs
-unexpected build or runtime costs.
+(`rtdp-silver-refresh-scheduler`) targets `rtdp-dbt-refresh-job:run` and is kept `PAUSED`
+by default; it is resumed only for controlled execution proofs. All deployments are manually
+triggered; no continuous pipeline incurs unexpected build or runtime costs.
 
 This setup is appropriate for a portfolio-grade production-light platform. It is not a
 continuously running production service.
@@ -169,6 +179,9 @@ continuously running production service.
 | 5,000-event cloud load test (accepted) | load-test-5000-cloud-evidence.md |
 | DLQ / deadLetterPolicy configured | production-pubsub-dlq-evidence.md |
 | Scheduler / silver refresh execution proof | silver-refresh-scheduler-execution-proof-evidence.md |
+| dbt Cloud Run Job deployment (Terraform apply, zero-diff plan) | dbt-refresh-cloud-run-deploy-evidence.md |
+| dbt refresh job execution proof (dbt run PASS=2, dbt test PASS=22, API readback HTTP 200) | dbt-refresh-job-execution-proof-evidence.md |
+| Scheduler switched to dbt refresh job; scheduler-triggered execution accepted | dbt-scheduler-switch-evidence.md |
 
 ---
 
@@ -184,8 +197,12 @@ continuously running production service.
   deployment gate without the risk of unintended deploys on every merge to main.
 - **Cloud SQL stopped by default**: reduces idle compute cost; trade-off is a mandatory
   start step before each validation window.
-- **Stored function for silver refresh instead of dbt**: simpler dependency footprint;
-  no SQL transformation governance or lineage tracking.
+- **dbt as the accepted operational scheduled transformation path**: dbt now runs silver and
+  gold model refreshes on Cloud Run, scheduled by Cloud Scheduler (PAUSED by default). Stored
+  functions (`silver.refresh_market_event_minute_aggregates()`,
+  `gold.refresh_market_event_daily_aggregates()`) are preserved as a rollback path but are not
+  actively scheduled. dbt provides SQL transformation governance, lineage tracking, and
+  integrated testing that stored functions do not.
 - **Evidence-first documentation retained**: raw evidence documents are verbose but
   provide traceable, audit-safe records of each execution.
 - **Synthetic market-style data for validation**: deterministic event-ID prefixes allow
@@ -195,19 +212,23 @@ continuously running production service.
 
 ## Known Remaining Gaps
 
-- **Gold analytics layer**: gold daily aggregates are deployed to Cloud SQL and validated through `GET /aggregates/daily`; evidence is available at `docs/gold-cloud-sql-deployment-evidence.md`.
-- **dbt / transformation governance**: dbt has been validated against Cloud SQL with output parity versus stored functions (silver 256/256, gold 7/7; 22 dbt tests passed; API readback HTTP 200). Evidence: [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md). The local dbt refresh runtime package (`apps/dbt-refresh-job`, CLI `rtdp-dbt-refresh-job`) is implemented and tested locally. `google_cloud_run_v2_job.rtdp_dbt_refresh_job` has been deployed to GCP via `terraform apply` on `feat/dbt-refresh-cloud-run-deploy`; Terraform state is confirmed and `terraform plan` returns zero diff. Evidence: [docs/dbt-refresh-cloud-run-deploy-evidence.md](dbt-refresh-cloud-run-deploy-evidence.md). The Cloud Run Job has not yet been executed; execution evidence and scheduler switch remain pending for a subsequent controlled evidence branch. Stored functions remain the authoritative refresh path until execution evidence is accepted. See [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md). Migration plan: [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md).
-- **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
-  sustained streaming performance is not validated.
-- **BigQuery and Dataflow**: documented as target architecture items; neither is implemented
-  in the current runtime.
+- **BigQuery analytical tier**: BigQuery and Dataflow remain target architecture items; neither
+  is implemented in the current runtime. BigQuery is the highest-priority remaining structural
+  gap: it bridges the platform from an operational store (Cloud SQL for serving) to a dual-store
+  architecture (Cloud SQL for serving, BigQuery for analytics).
 - **Automatic deploy-on-merge**: both deploy workflows require explicit manual dispatch;
   CI/CD pipeline automation is a planned next step.
-- **SLO / incident response documentation**: SLO targets and incident response runbooks
-  are defined in docs/SLO_AND_INCIDENT_RESPONSE.md; operational validation remains
-  production-light and scoped to controlled validation windows.
-- **API pagination behavior**: pagination should remain validated as part of future API
-  evidence updates.
+- **Incremental dbt models**: silver and gold models use full-refresh table materialization;
+  conversion to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` remains
+  open.
+- **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
+  sustained streaming performance is not validated.
+- **Stored-function retirement**: `silver.refresh_market_event_minute_aggregates()` and
+  `gold.refresh_market_event_daily_aggregates()` are preserved as a dbt rollback path; retirement
+  is low-priority cleanup pending long-term operational confidence in the dbt job.
+- **SLO / incident response documentation**: SLO targets and incident response runbooks are
+  defined in docs/SLO_AND_INCIDENT_RESPONSE.md; operational validation remains production-light
+  and scoped to controlled validation windows.
 
 ---
 

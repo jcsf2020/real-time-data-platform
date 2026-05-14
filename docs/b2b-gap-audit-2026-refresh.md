@@ -1,9 +1,9 @@
 # B2B Gap Audit — 2026 Refresh
 
-**Date:** 2026-05-13  
-**Scope:** Post dbt / Cloud Run Job / Terraform scaffold work  
-**Branch:** `main` (clean, zero diff)  
-**Validation state:** 153 pytest passed · ruff clean · terraform fmt/validate clean · dbt/profiles.yml absent
+**Date:** 2026-05-14  
+**Scope:** Post dbt / Cloud Run Job / scheduler switch accepted  
+**Branch:** `docs/post-dbt-scheduler-audit-refresh`  
+**Validation state:** 156 pytest passed · ruff clean · terraform fmt/validate clean · terraform plan zero-diff · dbt/profiles.yml absent
 
 ---
 
@@ -15,11 +15,11 @@ This is a production-light, evidence-driven GCP data platform. It demonstrates:
 
 - A complete real-time ingestion path: Pub/Sub → Cloud Run worker → Cloud SQL → FastAPI API, validated end-to-end with 100 / 1,000 / 5,000-event bounded load tests.
 - A medallion data architecture (bronze / silver / gold / observability / ai schemas) in PostgreSQL, with a governed dbt transformation layer covering silver and gold models.
-- Full Terraform IaC coverage across every deployed GCP resource, backed by a GCS remote state, validated with zero-diff plans. `rtdp-dbt-refresh-job` (Cloud Run Job for the dbt refresh path) now exists in GCP under Terraform management with a confirmed zero-diff plan; execution evidence is pending.
+- Full Terraform IaC coverage across every deployed GCP resource, backed by a GCS remote state, validated with zero-diff plans. `rtdp-dbt-refresh-job` (Cloud Run Job for the dbt refresh path) exists in GCP under Terraform management with a confirmed zero-diff plan; execution evidence and scheduler switch are accepted.
 - Operational observability: 4 logs-based Cloud Monitoring metrics with confirmed timeSeries datapoints, a 4-panel dashboard, 2 enabled alert policies with email notification, and a production DLQ with `deadLetterPolicy`.
 - A two-job CI pipeline: pytest (153 tests), ruff lint, import smoke test, and a full dbt compile/run/test run on every push — including an ephemeral pgvector container.
 - Principled cost control: Cloud SQL is `NEVER / STOPPED` outside bounded validation windows. No resource has been mutated without a scoped, runbook-backed evidence branch.
-- dbt models validated against real Cloud SQL data with parity vs. stored functions confirmed (silver 256/256, gold 7/7). API readback verified. `rtdp-dbt-refresh-job` Cloud Run Job deployed via Terraform; execution evidence pending.
+- dbt is the accepted operational scheduled transformation path: `rtdp-dbt-refresh-job` runs silver and gold models against Cloud SQL (silver 256 rows, gold 7 rows; 22 dbt tests passed; API readback HTTP 200). Cloud Scheduler targets `rtdp-dbt-refresh-job:run` (PAUSED by default). Scheduler-triggered execution accepted (`rtdp-dbt-refresh-job-6zb52`, dbt run PASS=2, dbt test PASS=22).
 
 ### What is production-light versus not production-grade
 
@@ -28,7 +28,7 @@ This is a production-light, evidence-driven GCP data platform. It demonstrates:
 | Availability | Validated during bounded windows only | Not continuously running; Cloud SQL stopped by default |
 | Scale | 5,000-event bounded bursts validated | Sustained streaming throughput not validated above 5,000 |
 | Data | Synthetic deterministic events | No real-world data variability exercised |
-| dbt | CI-validated, Cloud SQL parity confirmed | Not the operational refresh path yet; stored functions are authoritative |
+| dbt | Operationally scheduled via Cloud Scheduler (PAUSED by default); dbt run and test accepted; stored functions preserved as rollback | Scheduler paused by default; not continuously running; incremental models not yet implemented |
 | CI/CD | CI green on every push; manual deploys tested | No automatic deploy-on-merge |
 | Multi-environment | Single GCP project / environment | No staging, no canary, no multi-region |
 | SLO | Defined and documented | Aspirational targets; no continuous measurement |
@@ -37,7 +37,7 @@ This is a production-light, evidence-driven GCP data platform. It demonstrates:
 
 **Strong:** Full GCP data engineering stack evidenced end-to-end. Terraform discipline and evidence-first documentation are distinguishing signals. dbt with CI validation and Cloud SQL parity demonstrates governed transformation practice. The Pub/Sub DLQ, alert policies, and email notification channel demonstrate production-aware reliability thinking.
 
-**Honest ceiling:** This is a portfolio-grade platform operated in controlled windows, not a service taking live traffic 24/7. The dbt operational migration, BigQuery analytical tier, and automatic CD are the three gaps most visible to a technical interviewer.
+**Honest ceiling:** This is a portfolio-grade platform operated in controlled windows, not a service taking live traffic 24/7. The dbt operational migration and scheduler switch are now closed. BigQuery analytical tier and automatic CD remain the most visible gaps to a technical interviewer.
 
 ---
 
@@ -87,6 +87,14 @@ This is a production-light, evidence-driven GCP data platform. It demonstrates:
 
 **Verified throughout.** Cloud SQL (`rtdp-postgres`) is kept `NEVER / STOPPED` by default; confirmed in every evidence document. Cloud Scheduler (`rtdp-silver-refresh-scheduler`) is kept `PAUSED` by default. All deployments are manual `workflow_dispatch`; no continuous pipeline incurs unexpected costs. No `terraform apply` was run during import operations.
 
+### dbt operational deployment
+
+**Resolved** (branch `feat/dbt-refresh-cloud-run-deploy`). `google_cloud_run_v2_job.rtdp_dbt_refresh_job` was deployed to GCP via `terraform apply`. Two apply failures were encountered and resolved (unsupported Cloud Run v2 annotations). Final `terraform apply` succeeded; subsequent `terraform plan -detailed-exitcode` returns exit code 0. DATABASE_URL socket parsing was fixed to correctly derive the Cloud SQL Unix socket from the URL stored in Secret Manager. The job was then executed in a controlled validation window: `dbt run` passed (silver 256 rows, gold 7 rows) and `dbt test` passed all 22 tests. API readback for minute and daily aggregates returned HTTP 200. Cloud SQL was returned to `NEVER / STOPPED`. Evidence: `docs/dbt-refresh-cloud-run-deploy-evidence.md`, `docs/dbt-refresh-job-execution-proof-evidence.md`.
+
+### Scheduler switch to dbt job
+
+**Resolved** (branch `feat/dbt-scheduler-switch`). `infra/terraform/gcp/scheduler.tf` was updated to target `rtdp-dbt-refresh-job:run` instead of `rtdp-silver-refresh-job:run`. Terraform apply updated one resource; subsequent plan is zero-diff. A controlled manual scheduler trigger was executed after temporarily resuming the scheduler. Execution `rtdp-dbt-refresh-job-6zb52` completed with `dbt run` PASS=2 and `dbt test` PASS=22. Scheduler was returned to `paused = true`. Cloud SQL was returned to `NEVER / STOPPED`. `rtdp-silver-refresh-job` remains deployed as a rollback path but is no longer the active scheduler target. Evidence: `docs/dbt-scheduler-switch-evidence.md`.
+
 ---
 
 ## 3. Remaining Gaps
@@ -95,88 +103,22 @@ Ranked by B2B value impact, technical risk, and recommended priority.
 
 | # | Gap | Description | B2B Value Impact | Technical Risk | Priority |
 |---|---|---|---|---|---|
-| 1 | dbt job execution proof | Execute `rtdp-dbt-refresh-job` against Cloud SQL, validate dbt compile/run/test success in Cloud Logging, confirm API readback, stop Cloud SQL | High | Medium | P0 |
-| 2 | Scheduler switch to dbt job | Update scheduler URI from `rtdp-silver-refresh-job:run` to `rtdp-dbt-refresh-job:run`; validate one scheduled execution | High | Low | P1 |
-| 3 | BigQuery analytical tier | Stream or batch-export bronze events to BigQuery; demonstrate long-horizon analytical queries separate from the operational store | High | Medium | P1 |
-| 4 | Automatic deploy-on-merge | Convert at least one deploy workflow from `workflow_dispatch` to `push` trigger on `main`, with a meaningful rollback path | Medium | Low | P1 |
-| 5 | Incremental dbt models | Convert silver and gold from full-refresh table materialization to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` | Medium | Low | P2 |
-| 6 | Dataflow / streaming enrichment | Replace or augment the Cloud Run worker with a Dataflow pipeline for windowed aggregations | Medium | High | P2 |
-| 7 | Sustained throughput validation | Validate steady-state streaming above 5,000 events (e.g. a 10-minute continuous publish at 50 msg/s ≈ 30,000 events) | Medium | Low | P2 |
-| 8 | dbt observability metrics | Add Cloud Monitoring metrics specific to the dbt refresh job (run duration, test pass/fail count) | Low | Low | P3 |
-| 9 | Stored-function retirement | Remove `silver.refresh_market_event_minute_aggregates()` and `gold.refresh_market_event_daily_aggregates()` from `infra/postgres/init.sql` after dbt is the validated operational path | Low | Low | P3 |
-| 10 | Multi-environment (staging) | Add a staging GCP environment or a separate Terraform workspace | Low | High | P3 |
+| 1 | BigQuery analytical tier | Stream or batch-export bronze events to BigQuery; demonstrate long-horizon analytical queries separate from the operational store | High | Medium | P0 |
+| 2 | Automatic deploy-on-merge | Convert at least one deploy workflow from `workflow_dispatch` to `push` trigger on `main`, with a meaningful rollback path | Medium | Low | P1 |
+| 3 | Incremental dbt models | Convert silver and gold from full-refresh table materialization to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` | Medium | Low | P2 |
+| 4 | Dataflow / streaming enrichment | Replace or augment the Cloud Run worker with a Dataflow pipeline for windowed aggregations | Medium | High | P2 |
+| 5 | Sustained throughput validation | Validate steady-state streaming above 5,000 events (e.g. a 10-minute continuous publish at 50 msg/s ≈ 30,000 events) | Medium | Low | P2 |
+| 6 | dbt observability metrics | Add Cloud Monitoring metrics specific to the dbt refresh job (run duration, test pass/fail count) | Low | Low | P3 |
+| 7 | Stored-function retirement | Remove `silver.refresh_market_event_minute_aggregates()` and `gold.refresh_market_event_daily_aggregates()` from `infra/postgres/init.sql` once operational confidence in the dbt path is established | Low | Low | P3 |
+| 8 | Multi-environment (staging) | Add a staging GCP environment or a separate Terraform workspace | Low | High | P3 |
 
 ---
 
 ## 4. Critical Next Steps
 
-### Branch 1: `feat/dbt-refresh-cloud-run-deploy`
+> **Completed:** `feat/dbt-refresh-cloud-run-deploy` (dbt Cloud Run Job deployed and executed) and `feat/dbt-scheduler-switch` (scheduler switched; scheduler-triggered execution accepted). Both branches are merged and documented.
 
-**Objective:** Deploy `rtdp-dbt-refresh-job` via `terraform apply`, execute it once manually against Cloud SQL, and produce accepted evidence of dbt run + test success.
-
-**Files likely touched:**
-- `docs/dbt-refresh-deploy-evidence.md` (new)
-- `docs/evidence/dbt-refresh-deploy/` (new evidence artifacts)
-- `docs/ARCHITECTURE_REVIEW.md` (update Known Remaining Gaps)
-- `docs/EVIDENCE_INDEX.md` (add row)
-
-**Must not touch:** `infra/terraform/gcp/cloud_run_jobs.tf`, `infra/terraform/gcp/scheduler.tf`, dbt models, `apps/silver-refresh-job/`, `apps/dbt-refresh-job/__init__.py`, any test files, GitHub Actions workflows.
-
-**Validation commands:**
-```bash
-uv run pytest -q
-uv run ruff check .
-terraform fmt -check -recursive infra/terraform/gcp
-terraform -chdir=infra/terraform/gcp validate
-test ! -f dbt/profiles.yml && echo "REPO_DBT_PROFILE_ABSENT=true"
-git status --ignored --short dbt
-git diff --stat
-```
-
-**Acceptance criteria:**
-- `terraform apply` exits 0; `google_cloud_run_v2_job.rtdp_dbt_refresh_job` created in GCP.
-- `gcloud run jobs execute rtdp-dbt-refresh-job --region=europe-west1 --wait` exits 0.
-- Cloud Logging confirms `dbt_run_and_test` with `status: success`.
-- API `/aggregates/minute` and `/aggregates/daily` return HTTP 200 with rows.
-- Cloud SQL returned to `NEVER / STOPPED`.
-- No `dbt/profiles.yml` committed.
-- 153 pytest pass; ruff clean.
-
-**B2B value gained:** Closes the most visible remaining gap: dbt is not only CI-validated and Cloud SQL-parity confirmed — it runs operationally on GCP. Demonstrates end-to-end governed transformation in production cloud infrastructure.
-
----
-
-### Branch 2: `feat/dbt-scheduler-switch`
-
-**Objective:** Update the Cloud Scheduler URI to target `rtdp-dbt-refresh-job:run`, validate one controlled scheduled execution, and confirm the success log and metric.
-
-**Files likely touched:**
-- `infra/terraform/gcp/scheduler.tf` (update URI, keep `paused = true` until validation window)
-- `docs/dbt-scheduler-switch-evidence.md` (new)
-- `docs/ARCHITECTURE_REVIEW.md` (update)
-- `docs/EVIDENCE_INDEX.md` (add row)
-
-**Must not touch:** `cloud_run_jobs.tf`, dbt models, app code, test files.
-
-**Validation commands:**
-```bash
-terraform fmt -check -recursive infra/terraform/gcp
-terraform -chdir=infra/terraform/gcp validate
-uv run pytest -q
-```
-
-**Acceptance criteria:**
-- `terraform apply` on `scheduler.tf` updates the scheduler URI; zero drift on subsequent plan.
-- One controlled `gcloud scheduler jobs run` execution triggers `rtdp-dbt-refresh-job`.
-- Cloud Logging confirms `status: success` for the dbt refresh.
-- Scheduler returned to `paused = true`.
-- Cloud SQL returned to `NEVER / STOPPED`.
-
-**B2B value gained:** Closes the operational migration loop. The platform now demonstrates a fully automated, scheduled dbt transformation path on GCP — not just a manual execution proof.
-
----
-
-### Branch 3: `feat/bigquery-streaming-sink`
+### Branch 1: `feat/bigquery-streaming-sink`
 
 **Objective:** Introduce BigQuery as an analytical tier. Write a Cloud Run worker or Cloud Function that streams or batch-exports events from `bronze.market_events` (or directly from Pub/Sub) into a BigQuery dataset. Demonstrate a SQL query over long-horizon event history.
 
@@ -207,7 +149,7 @@ terraform -chdir=infra/terraform/gcp validate
 
 ---
 
-### Branch 4: `feat/cd-on-merge`
+### Branch 2: `feat/cd-on-merge`
 
 **Objective:** Add auto-deploy on push to `main` for the Pub/Sub worker (lowest blast-radius service). Document the rollback path (revision rollback in Cloud Run).
 
@@ -235,7 +177,7 @@ uv run ruff check .
 
 ---
 
-### Branch 5: `feat/incremental-dbt-models`
+### Branch 3: `feat/incremental-dbt-models`
 
 **Objective:** Convert silver and gold models from `materialized='table'` (full refresh) to `materialized='incremental'` merging on `(symbol, window_start)` and `(symbol, event_date)` respectively.
 
@@ -295,7 +237,7 @@ The following should **not** be built next because they would be overengineering
 
 ### For technical interviewers
 
-> The platform implements a dual-path architecture: a stored-function refresh path that has been operationally validated with scheduled execution proof, and a dbt transformation layer that has been CI-validated on every push and confirmed at output parity against Cloud SQL. The dbt operational deployment is the current frontier: the Terraform resource is scaffolded, the runtime parses `DATABASE_URL` to derive connection fields and writes a temporary `profiles.yml` that is deleted after each run, and the credential contract has been resolved. The next step is `terraform apply` followed by a controlled execution evidence branch. IaC covers every GCP resource via phased import with zero-diff plans; no resource was created without an explicit evidence trail. The CI pipeline runs ruff, 153 pytest tests, an import smoke test, and a full dbt compile/run/test on ephemeral containers on every push.
+> The platform implements a dual-path transformation architecture: dbt is now the accepted operational scheduled path, executed by Cloud Scheduler targeting the Terraform-owned `rtdp-dbt-refresh-job` Cloud Run Job, while stored functions remain available as a legacy rollback path. The dbt job runs silver and gold models against Cloud SQL through Secret Manager and Cloud SQL Unix socket connectivity, writes a temporary `profiles.yml` at runtime, deletes it after execution, and emits structured logs. Controlled evidence confirms `dbt run` PASS=2, silver output SELECT 256, gold output SELECT 7, `dbt test` PASS=22, API readback HTTP 200, scheduler-triggered execution success, and final Cloud SQL state `NEVER / STOPPED`. IaC covers every GCP resource via phased import with zero-diff plans. The CI pipeline runs ruff, 156 pytest tests, an import smoke test, and a full dbt compile/run/test on ephemeral containers on every push.
 
 ### For B2B clients
 
@@ -307,17 +249,17 @@ The following should **not** be built next because they would be overengineering
 
 | Dimension | Score (0–10) | Basis |
 |---|---|---|
-| GCP alignment | 8 | Pub/Sub, Cloud Run (services + jobs), Cloud SQL, Secret Manager, Artifact Registry, Workload Identity, Cloud Monitoring, Cloud Scheduler all deployed and IaC-managed. BigQuery and Dataflow absent. |
+| GCP alignment | 8 | Pub/Sub, Cloud Run (services + jobs), Cloud SQL, Secret Manager, Artifact Registry, Workload Identity, Cloud Monitoring, Cloud Scheduler all deployed and IaC-managed. Scheduler targets dbt job. BigQuery and Dataflow absent. |
 | Real-time / event-driven architecture | 7 | Full Pub/Sub → Cloud Run → PostgreSQL path validated at 5,000 events. DLQ configured. No Dataflow / windowed streaming. Bounded bursts only. |
-| IaC maturity | 8 | 100% of GCP resources in Terraform with zero-diff plans and GCS remote state. Workload Identity for CI auth. One scaffold resource (`rtdp-dbt-refresh-job`) not yet applied. No `terraform apply` executed without a scoped evidence branch. |
-| dbt / transformation maturity | 7 | Silver and gold models with 22 tests. CI validates on every push. Cloud SQL parity confirmed. `DATABASE_URL` runtime handling resolved. Not yet the operational refresh path; stored functions remain authoritative. |
+| IaC maturity | 8 | 100% of GCP resources in Terraform with zero-diff plans and GCS remote state. Workload Identity for CI auth. All resources applied; no `terraform apply` executed without a scoped evidence branch. |
+| dbt / transformation maturity | 8 | Silver and gold models with 22 tests. CI validates on every push. Cloud SQL parity confirmed. `rtdp-dbt-refresh-job` deployed, executed, and scheduler-triggered execution accepted. dbt is now the operational scheduled transformation path; stored functions preserved as rollback. Incremental models not yet implemented. |
 | Observability | 7 | 4 logs-based metrics with datapoints, 4-panel dashboard, 2 alert policies, email notification channel, DLQ. No distributed tracing, no Prometheus scrape endpoint wired to Cloud Monitoring. |
 | CI/CD | 7 | CI: ruff + pytest + smoke test + dbt on every push. Terraform Plan CI on infra path changes. Manual deploy workflows validated for API and worker. No auto-deploy-on-merge. |
 | Reliability / rollback | 7 | DLQ with maxDeliveryAttempts=5. Alert policies enabled. Stored functions as dbt rollback. SLO and incident response documented. Cloud SQL NEVER/STOPPED discipline. Not continuously running. |
 | Cost control | 9 | Rigorous Cloud SQL NEVER/STOPPED discipline confirmed in every evidence document. Scheduler PAUSED by default. Manual-only deploys. No unexpected idle compute. |
 | Documentation / evidence | 9 | Exceptional: every capability is backed by a scoped runbook and a separate accepted evidence document. EVIDENCE_INDEX, ARCHITECTURE_REVIEW, and SLO document up to date. Phased import evidence. Zero overclaiming. |
-| B2B market value | 7 | Strong GCP + dbt + IaC + observability signal. Missing: BigQuery, Dataflow, auto-CD. Honest positioning as production-light reduces risk of credibility gap in interviews. |
-| Enterprise production readiness | 5 | Cost-controlled single-environment platform validated in bounded windows. Not continuously running. No multi-region. No staging environment. No real traffic. No auto-scaling evidence. Appropriate ceiling for a portfolio project. |
+| B2B market value | 8 | Strong GCP + dbt (now operational) + IaC + observability signal. dbt operational migration closed. Missing: BigQuery, auto-CD. Honest positioning as production-light reduces risk of credibility gap in interviews. |
+| Enterprise production readiness | 6 | Cost-controlled single-environment platform validated in bounded windows. dbt operationally scheduled (paused by default). Not continuously running. No multi-region. No staging environment. No real traffic. Appropriate ceiling for a portfolio project. |
 
 **Overall signal:** A well-evidenced, disciplined GCP data engineering portfolio project. Strongest signals are IaC maturity, documentation quality, cost discipline, and dbt governance approach. The gap between current state and enterprise-grade production is clearly understood and honestly communicated.
 
@@ -325,15 +267,15 @@ The following should **not** be built next because they would be overengineering
 
 ## 8. Final Recommendation
 
-**Execute `feat/dbt-refresh-cloud-run-deploy` next.**
+**Execute `feat/bigquery-streaming-sink` next.**
 
-This is the highest-priority remaining branch because it closes the most visible gap: dbt is CI-validated, Cloud SQL-parity confirmed, runtime package tested (36 tests), Terraform resource scaffolded, and credential contract resolved. The only missing piece is `terraform apply` followed by a controlled execution evidence branch. When this branch is merged, the platform will demonstrate that dbt runs operationally on GCP infrastructure — not just in CI. That is the difference between "I know dbt" and "I deployed dbt as an operational transformation job on GCP."
+The dbt operational deployment (`feat/dbt-refresh-cloud-run-deploy`) and scheduler switch (`feat/dbt-scheduler-switch`) are both accepted. The platform now demonstrates a fully automated, scheduled dbt transformation path on GCP. BigQuery is the largest remaining structural gap: it bridges the platform from an operational store (Cloud SQL for serving) to a dual-store architecture (Cloud SQL for serving, BigQuery for analytics). It is the most-asked-about missing component in any GCP data engineering review.
 
-After that, `feat/dbt-scheduler-switch` closes the automation loop (scheduled dbt execution, not just manual). Then `feat/bigquery-streaming-sink` adds the analytical tier that is currently the largest structural gap in the architecture. BigQuery is the most-asked-about missing component in any GCP data engineering review.
+After BigQuery, `feat/cd-on-merge` demonstrates modern CD discipline — from "manual deploy tested" to "deploy on merge, rollback documented." Then `feat/incremental-dbt-models` demonstrates production dbt maturity.
 
-Do not start BigQuery before the dbt operational deployment is accepted. Do not start CD-on-merge before the BigQuery tier is planned. The logical sequence is: dbt operational → scheduler switch → BigQuery → CD-on-merge → incremental models.
+The logical sequence is: BigQuery → CD-on-merge → incremental models.
 
-The platform is already at a strong B2B signal level. The next three branches will take it from "strong portfolio" to "credible production-pattern demonstration."
+The platform is at a strong B2B signal level. The next three branches will take it from "strong portfolio" to "credible production-pattern demonstration."
 
 ---
 
@@ -348,7 +290,7 @@ The platform is already at a strong B2B signal level. The next three branches wi
 | `test ! -f dbt/profiles.yml` | `REPO_DBT_PROFILE_ABSENT=true` |
 | `git status --ignored --short dbt` | No output — no tracked or ignored artifacts in dbt/ |
 | `git diff --stat` | No diff |
-| `git status --short --branch` | `## main...origin/main` (clean) |
+| `git status --short --branch` | `## docs/post-dbt-scheduler-audit-refresh...origin/docs/post-dbt-scheduler-audit-refresh` (clean) |
 
 ---
 
@@ -362,9 +304,9 @@ The platform is already at a strong B2B signal level. The next three branches wi
 | No dbt models modified | Confirmed |
 | No tests modified | Confirmed |
 | No stored functions removed | Confirmed |
-| No scheduler state changed | Confirmed — `paused = true` in `scheduler.tf` |
+| Scheduler URI updated | Accepted — scheduler now targets `rtdp-dbt-refresh-job:run`; `paused = true` preserved |
 | No Cloud SQL started | Confirmed — Cloud SQL not touched |
-| No `terraform apply` run | Confirmed |
-| No GCP state mutated | Confirmed |
+| Terraform apply | Executed for dbt job deployment and scheduler URI switch; all other resources unchanged |
+| GCP state mutation | `rtdp-dbt-refresh-job` Cloud Run Job created; scheduler URI updated — both accepted intentional changes |
 | No `dbt/profiles.yml` committed | Confirmed |
 | No generated dbt artifacts committed | Confirmed |
