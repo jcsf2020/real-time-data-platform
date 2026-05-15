@@ -1,0 +1,16 @@
+[project]
+name = "rtdp-bigquery-append-job"
+version = "0.1.0"
+description = "Cloud Run Job: incremental append from Cloud SQL bronze.market_events to BigQuery."
+requires-python = ">=3.12"
+dependencies = [
+    "google-cloud-bigquery>=3.25.0",
+    "psycopg[binary]>=3.3.3",
+]
+
+[project.scripts]
+rtdp-bigquery-append-job = "rtdp_bigquery_append_job:main"
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
