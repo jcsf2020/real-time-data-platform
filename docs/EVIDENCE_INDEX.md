@@ -1,15 +1,16 @@
 # Evidence Index
 
 This document is a curated map of project evidence for the Real-Time Data Platform.
-It is intended for fast review of architecture, infrastructure-as-code, CI/CD, observability,
-load testing, and production-readiness evidence. It indexes existing documentation; it does
-not summarize or vouch for the project beyond what the linked documents contain.
+It is intended for technical review of architecture, infrastructure-as-code, CI/CD,
+observability, load testing, and production-readiness evidence. It indexes existing
+documentation; it does not summarize or vouch for the project beyond what the linked
+documents contain.
 
 ---
 
 ## Review Path
 
-Recommended 3-minute entry path for reviewers:
+Recommended entry path for reviewers:
 
 1. [README.md](../README.md) -- project overview, local quickstart, GCP status summary
 2. [docs/gcp-architecture.md](gcp-architecture.md) -- GCP service mapping and target flow
@@ -43,6 +44,8 @@ Recommended 3-minute entry path for reviewers:
 | dbt Cloud Run Job deployment | dbt-refresh-cloud-run-deploy-evidence.md | Terraform apply confirmed; zero-diff plan |
 | dbt refresh job execution | dbt-refresh-job-execution-proof-evidence.md | dbt run PASS=2, dbt test PASS=22, API readback HTTP 200 |
 | Scheduler switch to dbt job | dbt-scheduler-switch-evidence.md | Scheduler-triggered dbt execution accepted; PAUSED by default |
+| BigQuery analytical tier scaffold | bigquery-terraform-apply-evidence.md | Dataset rtdp_analytics + 3 tables + IAM applied via Terraform; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
+| BigQuery bounded backfill | bigquery-bounded-backfill-evidence.md | 6,104 rows from Cloud SQL bronze.market_events to BigQuery market_events_raw; source/target count match accepted; analytical query by symbol/event_type confirmed; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 | Cost-control state | Cloud SQL NEVER/STOPPED, Scheduler PAUSED (multiple docs) | Verified throughout |
 
 ---
@@ -79,6 +82,9 @@ separate evidence branches, are documented in their specific evidence files.
 | [docs/artifact-registry-terraform-import-plan-evidence.md](artifact-registry-terraform-import-plan-evidence.md) | Artifact Registry rtdp Docker repository imported |
 | [docs/cloud-resource-manager-api-enablement-evidence.md](cloud-resource-manager-api-enablement-evidence.md) | cloudresourcemanager API enabled; Terraform Plan CI rerun green |
 | [docs/api-deploy-ci-service-account-user-evidence.md](api-deploy-ci-service-account-user-evidence.md) | CI service account user binding for API deploy validated |
+| [docs/bigquery-analytical-tier-plan.md](bigquery-analytical-tier-plan.md) | BigQuery analytical tier design: dataset, table schema, partitioning, clustering strategy, IAM plan |
+| [docs/bigquery-terraform-apply-evidence.md](bigquery-terraform-apply-evidence.md) | BigQuery dataset rtdp_analytics + 3 tables + 2 IAM resources created via Terraform apply (6 resources total); PLAN_EXIT=0; Cloud SQL NEVER/STOPPED throughout |
+| [docs/bigquery-bounded-backfill-evidence.md](bigquery-bounded-backfill-evidence.md) | Bounded backfill: 6,104 rows exported from Cloud SQL bronze.market_events and loaded into BigQuery market_events_raw; source/target count match accepted; analytical query by symbol/event_type confirmed; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 
 ---
 
@@ -90,7 +96,7 @@ separate evidence branches, are documented in their specific evidence files.
 | [.github/workflows/terraform-plan.yml](../.github/workflows/terraform-plan.yml) | PR / push to main (infra path) | Terraform plan via Workload Identity; no apply |
 | [.github/workflows/deploy-worker-cloud-run.yml](../.github/workflows/deploy-worker-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys worker image to Cloud Run |
 | [.github/workflows/deploy-api-cloud-run.yml](../.github/workflows/deploy-api-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys API image to Cloud Run |
-| [.github/workflows/deploy-dbt-refresh-cloud-run.yml](../.github/workflows/deploy-dbt-refresh-cloud-run.yml) | workflow_dispatch (manual) | Builds and pushes dbt refresh job image to Artifact Registry only — no Cloud Run mutation; Terraform owns `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; job deployed via Terraform apply; execution evidence accepted |
+| [.github/workflows/deploy-dbt-refresh-cloud-run.yml](../.github/workflows/deploy-dbt-refresh-cloud-run.yml) | workflow_dispatch (manual) | Builds and pushes dbt refresh job image to Artifact Registry only -- no Cloud Run mutation; Terraform owns `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; job deployed via Terraform apply; execution evidence accepted |
 
 Supporting evidence:
 
@@ -100,6 +106,8 @@ Supporting evidence:
 - [docs/dbt-refresh-cloud-run-deploy-evidence.md](dbt-refresh-cloud-run-deploy-evidence.md) -- `rtdp-dbt-refresh-job` deployed via Terraform apply; zero-diff plan confirmed
 - [docs/dbt-refresh-job-execution-proof-evidence.md](dbt-refresh-job-execution-proof-evidence.md) -- `rtdp-dbt-refresh-job` executed against Cloud SQL; dbt run PASS=2, dbt test PASS=22, API readback HTTP 200; accepted
 - [docs/dbt-scheduler-switch-evidence.md](dbt-scheduler-switch-evidence.md) -- scheduler switched to `rtdp-dbt-refresh-job:run`; scheduler-triggered execution (`rtdp-dbt-refresh-job-6zb52`) accepted; scheduler PAUSED by default
+- [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md) -- Terraform resource definition for `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; credential contract; scheduler target; Cloud SQL NEVER/STOPPED by default
+- [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) -- migration plan executed; dbt is now the operational scheduled transformation path
 
 Neither deploy workflow triggers automatically on merge to main; both require explicit manual dispatch.
 
@@ -147,7 +155,8 @@ not a claim of enterprise-scale throughput.
 | [docs/gold-cloud-sql-deployment-evidence.md](gold-cloud-sql-deployment-evidence.md) | Cloud SQL deployment evidence for gold daily aggregates: SQL applied, refresh returned 7 rows, API /aggregates/daily returned HTTP 200, Cloud SQL returned to NEVER / STOPPED |
 | [docs/gold-cloud-sql-deployment-runbook.md](gold-cloud-sql-deployment-runbook.md) | Controlled runbook used to deploy the gold daily aggregates layer to Cloud SQL |
 | [docs/dbt-ci-validation-evidence.md](dbt-ci-validation-evidence.md) | dbt transformation layer (PR #104) and CI validation (PR #105): 22 dbt tests, 117 pytest, ruff clean; ephemeral pgvector container; no Cloud SQL mutation |
-| [docs/dbt-cloud-sql-migration-runbook.md](dbt-cloud-sql-migration-runbook.md) | Controlled runbook used to validate dbt silver and gold models against Cloud SQL and reconcile output with the stored-function baseline. |
+| [docs/dbt-cloud-sql-migration-runbook.md](dbt-cloud-sql-migration-runbook.md) | Controlled runbook used to validate dbt silver and gold models against Cloud SQL and reconcile output with the stored-function baseline |
+| [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md) | dbt compile/run/test succeeded against Cloud SQL; stored-function output matched; API readback returned HTTP 200 |
 
 ---
 
@@ -169,12 +178,13 @@ are verified across the evidence base:
 
 ## Known Remaining Gaps
 
-- BigQuery and Dataflow remain target architecture items; neither is implemented. BigQuery is the highest-priority remaining structural gap.
-- dbt is now the operational scheduled transformation path (accepted as of `docs/post-dbt-scheduler-audit-refresh`). Remaining dbt work: incremental model materialization; dbt-specific observability metrics.
+- BigQuery analytical tier base scaffold and bounded backfill are implemented and accepted
+  (docs/bigquery-terraform-apply-evidence.md, docs/bigquery-bounded-backfill-evidence.md).
+  This is no longer a missing structural gap. Remaining BigQuery work: incremental append
+  path (Pub/Sub fan-out, native BigQuery subscription, or scheduled batch export for
+  continuous data movement). Dataflow is not yet implemented.
+- dbt is the operational scheduled transformation path (accepted as of
+  `docs/post-dbt-scheduler-audit-refresh`). Remaining dbt work: incremental model
+  materialization; dbt-specific observability metrics.
 - Sustained throughput validation above 5,000 events is pending.
 - Automatic deploy-on-merge: both deploy workflows require manual dispatch.
-
-| [docs/dbt-cloud-sql-validation-evidence.md](dbt-cloud-sql-validation-evidence.md) | Evidence that dbt compile/run/test succeeded against Cloud SQL, matched stored-function outputs, and API readback returned HTTP 200. |
-| [apps/dbt-refresh-job/](../apps/dbt-refresh-job/) | Local dbt refresh runtime package (`rtdp-dbt-refresh-job` CLI): parses `DATABASE_URL` secret to derive dbt connection fields; explicit `DBT_POSTGRES_*` vars override; `DBT_POSTGRES_HOST` override used for Cloud SQL Unix socket; structured JSON logs; profiles.yml deleted after each run. Deployed as `rtdp-dbt-refresh-job` Cloud Run Job (Terraform-managed); execution evidence accepted. |
-| [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md) | Terraform resource definition (`google_cloud_run_v2_job.rtdp_dbt_refresh_job`) as source of truth; image build/push workflow only — no Cloud Run mutation. Credential contract resolved: `DATABASE_URL` secret from `rtdp-database-url`; `DBT_POSTGRES_PASSWORD` secret removed. Scheduler now targets `rtdp-dbt-refresh-job:run`. Cloud SQL `NEVER / STOPPED` by default. Terraform apply and execution evidence accepted. |
-| [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) | Migration plan executed. dbt is now the operational scheduled transformation path. See `docs/dbt-refresh-job-execution-proof-evidence.md` and `docs/dbt-scheduler-switch-evidence.md`. |

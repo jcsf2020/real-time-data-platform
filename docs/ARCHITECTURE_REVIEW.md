@@ -16,7 +16,7 @@ It does not overstate maturity beyond what the evidence record supports.
 - Exposes read-back and aggregate endpoints through a FastAPI serving layer.
 - Demonstrates parallel local (Docker Compose) and GCP (Cloud Run + Cloud SQL + Pub/Sub)
   deployment paths.
-- Operates as a cost-controlled, evidence-driven portfolio-grade platform, not a
+- Operates as a cost-controlled, evidence-backed production-light platform, not a
   continuously running production service.
 
 ---
@@ -47,6 +47,11 @@ Cloud Scheduler (rtdp-silver-refresh-scheduler)
 Cloud Run Job (rtdp-silver-refresh-job)  [legacy rollback path; not actively scheduled]
   --> silver.refresh_market_event_minute_aggregates()
 
+Cloud SQL (rtdp-postgres) bronze.market_events
+  --> bounded batch export (COPY --> CSV --> bq load; bounded validation window only)
+        --> BigQuery rtdp_analytics.market_events_raw
+              [6,104 rows; bounded backfill accepted; no continuous streaming path]
+
 Cloud Logging --> logs-based metrics --> alert policies / dashboard
 ```
 
@@ -63,7 +68,8 @@ Cloud Logging --> logs-based metrics --> alert policies / dashboard
 | dbt refresh job | Cloud Run Job (rtdp-dbt-refresh-job) | Runs dbt deps → dbt run (silver + gold models) → dbt test (22 tests) against Cloud SQL; accepted operational scheduled transformation path | dbt-refresh-job-execution-proof-evidence.md, dbt-scheduler-switch-evidence.md |
 | Silver refresh job (legacy) | Cloud Run Job (rtdp-silver-refresh-job) | Calls silver.refresh_market_event_minute_aggregates(); preserved as rollback path; not actively scheduled | silver-refresh-scheduler-execution-proof-evidence.md |
 | Cloud Scheduler | GCP Managed | Dispatches dbt refresh job (rtdp-dbt-refresh-job:run) on */15 * * * * UTC (PAUSED by default) | dbt-scheduler-switch-evidence.md |
-| Cloud SQL | GCP Managed PostgreSQL 16 (rtdp-postgres) | Durable operational store for medallion schemas | cloud-sql-terraform-import-plan-evidence.md |
+| Cloud SQL | GCP Managed PostgreSQL 16 (rtdp-postgres) | Durable operational store for medallion schemas; NEVER / STOPPED outside bounded validation windows | cloud-sql-terraform-import-plan-evidence.md |
+| BigQuery analytical dataset | GCP Managed BigQuery (rtdp_analytics, europe-west1) | Analytical warehouse; three Terraform-managed tables: market_events_raw (DAY partition on event_timestamp, clustered by symbol/event_type), market_event_minute_aggregates (DAY on window_start, clustered by symbol/event_type), market_event_daily_aggregates (DAY on event_date, clustered by symbol); worker service account granted bigquery.dataEditor and bigquery.jobUser | bigquery-terraform-apply-evidence.md, bigquery-bounded-backfill-evidence.md |
 | Pub/Sub topic / subscription / DLQ | GCP Managed | market-events-raw topic; push subscription with deadLetterPolicy | production-pubsub-dlq-evidence.md |
 | Cloud Monitoring | GCP Managed | 4 logs-based metrics, 4-panel dashboard, 2 alert policies, email channel | cloud-alert-policies-evidence.md |
 
@@ -111,7 +117,9 @@ The PostgreSQL database (`realtime_platform`) uses a medallion schema layout:
 - `bronze.market_events` -- raw validated events; append-only, full fidelity.
 - `silver.market_event_minute_aggregates` -- per-symbol per-minute rollup aggregates,
   populated by `silver.refresh_market_event_minute_aggregates()`.
-- `gold` -- `gold.market_event_daily_aggregates` table and `gold.refresh_market_event_daily_aggregates()` function deployed to Cloud SQL and validated through API readback.
+- `gold` -- `gold.market_event_daily_aggregates` table and
+  `gold.refresh_market_event_daily_aggregates()` function deployed to Cloud SQL and
+  validated through API readback.
 - `observability.pipeline_metrics` -- consumer metric time-series (local consumer only).
 - `ai.market_event_embeddings` -- pgvector-enabled table; schema created, not populated.
 
@@ -119,6 +127,19 @@ The `MarketEvent` contract (Pydantic v2) is defined once in `packages/contracts`
 imported by both producer and consumer. The `event_id` field is the idempotency key;
 persistence uses `ON CONFLICT(event_id) DO NOTHING`. A `schema_version` literal field
 enables forward-compatible contract evolution.
+
+The BigQuery dataset `rtdp_analytics` provides the analytical tier, separate from the
+Cloud SQL operational store:
+
+- `market_events_raw` -- raw event history mirrored from bronze.market_events; DAY
+  partition on event_timestamp; clustered by symbol, event_type. Populated by bounded
+  batch backfill (6,104 rows accepted); no continuous streaming path exists yet.
+- `market_event_minute_aggregates` -- curated minute aggregate schema; DAY partition on
+  window_start; clustered by symbol, event_type. Schema provisioned via Terraform;
+  population from BigQuery-native transformations is not yet implemented.
+- `market_event_daily_aggregates` -- curated daily aggregate schema; DAY partition on
+  event_date; clustered by symbol. Schema provisioned via Terraform; population from
+  BigQuery-native transformations is not yet implemented.
 
 ---
 
@@ -154,8 +175,9 @@ bounded validation windows and stopped immediately afterwards. Cloud Scheduler
 by default; it is resumed only for controlled execution proofs. All deployments are manually
 triggered; no continuous pipeline incurs unexpected build or runtime costs.
 
-This setup is appropriate for a portfolio-grade production-light platform. It is not a
-continuously running production service.
+This platform operates under a production-light constraint model: compute resources are
+inactive outside defined validation windows. It is not a continuously running production
+service.
 
 ---
 
@@ -182,29 +204,35 @@ continuously running production service.
 | dbt Cloud Run Job deployment (Terraform apply, zero-diff plan) | dbt-refresh-cloud-run-deploy-evidence.md |
 | dbt refresh job execution proof (dbt run PASS=2, dbt test PASS=22, API readback HTTP 200) | dbt-refresh-job-execution-proof-evidence.md |
 | Scheduler switched to dbt refresh job; scheduler-triggered execution accepted | dbt-scheduler-switch-evidence.md |
+| BigQuery analytical tier scaffold: dataset rtdp_analytics + 3 tables + IAM (6 Terraform resources applied; PLAN_EXIT=0) | bigquery-terraform-apply-evidence.md |
+| BigQuery bounded backfill: 6,104 rows from Cloud SQL bronze.market_events to BigQuery market_events_raw; source/target count match accepted; analytical query by symbol/event_type confirmed; PLAN_EXIT=0; Cloud SQL NEVER / STOPPED | bigquery-bounded-backfill-evidence.md |
 
 ---
 
 ## Key Trade-offs
 
-- **Cloud SQL instead of BigQuery** for current MVP persistence: provides a simpler
-  operational store with row-level access for API serving; BigQuery is the target for
-  analytical queries but is not yet implemented.
-- **Pub/Sub + Cloud Run instead of Dataflow/Flink**: serverless and lower operational
-  overhead for bounded event volumes; Dataflow would be appropriate for windowed
-  aggregations and stateful streaming at higher scale.
+- **Cloud SQL as operational serving store; BigQuery as analytical warehouse**: Cloud SQL
+  provides the row-level access patterns required for the FastAPI serving layer. BigQuery
+  (`rtdp_analytics`) provides the analytical tier: three Terraform-managed, DAY-partitioned,
+  clustered tables. A bounded backfill of 6,104 rows from `bronze.market_events` to
+  `market_events_raw` has been executed and validated with source-to-target count match and
+  an analytical query by symbol/event_type. Continuous streaming from Pub/Sub to BigQuery
+  is not yet implemented. Dataflow remains a future architectural target.
+- **Pub/Sub + Cloud Run instead of Dataflow**: serverless and lower operational overhead
+  for bounded event volumes; Dataflow would be appropriate for windowed aggregations and
+  stateful streaming at higher scale.
 - **Manual deploy workflows before automatic CD**: workflow_dispatch provides a controlled
   deployment gate without the risk of unintended deploys on every merge to main.
-- **Cloud SQL stopped by default**: reduces idle compute cost; trade-off is a mandatory
-  start step before each validation window.
+- **Cloud SQL stopped by default**: reduces idle compute cost; the operational constraint
+  is a mandatory start step before each validation window.
 - **dbt as the accepted operational scheduled transformation path**: dbt now runs silver and
   gold model refreshes on Cloud Run, scheduled by Cloud Scheduler (PAUSED by default). Stored
   functions (`silver.refresh_market_event_minute_aggregates()`,
   `gold.refresh_market_event_daily_aggregates()`) are preserved as a rollback path but are not
   actively scheduled. dbt provides SQL transformation governance, lineage tracking, and
   integrated testing that stored functions do not.
-- **Evidence-first documentation retained**: raw evidence documents are verbose but
-  provide traceable, audit-safe records of each execution.
+- **Evidence-first documentation**: raw evidence documents are verbose but provide
+  traceable, audit-safe records of each execution.
 - **Synthetic market-style data for validation**: deterministic event-ID prefixes allow
   precise scoping of log and metric queries; real-world data variability is not exercised.
 
@@ -212,23 +240,26 @@ continuously running production service.
 
 ## Known Remaining Gaps
 
-- **BigQuery analytical tier**: BigQuery and Dataflow remain target architecture items; neither
-  is implemented in the current runtime. BigQuery is the highest-priority remaining structural
-  gap: it bridges the platform from an operational store (Cloud SQL for serving) to a dual-store
-  architecture (Cloud SQL for serving, BigQuery for analytics).
+- **BigQuery incremental append / recurring data movement**: The BigQuery analytical tier
+  scaffold (dataset `rtdp_analytics`, three Terraform-managed tables) is implemented, and a
+  bounded backfill of 6,104 rows from `bronze.market_events` has been accepted
+  (bigquery-bounded-backfill-evidence.md). The remaining gap is the incremental append path:
+  Pub/Sub fan-out, native BigQuery subscription, or scheduled batch export for continuous
+  data movement. No continuous streaming to BigQuery exists. Dataflow remains future and is
+  not implemented.
 - **Automatic deploy-on-merge**: both deploy workflows require explicit manual dispatch;
   CI/CD pipeline automation is a planned next step.
 - **Incremental dbt models**: silver and gold models use full-refresh table materialization;
-  conversion to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` remains
-  open.
+  conversion to incremental merge on `(symbol, window_start)` / `(symbol, event_date)`
+  remains open.
 - **Sustained throughput above 5,000 events**: load tests cover bounded bursts only;
-  sustained streaming performance is not validated.
+  sustained streaming throughput is not validated.
 - **Stored-function retirement**: `silver.refresh_market_event_minute_aggregates()` and
-  `gold.refresh_market_event_daily_aggregates()` are preserved as a dbt rollback path; retirement
-  is low-priority cleanup pending long-term operational confidence in the dbt job.
+  `gold.refresh_market_event_daily_aggregates()` are preserved as a dbt rollback path;
+  retirement is deferred pending long-term operational confidence in the dbt job.
 - **SLO / incident response documentation**: SLO targets and incident response runbooks are
-  defined in docs/SLO_AND_INCIDENT_RESPONSE.md; operational validation remains production-light
-  and scoped to controlled validation windows.
+  defined in docs/SLO_AND_INCIDENT_RESPONSE.md; operational validation remains
+  production-light and scoped to controlled validation windows.
 
 ---
 
