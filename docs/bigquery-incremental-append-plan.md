@@ -246,9 +246,9 @@ BigQuery: rtdp_analytics.market_events_raw
  └─────────────────────────────────────────────────────────────────────┘
 ```
 
-### Watermark strategy
+### Export cursor strategy
 
-The append job determines what to export from Cloud SQL using a time-based cursor, preferably `ingested_at` from `bronze.market_events`, with `event_id` used only as the idempotency key. `event_id` must not be treated as an ordered watermark unless its generation format is explicitly proven to be monotonic.
+The append job determines what to export from Cloud SQL using a time-based cursor, preferably `ingested_at` from `bronze.market_events`, with `event_id` used only as the idempotency key. `event_id` must not be treated as an ordered export cursor unless its generation format is explicitly proven to be monotonic.
 
 Recommended delta predicate:
 
