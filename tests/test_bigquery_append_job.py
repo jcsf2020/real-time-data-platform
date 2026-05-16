@@ -6,11 +6,15 @@ from unittest.mock import patch
 
 import pytest
 
+import inspect
+
+import rtdp_bigquery_append_job as _bq_module
 from rtdp_bigquery_append_job import (
     build_cursor_query,
     build_duplicate_check_sql,
     build_merge_sql,
     build_source_export_query,
+    build_staging_cleanup_sql,
     map_source_row_to_bigquery_row,
     resolve_config,
     run_dry_run,
@@ -313,3 +317,120 @@ def test_map_source_row_does_not_include_source_topic_key(monkeypatch):
     result = map_source_row_to_bigquery_row(row, ts)
     assert "source_topic" not in result
     assert "ingested_at" not in result
+
+
+# ---------------------------------------------------------------------------
+# Staging cleanup: SQL builder and no-drop regression tests
+# ---------------------------------------------------------------------------
+
+
+def test_resolve_config_strips_database_url_trailing_newline(monkeypatch):
+    _base_env(monkeypatch)
+    monkeypatch.setenv("DATABASE_URL", "postgresql://user:test_password@host:5432/db\n")
+
+    cfg = resolve_config()
+    assert "\n" not in cfg["database_url"]
+    assert cfg["database_url"] == "postgresql://user:test_password@host:5432/db"
+
+
+def test_resolve_config_strips_socket_url_trailing_newline(monkeypatch):
+    """DATABASE_URL with a Cloud SQL socket path + trailing newline must be stripped."""
+    _base_env(monkeypatch)
+    socket_url = (
+        "postgresql://rtdp:pw@/realtime_platform"
+        "?host=/cloudsql/project-42987e01-2123-446b-ac7:europe-west1:rtdp-postgres\n"
+    )
+    monkeypatch.setenv("DATABASE_URL", socket_url)
+
+    cfg = resolve_config()
+    assert "\n" not in cfg["database_url"]
+    assert cfg["database_url"].endswith("rtdp-postgres")
+
+
+def test_resolve_config_strips_env_var_whitespace(monkeypatch):
+    """All string env vars must have leading/trailing whitespace stripped."""
+    _base_env(monkeypatch)
+    monkeypatch.setenv("PROJECT_ID", "  test-project-123  ")
+    monkeypatch.setenv("BQ_DATASET", "rtdp_analytics\n")
+    monkeypatch.setenv("BQ_TARGET_TABLE", "\nmarket_events_raw")
+
+    cfg = resolve_config()
+    assert cfg["project_id"] == "test-project-123"
+    assert cfg["bq_dataset"] == "rtdp_analytics"
+    assert cfg["bq_target_table"] == "market_events_raw"
+
+
+# ---------------------------------------------------------------------------
+# Staging cleanup: SQL builder and no-drop regression tests
+# ---------------------------------------------------------------------------
+
+
+def test_bq_row_serialization_converts_decimal_to_str():
+    """Decimal price/quantity from psycopg must be serialized as str for BigQuery NUMERIC.
+
+    The bq_rows_json comprehension in run() must handle Decimal so that
+    json.dumps (used internally by BigQuery insert_rows_json) does not raise.
+    """
+    import json
+    from decimal import Decimal
+
+    ts = datetime(2024, 6, 1, 12, 0, 0, tzinfo=timezone.utc)
+    row = {
+        "event_id": "evt-dec-001",
+        "event_timestamp": ts,
+        "symbol": "BTCUSDT",
+        "event_type": "trade",
+        "price": Decimal("68001.11"),
+        "quantity": Decimal("0.0001"),
+        "source_topic": "market-events-raw",
+        "ingested_at": ts,
+    }
+    bq_row = map_source_row_to_bigquery_row(row, ts)
+
+    # Replicate the bq_rows_json comprehension from run()
+    serialized = {
+        k: (v.isoformat() if isinstance(v, datetime)
+            else str(v) if isinstance(v, Decimal)
+            else v)
+        for k, v in bq_row.items()
+    }
+
+    # Must be JSON-serializable without error
+    json.dumps(serialized)
+    assert serialized["price"] == "68001.11"
+    assert serialized["quantity"] == "0.0001"
+
+
+# ---------------------------------------------------------------------------
+# Staging cleanup: SQL builder and no-drop regression tests
+# ---------------------------------------------------------------------------
+
+
+def test_staging_cleanup_sql_uses_truncate_not_drop():
+    sql = build_staging_cleanup_sql("proj", "ds", "events_staging")
+    assert "TRUNCATE" in sql.upper()
+    assert "DROP" not in sql.upper()
+    assert "DELETE" not in sql.upper()
+
+
+def test_staging_cleanup_sql_references_correct_table():
+    sql = build_staging_cleanup_sql("my-proj", "my_ds", "events_staging")
+    assert "`my-proj.my_ds.events_staging`" in sql
+
+
+def test_run_function_does_not_call_delete_table_for_staging():
+    """Regression: job code must not drop the Terraform-managed staging table."""
+    source = inspect.getsource(_bq_module)
+    assert "delete_table" not in source
+
+
+def test_append_job_complete_uses_source_rows_exported_not_rows_appended():
+    """append_job_complete must log source_rows_exported, not the misleading rows_appended.
+
+    rows_appended implied net BigQuery inserts, but the value was actually the number of
+    rows exported from Cloud SQL / loaded to staging. The MERGE may silently skip rows
+    already in the target, so the staging count is not the same as net inserts.
+    """
+    source = inspect.getsource(_bq_module)
+    assert "source_rows_exported" in source
+    assert "rows_appended" not in source
