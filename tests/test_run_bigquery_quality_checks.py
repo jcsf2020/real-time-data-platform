@@ -293,7 +293,7 @@ def test_bq_query_raises_on_invalid_json(monkeypatch):
             args=["bq"],
             returncode=0,
             stdout="not json",
-            stderr="",
+            stderr="warning from bq",
         )
 
     monkeypatch.setattr(module.subprocess, "run", fake_run)
@@ -301,7 +301,10 @@ def test_bq_query_raises_on_invalid_json(monkeypatch):
     try:
         module.bq_query("SELECT 1")
     except RuntimeError as exc:
-        assert "bq returned invalid JSON" in str(exc)
+        message = str(exc)
+        assert "bq returned invalid JSON" in message
+        assert "stdout_preview='not json'" in message
+        assert "stderr_preview='warning from bq'" in message
     else:
         raise AssertionError("Expected RuntimeError")
 

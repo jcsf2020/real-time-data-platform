@@ -87,7 +87,14 @@ def bq_query(sql: str) -> list[dict[str, Any]]:
     try:
         parsed = json.loads(result.stdout)
     except json.JSONDecodeError as exc:
-        raise RuntimeError(f"bq returned invalid JSON: {exc}") from exc
+        stdout_preview = result.stdout[:500].replace("\n", "\\n")
+        stderr_preview = result.stderr[:500].replace("\n", "\\n")
+        raise RuntimeError(
+            "bq returned invalid JSON\n"
+            f"json_error={exc}\n"
+            f"stdout_preview={stdout_preview!r}\n"
+            f"stderr_preview={stderr_preview!r}"
+        ) from exc
 
     if not isinstance(parsed, list):
         raise RuntimeError(f"bq returned unexpected payload type: {type(parsed).__name__}")
