@@ -1,0 +1,71 @@
+{
+  "accepted_event_types": [
+    "trade"
+  ],
+  "checks": [
+    {
+      "expected": "row_count > 0",
+      "name": "row_count_positive",
+      "observed": 6120,
+      "sql": "SELECT COUNT(*) AS row_count FROM `project-42987e01-2123-446b-ac7.rtdp_analytics.market_events_raw`",
+      "status": "pass"
+    },
+    {
+      "expected": "all required column null counts == 0",
+      "name": "required_columns_not_null",
+      "observed": {
+        "bq_load_timestamp_nulls": "0",
+        "event_id_nulls": "0",
+        "event_timestamp_nulls": "0",
+        "event_type_nulls": "0",
+        "ingest_timestamp_nulls": "0",
+        "symbol_nulls": "0"
+      },
+      "sql": "SELECT COUNTIF(event_id IS NULL) AS event_id_nulls, COUNTIF(event_timestamp IS NULL) AS event_timestamp_nulls, COUNTIF(symbol IS NULL) AS symbol_nulls, COUNTIF(event_type IS NULL) AS event_type_nulls, COUNTIF(ingest_timestamp IS NULL) AS ingest_timestamp_nulls, COUNTIF(bq_load_timestamp IS NULL) AS bq_load_timestamp_nulls FROM `project-42987e01-2123-446b-ac7.rtdp_analytics.market_events_raw`",
+      "status": "pass"
+    },
+    {
+      "expected": "duplicate_event_ids == 0",
+      "name": "event_id_unique",
+      "observed": 0,
+      "sql": "SELECT COUNT(*) AS duplicate_event_ids\nFROM (\n  SELECT event_id\n  FROM `project-42987e01-2123-446b-ac7.rtdp_analytics.market_events_raw`\n  GROUP BY event_id\n  HAVING COUNT(*) > 1\n)",
+      "status": "pass"
+    },
+    {
+      "expected": "event_type must be in accepted_event_types",
+      "name": "event_type_accepted_values",
+      "observed": {
+        "accepted_event_types": [
+          "trade"
+        ],
+        "invalid_event_type_rows": 0
+      },
+      "sql": "SELECT COUNT(*) AS invalid_event_type_rows\nFROM `project-42987e01-2123-446b-ac7.rtdp_analytics.market_events_raw`\nWHERE event_type NOT IN ('trade')",
+      "status": "pass"
+    },
+    {
+      "expected": "row_count > 0 and max_ingest_timestamp is not null",
+      "name": "freshness_available",
+      "observed": {
+        "max_ingest_timestamp": "2026-05-16 10:08:49.141452+00",
+        "row_count": 6120
+      },
+      "sql": "SELECT\n  CAST(MAX(ingest_timestamp) AS STRING) AS max_ingest_timestamp,\n  COUNT(*) AS row_count\nFROM `project-42987e01-2123-446b-ac7.rtdp_analytics.market_events_raw`",
+      "status": "pass"
+    },
+    {
+      "expected": "staging_row_count == 0",
+      "name": "staging_table_empty",
+      "observed": 0,
+      "sql": "SELECT COUNT(*) AS staging_row_count FROM `project-42987e01-2123-446b-ac7.rtdp_analytics.market_events_raw_staging`",
+      "status": "pass"
+    }
+  ],
+  "dataset": "rtdp_analytics",
+  "failed_checks": [],
+  "generated_at_utc": "2026-05-16T18:34:27.071074+00:00",
+  "project_id": "project-42987e01-2123-446b-ac7",
+  "staging_table": "market_events_raw_staging",
+  "status": "ok",
+  "table": "market_events_raw"
+}
