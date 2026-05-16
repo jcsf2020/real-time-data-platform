@@ -70,7 +70,7 @@ def table_ref(project_id: str, dataset: str, table: str) -> str:
 
 def bq_query(sql: str) -> list[dict[str, Any]]:
     result = subprocess.run(
-        ["bq", "query", "--nouse_legacy_sql", "--format=json", sql],
+        ["bq", "--quiet", "query", "--nouse_legacy_sql", "--format=json", sql],
         capture_output=True,
         text=True,
         check=False,

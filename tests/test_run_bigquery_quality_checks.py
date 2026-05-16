@@ -226,6 +226,40 @@ def test_empty_accepted_event_types_fails():
         raise AssertionError("Expected ValueError for empty accepted event types")
 
 
+def test_bq_query_uses_quiet_json_mode(monkeypatch):
+    module = load_module()
+    observed = {}
+
+    def fake_run(args, capture_output, text, check):
+        observed["args"] = args
+        observed["capture_output"] = capture_output
+        observed["text"] = text
+        observed["check"] = check
+        return subprocess.CompletedProcess(
+            args=args,
+            returncode=0,
+            stdout='[{"row_count": "1"}]',
+            stderr="",
+        )
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+
+    rows = module.bq_query("SELECT 1 AS row_count")
+
+    assert rows == [{"row_count": "1"}]
+    assert observed["args"] == [
+        "bq",
+        "--quiet",
+        "query",
+        "--nouse_legacy_sql",
+        "--format=json",
+        "SELECT 1 AS row_count",
+    ]
+    assert observed["capture_output"] is True
+    assert observed["text"] is True
+    assert observed["check"] is False
+
+
 def test_bq_query_raises_on_cli_failure(monkeypatch):
     module = load_module()
 
