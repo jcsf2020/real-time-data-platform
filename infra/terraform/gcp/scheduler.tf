@@ -1,3 +1,28 @@
+resource "google_cloud_scheduler_job" "bigquery_append_scheduler" {
+  name      = local.scheduler_bigquery_append
+  region    = var.region
+  schedule  = "0 * * * *"
+  time_zone = "Europe/Lisbon"
+  paused    = true
+
+  http_target {
+    uri         = "https://europe-west1-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/project-42987e01-2123-446b-ac7/jobs/rtdp-bigquery-append-job:run"
+    http_method = "POST"
+
+    oauth_token {
+      service_account_email = "rtdp-scheduler-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com"
+    }
+  }
+
+  retry_config {
+    retry_count          = 0
+    max_retry_duration   = "0s"
+    min_backoff_duration = "5s"
+    max_backoff_duration = "3600s"
+    max_doublings        = 5
+  }
+}
+
 resource "google_cloud_scheduler_job" "silver_refresh_scheduler" {
   name      = local.scheduler_silver_refresh
   region    = var.region
