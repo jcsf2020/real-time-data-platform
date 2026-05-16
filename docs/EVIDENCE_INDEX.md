@@ -47,6 +47,7 @@ Recommended entry path for reviewers:
 | BigQuery analytical tier scaffold | bigquery-terraform-apply-evidence.md | Dataset rtdp_analytics + 3 tables + IAM applied via Terraform; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 | BigQuery bounded backfill | bigquery-bounded-backfill-evidence.md | 6,104 rows from Cloud SQL bronze.market_events to BigQuery market_events_raw; source/target count match accepted; analytical query by symbol/event_type confirmed; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 | BigQuery incremental append | bigquery-incremental-append-evidence.md | Cloud Run Job + staging table via Terraform; cursor-based MERGE; 10 evidence rows appended (6104→6114); second run idempotent (6114 unchanged); 0 duplicates; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
+| BigQuery append scheduler | bigquery-append-scheduler-evidence.md | `rtdp-bigquery-append-scheduler` created via Terraform; PAUSED; targets `rtdp-bigquery-append-job:run`; `0 * * * *` Europe/Lisbon; no execution; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 | Cost-control state | Cloud SQL NEVER/STOPPED, Scheduler PAUSED (multiple docs) | Verified throughout |
 
 ---

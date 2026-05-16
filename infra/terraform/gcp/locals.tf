@@ -5,7 +5,8 @@ locals {
   pubsub_topic_market_events_raw_dlq = "market-events-raw-dlq"
   pubsub_subscription_worker_push    = "market-events-raw-worker-push"
 
-  scheduler_silver_refresh = "rtdp-silver-refresh-scheduler"
+  scheduler_silver_refresh  = "rtdp-silver-refresh-scheduler"
+  scheduler_bigquery_append = "rtdp-bigquery-append-scheduler"
 
   cloud_run_worker_url = "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push"
 }
