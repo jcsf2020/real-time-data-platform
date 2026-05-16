@@ -31,10 +31,20 @@ resource "google_project_iam_member" "compute_logging_log_writer" {
   member  = local.default_compute_service_account
 }
 
-resource "google_project_iam_member" "scheduler_run_invoker" {
-  project = var.project_id
-  role    = "roles/run.invoker"
-  member  = local.rtdp_scheduler_service_account
+resource "google_cloud_run_v2_job_iam_member" "scheduler_bigquery_append_invoker" {
+  project  = var.project_id
+  location = var.region
+  name     = google_cloud_run_v2_job.rtdp_bigquery_append_job.name
+  role     = "roles/run.invoker"
+  member   = local.rtdp_scheduler_service_account
+}
+
+resource "google_cloud_run_v2_job_iam_member" "scheduler_dbt_refresh_invoker" {
+  project  = var.project_id
+  location = var.region
+  name     = google_cloud_run_v2_job.rtdp_dbt_refresh_job.name
+  role     = "roles/run.invoker"
+  member   = local.rtdp_scheduler_service_account
 }
 
 resource "google_project_iam_member" "compute_storage_object_viewer" {
