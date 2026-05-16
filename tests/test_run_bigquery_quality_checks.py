@@ -309,6 +309,68 @@ def test_bq_query_raises_on_invalid_json(monkeypatch):
         raise AssertionError("Expected RuntimeError")
 
 
+def test_bq_query_parses_direct_json_stdout(monkeypatch):
+    module = load_module()
+
+    def fake_run(*_args, **_kwargs):
+        return subprocess.CompletedProcess(
+            args=["bq"],
+            returncode=0,
+            stdout='[{"row_count": "6120"}]',
+            stderr="",
+        )
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+
+    rows = module.bq_query("SELECT COUNT(*) AS row_count FROM t")
+    assert rows == [{"row_count": "6120"}]
+
+
+def test_bq_query_parses_json_with_warning_prefix(monkeypatch):
+    module = load_module()
+
+    def fake_run(*_args, **_kwargs):
+        return subprocess.CompletedProcess(
+            args=["bq"],
+            returncode=0,
+            stdout=(
+                "WARNING: `--scopes` flag may not work as expected and will be"
+                " ignored for account type external_account.\n"
+                '[{"row_count":"6120"}]'
+            ),
+            stderr="",
+        )
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+
+    rows = module.bq_query("SELECT COUNT(*) AS row_count FROM t")
+    assert rows == [{"row_count": "6120"}]
+
+
+def test_bq_query_raises_useful_diagnostics_for_no_json_payload(monkeypatch):
+    module = load_module()
+
+    def fake_run(*_args, **_kwargs):
+        return subprocess.CompletedProcess(
+            args=["bq"],
+            returncode=0,
+            stdout="WARNING: something went wrong\nno payload here",
+            stderr="bq stderr detail",
+        )
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+
+    try:
+        module.bq_query("SELECT 1")
+    except RuntimeError as exc:
+        message = str(exc)
+        assert "bq returned invalid JSON" in message
+        assert "stdout_preview=" in message
+        assert "stderr_preview=" in message
+    else:
+        raise AssertionError("Expected RuntimeError")
+
+
 def test_write_report_stdout(capsys):
     module = load_module()
 

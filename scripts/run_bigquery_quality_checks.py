@@ -68,6 +68,16 @@ def table_ref(project_id: str, dataset: str, table: str) -> str:
     return f"`{project_id}.{dataset}.{table}`"
 
 
+def _extract_json_payload(stdout: str) -> str:
+    """Return the JSON portion of bq stdout, skipping any leading warning lines."""
+    pos_bracket = stdout.find("[")
+    pos_brace = stdout.find("{")
+    candidates = [p for p in (pos_bracket, pos_brace) if p >= 0]
+    if not candidates:
+        return stdout
+    return stdout[min(candidates):]
+
+
 def bq_query(sql: str) -> list[dict[str, Any]]:
     result = subprocess.run(
         ["bq", "--quiet", "query", "--nouse_legacy_sql", "--format=json", sql],
@@ -85,7 +95,7 @@ def bq_query(sql: str) -> list[dict[str, Any]]:
         )
 
     try:
-        parsed = json.loads(result.stdout)
+        parsed = json.loads(_extract_json_payload(result.stdout))
     except json.JSONDecodeError as exc:
         stdout_preview = result.stdout[:500].replace("\n", "\\n")
         stderr_preview = result.stderr[:500].replace("\n", "\\n")
