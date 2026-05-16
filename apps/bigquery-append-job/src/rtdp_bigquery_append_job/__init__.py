@@ -5,6 +5,7 @@ import os
 import sys
 import time
 from datetime import datetime, timezone
+from decimal import Decimal
 
 _SERVICE = "rtdp-bigquery-append-job"
 _COMPONENT = "bigquery-append"
@@ -26,11 +27,11 @@ def _safe_config(cfg: dict) -> dict:
 
 def resolve_config() -> dict:
     """Read and validate required env vars. Raises ValueError on missing or invalid values."""
-    project_id = os.getenv("PROJECT_ID", "")
-    bq_dataset = os.getenv("BQ_DATASET", "")
-    bq_target_table = os.getenv("BQ_TARGET_TABLE", "")
-    bq_staging_table = os.getenv("BQ_STAGING_TABLE", "")
-    database_url = os.getenv("DATABASE_URL", "")
+    project_id = os.getenv("PROJECT_ID", "").strip()
+    bq_dataset = os.getenv("BQ_DATASET", "").strip()
+    bq_target_table = os.getenv("BQ_TARGET_TABLE", "").strip()
+    bq_staging_table = os.getenv("BQ_STAGING_TABLE", "").strip()
+    database_url = os.getenv("DATABASE_URL", "").strip()
 
     missing = [
         k
@@ -116,6 +117,15 @@ def build_merge_sql(
         f"          source.event_type, source.price, source.quantity,\n"
         f"          source.source, source.ingest_timestamp, source.bq_load_timestamp)"
     )
+
+
+def build_staging_cleanup_sql(project_id: str, dataset: str, staging_table: str) -> str:
+    """Return SQL that truncates the staging table without dropping it.
+
+    The staging table is Terraform-managed and must persist between job runs.
+    TRUNCATE is used rather than DELETE for efficiency on large stale loads.
+    """
+    return f"TRUNCATE TABLE `{project_id}.{dataset}.{staging_table}`"
 
 
 def build_duplicate_check_sql(project_id: str, dataset: str, table: str) -> str:
@@ -340,25 +350,47 @@ def run(cfg: dict) -> int:
                 "component": _COMPONENT,
                 "duration_ms": duration_ms,
                 "operation": "append_job_complete",
-                "rows_appended": 0,
+                "source_rows_exported": 0,
                 "service": _SERVICE,
                 "status": "success",
                 "timestamp_utc": utc_now_iso(),
             })
             return 0
 
-        # Step 3: load delta rows to BigQuery staging
+        # Step 3a: truncate staging before load (clear any stale rows from a prior failed run)
+        staging_ref = f"{project_id}.{dataset}.{staging}"
+        pre_cleanup_sql = build_staging_cleanup_sql(project_id, dataset, staging)
+        emit_log({
+            "component": _COMPONENT,
+            "cleanup_sql": pre_cleanup_sql,
+            "operation": "staging_cleanup_before_load_planned",
+            "service": _SERVICE,
+            "staging_table": staging_ref,
+            "status": "executing",
+            "timestamp_utc": utc_now_iso(),
+        })
+        bq_client.query(pre_cleanup_sql).result()
+        emit_log({
+            "component": _COMPONENT,
+            "operation": "staging_cleanup_before_load_complete",
+            "service": _SERVICE,
+            "status": "success",
+            "timestamp_utc": utc_now_iso(),
+        })
+
+        # Step 3b: load delta rows to BigQuery staging
         bq_load_ts = datetime.now(timezone.utc)
         bq_rows = [map_source_row_to_bigquery_row(r, bq_load_ts) for r in source_rows]
         bq_rows_json = [
             {
-                k: v.isoformat() if isinstance(v, datetime) else v
+                k: (v.isoformat() if isinstance(v, datetime)
+                    else str(v) if isinstance(v, Decimal)
+                    else v)
                 for k, v in row.items()
             }
             for row in bq_rows
         ]
 
-        staging_ref = f"{project_id}.{dataset}.{staging}"
         emit_log({
             "component": _COMPONENT,
             "operation": "staging_load_planned",
@@ -420,15 +452,31 @@ def run(cfg: dict) -> int:
             "timestamp_utc": utc_now_iso(),
         })
 
-        # Step 6: clean up staging table
-        bq_client.delete_table(staging_ref, not_found_ok=True)
+        # Step 6: truncate staging after merge (staging is Terraform-managed, must not be dropped)
+        post_cleanup_sql = build_staging_cleanup_sql(project_id, dataset, staging)
+        emit_log({
+            "component": _COMPONENT,
+            "cleanup_sql": post_cleanup_sql,
+            "operation": "staging_cleanup_after_merge_planned",
+            "service": _SERVICE,
+            "status": "executing",
+            "timestamp_utc": utc_now_iso(),
+        })
+        bq_client.query(post_cleanup_sql).result()
+        emit_log({
+            "component": _COMPONENT,
+            "operation": "staging_cleanup_after_merge_complete",
+            "service": _SERVICE,
+            "status": "success",
+            "timestamp_utc": utc_now_iso(),
+        })
 
         duration_ms = round((time.monotonic() - t0) * 1000, 3)
         emit_log({
             "component": _COMPONENT,
             "duration_ms": duration_ms,
             "operation": "append_job_complete",
-            "rows_appended": len(bq_rows_json),
+            "source_rows_exported": len(bq_rows_json),
             "service": _SERVICE,
             "status": "success",
             "timestamp_utc": utc_now_iso(),

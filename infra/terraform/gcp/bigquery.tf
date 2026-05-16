@@ -36,6 +36,15 @@ resource "google_bigquery_table" "market_events_raw" {
   }
 }
 
+resource "google_bigquery_table" "market_events_raw_staging" {
+  dataset_id          = google_bigquery_dataset.rtdp_analytics.dataset_id
+  table_id            = "market_events_raw_staging"
+  project             = var.project_id
+  deletion_protection = false
+
+  schema = file("${path.module}/schemas/market_events_raw.json")
+}
+
 resource "google_bigquery_table" "market_event_minute_aggregates" {
   dataset_id          = google_bigquery_dataset.rtdp_analytics.dataset_id
   table_id            = "market_event_minute_aggregates"
