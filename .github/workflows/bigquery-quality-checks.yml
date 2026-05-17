@@ -2,6 +2,8 @@ name: BigQuery Quality Checks
 
 "on":
   workflow_dispatch:
+  schedule:
+    - cron: "15 6 * * *"
 
 permissions:
   contents: read
