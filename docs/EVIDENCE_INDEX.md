@@ -50,6 +50,9 @@ Recommended entry path for reviewers:
 | BigQuery append scheduler | bigquery-append-scheduler-evidence.md | `rtdp-bigquery-append-scheduler` created via Terraform; PAUSED; targets `rtdp-bigquery-append-job:run`; `0 * * * *` Europe/Lisbon; no execution; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 | BigQuery append scheduler proof | bigquery-append-scheduler-proof-evidence.md | Corrected-image proof (SHA `3e0db6f`): executions `p9hkt` + `7pn6g`; BQ 6117→6120 (+3 exact); second run idempotent (6120 unchanged); SCHEDULERPROOFV2USDT=3; duplicate_count=0; logs confirm `source_rows_exported` (not `rows_appended`); staging numRows=0; both schedulers PAUSED; Cloud SQL NEVER/STOPPED; PLAN_EXIT=0; 187 tests passed |
 | Scheduler IAM hardening | scheduler-job-invoker-iam-hardening-evidence.md | Replaced project-level `roles/run.invoker` with two `google_cloud_run_v2_job_iam_member` bindings scoped to `rtdp-bigquery-append-job` and `rtdp-dbt-refresh-job`; Google provider 6.50.0 confirmed to support resource; Plan: 2 add, 1 destroy, 0 change; both schedulers PAUSED; Cloud SQL NEVER/STOPPED; PLAN_EXIT=2 (pending apply) |
+| Scheduler IAM scoped proof | scheduler-job-scoped-iam-proof-evidence.md | Live GCP proof: project-level `roles/run.invoker` removed for `rtdp-scheduler-sa`; job-scoped `roles/run.invoker` confirmed on `rtdp-bigquery-append-job` and `rtdp-dbt-refresh-job`; `rtdp-silver-refresh-job` has no invoker binding; PLAN_EXIT=0; both schedulers PAUSED; Cloud SQL NEVER/STOPPED |
+| BigQuery quality checks | bigquery-quality-checks-evidence.md | Read-only quality script for `rtdp_analytics.market_events_raw`; 6/6 checks pass; row_count=6120; staging=0; no BigQuery mutation; no Cloud SQL start; 197 tests pass; ruff clean |
+| BigQuery quality workflow | bigquery-quality-workflow-proof-evidence.md | `workflow_dispatch` Run ID 25982120058; conclusion: success; artifact status: ok; 6/6 checks passed; row_count=6120; staging=0; no BigQuery mutation; no Cloud SQL start; no scheduler execution; manual dispatch only |
 | Cost-control state | Cloud SQL NEVER/STOPPED, Scheduler PAUSED (multiple docs) | Verified throughout |
 
 ---
@@ -101,6 +104,7 @@ separate evidence branches, are documented in their specific evidence files.
 | [.github/workflows/deploy-worker-cloud-run.yml](../.github/workflows/deploy-worker-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys worker image to Cloud Run |
 | [.github/workflows/deploy-api-cloud-run.yml](../.github/workflows/deploy-api-cloud-run.yml) | workflow_dispatch (manual) | Builds and deploys API image to Cloud Run |
 | [.github/workflows/deploy-dbt-refresh-cloud-run.yml](../.github/workflows/deploy-dbt-refresh-cloud-run.yml) | workflow_dispatch (manual) | Builds and pushes dbt refresh job image to Artifact Registry only -- no Cloud Run mutation; Terraform owns `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; job deployed via Terraform apply; execution evidence accepted |
+| [.github/workflows/bigquery-quality-checks.yml](../.github/workflows/bigquery-quality-checks.yml) | workflow_dispatch (manual) | Runs 6 read-only BigQuery quality checks against `rtdp_analytics.market_events_raw`; authenticates via OIDC Workload Identity; uploads `ci-report.json` artifact; no BigQuery mutation; no Cloud SQL start |
 
 Supporting evidence:
 
@@ -112,6 +116,9 @@ Supporting evidence:
 - [docs/dbt-scheduler-switch-evidence.md](dbt-scheduler-switch-evidence.md) -- scheduler switched to `rtdp-dbt-refresh-job:run`; scheduler-triggered execution (`rtdp-dbt-refresh-job-6zb52`) accepted; scheduler PAUSED by default
 - [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md) -- Terraform resource definition for `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; credential contract; scheduler target; Cloud SQL NEVER/STOPPED by default
 - [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) -- migration plan executed; dbt is now the operational scheduled transformation path
+- [docs/bigquery-quality-checks-evidence.md](bigquery-quality-checks-evidence.md) -- read-only quality script; 6/6 checks pass against `rtdp_analytics.market_events_raw`; row_count=6120; staging=0; no mutation
+- [docs/bigquery-quality-workflow-proof-evidence.md](bigquery-quality-workflow-proof-evidence.md) -- `workflow_dispatch` Run ID 25982120058; conclusion: success; artifact status: ok; 6/6 checks passed; manual dispatch only
+- [docs/evidence/bigquery-quality-checks/report.json](evidence/bigquery-quality-checks/report.json) -- machine-readable quality report committed under docs/evidence
 
 Neither deploy workflow triggers automatically on merge to main; both require explicit manual dispatch.
 
@@ -182,11 +189,11 @@ are verified across the evidence base:
 
 ## Known Remaining Gaps
 
-- BigQuery analytical tier base scaffold and bounded backfill are implemented and accepted
-  (docs/bigquery-terraform-apply-evidence.md, docs/bigquery-bounded-backfill-evidence.md).
-  This is no longer a missing structural gap. Remaining BigQuery work: incremental append
-  path (Pub/Sub fan-out, native BigQuery subscription, or scheduled batch export for
-  continuous data movement). Dataflow is not yet implemented.
+- BigQuery analytical tier, bounded backfill, incremental append, and append scheduler are
+  implemented and accepted. Read-only quality checks are implemented and validated both
+  locally and via manual GitHub Actions dispatch. Remaining BigQuery work: automated/scheduled
+  quality check execution (only manual dispatch has been proven); Dataflow is not yet
+  implemented.
 - dbt is the operational scheduled transformation path (accepted as of
   `docs/post-dbt-scheduler-audit-refresh`). Remaining dbt work: incremental model
   materialization; dbt-specific observability metrics.
