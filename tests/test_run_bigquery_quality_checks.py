@@ -7,6 +7,7 @@ import importlib.util
 import json
 import subprocess
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 from types import ModuleType
 
@@ -32,6 +33,8 @@ def args(**overrides):
         "staging_table": "market_events_raw_staging",
         "accepted_event_types": "trade",
         "report_output": "",
+        "min_row_count": 1,
+        "freshness_max_age_hours": 0.0,
     }
     defaults.update(overrides)
     return argparse.Namespace(**defaults)
@@ -120,9 +123,11 @@ def test_run_checks_builds_expected_report_with_all_checks_passing(monkeypatch):
         "event_type_accepted_values",
         "freshness_available",
         "staging_table_empty",
+        "row_count_minimum",
     ]
     assert all(check["status"] == "pass" for check in report["checks"])
-    assert len(observed_sql) == 6
+    # row_count SQL is called twice: once for row_count_positive, once for row_count_minimum
+    assert len(observed_sql) == 7
 
 
 def test_run_checks_reports_failures(monkeypatch):
@@ -188,6 +193,7 @@ def test_run_checks_reports_failures(monkeypatch):
         "event_type_accepted_values",
         "freshness_available",
         "staging_table_empty",
+        "row_count_minimum",
     ]
 
 
@@ -400,3 +406,163 @@ def test_write_report_missing_parent_fails(tmp_path):
         assert "Report output parent does not exist" in str(exc)
     else:
         raise AssertionError("Expected FileNotFoundError")
+
+
+# ---------------------------------------------------------------------------
+# parse_bigquery_timestamp
+# ---------------------------------------------------------------------------
+
+
+def test_parse_bigquery_timestamp_handles_utc_suffix():
+    module = load_module()
+
+    dt = module.parse_bigquery_timestamp("2026-05-16 10:08:49.141452 UTC")
+
+    assert dt.year == 2026
+    assert dt.month == 5
+    assert dt.day == 16
+    assert dt.hour == 10
+    assert dt.utcoffset().total_seconds() == 0
+
+
+def test_parse_bigquery_timestamp_handles_plus00_offset():
+    module = load_module()
+
+    dt = module.parse_bigquery_timestamp("2026-05-16 10:08:49.141452+00")
+
+    assert dt.year == 2026
+    assert dt.utcoffset().total_seconds() == 0
+
+
+# ---------------------------------------------------------------------------
+# age_hours
+# ---------------------------------------------------------------------------
+
+
+def test_age_hours_computes_correctly():
+    module = load_module()
+
+    now = datetime(2026, 5, 17, 12, 0, 0, tzinfo=UTC)
+    observed = datetime(2026, 5, 17, 10, 0, 0, tzinfo=UTC)
+
+    assert module.age_hours(observed, now) == 2.0
+
+
+# ---------------------------------------------------------------------------
+# check_row_count_minimum
+# ---------------------------------------------------------------------------
+
+
+def test_row_count_minimum_passes_with_row_count_6120(monkeypatch):
+    module = load_module()
+    monkeypatch.setattr(module, "scalar_int", lambda *_: 6120)
+
+    check = module.check_row_count_minimum("`project.dataset.table`", 1)
+
+    assert check.name == "row_count_minimum"
+    assert check.status == "pass"
+    assert check.observed == 6120
+
+
+def test_row_count_minimum_fails_when_threshold_exceeds_observed(monkeypatch):
+    module = load_module()
+    monkeypatch.setattr(module, "scalar_int", lambda *_: 100)
+
+    check = module.check_row_count_minimum("`project.dataset.table`", 1000)
+
+    assert check.name == "row_count_minimum"
+    assert check.status == "fail"
+    assert check.observed == 100
+
+
+# ---------------------------------------------------------------------------
+# check_freshness_max_age_hours
+# ---------------------------------------------------------------------------
+
+
+def test_freshness_max_age_hours_skipped_by_default(monkeypatch):
+    module = load_module()
+
+    dummy = module.QualityCheck(name="x", status="pass", observed=None, expected="", sql="")
+    freshness_max_called = []
+
+    monkeypatch.setattr(module, "check_row_count_positive", lambda *_: dummy)
+    monkeypatch.setattr(module, "check_required_columns_not_null", lambda *_: dummy)
+    monkeypatch.setattr(module, "check_event_id_unique", lambda *_: dummy)
+    monkeypatch.setattr(module, "check_event_type_accepted_values", lambda *_: dummy)
+    monkeypatch.setattr(module, "check_freshness_available", lambda *_: dummy)
+    monkeypatch.setattr(module, "check_staging_table_empty", lambda *_: dummy)
+    monkeypatch.setattr(module, "check_row_count_minimum", lambda *_: dummy)
+
+    def spy(*_):
+        freshness_max_called.append(True)
+        return dummy
+
+    monkeypatch.setattr(module, "check_freshness_max_age_hours", spy)
+
+    report = module.run_checks(args(freshness_max_age_hours=0.0))
+
+    assert not freshness_max_called
+    assert all(check["name"] != "freshness_max_age_hours" for check in report["checks"])
+
+
+def test_freshness_max_age_hours_passes_when_within_threshold(monkeypatch):
+    module = load_module()
+
+    now = datetime(2026, 5, 17, 12, 0, 0, tzinfo=UTC)
+    # timestamp is 1 hour before now
+    monkeypatch.setattr(
+        module,
+        "bq_query",
+        lambda _: [{"max_ingest_timestamp": "2026-05-17 11:00:00+00:00", "row_count": "100"}],
+    )
+
+    check = module.check_freshness_max_age_hours("`t`", threshold_hours=2.0, now=now)
+
+    assert check.name == "freshness_max_age_hours"
+    assert check.status == "pass"
+    assert check.observed["age_hours"] == 1.0
+
+
+def test_freshness_max_age_hours_fails_when_older_than_threshold(monkeypatch):
+    module = load_module()
+
+    now = datetime(2026, 5, 17, 12, 0, 0, tzinfo=UTC)
+    # timestamp is 5 hours before now
+    monkeypatch.setattr(
+        module,
+        "bq_query",
+        lambda _: [{"max_ingest_timestamp": "2026-05-17 07:00:00+00:00", "row_count": "100"}],
+    )
+
+    check = module.check_freshness_max_age_hours("`t`", threshold_hours=2.0, now=now)
+
+    assert check.name == "freshness_max_age_hours"
+    assert check.status == "fail"
+    assert check.observed["age_hours"] == 5.0
+
+
+# ---------------------------------------------------------------------------
+# CLI args
+# ---------------------------------------------------------------------------
+
+
+def test_cli_args_parse_correctly(monkeypatch):
+    module = load_module()
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_bigquery_quality_checks.py",
+            "--min-row-count",
+            "500",
+            "--freshness-max-age-hours",
+            "48.5",
+        ],
+    )
+
+    parsed = module.parse_args()
+
+    assert parsed.min_row_count == 500
+    assert parsed.freshness_max_age_hours == 48.5
