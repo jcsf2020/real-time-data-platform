@@ -14,6 +14,8 @@ The checks are read-only:
   - event_type_accepted_values
   - freshness_available
   - staging_table_empty
+  - row_count_minimum          (always; threshold via --min-row-count)
+  - freshness_max_age_hours    (only when --freshness-max-age-hours > 0)
 """
 
 from __future__ import annotations
@@ -60,6 +62,18 @@ def parse_args() -> argparse.Namespace:
         "--report-output",
         default="",
         help="Optional path to write the JSON report. If omitted, prints to stdout.",
+    )
+    parser.add_argument(
+        "--min-row-count",
+        type=int,
+        default=1,
+        help="Minimum row count threshold for row_count_minimum check.",
+    )
+    parser.add_argument(
+        "--freshness-max-age-hours",
+        type=float,
+        default=0.0,
+        help="Max age in hours for freshness_max_age_hours check. Skipped when <= 0.",
     )
     return parser.parse_args()
 
@@ -132,6 +146,26 @@ def scalar_string(sql: str, key: str) -> str | None:
     return str(value)
 
 
+def parse_bigquery_timestamp(value: str) -> datetime:
+    """Parse a BigQuery timestamp string into a UTC-aware datetime.
+
+    Handles the two common formats BigQuery returns:
+      "2026-05-16 10:08:49.141452 UTC"
+      "2026-05-16 10:08:49.141452+00"
+    """
+    normalized = value.strip()
+    if normalized.endswith(" UTC"):
+        normalized = normalized[:-4] + "+00:00"
+    elif normalized.endswith("+00"):
+        normalized = normalized + ":00"
+    return datetime.fromisoformat(normalized)
+
+
+def age_hours(observed: datetime, now: datetime) -> float:
+    """Return elapsed hours between observed and now."""
+    return (now - observed).total_seconds() / 3600
+
+
 def check_row_count_positive(raw_table: str) -> QualityCheck:
     sql = f"SELECT COUNT(*) AS row_count FROM {raw_table}"
     row_count = scalar_int(sql, "row_count")
@@ -140,6 +174,18 @@ def check_row_count_positive(raw_table: str) -> QualityCheck:
         status="pass" if row_count > 0 else "fail",
         observed=row_count,
         expected="row_count > 0",
+        sql=sql,
+    )
+
+
+def check_row_count_minimum(raw_table: str, min_row_count: int) -> QualityCheck:
+    sql = f"SELECT COUNT(*) AS row_count FROM {raw_table}"
+    row_count = scalar_int(sql, "row_count")
+    return QualityCheck(
+        name="row_count_minimum",
+        status="pass" if row_count >= min_row_count else "fail",
+        observed=row_count,
+        expected=f"row_count >= {min_row_count}",
         sql=sql,
     )
 
@@ -238,6 +284,41 @@ FROM {raw_table}
     )
 
 
+def check_freshness_max_age_hours(
+    raw_table: str,
+    threshold_hours: float,
+    now: datetime,
+) -> QualityCheck:
+    sql = f"""
+SELECT
+  CAST(MAX(ingest_timestamp) AS STRING) AS max_ingest_timestamp,
+  COUNT(*) AS row_count
+FROM {raw_table}
+""".strip()
+    rows = bq_query(sql)
+    max_ingest_timestamp = first_value(rows, "max_ingest_timestamp")
+
+    if not max_ingest_timestamp:
+        return QualityCheck(
+            name="freshness_max_age_hours",
+            status="fail",
+            observed={"max_ingest_timestamp": None, "age_hours": None},
+            expected=f"age_hours <= {threshold_hours}",
+            sql=sql,
+        )
+
+    observed_dt = parse_bigquery_timestamp(max_ingest_timestamp)
+    hours = age_hours(observed_dt, now)
+
+    return QualityCheck(
+        name="freshness_max_age_hours",
+        status="pass" if hours <= threshold_hours else "fail",
+        observed={"max_ingest_timestamp": max_ingest_timestamp, "age_hours": round(hours, 4)},
+        expected=f"age_hours <= {threshold_hours}",
+        sql=sql,
+    )
+
+
 def check_staging_table_empty(staging_table: str) -> QualityCheck:
     sql = f"SELECT COUNT(*) AS staging_row_count FROM {staging_table}"
     staging_row_count = scalar_int(sql, "staging_row_count")
@@ -268,7 +349,13 @@ def run_checks(args: argparse.Namespace) -> dict[str, Any]:
         check_event_type_accepted_values(raw_table, accepted_event_types),
         check_freshness_available(raw_table),
         check_staging_table_empty(staging_table),
+        check_row_count_minimum(raw_table, args.min_row_count),
     ]
+
+    if args.freshness_max_age_hours > 0:
+        checks.append(
+            check_freshness_max_age_hours(raw_table, args.freshness_max_age_hours, datetime.now(UTC))
+        )
 
     failed_checks = [check.name for check in checks if check.status != "pass"]
 
