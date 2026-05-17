@@ -53,6 +53,7 @@ Recommended entry path for reviewers:
 | Scheduler IAM scoped proof | scheduler-job-scoped-iam-proof-evidence.md | Live GCP proof: project-level `roles/run.invoker` removed for `rtdp-scheduler-sa`; job-scoped `roles/run.invoker` confirmed on `rtdp-bigquery-append-job` and `rtdp-dbt-refresh-job`; `rtdp-silver-refresh-job` has no invoker binding; PLAN_EXIT=0; both schedulers PAUSED; Cloud SQL NEVER/STOPPED |
 | BigQuery quality checks | bigquery-quality-checks-evidence.md | Read-only quality script for `rtdp_analytics.market_events_raw`; 6/6 checks pass; row_count=6120; staging=0; no BigQuery mutation; no Cloud SQL start; 197 tests pass; ruff clean |
 | BigQuery quality workflow | bigquery-quality-workflow-proof-evidence.md | `workflow_dispatch` Run ID 25982120058; conclusion: success; artifact status: ok; 6/6 checks passed; row_count=6120; staging=0; no BigQuery mutation; no Cloud SQL start; no scheduler execution; manual dispatch only |
+| BigQuery quality schedule enabled | bigquery-quality-schedule-enabled-evidence.md | schedule `15 6 * * *` enabled on `main` (PR #141); `workflow_dispatch` Run ID 25984483471 post-merge: success; 6/6 checks passed; row_count=6120; staging=0; scheduled event real execution NOT YET PROVEN |
 | Cost-control state | Cloud SQL NEVER/STOPPED, Scheduler PAUSED (multiple docs) | Verified throughout |
 
 ---
@@ -118,6 +119,7 @@ Supporting evidence:
 - [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) -- migration plan executed; dbt is now the operational scheduled transformation path
 - [docs/bigquery-quality-checks-evidence.md](bigquery-quality-checks-evidence.md) -- read-only quality script; 6/6 checks pass against `rtdp_analytics.market_events_raw`; row_count=6120; staging=0; no mutation
 - [docs/bigquery-quality-workflow-proof-evidence.md](bigquery-quality-workflow-proof-evidence.md) -- `workflow_dispatch` Run ID 25982120058; conclusion: success; artifact status: ok; 6/6 checks passed; manual dispatch only
+- [docs/bigquery-quality-schedule-enabled-evidence.md](bigquery-quality-schedule-enabled-evidence.md) -- schedule `15 6 * * *` enabled via PR #141; `workflow_dispatch` Run ID 25984483471 post-merge: success; 6/6 checks passed; scheduled event real execution NOT YET PROVEN
 - [docs/evidence/bigquery-quality-checks/report.json](evidence/bigquery-quality-checks/report.json) -- machine-readable quality report committed under docs/evidence
 
 Neither deploy workflow triggers automatically on merge to main; both require explicit manual dispatch.
@@ -191,9 +193,9 @@ are verified across the evidence base:
 
 - BigQuery analytical tier, bounded backfill, incremental append, and append scheduler are
   implemented and accepted. Read-only quality checks are implemented and validated both
-  locally and via manual GitHub Actions dispatch. Remaining BigQuery work: automated/scheduled
-  quality check execution (only manual dispatch has been proven); Dataflow is not yet
-  implemented.
+  locally and via manual GitHub Actions dispatch; schedule `15 6 * * *` is enabled on `main`
+  (PR #141) but scheduled event real execution is NOT YET PROVEN. Remaining BigQuery work:
+  confirmed scheduled event execution; Dataflow is not yet implemented.
 - dbt is the operational scheduled transformation path (accepted as of
   `docs/post-dbt-scheduler-audit-refresh`). Remaining dbt work: incremental model
   materialization; dbt-specific observability metrics.
