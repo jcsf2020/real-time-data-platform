@@ -55,6 +55,7 @@ Recommended entry path for reviewers:
 | BigQuery quality workflow | bigquery-quality-workflow-proof-evidence.md | `workflow_dispatch` Run ID 25982120058; conclusion: success; artifact status: ok; 6/6 checks passed; row_count=6120; staging=0; no BigQuery mutation; no Cloud SQL start; no scheduler execution; manual dispatch only |
 | BigQuery quality schedule enabled | bigquery-quality-schedule-enabled-evidence.md | schedule `15 6 * * *` enabled on `main` (PR #141); `workflow_dispatch` Run ID 25984483471 post-merge: success; 6/6 checks passed; row_count=6120; staging=0; scheduled event real execution NOT YET PROVEN |
 | BigQuery quality thresholds | bigquery-quality-thresholds-evidence.md | `--min-row-count` and `--freshness-max-age-hours` flags added (PR #145); `row_count_minimum` live pass: observed 6120 >= 6000; `freshness_max_age_hours` skipped as expected (unit-tested only, not live-proven); 210 tests passed; no BigQuery mutation; no Cloud SQL start; no scheduler execution; scheduled event real execution NOT YET PROVEN |
+| BigQuery quality alert proof | bigquery-quality-alert-notification-proof-evidence.md | Controlled failure proven (PR #150): Run 26007825072 success (min_row_count=1; observed 6120 >= 1); Run 26007909020 failure (min_row_count=999999999; observed 6120 < 999999999); `row_count_minimum` fail; exit code 1; artifact preserved; GitHub Actions UI failure surface observable; email/bell/Cloud Monitoring NOT PROVEN; scheduled event NOT YET PROVEN |
 | Cost-control state | Cloud SQL NEVER/STOPPED, Scheduler PAUSED (multiple docs) | Verified throughout |
 
 ---
@@ -122,6 +123,7 @@ Supporting evidence:
 - [docs/bigquery-quality-workflow-proof-evidence.md](bigquery-quality-workflow-proof-evidence.md) -- `workflow_dispatch` Run ID 25982120058; conclusion: success; artifact status: ok; 6/6 checks passed; manual dispatch only
 - [docs/bigquery-quality-schedule-enabled-evidence.md](bigquery-quality-schedule-enabled-evidence.md) -- schedule `15 6 * * *` enabled via PR #141; `workflow_dispatch` Run ID 25984483471 post-merge: success; 6/6 checks passed; scheduled event real execution NOT YET PROVEN
 - [docs/bigquery-quality-thresholds-evidence.md](bigquery-quality-thresholds-evidence.md) -- threshold checks (PR #145): `row_count_minimum` live pass (6120 >= 6000); `freshness_max_age_hours` skipped as expected (unit-tested only, not live-proven); 210 tests passed; no mutation; scheduled event real execution NOT YET PROVEN
+- [docs/bigquery-quality-alert-notification-proof-evidence.md](bigquery-quality-alert-notification-proof-evidence.md) -- controlled failure proof (PR #150): Run 26007825072 success (min_row_count=1; 6120 >= 1); Run 26007909020 failure (min_row_count=999999999; 6120 < 999999999); `row_count_minimum` fail; exit code 1; artifact preserved despite failure; GitHub Actions UI failure surface observable; email not proven; bell not proven; Cloud Monitoring not proven; scheduled event NOT YET PROVEN
 - [docs/evidence/bigquery-quality-checks/report.json](evidence/bigquery-quality-checks/report.json) -- machine-readable quality report committed under docs/evidence
 
 Neither deploy workflow triggers automatically on merge to main; both require explicit manual dispatch.
@@ -198,8 +200,12 @@ are verified across the evidence base:
   locally and via manual GitHub Actions dispatch; schedule `15 6 * * *` is enabled on `main`
   (PR #141) but scheduled event real execution is NOT YET PROVEN. Threshold checks
   (`row_count_minimum` always included; `freshness_max_age_hours` unit-tested only, not
-  live-proven) merged via PR #145. Remaining BigQuery work: confirmed scheduled event
-  execution; live `freshness_max_age_hours` validation; Dataflow is not yet implemented.
+  live-proven) merged via PR #145. Controlled failure and GitHub Actions UI failure surface
+  proven via PR #150 (Run 26007909020: `row_count_minimum` fail; observed 6120 vs threshold
+  999999999; exit code 1; artifact preserved); email/bell/Cloud Monitoring notification
+  delivery NOT PROVEN. Remaining BigQuery work: confirmed scheduled event execution; live
+  `freshness_max_age_hours` validation; notification delivery proof; Dataflow is not yet
+  implemented.
 - dbt is the operational scheduled transformation path (accepted as of
   `docs/post-dbt-scheduler-audit-refresh`). Remaining dbt work: incremental model
   materialization; dbt-specific observability metrics.
