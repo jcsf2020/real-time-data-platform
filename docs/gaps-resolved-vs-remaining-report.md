@@ -1,8 +1,8 @@
 # Gaps Resolved vs Remaining Report
 
-**Status:** CURRENT SNAPSHOT - 2026-05-17
-**Branch:** `docs/gaps-resolved-vs-remaining-report`
-**Baseline:** 201 tests passed · ruff clean · dbt/profiles.yml absent · Cloud SQL NEVER/STOPPED
+**Status:** CURRENT SNAPSHOT - 2026-05-18
+**Branch:** `docs/refresh-gaps-after-alert-proof`
+**Baseline:** 210 tests passed · ruff clean · dbt/profiles.yml absent · Cloud SQL NEVER/STOPPED
 
 ---
 
@@ -12,13 +12,19 @@ The Real-Time Data Platform is a production-light, evidence-backed GCP data engi
 portfolio project. As of this snapshot, the platform demonstrates a complete event
 ingestion and analytical pipeline: Pub/Sub → Cloud Run → Cloud SQL → BigQuery, with full
 Terraform IaC coverage, governed dbt transformations, operational observability, and a
-validated data quality layer.
+validated data quality layer with threshold-based checks and a proven controlled failure path.
 
-The most recent evidence sequence (PRs #127–#139) delivered BigQuery incremental append,
-scheduler-triggered execution proof, job-scoped IAM hardening, and a validated manual
-GitHub Actions workflow for read-only BigQuery data quality checks. All 6 quality checks
-pass against the production dataset. The manual `workflow_dispatch` quality workflow is
-**proven**. Scheduled (automated) quality execution is **not yet proven**.
+The most recent evidence sequence (PRs #145–#151) delivered two new threshold-based quality
+checks (`row_count_minimum` always included; `freshness_max_age_hours` skipped when not
+supplied), `workflow_dispatch` inputs wired end-to-end into the quality script, and a
+controlled failure proof: Run ID **26007909020** concluded `failure` with
+`row_count_minimum` failing at threshold 999999999 against observed 6120 rows, artifact
+preserved, exit code 1 visible in logs, and the GitHub Actions UI failure surface observable.
+Run ID **26007825072** (safe inputs: min_row_count=1) confirmed the passing path.
+
+The GitHub Actions UI failure surface is **proven**. Email notification delivery, GitHub
+notification bell delivery, and Cloud Monitoring alerting are **NOT PROVEN**. Real scheduled
+event execution is **NOT YET PROVEN**.
 
 The platform is not a continuously running production service. Every capability is backed
 by a scoped runbook and an accepted evidence document. The framing is intentionally
@@ -30,12 +36,14 @@ conservative: no overclaiming, no production-scale assertions beyond the evidenc
 
 | Check | Result |
 |---|---|
-| `uv run pytest -q` | **201 passed** |
+| `uv run pytest -q` | **210 passed** |
 | `uv run ruff check .` | All checks passed |
 | `test ! -f dbt/profiles.yml` | `REPO_DBT_PROFILE_ABSENT=true` |
 | Terraform plan | `PLAN_EXIT=0` |
-| BigQuery quality workflow | Run ID **25982120058** · conclusion: **success** |
-| Quality checks | **6/6 passed** · row_count=6120 · staging=0 |
+| BigQuery quality workflow — safe run | Run ID **26007825072** · conclusion: **success** · `row_count_minimum` pass (6120 >= 1) |
+| BigQuery quality workflow — controlled failure | Run ID **26007909020** · conclusion: **failure** · `row_count_minimum` fail (6120 < 999999999) · artifact preserved |
+| GitHub Actions UI failure surface | **observable** |
+| Scheduled trigger (`15 6 * * *`) | present on `main`; scheduled event real execution is NOT YET PROVEN |
 | Cloud SQL | `NEVER / STOPPED` |
 | Schedulers | Both `PAUSED` |
 
@@ -59,7 +67,8 @@ Cloud Scheduler (rtdp-silver-refresh-scheduler, PAUSED)
 Cloud SQL bronze.market_events
   → incremental cursor-based MERGE (rtdp-bigquery-append-job, PAUSED scheduler)
     → BigQuery rtdp_analytics.market_events_raw [analytical path]
-      → read-only quality checks (manual workflow_dispatch)
+      → read-only quality checks (manual workflow_dispatch + schedule cron)
+        · row_count_minimum · freshness_max_age_hours (skip when 0)
 
 Cloud Logging → logs-based metrics → alert policies / dashboard  [observability]
 ```
@@ -148,6 +157,60 @@ The scheduler remains PAUSED — this is proof of dispatch mechanics, not contin
 The manual `workflow_dispatch` BigQuery quality workflow is **proven**. OIDC auth, `bq` CLI
 execution, 6 read-only checks, and artifact report generation are all confirmed in CI.
 
+### BigQuery Quality Thresholds (PRs #145–#147)
+
+| Item | Detail |
+|---|---|
+| New flags | `--min-row-count` (default 1) · `--freshness-max-age-hours` (default 0.0; skipped when ≤ 0) |
+| New checks | `row_count_minimum` always included; `freshness_max_age_hours` included when flag > 0 |
+| Live result | `row_count_minimum` pass: observed 6120 >= threshold 6000; `freshness_max_age_hours` skipped (flag not supplied) |
+| Baseline checks | All 6 preserved and passing |
+| Total checks in live report | 7 (6 baseline + `row_count_minimum`) |
+| Unit tests added | 13 new tests; focused file: 23 passed |
+| Full suite | **210 passed** |
+| Mutations | None — all SELECTs |
+| BigQuery not mutated | Yes |
+| Cloud SQL not started | Yes |
+| Cloud Scheduler not executed | Yes |
+| Evidence | `docs/bigquery-quality-thresholds-evidence.md` |
+
+`row_count_minimum` is implemented, unit-tested, and live-proven. `freshness_max_age_hours`
+is implemented and unit-tested; live pass/fail validation is **NOT YET PROVEN** — the live
+run intentionally omitted the flag.
+
+### BigQuery Quality Alert Proof / Controlled Failure (PRs #148–#151)
+
+| Item | Detail |
+|---|---|
+| Workflow inputs | `min_row_count` (default "1") · `freshness_max_age_hours` (default "0") wired via PR #149 |
+| Safe run | Run ID **26007825072** · event: workflow_dispatch · conclusion: **success** · `row_count_minimum` pass (observed 6120 >= 1) · status: ok |
+| Controlled failure run | Run ID **26007909020** · event: workflow_dispatch · conclusion: **failure** · `row_count_minimum` fail (observed 6120 < 999999999) · status: error |
+| failed_checks | `["row_count_minimum"]` |
+| Artifact | Preserved despite failure (`if: always()`) |
+| Exit code | 1 visible in failed run logs |
+| GitHub Actions UI failure surface | **observable** — red failure badge and step-level failure annotation |
+| Baseline checks during failure | All 6 passed — check isolation confirmed |
+| BigQuery not mutated | Yes |
+| Cloud SQL not started | Yes |
+| Cloud Scheduler not executed | Yes |
+| Evidence | `docs/bigquery-quality-alert-notification-proof-evidence.md` |
+
+The controlled failure path is **proven**. The GitHub Actions UI failure surface is **proven**.
+email notification delivery NOT PROVEN · GitHub notification bell delivery NOT PROVEN ·
+Cloud Monitoring alerting NOT PROVEN · real scheduled event execution NOT YET PROVEN.
+
+### SLO Quality Gates Alignment (docs/slo-quality-gates-alignment)
+
+| Item | Detail |
+|---|---|
+| Document | `docs/slo-quality-gates-alignment.md` |
+| Scope | Aligns BigQuery quality checks with existing SLO/incident response model |
+| Quality SLIs | 6 SLIs formally defined with severity classifications (P1/P2) |
+| Severity model | Extended from existing SLO model; P3/SEV3 targets defined but not yet implemented |
+| Incident runbook | Quality gate failure runbook defined; mapped to existing runbooks |
+| Alerting gap | Explicitly stated as NOT YET PROVEN |
+| Scheduled execution gap | Explicitly stated as NOT YET PROVEN |
+
 ### Test Suite Growth
 
 | Milestone | Tests |
@@ -156,9 +219,10 @@ execution, 6 read-only checks, and artifact report generation are all confirmed 
 | Post incremental append | 178 |
 | Post scheduler IAM proof | 187 |
 | Post quality checks | 197 |
-| Post quality workflow proof | **201** |
+| Post quality workflow proof | 201 |
+| Post quality thresholds (PRs #145–#147) | **210** |
 
-Tests grew by 45 (29%) during the BigQuery quality evidence sequence without regressions.
+Tests grew by 54 (35%) during the BigQuery quality evidence sequence without regressions.
 
 ### Previously Resolved (Pre-Sequence Baseline)
 
@@ -181,18 +245,18 @@ Tests grew by 45 (29%) during the BigQuery quality evidence sequence without reg
 
 ## Gaps Remaining
 
-The following gaps are confirmed as of 2026-05-17. Each entry is ranked by B2B / recruiter
+The following gaps are confirmed as of 2026-05-18. Each entry is ranked by B2B / recruiter
 value and implementation feasibility.
 
 | # | Gap | Description | B2B Value | Risk | Priority |
 |---|---|---|---|---|---|
-| 1 | Scheduled BigQuery quality workflow | Manual `workflow_dispatch` is proven. A scheduled trigger (e.g. `schedule:` cron in the workflow) is **not yet proven**. This is the most natural next step from current state. | High | Low | P0 |
-| 2 | Quality failure alerting / notification | No proven path for alerting when a quality check fails. The SLO document and alert policies exist but are not connected to BigQuery quality outcomes. | High | Low | P0 |
-| 3 | Analytics layer depth | Current checks cover row count, nulls, uniqueness, accepted values, freshness, staging empty. Volume thresholds, distribution anomalies, and freshness SLA enforcement are not yet implemented. | Medium | Low | P1 |
-| 4 | SLO / quality gate alignment | `docs/SLO_AND_INCIDENT_RESPONSE.md` is defined but predates the quality workflow. BigQuery quality signals are not yet wired into formal SLO targets or error budget. | Medium | Low | P1 |
-| 5 | Automatic deploy-on-merge (CD) | Both deploy workflows require manual `workflow_dispatch`. No deploy happens automatically on merge to main. | Medium | Low | P2 |
-| 6 | Incremental dbt models | Silver and gold models use full-refresh table materialization. Conversion to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` is not yet done. | Medium | Low | P2 |
-| 7 | BigQuery quality signals in Cloud Monitoring | The 4-panel dashboard covers pipeline and refresh metrics. BigQuery quality check results are not surfaced as Cloud Monitoring metrics or dashboard panels. | Medium | Low | P2 |
+| 1 | Scheduled BigQuery quality workflow — real event execution | Schedule cron `15 6 * * *` is present on `main`. Manual `workflow_dispatch` is proven. A run triggered by a real `event: schedule` has not been observed. Real scheduled event execution is **NOT YET PROVEN**. | High | Low | P0 |
+| 2 | Email and bell notification delivery | The GitHub Actions UI failure surface is proven (Run ID 26007909020). Email notification delivery is **NOT PROVEN**. GitHub notification bell delivery is **NOT PROVEN**. No proven path from workflow failure to delivered notification exists. | High | Low | P0 |
+| 3 | Cloud Monitoring alerting | Cloud Monitoring does not receive BigQuery quality metrics. No alert policy monitors quality check results. Cloud Monitoring alerting is **NOT PROVEN**. | High | Low | P1 |
+| 4 | `freshness_max_age_hours` live validation | `freshness_max_age_hours` is implemented and unit-tested. Live pass/fail validation is **NOT YET PROVEN** — the live run omitted `--freshness-max-age-hours`. | Medium | Low | P1 |
+| 5 | Analytics layer depth — distribution anomalies | Current checks cover row count, nulls, uniqueness, accepted values, freshness, staging empty, and volume threshold. Distribution anomalies and advanced freshness SLA enforcement are not yet implemented. | Medium | Low | P2 |
+| 6 | Automatic deploy-on-merge (CD) | Both deploy workflows require manual `workflow_dispatch`. No deploy happens automatically on merge to main. | Medium | Low | P2 |
+| 7 | Incremental dbt models | Silver and gold models use full-refresh table materialization. Conversion to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` is not yet done. | Medium | Low | P2 |
 | 8 | Dataflow / streaming enrichment | Pub/Sub → BigQuery via Dataflow for windowed aggregations is not implemented. Cloud Run is the worker; no stateful streaming. | Low | High | P3 |
 | 9 | Sustained throughput above 5,000 events | Load tests are bounded bursts only. Sustained steady-state streaming throughput is not validated. | Low | Low | P3 |
 | 10 | Multi-environment (staging) | Single GCP project. No staging environment, no canary, no multi-region. | Low | High | P3 |
@@ -202,11 +266,22 @@ value and implementation feasibility.
 | Item | Status |
 |---|---|
 | Manual BigQuery quality workflow (Run ID 25982120058) | **PROVEN** |
-| Scheduled (automated) BigQuery quality workflow | **NOT YET PROVEN** |
-| Quality check failure alerting / notification | **NOT YET PROVEN** |
+| `workflow_dispatch` inputs wired end-to-end (PR #149) | **PROVEN** |
+| Safe input run (Run ID 26007825072): conclusion success, `row_count_minimum` pass | **PROVEN** |
+| Controlled failure run (Run ID 26007909020): conclusion failure, `row_count_minimum` fail | **PROVEN** |
+| GitHub Actions UI failure surface observable | **PROVEN** |
+| Artifact preserved despite workflow failure | **PROVEN** |
+| `row_count_minimum` implemented, unit-tested, live-proven | **PROVEN** |
+| `freshness_max_age_hours` implemented and unit-tested | **PROVEN** |
+| `freshness_max_age_hours` live pass/fail validation | **NOT YET PROVEN** |
+| Scheduled (automated) BigQuery quality workflow — real `event: schedule` execution | **NOT YET PROVEN** |
+| Email notification delivery on quality failure | **NOT PROVEN** |
+| GitHub notification bell delivery on quality failure | **NOT PROVEN** |
+| Cloud Monitoring alerting on quality failure | **NOT PROVEN** |
+| Cloud Monitoring quality metrics — any emission | **NOT PROVEN** |
 | BigQuery data mutation from quality checks | **NOT APPLICABLE** — checks are read-only SELECTs only |
-| Cloud SQL started during quality workflow proof | **No** — confirmed absent |
-| Scheduler executed during quality workflow proof | **No** — confirmed absent |
+| Cloud SQL started during quality workflow proofs | **No** — confirmed absent in both Run IDs 26007825072 and 26007909020 |
+| Scheduler executed during quality workflow proofs | **No** — confirmed absent |
 
 ---
 
@@ -245,10 +320,10 @@ candidate from a junior one:
 | Real-time / event-driven architecture | 7 | Full Pub/Sub → Cloud Run → Cloud SQL path at 5,000 events. DLQ configured. Incremental append to BigQuery proven. No Dataflow / windowed streaming. Bounded bursts only. |
 | IaC maturity | 8 | 100% resources in Terraform. GCS remote state. Zero-diff plans. Workload Identity for CI. Phased import approach documented. |
 | dbt / transformation | 8 | 22 dbt tests. CI on every push. Cloud SQL parity confirmed. Scheduler-triggered execution accepted. Stored functions preserved as rollback. Incremental models not yet implemented. |
-| Data quality | 7 | 6-check quality script. Manual CI workflow proven (Run ID 25982120058). Artifact report generation confirmed. Scheduled quality execution not yet proven. No alerting on failures. |
+| Data quality | 8 | 8-check quality script (`row_count_minimum` always included; `freshness_max_age_hours` skipped when 0). Manual CI workflow proven (Run ID 25982120058). Controlled failure proven (Run ID 26007909020). Artifact preserved on failure. GitHub Actions UI failure surface observable. `freshness_max_age_hours` live validation and email/bell/Cloud Monitoring NOT PROVEN. Scheduled execution NOT YET PROVEN. |
 | Observability | 7 | 4 logs-based metrics with datapoints. 4-panel dashboard. 2 alert policies. Email notification. DLQ. BigQuery quality signals not in dashboard. No distributed tracing. |
-| CI/CD | 7 | CI green on every push (201 tests + ruff). Terraform Plan CI on infra changes. Manual deploy workflows validated. No auto-deploy-on-merge. |
-| Reliability / rollback | 7 | DLQ with maxDeliveryAttempts=5. Alert policies enabled. Stored functions as dbt rollback. SLO documented. Not continuously running. |
+| CI/CD | 7 | CI green on every push (210 tests + ruff). Terraform Plan CI on infra changes. Manual deploy workflows validated. `workflow_dispatch` inputs proven (controlled failure). No auto-deploy-on-merge. |
+| Reliability / rollback | 7 | DLQ with maxDeliveryAttempts=5. Alert policies enabled. Stored functions as dbt rollback. SLO documented. Quality gate failure runbook defined. Not continuously running. |
 | Cost control | 9 | Cloud SQL NEVER/STOPPED throughout all evidence. Schedulers PAUSED by default. Manual-only deploys. No unexpected idle compute. |
 | Evidence / documentation | 9 | 50+ evidence documents. EVIDENCE_INDEX, ARCHITECTURE_REVIEW, SLO document current. Zero overclaiming. Conservative production-light framing. |
 | Enterprise production readiness | 6 | Production-light single-environment platform. Not continuously running. No multi-region. No staging. No real traffic. Appropriate for a portfolio platform at this stage. |
@@ -262,8 +337,8 @@ candidate from a junior one:
 | Trend | Platform Signal |
 |---|---|
 | GCP remains a dominant hyperscaler for data engineering | Full GCP stack with proven IaC coverage |
-| BigQuery adoption continues to grow as primary analytical store | Terraform-managed BigQuery tier with incremental append and quality checks |
-| Data quality / data contracts gaining hiring weight | Read-only quality checks with CI workflow, artifact reports, parser hardening |
+| BigQuery adoption continues to grow as primary analytical store | Terraform-managed BigQuery tier with incremental append, threshold quality checks, and controlled failure proof |
+| Data quality / data contracts gaining hiring weight | Read-only quality checks with CI workflow, artifact reports, parser hardening, threshold-based checks, controlled failure proof |
 | dbt adoption now expected at senior DE level | Governed dbt path with 22 tests, CI, scheduler-triggered execution |
 | OIDC / keyless CI auth becoming standard | Workload Identity Federation proven and Terraform-imported |
 | Medallion architecture standard in lakehouse designs | Bronze/Silver/Gold in Cloud SQL + BigQuery analytical tier |
@@ -271,10 +346,11 @@ candidate from a junior one:
 
 ### What Would Increase Relevance Further
 
-- Automated (scheduled) BigQuery quality checks — the single highest-value gap remaining
-- Streaming insert path (Pub/Sub → BigQuery direct or via Dataflow) for near-real-time analytics
+- Real scheduled event execution captured — first `event: schedule` GitHub Actions run evidenced
+- Email or GitHub bell notification delivery proven on quality failure
+- Cloud Monitoring quality metrics — push quality results as custom metrics, alert on failure
+- `freshness_max_age_hours` live validation against fresh data
 - dbt incremental materialization — standard production dbt pattern
-- Quality alerting / notification pipeline — signals operational maturity
 
 ---
 
@@ -284,39 +360,40 @@ Ranked by B2B impact vs implementation cost:
 
 | # | Branch | Objective | B2B Signal |
 |---|---|---|---|
-| 1 | `feat/bigquery-quality-scheduled-workflow` or `docs/scheduled-bigquery-quality-plan` | Add scheduled trigger to the BigQuery quality workflow; prove automated execution | Closes manual-only gap; shows operational quality posture, not just one-shot proof |
-| 2 | `docs/slo-quality-gates-alignment` | Connect BigQuery quality results to SLO targets and error budget definition | Shows quality gates as an engineering control, not just a script |
-| 3 | `feat/bigquery-quality-thresholds` | Add volume threshold checks, freshness SLA enforcement, distribution anomaly detection to the quality script | Upgrades from baseline checks to analytical quality |
-| 4 | `docs/portfolio-b2b-narrative` | Consolidate platform evidence into a recruiter-facing one-pager: capabilities, evidence links, honest limitations | Directly accelerates hiring signal |
-| 5 | `feat/quality-alert-notification-proof` | Prove that a quality check failure triggers an alert (Cloud Monitoring or GitHub Actions notification) | Shows the alerting loop, which is what production teams care about |
+| 1 | `docs/bigquery-quality-scheduled-run-evidence` | Capture the first real `event: schedule` run (cron `15 6 * * *` already on main); confirm `event: schedule` field in run metadata | Closes the scheduled execution gap; shows quality execution is not just manual |
+| 2 | `feat/github-notification-delivery-proof` or `docs/github-notification-delivery-evidence` | Prove email or GitHub bell notification delivery when a quality check fails | Closes the email/bell notification gap; shows the alerting loop at the notification layer |
+| 3 | `feat/bigquery-quality-cloud-monitoring-metrics` | Push quality check results as custom metrics to Cloud Monitoring; create alert policy on quality failure | Closes the Cloud Monitoring alerting gap; surfaces quality signals in the existing dashboard |
+| 4 | `feat/freshness-live-validation` | Execute a live run with `--freshness-max-age-hours` > 0 against data with a known age; prove pass or fail | Closes the `freshness_max_age_hours` live validation gap |
+| 5 | `docs/portfolio-b2b-narrative` | Consolidate platform evidence into a recruiter-facing one-pager: capabilities, evidence links, honest limitations | Directly accelerates hiring signal |
 
 ---
 
 ## Recommended Execution Order
 
 ```
-1. feat/bigquery-quality-scheduled-workflow
-   ├── Add schedule: trigger to bigquery-quality-checks.yml
-   ├── Prove automated execution with CI evidence
-   └── Document in docs/bigquery-quality-scheduled-workflow-evidence.md
+1. docs/bigquery-quality-scheduled-run-evidence
+   ├── Wait for a real event: schedule run from cron "15 6 * * *"
+   ├── Confirm event field == "schedule" (not workflow_dispatch)
+   └── Document Run ID, generated_at_utc, artifact ci-report.json
 
-2. docs/slo-quality-gates-alignment
-   ├── Update SLO_AND_INCIDENT_RESPONSE.md with BigQuery quality SLIs
-   ├── Link quality workflow run to SLO measurement
-   └── No code changes; docs-only branch
+2. feat/github-notification-delivery-proof
+   ├── Trigger workflow_dispatch with min_row_count = 999999999
+   ├── Capture delivered email at jcsf2020@gmail.com OR GitHub bell entry
+   └── Document notification delivery as proven
 
-3. feat/bigquery-quality-thresholds
-   ├── Add row_count_minimum, freshness_sla_hours, distribution checks to script
-   ├── Add unit tests for new checks
-   └── Run against live BigQuery; commit updated evidence
+3. feat/bigquery-quality-cloud-monitoring-metrics
+   ├── Push quality check results to Cloud Monitoring custom metrics after each run
+   ├── Create alert policy on quality failure metric
+   └── Document Cloud Monitoring receives quality metrics
 
-4. docs/portfolio-b2b-narrative
+4. feat/freshness-live-validation
+   ├── Execute live run with --freshness-max-age-hours > 0
+   ├── Confirm pass or expected fail against known data age
+   └── Document freshness_max_age_hours as live-proven
+
+5. docs/portfolio-b2b-narrative
    ├── One-page recruiter-facing summary: capabilities + evidence links + limitations
    └── Distilled from EVIDENCE_INDEX, this report, and ARCHITECTURE_REVIEW
-
-5. feat/quality-alert-notification-proof
-   ├── Prove failure → alert path (Cloud Monitoring policy or workflow notification step)
-   └── Document end-to-end alerting chain
 ```
 
 ---
@@ -327,10 +404,12 @@ The following claims must NOT be made from the current evidence:
 
 | Overclaim | Correct Statement |
 |---|---|
-| "BigQuery quality checks run automatically on a schedule" | Manual `workflow_dispatch` only is proven. Scheduled execution is not yet proven. |
-| "Failures trigger alerts" | Alert policies exist for pipeline errors; no proven path from quality check failure to notification. |
-| "Cloud SQL was started during the quality workflow proof" | Cloud SQL was NOT started during Run ID 25982120058. |
-| "Schedulers were executed during the quality workflow proof" | No schedulers were executed during Run ID 25982120058. |
+| "BigQuery quality checks run automatically on a schedule" | Manual `workflow_dispatch` is proven. Real scheduled event execution (cron `15 6 * * *`) is NOT YET PROVEN. |
+| "Quality failures trigger email or notification alerts" | GitHub Actions UI failure surface is proven (Run ID 26007909020). Email notification delivery is NOT PROVEN. GitHub notification bell delivery is NOT PROVEN. |
+| "Cloud Monitoring monitors quality check results" | Cloud Monitoring does not receive BigQuery quality metrics. Cloud Monitoring alerting is NOT PROVEN. |
+| "freshness_max_age_hours is live-proven" | `freshness_max_age_hours` is implemented and unit-tested only. Live pass/fail validation is NOT YET PROVEN. |
+| "Cloud SQL was started during the quality workflow proofs" | Cloud SQL was NOT started during Run ID 26007825072 or Run ID 26007909020. |
+| "Schedulers were executed during the quality workflow proofs" | No schedulers were executed during Run ID 26007825072 or Run ID 26007909020. |
 | "BigQuery data was modified by quality checks" | All quality check SQL is read-only SELECT only. No mutation. |
 | "Platform handles production-scale continuous traffic" | Platform operates in bounded validation windows. Cloud SQL is NEVER/STOPPED by default. Not a continuously running production service. |
 | "Dataflow is implemented" | Dataflow is not implemented. Cloud Run is the worker; no stateful windowed streaming. |
@@ -341,20 +420,29 @@ The following claims must NOT be made from the current evidence:
 ## Final Conclusion
 
 The platform has advanced significantly since the 2026-05 gap audit baseline. The evidence
-sequence ending with PR #139 delivers:
+sequence through PR #151 delivers:
 
 - **BigQuery incremental append** — cursor-based MERGE, idempotent, PLAN_EXIT=0
 - **Scheduler dispatch proof** — two executions with corrected image, exact +3 row delta confirmed
 - **Job-scoped IAM hardening** — project-level invoker replaced by two resource-scoped bindings; blast radius minimized
 - **6-check read-only quality script** — no mutations, no Cloud SQL start, CI-compatible
 - **Manual CI quality workflow** — Run ID 25982120058, conclusion: success, 6/6 checks, artifact confirmed
-- **201 tests passing** — 45 new tests added without regressions; ruff clean throughout
+- **Quality thresholds** — `row_count_minimum` implemented, unit-tested, live-proven (6120 >= 6000); `freshness_max_age_hours` implemented and unit-tested; live validation NOT YET PROVEN
+- **Controlled failure proof** — Run ID 26007909020: `row_count_minimum` fail, observed 6120 < 999999999, artifact preserved, exit code 1, GitHub Actions UI failure surface observable
+- **SLO quality gates alignment** — 6 quality SLIs formally defined with severity classifications; incident runbook drafted
+- **210 tests passing** — 54 new tests added without regressions; ruff clean throughout
 
-The single highest-priority remaining gap is **scheduled (automated) BigQuery quality
-execution**. The manual path is fully proven; adding a `schedule:` trigger would close
-the most visible operational quality gap and is low-risk given the current workflow is
-already green on `workflow_dispatch`.
+Three gaps remain the highest-priority next investments:
+
+1. **Real scheduled event execution** — the cron trigger is on `main`; capturing the first
+   `event: schedule` run in `docs/bigquery-quality-scheduled-run-evidence.md` requires no
+   code change.
+2. **Email or bell notification delivery** — the GitHub Actions failure signal is proven;
+   proving that a notification reaches a subscriber closes the most visible alerting gap.
+3. **Cloud Monitoring quality metrics** — connecting quality results to Cloud Monitoring
+   would close the observability gap and enable alert policies on quality failures.
 
 The platform is at a stage where the evidence base is strong enough to carry a senior
-Data Engineer / Data Platform Engineer portfolio review. The recommended investment is
-in closing the automated quality loop rather than adding new architectural layers.
+Data Engineer / Data Platform Engineer portfolio review. The controlled failure proof,
+threshold checks, and SLO alignment add operational maturity signal that distinguishes
+this platform from a one-pass demo.
