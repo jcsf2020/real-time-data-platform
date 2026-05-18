@@ -2,6 +2,15 @@ name: BigQuery Quality Checks
 
 "on":
   workflow_dispatch:
+    inputs:
+      min_row_count:
+        description: "Minimum row count threshold. Use 999999999 for controlled failure proof."
+        required: false
+        default: "1"
+      freshness_max_age_hours:
+        description: "Max data age in hours. Use 0 to skip."
+        required: false
+        default: "0"
   schedule:
     - cron: "15 6 * * *"
 
@@ -35,6 +44,8 @@ jobs:
       - name: Run BigQuery quality checks
         run: |
           python3 scripts/run_bigquery_quality_checks.py \
+            --min-row-count ${{ inputs.min_row_count || '1' }} \
+            --freshness-max-age-hours ${{ inputs.freshness_max_age_hours || '0' }} \
             --report-output docs/evidence/bigquery-quality-checks/ci-report.json
 
       - name: Upload quality check report
