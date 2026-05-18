@@ -48,6 +48,13 @@ jobs:
             --freshness-max-age-hours ${{ inputs.freshness_max_age_hours || '0' }} \
             --report-output docs/evidence/bigquery-quality-checks/ci-report.json
 
+      - name: Push BigQuery quality metrics to Cloud Monitoring
+        if: always()
+        run: |
+          python3 scripts/push_bigquery_quality_metrics.py \
+            --report-path docs/evidence/bigquery-quality-checks/ci-report.json \
+            --project-id project-42987e01-2123-446b-ac7
+
       - name: Upload quality check report
         if: always()
         uses: actions/upload-artifact@v4
