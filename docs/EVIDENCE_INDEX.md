@@ -57,6 +57,7 @@ Recommended entry path for reviewers:
 | BigQuery quality thresholds | bigquery-quality-thresholds-evidence.md | `--min-row-count` and `--freshness-max-age-hours` flags added (PR #145); `row_count_minimum` live pass: observed 6120 >= 6000; `freshness_max_age_hours` skipped as expected (unit-tested only, not live-proven); 210 tests passed; no BigQuery mutation; no Cloud SQL start; no scheduler execution; scheduled event real execution NOT YET PROVEN |
 | BigQuery quality alert proof | bigquery-quality-alert-notification-proof-evidence.md | Controlled failure proven (PR #150): Run 26007825072 success (min_row_count=1; observed 6120 >= 1); Run 26007909020 failure (min_row_count=999999999; observed 6120 < 999999999); `row_count_minimum` fail; exit code 1; artifact preserved; GitHub Actions UI failure surface observable; email/bell/Cloud Monitoring NOT PROVEN; scheduled event NOT YET PROVEN |
 | BigQuery freshness live failure | bigquery-freshness-live-validation-evidence.md | Run ID 26020167461; `workflow_dispatch`; `freshness_max_age_hours` fail (age_hours 45.5496 > 1.0; max_ingest_timestamp 2026-05-16 10:08:49.141452+00); `row_count_minimum` pass (6120 >= 1); `staging_table_empty` pass (0); artifact preserved; BigQuery not mutated; Cloud SQL not started; Cloud Scheduler not executed; passing `freshness_max_age_hours` live run NOT YET PROVEN |
+| BigQuery quality Cloud Monitoring metrics plan | bigquery-quality-cloud-monitoring-metrics-plan.md | PLANNED - QUALITY METRICS NOT YET IMPLEMENTED; 5 planned metrics (`custom.googleapis.com/rtdp/bigquery_quality/status`, `failed_checks_count`, `check_pass`, `row_count`, `freshness_age_hours`); preferred script `scripts/push_bigquery_quality_metrics.py`; metric emission step with `if: always()`; `roles/monitoring.metricWriter` required; Cloud Monitoring quality metrics NOT implemented; Cloud Monitoring alerting NOT proven; real scheduled event execution NOT YET PROVEN |
 | Cost-control state | Cloud SQL NEVER/STOPPED, Scheduler PAUSED (multiple docs) | Verified throughout |
 
 ---
@@ -126,6 +127,7 @@ Supporting evidence:
 - [docs/bigquery-quality-thresholds-evidence.md](bigquery-quality-thresholds-evidence.md) -- threshold checks (PR #145): `row_count_minimum` live pass (6120 >= 6000); `freshness_max_age_hours` skipped as expected (unit-tested only, not live-proven); 210 tests passed; no mutation; scheduled event real execution NOT YET PROVEN
 - [docs/bigquery-quality-alert-notification-proof-evidence.md](bigquery-quality-alert-notification-proof-evidence.md) -- controlled failure proof (PR #150): Run 26007825072 success (min_row_count=1; 6120 >= 1); Run 26007909020 failure (min_row_count=999999999; 6120 < 999999999); `row_count_minimum` fail; exit code 1; artifact preserved despite failure; GitHub Actions UI failure surface observable; email not proven; bell not proven; Cloud Monitoring not proven; scheduled event NOT YET PROVEN
 - [docs/bigquery-freshness-live-validation-evidence.md](bigquery-freshness-live-validation-evidence.md) -- freshness live failure proof (PR #153): Run ID 26020167461; `freshness_max_age_hours` fail (age_hours 45.5496 > 1.0; max_ingest_timestamp 2026-05-16 10:08:49.141452+00); `row_count_minimum` pass (6120 >= 1); `staging_table_empty` pass (0); artifact preserved; BigQuery not mutated; Cloud SQL not started; Cloud Scheduler not executed; passing `freshness_max_age_hours` live run NOT YET PROVEN; scheduled event NOT YET PROVEN
+- [docs/bigquery-quality-cloud-monitoring-metrics-plan.md](bigquery-quality-cloud-monitoring-metrics-plan.md) -- Cloud Monitoring quality metrics plan (PR #155): PLANNED - QUALITY METRICS NOT YET IMPLEMENTED; 5 planned metric types (`custom.googleapis.com/rtdp/bigquery_quality/status`, `custom.googleapis.com/rtdp/bigquery_quality/failed_checks_count`, `custom.googleapis.com/rtdp/bigquery_quality/check_pass`, `custom.googleapis.com/rtdp/bigquery_quality/row_count`, `custom.googleapis.com/rtdp/bigquery_quality/freshness_age_hours`); preferred script `scripts/push_bigquery_quality_metrics.py`; metric emission step with `if: always()`; `roles/monitoring.metricWriter` required; BigQuery not mutated; Cloud SQL not started; Cloud Scheduler not executed; no secrets printed; Cloud Monitoring quality metrics NOT implemented; Cloud Monitoring alerting NOT proven; real scheduled event execution NOT YET PROVEN
 - [docs/evidence/bigquery-quality-checks/report.json](evidence/bigquery-quality-checks/report.json) -- machine-readable quality report committed under docs/evidence
 
 Neither deploy workflow triggers automatically on merge to main; both require explicit manual dispatch.
@@ -208,9 +210,13 @@ are verified across the evidence base:
   delivery NOT PROVEN. `freshness_max_age_hours` live failure proven via PR #153 (Run
   26020167461: age_hours 45.5496 > 1.0; max_ingest_timestamp 2026-05-16 10:08:49.141452+00;
   BigQuery not mutated; Cloud SQL not started; Cloud Scheduler not executed); passing
-  `freshness_max_age_hours` live run NOT YET PROVEN. Remaining BigQuery work: confirmed
-  scheduled event execution; passing `freshness_max_age_hours` live run; notification
-  delivery proof; Dataflow is not yet implemented.
+  `freshness_max_age_hours` live run NOT YET PROVEN. Cloud Monitoring quality metrics plan
+  added via PR #155 (`docs/bigquery-quality-cloud-monitoring-metrics-plan.md`): Cloud
+  Monitoring quality metrics NOT implemented; Cloud Monitoring alerting NOT proven. Remaining
+  BigQuery work: confirmed scheduled event execution; passing `freshness_max_age_hours` live
+  run; notification delivery proof; Cloud Monitoring quality metrics implementation
+  (`scripts/push_bigquery_quality_metrics.py`, `roles/monitoring.metricWriter`); Dataflow is
+  not yet implemented.
 - dbt is the operational scheduled transformation path (accepted as of
   `docs/post-dbt-scheduler-audit-refresh`). Remaining dbt work: incremental model
   materialization; dbt-specific observability metrics.
