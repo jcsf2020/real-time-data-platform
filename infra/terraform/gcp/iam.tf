@@ -59,6 +59,12 @@ resource "google_project_iam_member" "terraform_plan_ci_viewer" {
   member  = local.terraform_plan_ci_member
 }
 
+resource "google_project_iam_member" "terraform_plan_ci_monitoring_metric_writer" {
+  project = var.project_id
+  role    = "roles/monitoring.metricWriter"
+  member  = local.terraform_plan_ci_member
+}
+
 resource "google_service_account_iam_member" "terraform_plan_ci_workload_identity_user" {
   service_account_id = google_service_account.rtdp_terraform_plan_ci.name
   role               = "roles/iam.workloadIdentityUser"
