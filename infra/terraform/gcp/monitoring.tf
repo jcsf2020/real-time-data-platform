@@ -192,3 +192,42 @@ resource "google_monitoring_alert_policy" "silver_refresh_error" {
     prevent_destroy = true
   }
 }
+
+resource "google_monitoring_alert_policy" "bigquery_quality_failure" {
+  display_name = "RTDP BigQuery Quality Failure"
+  combiner     = "OR"
+  enabled      = true
+
+  conditions {
+    display_name = "BigQuery quality failed checks count > 0"
+
+    condition_threshold {
+      filter     = "metric.type=\"custom.googleapis.com/rtdp/bigquery_quality/failed_checks_count\" resource.type=\"global\""
+      comparison = "COMPARISON_GT"
+      duration   = "0s"
+
+      aggregations {
+        alignment_period     = "300s"
+        per_series_aligner   = "ALIGN_MAX"
+        cross_series_reducer = "REDUCE_SUM"
+      }
+    }
+  }
+
+  # Notification channel managed outside Terraform — see comment above.
+  notification_channels = [
+    "projects/project-42987e01-2123-446b-ac7/notificationChannels/1439157631105258885",
+  ]
+
+  documentation {
+    content = "BigQuery quality checks emitted failed_checks_count > 0. At least one quality check has failed — investigate the BigQuery quality job run for details."
+  }
+
+  alert_strategy {
+    auto_close = "604800s"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
