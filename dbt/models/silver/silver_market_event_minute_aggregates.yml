@@ -5,12 +5,13 @@ models:
     description: >
       Per-symbol per-minute price and volume aggregates over bronze.market_events.
       Reproduces the logic of silver.refresh_market_event_minute_aggregates() defined
-      in infra/postgres/init.sql. Materialized as a table; the stored function remains
-      authoritative until dbt CI is established (see migration plan in
-      docs/dbt-transformation-governance-plan.md section 10).
+      in infra/postgres/init.sql. Materialized incrementally using delete+insert on
+      (symbol, window_start); each run reprocesses the trailing 10-minute window from
+      the current high-water mark to pick up late-arriving events without scanning the
+      full bronze table.
     config:
       schema: silver
-      materialized: table
+      materialized: incremental
     tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
