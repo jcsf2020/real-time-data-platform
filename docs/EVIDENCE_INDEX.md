@@ -182,6 +182,7 @@ not a claim of enterprise-scale throughput.
 | [docs/load-test-100-cloud-evidence.md](load-test-100-cloud-evidence.md) | 100 events: 100 acks, 100 worker ok logs, metric sum=100, API readback confirmed |
 | [docs/load-test-1000-cloud-evidence.md](load-test-1000-cloud-evidence.md) | 1,000 events: all acceptance criteria met |
 | [docs/load-test-5000-cloud-evidence.md](load-test-5000-cloud-evidence.md) | 5,000 events: 5,000 acks, metric sum=4,963, DLQ empty, silver refresh succeeded |
+| [docs/cloud-load-test-10000-plan.md](cloud-load-test-10000-plan.md) | PLANNED -- 10,000-event cloud load test plan; execution NOT YET PROVEN; no events published; no Cloud SQL start; no Terraform apply; Dataflow not implemented |
 
 ---
 
@@ -260,5 +261,5 @@ are verified across the evidence base:
   dbt run PASS=2; gold INSERT 0 7; silver INSERT 0 13; dbt test PASS=22; Cloud SQL restored
   to NEVER/STOPPED; PLAN_EXIT=0; see `docs/dbt-cloud-sql-incremental-execution-proof.md`).
   Remaining dbt work: dbt-specific observability metrics.
-- Sustained throughput validation above 5,000 events is pending.
+- Sustained throughput validation above 5,000 events is planned: see [docs/cloud-load-test-10000-plan.md](cloud-load-test-10000-plan.md) for the 10,000-event execution plan (NOT YET EXECUTED; no events published; no Cloud SQL start; no Terraform apply).
 - Automatic deploy-on-merge: both deploy workflows require manual dispatch.
