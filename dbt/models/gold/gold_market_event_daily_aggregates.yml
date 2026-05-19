@@ -6,12 +6,13 @@ models:
       Per-symbol per-day price summary (OHLCV-style) over bronze.market_events.
       Reproduces the logic of gold.refresh_market_event_daily_aggregates() defined
       in infra/postgres/init.sql. Reads bronze directly (not via the silver model)
-      to preserve price extremes at raw event granularity. Materialized as a table;
-      the stored function remains authoritative until dbt CI is established (see
-      docs/dbt-transformation-governance-plan.md section 10).
+      to preserve price extremes at raw event granularity. Materialized incrementally
+      using delete+insert on (symbol, event_date); each run reprocesses the trailing
+      3-day window from the current high-water mark to pick up late-arriving events
+      without scanning the full bronze table.
     config:
       schema: gold
-      materialized: table
+      materialized: incremental
     tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
