@@ -50,7 +50,7 @@ def run_refresh(database_url: str) -> int:
 
 
 def main(argv: list[str] | None = None) -> None:
-    database_url = os.getenv("DATABASE_URL")
+    database_url = os.getenv("DATABASE_URL", "").strip()
     if not database_url:
         emit_log({
             "component": "silver-refresh",
