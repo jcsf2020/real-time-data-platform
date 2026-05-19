@@ -48,7 +48,8 @@ Recommended deep technical review path:
 | dbt Cloud Run Job deployment | dbt-refresh-cloud-run-deploy-evidence.md | Terraform apply confirmed; zero-diff plan |
 | dbt refresh job execution | dbt-refresh-job-execution-proof-evidence.md | dbt run PASS=2, dbt test PASS=22, API readback HTTP 200 |
 | Scheduler switch to dbt job | dbt-scheduler-switch-evidence.md | Scheduler-triggered dbt execution accepted; PAUSED by default |
-| dbt silver incremental model | dbt-incremental-silver-evidence.md | silver_market_event_minute_aggregates converted to incremental (delete+insert, unique_key=[symbol, window_start], 10-min lookback); LOCAL CODE ONLY; Cloud SQL live execution NOT YET PROVEN; gold remains full-refresh |
+| dbt silver incremental model | dbt-incremental-silver-evidence.md | silver_market_event_minute_aggregates converted to incremental (delete+insert, unique_key=[symbol, window_start], 10-min lookback); LOCAL CODE ONLY; Cloud SQL live execution NOT YET PROVEN |
+| dbt gold incremental model | dbt-incremental-gold-evidence.md | gold_market_event_daily_aggregates converted to incremental (delete+insert, unique_key=[symbol, event_date], 3-day lookback); 239 pytest passed; 8 dbt tests passed; LOCAL DISPOSABLE POSTGRES VALIDATION PASSED; Cloud SQL live execution NOT YET PROVEN |
 | BigQuery analytical tier scaffold | bigquery-terraform-apply-evidence.md | Dataset rtdp_analytics + 3 tables + IAM applied via Terraform; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 | BigQuery bounded backfill | bigquery-bounded-backfill-evidence.md | 6,104 rows from Cloud SQL bronze.market_events to BigQuery market_events_raw; source/target count match accepted; analytical query by symbol/event_type confirmed; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
 | BigQuery incremental append | bigquery-incremental-append-evidence.md | Cloud Run Job + staging table via Terraform; cursor-based MERGE; 10 evidence rows appended (6104→6114); second run idempotent (6114 unchanged); 0 duplicates; PLAN_EXIT=0; Cloud SQL NEVER/STOPPED |
@@ -132,7 +133,8 @@ Supporting evidence:
 - [docs/dbt-scheduler-switch-evidence.md](dbt-scheduler-switch-evidence.md) -- scheduler switched to `rtdp-dbt-refresh-job:run`; scheduler-triggered execution (`rtdp-dbt-refresh-job-6zb52`) accepted; scheduler PAUSED by default
 - [docs/dbt-refresh-cloud-run-job-plan.md](dbt-refresh-cloud-run-job-plan.md) -- Terraform resource definition for `google_cloud_run_v2_job.rtdp_dbt_refresh_job`; credential contract; scheduler target; Cloud SQL NEVER/STOPPED by default
 - [docs/dbt-operational-migration-plan.md](dbt-operational-migration-plan.md) -- migration plan executed; dbt is now the operational scheduled transformation path
-- [docs/dbt-incremental-silver-evidence.md](dbt-incremental-silver-evidence.md) -- `silver_market_event_minute_aggregates` converted from `materialized='table'` to `materialized='incremental'` with `incremental_strategy='delete+insert'`, `unique_key=['symbol', 'window_start']`, and a 10-minute `is_incremental()` lookback guard; LOCAL CODE ONLY; Cloud SQL live execution NOT YET PROVEN; gold model remains full-refresh; no Terraform, CI, or workflow changes
+- [docs/dbt-incremental-silver-evidence.md](dbt-incremental-silver-evidence.md) -- `silver_market_event_minute_aggregates` converted from `materialized='table'` to `materialized='incremental'` with `incremental_strategy='delete+insert'`, `unique_key=['symbol', 'window_start']`, and a 10-minute `is_incremental()` lookback guard; LOCAL CODE ONLY; Cloud SQL live execution NOT YET PROVEN; no Terraform, CI, or workflow changes
+- [docs/dbt-incremental-gold-evidence.md](dbt-incremental-gold-evidence.md) -- `gold_market_event_daily_aggregates` converted from `materialized='table'` to `materialized='incremental'` with `incremental_strategy='delete+insert'`, `unique_key=['symbol', 'event_date']`, and a 3-day `is_incremental()` lookback guard; COALESCE DATE '1900-01-01' fallback for empty target; dbt compile/run/test: 8/8 tests PASS; 239 pytest PASS; ruff clean; PLAN_EXIT=0; LOCAL DISPOSABLE POSTGRES VALIDATION PASSED; Cloud SQL live execution NOT YET PROVEN; no Terraform, CI, or workflow changes
 - [docs/bigquery-quality-checks-evidence.md](bigquery-quality-checks-evidence.md) -- read-only quality script; 6/6 checks pass against `rtdp_analytics.market_events_raw`; row_count=6120; staging=0; no mutation
 - [docs/bigquery-quality-workflow-proof-evidence.md](bigquery-quality-workflow-proof-evidence.md) -- `workflow_dispatch` Run ID 25982120058; conclusion: success; artifact status: ok; 6/6 checks passed; manual dispatch only
 - [docs/bigquery-quality-schedule-enabled-evidence.md](bigquery-quality-schedule-enabled-evidence.md) -- schedule `15 6 * * *` enabled via PR #141; `workflow_dispatch` Run ID 25984483471 post-merge: success; 6/6 checks passed; scheduled event real execution NOT YET PROVEN
@@ -251,6 +253,10 @@ are verified across the evidence base:
 - dbt is the operational scheduled transformation path (accepted as of
   `docs/post-dbt-scheduler-audit-refresh`). Silver incremental model implemented (LOCAL CODE
   ONLY; Cloud SQL live execution NOT YET PROVEN; see `docs/dbt-incremental-silver-evidence.md`).
-  Remaining dbt work: gold incremental model; dbt-specific observability metrics.
+  Gold incremental model implemented (LOCAL DISPOSABLE POSTGRES VALIDATION PASSED; Cloud SQL
+  live execution NOT YET PROVEN; see `docs/dbt-incremental-gold-evidence.md`; 239 pytest
+  passed; 8/8 dbt tests passed; PLAN_EXIT=0).
+  Remaining dbt work: dbt-specific observability metrics; Cloud SQL live incremental execution
+  proof for both silver and gold models.
 - Sustained throughput validation above 5,000 events is pending.
 - Automatic deploy-on-merge: both deploy workflows require manual dispatch.
