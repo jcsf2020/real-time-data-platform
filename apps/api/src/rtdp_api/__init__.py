@@ -15,7 +15,7 @@ ENVIRONMENT = os.getenv("ENVIRONMENT", "local")
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "postgresql://rtdp:rtdp@localhost:15432/realtime_platform",
-)
+).strip()
 
 DB_POOL = ConnectionPool(
     conninfo=DATABASE_URL,

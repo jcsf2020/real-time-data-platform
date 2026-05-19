@@ -15,7 +15,7 @@ SOURCE_TOPIC = "market-events-raw"
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
     "postgresql://rtdp:rtdp@localhost:15432/realtime_platform",
-)
+).strip()
 
 _INSERT_SQL = """
     INSERT INTO bronze.market_events (
@@ -118,7 +118,7 @@ def process_message(data: bytes, database_url: str = DATABASE_URL) -> dict:
 
 def main(argv: list[str] | None = None) -> None:
     """Read a JSON MarketEvent from stdin and process it. For local validation only."""
-    database_url = os.getenv("DATABASE_URL", DATABASE_URL)
+    database_url = os.getenv("DATABASE_URL", DATABASE_URL).strip()
     data = sys.stdin.buffer.read()
     result = process_message(data, database_url)
     print(json.dumps(result))
