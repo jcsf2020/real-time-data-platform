@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 
-ALLOWED_SIZES = frozenset({100, 1000, 5000})
+ALLOWED_SIZES = frozenset({100, 1000, 5000, 10000})
 SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
 _BASE_PRICES = {
     "BTCUSDT": Decimal("67500.00"),
