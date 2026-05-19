@@ -250,7 +250,7 @@ The `silver` layer is populated by calling `silver.refresh_market_event_minute_a
 
 ## GCP Target Architecture
 
-> **Status:** The GCP MVP is operationally validated. The FastAPI serving layer is deployed to Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. Pub/Sub ingestion is validated through `market-events-raw`, the deployed Cloud Run worker, and idempotent writes into `bronze.market_events`. Observability is validated with logs-based metrics, a Cloud Monitoring dashboard, alert policies, an email notification channel, a production Pub/Sub DLQ, Cloud Scheduler configuration, scheduled silver refresh execution proof, and accepted 100 / 1,000 / 5,000-event cloud load tests. BigQuery, Dataflow, Terraform/IaC, and automated deployment remain open roadmap items.
+> **Status:** The GCP MVP is operationally validated. The FastAPI serving layer is deployed to Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. Pub/Sub ingestion is validated through `market-events-raw`, the deployed Cloud Run worker, and idempotent writes into `bronze.market_events`. Observability is validated with logs-based metrics, a Cloud Monitoring dashboard, alert policies, an email notification channel, a production Pub/Sub DLQ, Cloud Scheduler configuration, and accepted 100 / 1,000 / 5,000-event cloud load tests. All GCP resources are Terraform-managed with a GCS-backed remote state and zero-diff plans. A BigQuery analytical tier (dataset `rtdp_analytics`, three Terraform-managed tables) is live: bounded backfill accepted (6,120 rows), cursor-based incremental append proven, and a read-only quality workflow running on a daily schedule with Cloud Monitoring alert policies, incident creation, and email notification delivery proven. Dataflow and automatic deploy-on-merge remain open roadmap items.
 
 | Local Component | GCP Target | Notes |
 |---|---|---|
@@ -440,6 +440,8 @@ uv run pytest -q
 
 ## Recruiter-Facing Evidence
 
+See [docs/portfolio-b2b-narrative.md](docs/portfolio-b2b-narrative.md) for the recruiter and B2B front-door summary: executive positioning, validated capabilities, intentional non-claims, evidence entry points, and 2026-2027 relevance.
+
 See [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) for a curated map of all project evidence by category: architecture, infrastructure-as-code, CI/CD, observability, load testing, and production-readiness.
 
 See [docs/ARCHITECTURE_REVIEW.md](docs/ARCHITECTURE_REVIEW.md) for the consolidated architecture review: implemented capabilities, operational controls, trade-offs, and remaining gaps.
@@ -508,8 +510,8 @@ See [docs/gold-cloud-sql-deployment-evidence.md](docs/gold-cloud-sql-deployment-
 
 **Planned (next phases):**
 
-- Add BigQuery or Dataflow analytical tier
-- Add automatic deploy-on-merge only if later required
-- Deploy gold layer to Cloud SQL
-- Populate `ai.market_event_embeddings` with pgvector embeddings
-- Keep README and evidence docs aligned with execution state
+- Add Dataflow streaming enrichment pipeline (stateful windowed aggregations)
+- Add automatic deploy-on-merge for the worker service
+- Convert dbt models to incremental materialization
+- Prove GitHub notification bell delivery on quality failure
+- Validate sustained throughput above 5,000 events

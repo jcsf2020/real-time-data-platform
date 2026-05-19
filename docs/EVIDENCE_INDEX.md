@@ -10,7 +10,11 @@ documents contain.
 
 ## Review Path
 
-Recommended entry path for reviewers:
+For a recruiter or B2B entry point, start with
+[docs/portfolio-b2b-narrative.md](portfolio-b2b-narrative.md) for an executive summary,
+validated capabilities, intentional non-claims, and 2026-2027 relevance.
+
+Recommended deep technical review path:
 
 1. [README.md](../README.md) -- project overview, local quickstart, GCP status summary
 2. [docs/gcp-architecture.md](gcp-architecture.md) -- GCP service mapping and target flow
