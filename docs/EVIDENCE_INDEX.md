@@ -183,6 +183,7 @@ not a claim of enterprise-scale throughput.
 | [docs/load-test-1000-cloud-evidence.md](load-test-1000-cloud-evidence.md) | 1,000 events: all acceptance criteria met |
 | [docs/load-test-5000-cloud-evidence.md](load-test-5000-cloud-evidence.md) | 5,000 events: 5,000 acks, metric sum=4,963, DLQ empty, silver refresh succeeded |
 | [docs/load-test-10000-cloud-evidence.md](load-test-10000-cloud-evidence.md) | VALIDATED -- 10,000-event cloud load test passed; published_total=10000; unique_message_ids=10000; publish_error_count=0; worker OK logs=10000; worker errors=0; Cloud Monitoring processed metric=10000; error metric=0; Cloud SQL prefix rows=10000; duplicate event_id count=0; DLQ subscriptions=0; Cloud SQL restored to STOPPED/NEVER; schedulers PAUSED; Dataflow not implemented |
+| [docs/cloud-load-test-50000-plan.md](cloud-load-test-50000-plan.md) | PLANNED -- 50,000-event cloud load test plan; execution NOT YET PROVEN; no events published; no Cloud SQL start; no Terraform apply; Dataflow not implemented |
 
 ---
 
@@ -261,5 +262,5 @@ are verified across the evidence base:
   dbt run PASS=2; gold INSERT 0 7; silver INSERT 0 13; dbt test PASS=22; Cloud SQL restored
   to NEVER/STOPPED; PLAN_EXIT=0; see `docs/dbt-cloud-sql-incremental-execution-proof.md`).
   Remaining dbt work: dbt-specific observability metrics.
-- Sustained throughput validation above 5,000 events now has a 10,000-event bounded cloud proof: see [docs/load-test-10000-cloud-evidence.md](load-test-10000-cloud-evidence.md). Remaining scale work: 50,000+ events and/or Dataflow baseline comparison.
+- Sustained throughput validation above 5,000 events now has a 10,000-event bounded cloud proof: see [docs/load-test-10000-cloud-evidence.md](load-test-10000-cloud-evidence.md). 50,000-event validation planned (see [docs/cloud-load-test-50000-plan.md](cloud-load-test-50000-plan.md)); execution NOT YET PROVEN. Dataflow remains deferred until current-stack throughput ceiling is better evidenced.
 - Automatic deploy-on-merge: both deploy workflows require manual dispatch.
