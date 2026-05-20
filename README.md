@@ -4,16 +4,57 @@ A local-first, event-driven data platform built with Python, Redpanda (Kafka-com
 
 ---
 
+## Latest Milestone: 50,000-Event Bounded GCP Load Test
+
+**Date:** 2026-05-20 | **Branch:** `exec/cloud-load-test-50000-evidence`
+
+Validated path: Pub/Sub -> Cloud Run worker -> Cloud SQL
+
+| Metric | Value |
+|---|---:|
+| Events published | 50,000 |
+| Unique Pub/Sub message IDs | 50,000 |
+| Publish errors | 0 |
+| Worker OK logs | 50,000 |
+| Worker errors | 0 |
+| Cloud SQL rows (prefix match) | 50,000 |
+| Duplicate event_id count | 0 |
+| Cloud Monitoring processed metric | 50,002 |
+| Cloud Monitoring error metric | 0 |
+| Terraform PLAN_EXIT | 0 |
+| Cloud SQL final state | STOPPED / NEVER |
+| Schedulers final state | PAUSED |
+
+Cloud Monitoring showed 50,002 due to DELTA window alignment; structured logs and Cloud SQL rows are authoritative for the exact 50,000 proof.
+
+Evidence: [docs/load-test-50000-cloud-evidence.md](docs/load-test-50000-cloud-evidence.md)
+
+---
+
 ## What This Project Demonstrates
 
-- End-to-end streaming pipeline: producer → broker → consumer → storage → API
-- Versioned, validated event contracts using Pydantic
-- Medallion architecture (bronze / silver / gold / observability / ai schemas)
-- Idempotent event persistence with `ON CONFLICT DO NOTHING`
-- Prometheus-compatible metrics endpoint for operational observability
-- Containerised full-stack runtime with Docker Compose
-- CI pipeline with linting, tests, and import smoke tests via GitHub Actions
-- GCP target architecture mapping (Pub/Sub, Cloud Run, Cloud SQL, BigQuery, Dataflow)
+- GCP event processing: Pub/Sub, Cloud Run, Cloud SQL, BigQuery -- deployed, Terraform-managed, and evidenced
+- Python workers on Cloud Run: event worker, API, dbt refresh job, BigQuery append job
+- Pub/Sub ingestion with DLQ (deadLetterPolicy, maxDeliveryAttempts=5) and idempotent event delivery
+- Cloud SQL / Postgres: idempotent writes via `ON CONFLICT`; 50,000 rows written with 0 duplicate event_id
+- BigQuery analytical tier: DAY-partitioned tables; cursor-based incremental append; bounded backfill proven
+- dbt incremental models (silver, gold): delete+insert strategy; 22 dbt tests; Cloud SQL live execution proven
+- Terraform IaC: 100% GCP resource coverage; GCS remote state; PLAN_EXIT=0 throughout; Workload Identity for CI
+- Cloud Monitoring and Cloud Logging: 4 logs-based metrics with datapoints; 4-panel dashboard; alert policies; structured JSON logs per event
+- CI validation: pytest (241 tests), ruff, Terraform plan CI, dbt compile/run/test on every push via GitHub Actions
+- Data quality checks: 8-check BigQuery quality workflow; scheduled and manual execution proven; controlled failure and pass runs both evidenced
+- Alerting and incident delivery: quality failure -> Cloud Monitoring incident -> email notification proven end-to-end
+- Cost control: Cloud SQL NEVER/STOPPED verified across 60+ evidence docs; schedulers PAUSED by default
+- Versioned, validated event contracts using Pydantic (MarketEvent schema, schema_version field)
+- Medallion architecture: bronze / silver / gold / observability / ai schemas in PostgreSQL; BigQuery analytical tier
+
+---
+
+## Evidence-First Positioning
+
+This project is positioned as bounded, evidence-backed GCP data platform work. It does not claim sustained production throughput, Dataflow implementation, exactly-once production semantics, or enterprise-certified security.
+
+All validated milestones include specific run IDs, commit SHAs, GCP resource names, and machine-readable evidence artifacts. Every claim is verifiable by an independent technical reviewer.
 
 ---
 
@@ -102,7 +143,7 @@ flowchart LR
 | Tests | pytest |
 | Container runtime | Docker Compose |
 | CI | GitHub Actions |
-| Target cloud | GCP (Pub/Sub, Cloud Run, Cloud SQL, BigQuery, Dataflow) |
+| Target cloud | GCP (Pub/Sub, Cloud Run, Cloud SQL, BigQuery) |
 
 ---
 
@@ -250,13 +291,13 @@ The `silver` layer is populated by calling `silver.refresh_market_event_minute_a
 
 ## GCP Target Architecture
 
-> **Status:** The GCP MVP is operationally validated. The FastAPI serving layer is deployed to Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. Pub/Sub ingestion is validated through `market-events-raw`, the deployed Cloud Run worker, and idempotent writes into `bronze.market_events`. Observability is validated with logs-based metrics, a Cloud Monitoring dashboard, alert policies, an email notification channel, a production Pub/Sub DLQ, Cloud Scheduler configuration, and accepted 100 / 1,000 / 5,000-event cloud load tests. All GCP resources are Terraform-managed with a GCS-backed remote state and zero-diff plans. A BigQuery analytical tier (dataset `rtdp_analytics`, three Terraform-managed tables) is live: bounded backfill accepted (6,120 rows), cursor-based incremental append proven, and a read-only quality workflow running on a daily schedule with Cloud Monitoring alert policies, incident creation, and email notification delivery proven. Dataflow and automatic deploy-on-merge remain open roadmap items.
+> **Status:** The GCP MVP is operationally validated. The FastAPI serving layer is deployed to Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. Pub/Sub ingestion is validated through `market-events-raw`, the deployed Cloud Run worker, and idempotent writes into `bronze.market_events`. Observability is validated with logs-based metrics, a Cloud Monitoring dashboard, alert policies, an email notification channel, a production Pub/Sub DLQ, Cloud Scheduler configuration, and accepted 100 / 1,000 / 5,000 / 10,000 / 50,000-event bounded cloud load tests (50,000 is the latest validated milestone, 2026-05-20). All GCP resources are Terraform-managed with a GCS-backed remote state and zero-diff plans. A BigQuery analytical tier (dataset `rtdp_analytics`, three Terraform-managed tables) is live: bounded backfill accepted (6,120 rows), cursor-based incremental append proven, and a read-only quality workflow running on a daily schedule with Cloud Monitoring alert policies, incident creation, and email notification delivery proven. Dataflow and automatic deploy-on-merge remain open roadmap items.
 
 | Local Component | GCP Target | Notes |
 |---|---|---|
 | Redpanda / Kafka | Pub/Sub | Managed event ingestion, fan-out, replay |
 | Python producer | Cloud Run job or external source | Stateless event publishing |
-| Python consumer | Cloud Run worker or Dataflow | Consumer or streaming enrichment pipeline |
+| Python consumer | Cloud Run worker; Dataflow is future roadmap | Consumer processing is currently Cloud Run-based |
 | PostgreSQL container | Cloud SQL for PostgreSQL | Implemented as managed operational store |
 | FastAPI container | Cloud Run service | Already containerised, Cloud Run-compatible |
 | `/metrics-prometheus` | Cloud Monitoring / Managed Prometheus | Metric scrape target |
@@ -269,7 +310,7 @@ The `silver` layer is populated by calling `silver.refresh_market_event_minute_a
 ```
 Event source
   → Pub/Sub: market-events-raw
-      → Cloud Run worker or Dataflow pipeline
+      → Cloud Run worker (current); Dataflow pipeline is future roadmap
           → Cloud SQL (operational storage)
           → BigQuery (analytical reporting)
           → Cloud Monitoring (metrics and alerting)
@@ -346,6 +387,10 @@ See [docs/load-test-5000-cloud-runbook.md](docs/load-test-5000-cloud-runbook.md)
 
 See [docs/load-test-5000-cloud-evidence.md](docs/load-test-5000-cloud-evidence.md) for the accepted 5,000-event cloud evidence: 5,000 publish acknowledgements, 5,000 worker `status=ok` logs, `worker_message_processed_count` metric sum 4,963, DLQ empty, API readback confirmed, silver refresh succeeded, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
 
+See [docs/load-test-10000-cloud-evidence.md](docs/load-test-10000-cloud-evidence.md) for the accepted 10,000-event cloud evidence: 10,000 publish acknowledgements, 10,000 worker `status=ok` logs, 0 worker errors, 10,000 Cloud SQL rows, 0 duplicate event_id, Cloud Monitoring processed metric=10,000, Cloud SQL `NEVER / STOPPED`, Schedulers `PAUSED`.
+
+See [docs/load-test-50000-cloud-evidence.md](docs/load-test-50000-cloud-evidence.md) for the accepted 50,000-event cloud evidence (latest milestone, 2026-05-20): 50,000 publish acknowledgements, 50,000 worker `status=ok` logs, 0 worker errors, 50,000 Cloud SQL rows, 0 duplicate event_id, Cloud Monitoring processed metric=50,002 (DELTA window alignment; structured logs and Cloud SQL rows are authoritative), Cloud SQL `NEVER / STOPPED`, Schedulers `PAUSED`.
+
 See [docs/terraform-iac-baseline-runbook.md](docs/terraform-iac-baseline-runbook.md) for the Terraform / IaC baseline runbook: a phased, safety-first migration strategy for bringing existing validated GCP resources under Terraform state management without destroying or drifting live infrastructure (runbook only — no Terraform files created, no GCP writes performed).
 
 See [infra/terraform/gcp/README.md](infra/terraform/gcp/README.md) for the initial Terraform GCP skeleton covering low-risk Pub/Sub and Scheduler resources. Skeleton only — no terraform init/plan/apply/import executed.
@@ -407,7 +452,7 @@ Region: europe-west1
 Secret Manager: rtdp-database-url
 ```
 
-The database contains validated cloud-ingested events from accepted 100 / 1,000 / 5,000-event load tests. Cloud SQL is normally kept `NEVER / STOPPED` for cost control and started only during bounded validation windows.
+The database contains validated cloud-ingested events from accepted bounded load tests (100 / 1,000 / 5,000 / 10,000 / 50,000 events; 50,000 is the latest validated milestone). Cloud SQL is normally kept `NEVER / STOPPED` for cost control and started only during bounded validation windows.
 
 ---
 
@@ -438,11 +483,17 @@ uv run pytest -q
 
 ---
 
-## Recruiter-Facing Evidence
+## Key Evidence Links
 
-See [docs/portfolio-b2b-narrative.md](docs/portfolio-b2b-narrative.md) for the recruiter and B2B front-door summary: executive positioning, validated capabilities, intentional non-claims, evidence entry points, and 2026-2027 relevance.
-
-See [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) for a curated map of all project evidence by category: architecture, infrastructure-as-code, CI/CD, observability, load testing, and production-readiness.
+| Document | What It Contains |
+|---|---|
+| [docs/recruiter-facing-platform-summary.md](docs/recruiter-facing-platform-summary.md) | One-page hiring translation: proven capabilities, non-claims, safe interview positioning |
+| [docs/executive-platform-audit-after-50k.md](docs/executive-platform-audit-after-50k.md) | Post-50k platform audit: devil-advocate review, gap tracking, recruiter translation |
+| [docs/load-test-50000-cloud-evidence.md](docs/load-test-50000-cloud-evidence.md) | 50,000-event bounded cloud load test: all acceptance criteria met |
+| [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) | Master evidence catalog: 60+ documents indexed by category |
+| [docs/gcp-architecture.md](docs/gcp-architecture.md) | GCP service mapping and validated event-processing path |
+| [docs/dbt-cloud-sql-incremental-execution-proof.md](docs/dbt-cloud-sql-incremental-execution-proof.md) | dbt incremental execution against live Cloud SQL; dbt run PASS=2; dbt test PASS=22 |
+| [docs/bigquery-quality-incident-notification-delivery-proof.md](docs/bigquery-quality-incident-notification-delivery-proof.md) | End-to-end alerting loop: quality failure -> Cloud Monitoring incident -> email delivery |
 
 See [docs/ARCHITECTURE_REVIEW.md](docs/ARCHITECTURE_REVIEW.md) for the consolidated architecture review: implemented capabilities, operational controls, trade-offs, and remaining gaps.
 
@@ -469,7 +520,7 @@ This project demonstrates practical Data Engineering skills relevant to streamin
 | Medallion architecture | bronze / silver / gold / observability / ai schemas in PostgreSQL |
 | Idempotent processing | `ON CONFLICT(event_id) DO NOTHING` enforced at persistence layer |
 | Operational observability | Prometheus-format metrics endpoint, structured JSON logs |
-| Cloud architecture thinking | Documented GCP mapping: Pub/Sub, Cloud Run, BigQuery, Dataflow |
+| Cloud architecture thinking | Documented GCP mapping: Pub/Sub, Cloud Run, BigQuery; Dataflow explicitly marked as not implemented / future roadmap |
 | API design | FastAPI with health, readiness, version, data, and metrics endpoints |
 | Containerised runtime | Docker Compose stack for full local development |
 | CI discipline | Lint + test + smoke test on every push, no manual steps |
@@ -500,7 +551,7 @@ This project demonstrates practical Data Engineering skills relevant to streamin
 - Production Pub/Sub DLQ / `deadLetterPolicy`
 - Cloud Scheduler configuration for silver refresh
 - Scheduled execution proof for `rtdp-silver-refresh-job`
-- Accepted 100 / 1,000 / 5,000-event cloud load tests
+- Accepted 50,000-event bounded cloud load test (2026-05-20; latest validated milestone); previously accepted 100 / 1,000 / 5,000 / 10,000-event tests
 
 **Implemented and cloud-validated:**
 
@@ -512,6 +563,4 @@ See [docs/gold-cloud-sql-deployment-evidence.md](docs/gold-cloud-sql-deployment-
 
 - Add Dataflow streaming enrichment pipeline (stateful windowed aggregations)
 - Add automatic deploy-on-merge for the worker service
-- Convert dbt models to incremental materialization
 - Prove GitHub notification bell delivery on quality failure
-- Validate sustained throughput above 5,000 events
