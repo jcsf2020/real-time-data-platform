@@ -21,7 +21,7 @@ def run(*args: str) -> subprocess.CompletedProcess:
     )
 
 
-@pytest.mark.parametrize("size", [100, 1000, 5000])
+@pytest.mark.parametrize("size", [100, 1000, 5000, 10000])
 def test_event_count(size):
     result = run("--size", str(size), "--prefix-timestamp", TS)
     assert result.returncode == 0
