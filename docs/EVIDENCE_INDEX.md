@@ -222,6 +222,14 @@ are verified across the evidence base:
 
 ---
 
+## Platform Audit
+
+| Document | Summary |
+|---|---|
+| [docs/executive-platform-audit-after-50k.md](executive-platform-audit-after-50k.md) | EXECUTIVE AUDIT -- post-50k platform assessment; translates bounded 50,000-event Pub/Sub -> Cloud Run -> Cloud SQL evidence into recruitment/B2B positioning; includes proven evidence, remaining gaps, devil-advocate review, and next steps; Dataflow not implemented; sustained production throughput not claimed. |
+
+---
+
 ## Known Remaining Gaps
 
 - BigQuery analytical tier, bounded backfill, incremental append, and append scheduler are
