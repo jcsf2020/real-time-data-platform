@@ -194,6 +194,7 @@ not a claim of enterprise-scale throughput.
 |---|---|
 | [docs/pubsub-retry-dlq-inspection.md](pubsub-retry-dlq-inspection.md) | Read-only inspection of production Pub/Sub retry and DLQ configuration before mutation |
 | [docs/production-pubsub-dlq-evidence.md](production-pubsub-dlq-evidence.md) | Production DLQ topic and deadLetterPolicy configured (maxDeliveryAttempts=5, 10s/60s backoff) |
+| [docs/dlq-malformed-message-validation-plan.md](dlq-malformed-message-validation-plan.md) | PLANNED -- DLQ malformed-message validation plan; defines a bounded one-message poison payload procedure to prove Pub/Sub retry and DLQ routing in a future execution branch; no malformed message published; no Cloud SQL start; no Terraform apply; DLQ malformed-message routing NOT YET PROVEN |
 | [docs/silver-refresh-scheduler-evidence.md](silver-refresh-scheduler-evidence.md) | Cloud Scheduler job configured and paused; service account and invoker role validated |
 | [docs/silver-refresh-scheduler-execution-proof-evidence.md](silver-refresh-scheduler-execution-proof-evidence.md) | Scheduler dispatched silver refresh job; execution succeeded; success metric confirmed |
 | [docs/silver-refresh-job-validation.md](silver-refresh-job-validation.md) | Cloud Run Job silver refresh execution validated |
