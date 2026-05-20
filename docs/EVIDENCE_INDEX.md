@@ -228,6 +228,7 @@ are verified across the evidence base:
 | --- | --- |
 | [docs/executive-platform-audit-after-50k.md](executive-platform-audit-after-50k.md) | EXECUTIVE AUDIT -- post-50k platform assessment; translates bounded 50,000-event Pub/Sub -> Cloud Run -> Cloud SQL evidence into recruitment/B2B positioning; includes proven evidence, remaining gaps, devil-advocate review, and next steps; Dataflow not implemented; sustained production throughput not claimed. |
 | [docs/recruiter-facing-platform-summary.md](recruiter-facing-platform-summary.md) | RECRUITER SUMMARY -- one-page hiring/B2B translation of the Real-Time Data Platform; explains the 50,000-event bounded GCP milestone, proven capabilities, safe interview positioning, best-fit roles, and explicit non-claims; Dataflow not implemented; sustained production throughput not claimed. |
+| [docs/latency-throughput-analysis-after-50k.md](latency-throughput-analysis-after-50k.md) | ANALYSIS -- latency and throughput analysis after 50,000-event bounded cloud load test; derives conservative publish rates from existing evidence, compares 10k vs 50k runs, explains Cloud Monitoring 50,002 DELTA alignment, and documents remaining latency/sustained-throughput gaps; no new events published; no Cloud SQL start; no p50/p95/p99 claim. |
 
 ---
 
