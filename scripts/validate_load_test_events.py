@@ -8,7 +8,7 @@ from pathlib import Path
 
 from rtdp_pubsub_worker import validate_event
 
-ALLOWED_SIZES = frozenset({100, 1000, 5000, 10000})
+ALLOWED_SIZES = frozenset({100, 1000, 5000, 10000, 50000})
 SYMBOLS = frozenset({"BTCUSDT", "ETHUSDT", "SOLUSDT"})
 _TIMESTAMP_RE = re.compile(r"^\d{14}$")
 
