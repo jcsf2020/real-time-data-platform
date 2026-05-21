@@ -46,6 +46,17 @@ def utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _diff_ms(start_iso: str | None, end_iso: str | None) -> float | None:
+    if start_iso is None or end_iso is None:
+        return None
+    try:
+        start = datetime.fromisoformat(start_iso)
+        end = datetime.fromisoformat(end_iso)
+        return round((end - start).total_seconds() * 1000, 3)
+    except Exception:
+        return None
+
+
 def emit_log(payload: dict) -> None:
     print(json.dumps(payload, sort_keys=True), flush=True)
 
@@ -78,17 +89,30 @@ def insert_bronze_event(event: MarketEvent, raw_payload: dict, database_url: str
 
 def process_message(data: bytes, database_url: str = DATABASE_URL) -> dict:
     """Process one Pub/Sub message. Returns status dict; never raises."""
+    worker_received_at = utc_now_iso()
     t0 = time.monotonic()
     event_id = None
     symbol = None
+    producer_created_at: str | None = None
+    worker_decoded_at: str | None = None
+    worker_validated_at: str | None = None
+    db_insert_started_at: str | None = None
+    db_insert_completed_at: str | None = None
+
     try:
         payload = decode_message(data)
+        worker_decoded_at = utc_now_iso()
+        producer_created_at = payload.get("producer_created_at")
         event = validate_event(payload)
+        worker_validated_at = utc_now_iso()
         event_id = event.event_id
         symbol = event.symbol
+        db_insert_started_at = utc_now_iso()
         insert_bronze_event(event, payload, database_url)
+        db_insert_completed_at = utc_now_iso()
     except Exception as exc:
-        emit_log({
+        worker_completed_at = utc_now_iso()
+        log_entry: dict = {
             "component": "pubsub-worker",
             "error_message": str(exc),
             "error_type": type(exc).__name__,
@@ -99,11 +123,30 @@ def process_message(data: bytes, database_url: str = DATABASE_URL) -> dict:
             "source_topic": SOURCE_TOPIC,
             "status": "error",
             "symbol": symbol,
-            "timestamp_utc": utc_now_iso(),
-        })
+            "timestamp_utc": worker_completed_at,
+            "worker_completed_at": worker_completed_at,
+            "worker_received_at": worker_received_at,
+        }
+        if worker_decoded_at is not None:
+            log_entry["worker_decoded_at"] = worker_decoded_at
+        if worker_validated_at is not None:
+            log_entry["worker_validated_at"] = worker_validated_at
+        if db_insert_started_at is not None:
+            log_entry["db_insert_started_at"] = db_insert_started_at
+        emit_log(log_entry)
         return {"status": "error", "error": str(exc)}
-    emit_log({
+
+    worker_completed_at = utc_now_iso()
+
+    validation_latency_ms = _diff_ms(worker_received_at, worker_validated_at)
+    db_write_latency_ms = _diff_ms(db_insert_started_at, db_insert_completed_at)
+    worker_processing_latency_ms = _diff_ms(worker_received_at, worker_completed_at)
+
+    log_entry = {
         "component": "pubsub-worker",
+        "db_insert_completed_at": db_insert_completed_at,
+        "db_insert_started_at": db_insert_started_at,
+        "db_write_latency_ms": db_write_latency_ms,
         "event_id": event_id,
         "operation": "process_message",
         "processing_time_ms": round((time.monotonic() - t0) * 1000, 3),
@@ -111,8 +154,21 @@ def process_message(data: bytes, database_url: str = DATABASE_URL) -> dict:
         "source_topic": SOURCE_TOPIC,
         "status": "ok",
         "symbol": symbol,
-        "timestamp_utc": utc_now_iso(),
-    })
+        "timestamp_utc": worker_completed_at,
+        "validation_latency_ms": validation_latency_ms,
+        "worker_completed_at": worker_completed_at,
+        "worker_decoded_at": worker_decoded_at,
+        "worker_processing_latency_ms": worker_processing_latency_ms,
+        "worker_received_at": worker_received_at,
+        "worker_validated_at": worker_validated_at,
+    }
+    if producer_created_at is not None:
+        log_entry["producer_created_at"] = producer_created_at
+        end_to_end_latency_ms = _diff_ms(producer_created_at, worker_completed_at)
+        if end_to_end_latency_ms is not None:
+            log_entry["end_to_end_latency_ms"] = end_to_end_latency_ms
+
+    emit_log(log_entry)
     return {"status": "ok", "event_id": event_id}
 
 

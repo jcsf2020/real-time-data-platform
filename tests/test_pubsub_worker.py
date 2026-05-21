@@ -228,6 +228,56 @@ def test_log_valid_message_emits_one_line(capsys):
     assert "timestamp_utc" in log
 
 
+def test_log_valid_message_includes_stage_timestamps(capsys):
+    mock_conn, _ = _mock_conn()
+    data = json.dumps(_make_payload()).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", return_value=mock_conn):
+        process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "ok"
+    assert "worker_received_at" in log
+    assert "worker_decoded_at" in log
+    assert "worker_validated_at" in log
+    assert "db_insert_started_at" in log
+    assert "db_insert_completed_at" in log
+    assert "worker_completed_at" in log
+    assert "worker_processing_latency_ms" in log
+    assert log["worker_processing_latency_ms"] >= 0
+    assert "validation_latency_ms" in log
+    assert log["validation_latency_ms"] >= 0
+    assert "db_write_latency_ms" in log
+    assert log["db_write_latency_ms"] >= 0
+
+
+def test_log_valid_message_with_producer_created_at_includes_end_to_end_latency(capsys):
+    mock_conn, _ = _mock_conn()
+    data = json.dumps(_make_payload(producer_created_at="2024-01-01T00:00:00+00:00")).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", return_value=mock_conn):
+        process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "ok"
+    assert "producer_created_at" in log
+    assert log["producer_created_at"] == "2024-01-01T00:00:00+00:00"
+    assert "end_to_end_latency_ms" in log
+    assert log["end_to_end_latency_ms"] >= 0
+
+
+def test_log_valid_message_without_producer_created_at_has_no_end_to_end_latency(capsys):
+    mock_conn, _ = _mock_conn()
+    data = json.dumps(_make_payload()).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", return_value=mock_conn):
+        process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert "end_to_end_latency_ms" not in log
+    assert "producer_created_at" not in log
+
+
 def test_log_invalid_json_emits_error_line(capsys):
     process_message(b"not-json", "postgresql://test")
 
@@ -237,6 +287,15 @@ def test_log_invalid_json_emits_error_line(capsys):
     assert log["service"] == "rtdp-pubsub-worker"
 
 
+def test_log_invalid_json_includes_received_and_completed_at(capsys):
+    process_message(b"not-json", "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "error"
+    assert "worker_received_at" in log
+    assert "worker_completed_at" in log
+
+
 def test_log_validation_failure_emits_error_line(capsys):
     data = json.dumps(_make_payload(price="-1")).encode("utf-8")
     process_message(data, "postgresql://test")
@@ -244,6 +303,17 @@ def test_log_validation_failure_emits_error_line(capsys):
     log = _capture_log(capsys)
     assert log["status"] == "error"
     assert "error_type" in log
+
+
+def test_log_validation_failure_includes_received_decoded_completed(capsys):
+    data = json.dumps(_make_payload(price="-1")).encode("utf-8")
+    process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "error"
+    assert "worker_received_at" in log
+    assert "worker_decoded_at" in log
+    assert "worker_completed_at" in log
 
 
 def test_log_db_failure_emits_error_line(capsys):
@@ -256,6 +326,18 @@ def test_log_db_failure_emits_error_line(capsys):
     assert log["status"] == "error"
     assert log["error_type"] == "Exception"
     assert "connection refused" in log["error_message"]
+
+
+def test_log_db_failure_includes_db_insert_started_and_worker_completed(capsys):
+    data = json.dumps(_make_payload()).encode("utf-8")
+
+    with patch("rtdp_pubsub_worker.psycopg.connect", side_effect=Exception("connection refused")):
+        process_message(data, "postgresql://test")
+
+    log = _capture_log(capsys)
+    assert log["status"] == "error"
+    assert "db_insert_started_at" in log
+    assert "worker_completed_at" in log
 
 
 def test_log_does_not_contain_raw_payload(capsys):
