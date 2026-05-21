@@ -1,0 +1,4102 @@
+[
+  {
+    "insertId": "6a0ec34a0003045514c3bc1f",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:14.198245+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:14.164608+00:00",
+      "db_write_latency_ms": 33.637,
+      "end_to_end_latency_ms": 822.406,
+      "event_id": "7ae13624-30af-482e-847f-f43bebadc673",
+      "operation": "process_message",
+      "processing_time_ms": 33.78,
+      "producer_created_at": "2026-05-21T08:33:13.375865+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:14.198271+00:00",
+      "validation_latency_ms": 0.098,
+      "worker_completed_at": "2026-05-21T08:33:14.198271+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:14.164534+00:00",
+      "worker_processing_latency_ms": 33.765,
+      "worker_received_at": "2026-05-21T08:33:14.164506+00:00",
+      "worker_validated_at": "2026-05-21T08:33:14.164604+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:14.297859312Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:14.197717Z"
+  },
+  {
+    "insertId": "6a0ec34900029c080622d831",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:13.171172+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:13.139532+00:00",
+      "db_write_latency_ms": 31.64,
+      "end_to_end_latency_ms": 851.066,
+      "event_id": "48028f61-c36b-4fbb-a7b7-8b4a91e2e3e7",
+      "operation": "process_message",
+      "processing_time_ms": 31.757,
+      "producer_created_at": "2026-05-21T08:33:12.320124+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:13.171190+00:00",
+      "validation_latency_ms": 0.089,
+      "worker_completed_at": "2026-05-21T08:33:13.171190+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:13.139468+00:00",
+      "worker_processing_latency_ms": 31.751,
+      "worker_received_at": "2026-05-21T08:33:13.139439+00:00",
+      "worker_validated_at": "2026-05-21T08:33:13.139528+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:13.296946632Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:13.171016Z"
+  },
+  {
+    "insertId": "6a0ec348000128af527ab05c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:12.075953+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:12.045010+00:00",
+      "db_write_latency_ms": 30.943,
+      "end_to_end_latency_ms": 798.263,
+      "event_id": "284d9368-d675-4ace-978a-b30268cc34cd",
+      "operation": "process_message",
+      "processing_time_ms": 31.074,
+      "producer_created_at": "2026-05-21T08:33:11.277706+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:12.075969+00:00",
+      "validation_latency_ms": 0.108,
+      "worker_completed_at": "2026-05-21T08:33:12.075969+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:12.044930+00:00",
+      "worker_processing_latency_ms": 31.071,
+      "worker_received_at": "2026-05-21T08:33:12.044898+00:00",
+      "worker_validated_at": "2026-05-21T08:33:12.045006+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:12.300628919Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:12.075951Z"
+  },
+  {
+    "insertId": "6a0ec3470000e601b81ad0c0",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:11.059125+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:11.028147+00:00",
+      "db_write_latency_ms": 30.978,
+      "end_to_end_latency_ms": 826.572,
+      "event_id": "e0d4b3b0-b7ca-4ed7-843a-171d325c4fbd",
+      "operation": "process_message",
+      "processing_time_ms": 31.094,
+      "producer_created_at": "2026-05-21T08:33:10.232564+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:11.059136+00:00",
+      "validation_latency_ms": 0.093,
+      "worker_completed_at": "2026-05-21T08:33:11.059136+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:11.028077+00:00",
+      "worker_processing_latency_ms": 31.086,
+      "worker_received_at": "2026-05-21T08:33:11.028050+00:00",
+      "worker_validated_at": "2026-05-21T08:33:11.028143+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:11.301101965Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:11.058881Z"
+  },
+  {
+    "insertId": "6a0ec3460000769c0472d87c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:10.030852+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:09.999670+00:00",
+      "db_write_latency_ms": 31.182,
+      "end_to_end_latency_ms": 870.272,
+      "event_id": "e6c763de-d423-4b69-9918-8b484f053b84",
+      "operation": "process_message",
+      "processing_time_ms": 31.317,
+      "producer_created_at": "2026-05-21T08:33:09.160606+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:10.030878+00:00",
+      "validation_latency_ms": 0.088,
+      "worker_completed_at": "2026-05-21T08:33:10.030878+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:09.999607+00:00",
+      "worker_processing_latency_ms": 31.3,
+      "worker_received_at": "2026-05-21T08:33:09.999578+00:00",
+      "worker_validated_at": "2026-05-21T08:33:09.999666+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:10.299371689Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:10.030364Z"
+  },
+  {
+    "insertId": "6a0ec344000e4eeea64aeb6d",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:08.937800+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:08.901916+00:00",
+      "db_write_latency_ms": 35.884,
+      "end_to_end_latency_ms": 817.387,
+      "event_id": "30db1c6a-7eb8-48ea-8ed5-4d9a3a201748",
+      "operation": "process_message",
+      "processing_time_ms": 35.998,
+      "producer_created_at": "2026-05-21T08:33:08.120430+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:08.937817+00:00",
+      "validation_latency_ms": 0.085,
+      "worker_completed_at": "2026-05-21T08:33:08.937817+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:08.901854+00:00",
+      "worker_processing_latency_ms": 35.99,
+      "worker_received_at": "2026-05-21T08:33:08.901827+00:00",
+      "worker_validated_at": "2026-05-21T08:33:08.901912+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:08.969385836Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:08.937710Z"
+  },
+  {
+    "insertId": "6a0ec343000da95c1ce37de8",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:07.896289+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:07.864403+00:00",
+      "db_write_latency_ms": 31.886,
+      "end_to_end_latency_ms": 801.79,
+      "event_id": "15918649-417a-4151-bcf1-757e54bdb459",
+      "operation": "process_message",
+      "processing_time_ms": 32.05,
+      "producer_created_at": "2026-05-21T08:33:07.094523+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:07.896313+00:00",
+      "validation_latency_ms": 0.104,
+      "worker_completed_at": "2026-05-21T08:33:07.896313+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:07.864328+00:00",
+      "worker_processing_latency_ms": 32.018,
+      "worker_received_at": "2026-05-21T08:33:07.864295+00:00",
+      "worker_validated_at": "2026-05-21T08:33:07.864399+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:07.970329972Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:07.895324Z"
+  },
+  {
+    "insertId": "6a0ec342000d6f5c5b1dd021",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:06.881939+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:06.846610+00:00",
+      "db_write_latency_ms": 35.329,
+      "end_to_end_latency_ms": 843.037,
+      "event_id": "9e36d3b6-1f84-430b-884e-b22975d1ba47",
+      "operation": "process_message",
+      "processing_time_ms": 35.476,
+      "producer_created_at": "2026-05-21T08:33:06.038930+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:06.881967+00:00",
+      "validation_latency_ms": 0.1,
+      "worker_completed_at": "2026-05-21T08:33:06.881967+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:06.846535+00:00",
+      "worker_processing_latency_ms": 35.462,
+      "worker_received_at": "2026-05-21T08:33:06.846505+00:00",
+      "worker_validated_at": "2026-05-21T08:33:06.846605+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:06.971418216Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:06.880476Z"
+  },
+  {
+    "insertId": "6a0ec341000ca18257f680be",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:05.828787+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:05.796567+00:00",
+      "db_write_latency_ms": 32.22,
+      "end_to_end_latency_ms": 858.797,
+      "event_id": "e8948317-0456-48b8-bb31-eff30ba141cb",
+      "operation": "process_message",
+      "processing_time_ms": 32.443,
+      "producer_created_at": "2026-05-21T08:33:04.970020+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:05.828817+00:00",
+      "validation_latency_ms": 0.154,
+      "worker_completed_at": "2026-05-21T08:33:05.828817+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:05.796438+00:00",
+      "worker_processing_latency_ms": 32.411,
+      "worker_received_at": "2026-05-21T08:33:05.796406+00:00",
+      "worker_validated_at": "2026-05-21T08:33:05.796560+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:05.971036055Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:05.827778Z"
+  },
+  {
+    "insertId": "6a0ec340000b530323043066",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:04.742261+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:04.711086+00:00",
+      "db_write_latency_ms": 31.175,
+      "end_to_end_latency_ms": 816.225,
+      "event_id": "f66a4af6-a3b9-41ad-9397-f425d7d9c537",
+      "operation": "process_message",
+      "processing_time_ms": 31.313,
+      "producer_created_at": "2026-05-21T08:33:03.926060+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:04.742285+00:00",
+      "validation_latency_ms": 0.099,
+      "worker_completed_at": "2026-05-21T08:33:04.742285+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:04.711014+00:00",
+      "worker_processing_latency_ms": 31.302,
+      "worker_received_at": "2026-05-21T08:33:04.710983+00:00",
+      "worker_validated_at": "2026-05-21T08:33:04.711082+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:04.973537550Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:04.742147Z"
+  },
+  {
+    "insertId": "6a0ec33f000ae5e26bf81d8c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:03.714832+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:03.683246+00:00",
+      "db_write_latency_ms": 31.586,
+      "end_to_end_latency_ms": 830.857,
+      "event_id": "07c9a244-1608-4bba-88d0-16643fac36d7",
+      "operation": "process_message",
+      "processing_time_ms": 31.748,
+      "producer_created_at": "2026-05-21T08:33:02.884003+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:03.714860+00:00",
+      "validation_latency_ms": 0.091,
+      "worker_completed_at": "2026-05-21T08:33:03.714860+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:03.683180+00:00",
+      "worker_processing_latency_ms": 31.708,
+      "worker_received_at": "2026-05-21T08:33:03.683152+00:00",
+      "worker_validated_at": "2026-05-21T08:33:03.683243+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:03.975469234Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:03.714210Z"
+  },
+  {
+    "insertId": "6a0ec33e000a50514776f11c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:02.675981+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:02.644894+00:00",
+      "db_write_latency_ms": 31.087,
+      "end_to_end_latency_ms": 844.533,
+      "event_id": "14a2c76e-c17b-4572-a93e-6a382d08acad",
+      "operation": "process_message",
+      "processing_time_ms": 31.247,
+      "producer_created_at": "2026-05-21T08:33:01.831493+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:02.676026+00:00",
+      "validation_latency_ms": 0.095,
+      "worker_completed_at": "2026-05-21T08:33:02.676026+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:02.644825+00:00",
+      "worker_processing_latency_ms": 31.232,
+      "worker_received_at": "2026-05-21T08:33:02.644794+00:00",
+      "worker_validated_at": "2026-05-21T08:33:02.644889+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:02.972202794Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:02.675921Z"
+  },
+  {
+    "insertId": "6a0ec33d0009499d2c55d73c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:01.609008+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:01.576335+00:00",
+      "db_write_latency_ms": 32.673,
+      "end_to_end_latency_ms": 816.84,
+      "event_id": "9ae89862-8931-47ec-9990-eae6970c20b9",
+      "operation": "process_message",
+      "processing_time_ms": 32.81,
+      "producer_created_at": "2026-05-21T08:33:00.792196+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:01.609036+00:00",
+      "validation_latency_ms": 0.089,
+      "worker_completed_at": "2026-05-21T08:33:01.609036+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:01.576271+00:00",
+      "worker_processing_latency_ms": 32.793,
+      "worker_received_at": "2026-05-21T08:33:01.576243+00:00",
+      "worker_validated_at": "2026-05-21T08:33:01.576332+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:01.640332725Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:01.608669Z"
+  },
+  {
+    "insertId": "6a0ec33c0008ad5a32f261fa",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:33:00.569728+00:00",
+      "db_insert_started_at": "2026-05-21T08:33:00.537554+00:00",
+      "db_write_latency_ms": 32.174,
+      "end_to_end_latency_ms": 841.587,
+      "event_id": "bbfaa387-7430-4503-a1a8-463ba288ab4f",
+      "operation": "process_message",
+      "processing_time_ms": 32.326,
+      "producer_created_at": "2026-05-21T08:32:59.728178+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:33:00.569765+00:00",
+      "validation_latency_ms": 0.097,
+      "worker_completed_at": "2026-05-21T08:33:00.569765+00:00",
+      "worker_decoded_at": "2026-05-21T08:33:00.537484+00:00",
+      "worker_processing_latency_ms": 32.312,
+      "worker_received_at": "2026-05-21T08:33:00.537453+00:00",
+      "worker_validated_at": "2026-05-21T08:33:00.537550+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:33:00.642153829Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:33:00.568666Z"
+  },
+  {
+    "insertId": "6a0ec33b0007bf6ffaa7c170",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:59.508157+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:59.475805+00:00",
+      "db_write_latency_ms": 32.352,
+      "end_to_end_latency_ms": 790.15,
+      "event_id": "c89866c0-9299-4daf-b3b7-5e21e293a97e",
+      "operation": "process_message",
+      "processing_time_ms": 32.486,
+      "producer_created_at": "2026-05-21T08:32:58.718028+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:59.508178+00:00",
+      "validation_latency_ms": 0.101,
+      "worker_completed_at": "2026-05-21T08:32:59.508178+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:59.475731+00:00",
+      "worker_processing_latency_ms": 32.478,
+      "worker_received_at": "2026-05-21T08:32:59.475700+00:00",
+      "worker_validated_at": "2026-05-21T08:32:59.475801+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:59.642950502Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:59.507759Z"
+  },
+  {
+    "insertId": "6a0ec33a0007908dd0bd9c7d",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:58.496543+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:58.464752+00:00",
+      "db_write_latency_ms": 31.791,
+      "end_to_end_latency_ms": 904.035,
+      "event_id": "47f9a6c3-b1f5-43cc-8b6e-1f1b63b7e70b",
+      "operation": "process_message",
+      "processing_time_ms": 31.942,
+      "producer_created_at": "2026-05-21T08:32:57.592532+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:58.496567+00:00",
+      "validation_latency_ms": 0.088,
+      "worker_completed_at": "2026-05-21T08:32:58.496567+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:58.464687+00:00",
+      "worker_processing_latency_ms": 31.907,
+      "worker_received_at": "2026-05-21T08:32:58.464660+00:00",
+      "worker_validated_at": "2026-05-21T08:32:58.464748+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:58.643564825Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:58.495757Z"
+  },
+  {
+    "insertId": "6a0ec3390005dd88c61d924c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:57.385375+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:57.354623+00:00",
+      "db_write_latency_ms": 30.752,
+      "end_to_end_latency_ms": 785.711,
+      "event_id": "b169d9b5-8e79-43be-9e3a-80655523b26b",
+      "operation": "process_message",
+      "processing_time_ms": 30.89,
+      "producer_created_at": "2026-05-21T08:32:56.599690+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:57.385401+00:00",
+      "validation_latency_ms": 0.094,
+      "worker_completed_at": "2026-05-21T08:32:57.385401+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:57.354556+00:00",
+      "worker_processing_latency_ms": 30.876,
+      "worker_received_at": "2026-05-21T08:32:57.354525+00:00",
+      "worker_validated_at": "2026-05-21T08:32:57.354619+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:57.646266223Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:57.384392Z"
+  },
+  {
+    "insertId": "6a0ec3380005b1d915d9be71",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:56.373719+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:56.337252+00:00",
+      "db_write_latency_ms": 36.467,
+      "end_to_end_latency_ms": 828.034,
+      "event_id": "826487cb-b407-4baf-b889-0908da614286",
+      "operation": "process_message",
+      "processing_time_ms": 36.587,
+      "producer_created_at": "2026-05-21T08:32:55.545697+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:56.373731+00:00",
+      "validation_latency_ms": 0.097,
+      "worker_completed_at": "2026-05-21T08:32:56.373731+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:56.337182+00:00",
+      "worker_processing_latency_ms": 36.58,
+      "worker_received_at": "2026-05-21T08:32:56.337151+00:00",
+      "worker_validated_at": "2026-05-21T08:32:56.337248+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:56.645101568Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:56.373209Z"
+  },
+  {
+    "insertId": "6a0ec337000544ec579fa107",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:55.345570+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:55.311891+00:00",
+      "db_write_latency_ms": 33.679,
+      "end_to_end_latency_ms": 840.673,
+      "event_id": "de2f94a3-df7a-4dbc-9c7a-1e33a4af0ad0",
+      "operation": "process_message",
+      "processing_time_ms": 33.847,
+      "producer_created_at": "2026-05-21T08:32:54.504924+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:55.345597+00:00",
+      "validation_latency_ms": 0.102,
+      "worker_completed_at": "2026-05-21T08:32:55.345597+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:55.311813+00:00",
+      "worker_processing_latency_ms": 33.813,
+      "worker_received_at": "2026-05-21T08:32:55.311784+00:00",
+      "worker_validated_at": "2026-05-21T08:32:55.311886+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:55.646798615Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:55.345324Z"
+  },
+  {
+    "insertId": "6a0ec33600050653d00150b9",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:54.329395+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:54.299012+00:00",
+      "db_write_latency_ms": 30.383,
+      "end_to_end_latency_ms": 889.663,
+      "event_id": "93e344aa-e96b-461d-8336-bba646a3a2bf",
+      "operation": "process_message",
+      "processing_time_ms": 30.499,
+      "producer_created_at": "2026-05-21T08:32:53.439743+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:54.329406+00:00",
+      "validation_latency_ms": 0.097,
+      "worker_completed_at": "2026-05-21T08:32:54.329406+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:54.298940+00:00",
+      "worker_processing_latency_ms": 30.496,
+      "worker_received_at": "2026-05-21T08:32:54.298910+00:00",
+      "worker_validated_at": "2026-05-21T08:32:54.299007+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:54.648341326Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:54.329299Z"
+  },
+  {
+    "insertId": "6a0ec335000363e0f910739b",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:53.222726+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:53.190241+00:00",
+      "db_write_latency_ms": 32.485,
+      "end_to_end_latency_ms": 819.903,
+      "event_id": "87bdae00-face-4179-9741-25e3b9d7679b",
+      "operation": "process_message",
+      "processing_time_ms": 32.602,
+      "producer_created_at": "2026-05-21T08:32:52.402833+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:53.222736+00:00",
+      "validation_latency_ms": 0.092,
+      "worker_completed_at": "2026-05-21T08:32:53.222736+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:53.190174+00:00",
+      "worker_processing_latency_ms": 32.591,
+      "worker_received_at": "2026-05-21T08:32:53.190145+00:00",
+      "worker_validated_at": "2026-05-21T08:32:53.190237+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:53.317125145Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:53.222176Z"
+  },
+  {
+    "insertId": "6a0ec33400029058e45b39b8",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:52.168871+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:52.138206+00:00",
+      "db_write_latency_ms": 30.665,
+      "end_to_end_latency_ms": 814.773,
+      "event_id": "31e8bad5-9804-41c8-b84c-daa19363788a",
+      "operation": "process_message",
+      "processing_time_ms": 30.79,
+      "producer_created_at": "2026-05-21T08:32:51.354116+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:52.168889+00:00",
+      "validation_latency_ms": 0.087,
+      "worker_completed_at": "2026-05-21T08:32:52.168889+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:52.138144+00:00",
+      "worker_processing_latency_ms": 30.774,
+      "worker_received_at": "2026-05-21T08:32:52.138115+00:00",
+      "worker_validated_at": "2026-05-21T08:32:52.138202+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:52.317085853Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:52.168024Z"
+  },
+  {
+    "insertId": "6a0ec33300021ccdcc6f4091",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:51.139391+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:51.106983+00:00",
+      "db_write_latency_ms": 32.408,
+      "end_to_end_latency_ms": 839.874,
+      "event_id": "a78a57e2-5920-432a-8842-3b2a83a3d6c7",
+      "operation": "process_message",
+      "processing_time_ms": 32.548,
+      "producer_created_at": "2026-05-21T08:32:50.299543+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:51.139417+00:00",
+      "validation_latency_ms": 0.094,
+      "worker_completed_at": "2026-05-21T08:32:51.139417+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:51.106913+00:00",
+      "worker_processing_latency_ms": 32.533,
+      "worker_received_at": "2026-05-21T08:32:51.106884+00:00",
+      "worker_validated_at": "2026-05-21T08:32:51.106978+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:51.316272851Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:51.138445Z"
+  },
+  {
+    "insertId": "6a0ec33200010f383b29c576",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:50.069713+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:50.037879+00:00",
+      "db_write_latency_ms": 31.834,
+      "end_to_end_latency_ms": 829.282,
+      "event_id": "765de034-caa5-419d-8ef1-822dba4f5113",
+      "operation": "process_message",
+      "processing_time_ms": 32,
+      "producer_created_at": "2026-05-21T08:32:49.240487+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:50.069769+00:00",
+      "validation_latency_ms": 0.095,
+      "worker_completed_at": "2026-05-21T08:32:50.069769+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:50.037811+00:00",
+      "worker_processing_latency_ms": 31.988,
+      "worker_received_at": "2026-05-21T08:32:50.037781+00:00",
+      "worker_validated_at": "2026-05-21T08:32:50.037876+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:50.317579038Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:50.069432Z"
+  },
+  {
+    "insertId": "6a0ec3310000f03084cfaf57",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:49.061905+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:49.022890+00:00",
+      "db_write_latency_ms": 39.015,
+      "end_to_end_latency_ms": 878.493,
+      "event_id": "540501cd-8fc9-42e9-afca-fe2856c559d2",
+      "operation": "process_message",
+      "processing_time_ms": 39.144,
+      "producer_created_at": "2026-05-21T08:32:48.183438+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:49.061931+00:00",
+      "validation_latency_ms": 0.086,
+      "worker_completed_at": "2026-05-21T08:32:49.061931+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:49.022829+00:00",
+      "worker_processing_latency_ms": 39.131,
+      "worker_received_at": "2026-05-21T08:32:49.022800+00:00",
+      "worker_validated_at": "2026-05-21T08:32:49.022886+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:49.319386603Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:49.061488Z"
+  },
+  {
+    "insertId": "6a0ec32f000e861155a7bb63",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:47.952285+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:47.920407+00:00",
+      "db_write_latency_ms": 31.878,
+      "end_to_end_latency_ms": 768.198,
+      "event_id": "60fa6d69-3f3f-4a9f-8b99-3bc5a6cce6c7",
+      "operation": "process_message",
+      "processing_time_ms": 32.021,
+      "producer_created_at": "2026-05-21T08:32:47.184116+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:47.952314+00:00",
+      "validation_latency_ms": 0.101,
+      "worker_completed_at": "2026-05-21T08:32:47.952314+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:47.920334+00:00",
+      "worker_processing_latency_ms": 32.012,
+      "worker_received_at": "2026-05-21T08:32:47.920302+00:00",
+      "worker_validated_at": "2026-05-21T08:32:47.920403+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:47.986962890Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:47.951825Z"
+  },
+  {
+    "insertId": "6a0ec32e000f27369b7c9745",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:46.993647+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:46.958812+00:00",
+      "db_write_latency_ms": 34.835,
+      "end_to_end_latency_ms": 889.919,
+      "event_id": "c3097b8a-0491-417a-a06d-a0204d807604",
+      "operation": "process_message",
+      "processing_time_ms": 34.971,
+      "producer_created_at": "2026-05-21T08:32:46.103752+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:46.993671+00:00",
+      "validation_latency_ms": 0.089,
+      "worker_completed_at": "2026-05-21T08:32:46.993671+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:46.958740+00:00",
+      "worker_processing_latency_ms": 34.958,
+      "worker_received_at": "2026-05-21T08:32:46.958713+00:00",
+      "worker_validated_at": "2026-05-21T08:32:46.958802+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:47.321862537Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:46.993078Z"
+  },
+  {
+    "insertId": "6a0ec32d000d37a3d6ed1c95",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:45.866341+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:45.832576+00:00",
+      "db_write_latency_ms": 33.765,
+      "end_to_end_latency_ms": 784.502,
+      "event_id": "db754b98-4c0f-4674-a244-f988289ce9c0",
+      "operation": "process_message",
+      "processing_time_ms": 33.916,
+      "producer_created_at": "2026-05-21T08:32:45.081864+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:45.866366+00:00",
+      "validation_latency_ms": 0.108,
+      "worker_completed_at": "2026-05-21T08:32:45.866366+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:45.832495+00:00",
+      "worker_processing_latency_ms": 33.902,
+      "worker_received_at": "2026-05-21T08:32:45.832464+00:00",
+      "worker_validated_at": "2026-05-21T08:32:45.832572+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:45.993840482Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:45.866211Z"
+  },
+  {
+    "insertId": "6a0ec32c000d7e7331c45941",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:44.884876+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:44.831008+00:00",
+      "db_write_latency_ms": 53.868,
+      "end_to_end_latency_ms": 877.556,
+      "event_id": "4372737e-02e2-4cb9-9968-c278343b6fa5",
+      "operation": "process_message",
+      "processing_time_ms": 53.989,
+      "producer_created_at": "2026-05-21T08:32:44.007339+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:44.884895+00:00",
+      "validation_latency_ms": 0.092,
+      "worker_completed_at": "2026-05-21T08:32:44.884895+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:44.830942+00:00",
+      "worker_processing_latency_ms": 53.983,
+      "worker_received_at": "2026-05-21T08:32:44.830912+00:00",
+      "worker_validated_at": "2026-05-21T08:32:44.831004+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:44.991090874Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:44.884339Z"
+  },
+  {
+    "insertId": "6a0ec32b000c90ffbeaef073",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:43.824410+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:43.792448+00:00",
+      "db_write_latency_ms": 31.962,
+      "end_to_end_latency_ms": 878.524,
+      "event_id": "0e67c36a-d70a-4f3c-8813-d65216abaa56",
+      "operation": "process_message",
+      "processing_time_ms": 32.093,
+      "producer_created_at": "2026-05-21T08:32:42.945909+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:43.824433+00:00",
+      "validation_latency_ms": 0.088,
+      "worker_completed_at": "2026-05-21T08:32:43.824433+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:43.792384+00:00",
+      "worker_processing_latency_ms": 32.077,
+      "worker_received_at": "2026-05-21T08:32:43.792356+00:00",
+      "worker_validated_at": "2026-05-21T08:32:43.792444+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:43.991745138Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:43.823551Z"
+  },
+  {
+    "insertId": "6a0ec32a000b35eb093adc0c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:42.735755+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:42.704263+00:00",
+      "db_write_latency_ms": 31.492,
+      "end_to_end_latency_ms": 827.43,
+      "event_id": "16a6769a-1748-4eb7-a409-a14d95351920",
+      "operation": "process_message",
+      "processing_time_ms": 31.603,
+      "producer_created_at": "2026-05-21T08:32:41.908338+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:42.735768+00:00",
+      "validation_latency_ms": 0.086,
+      "worker_completed_at": "2026-05-21T08:32:42.735768+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:42.704200+00:00",
+      "worker_processing_latency_ms": 31.595,
+      "worker_received_at": "2026-05-21T08:32:42.704173+00:00",
+      "worker_validated_at": "2026-05-21T08:32:42.704259+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:42.993255666Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:42.734699Z"
+  },
+  {
+    "insertId": "6a0ec329000ad4bc80de5ebd",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:41.710483+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:41.680064+00:00",
+      "db_write_latency_ms": 30.419,
+      "end_to_end_latency_ms": 856.436,
+      "event_id": "a50fe037-3402-464d-9f8c-5668a0783ae5",
+      "operation": "process_message",
+      "processing_time_ms": 30.551,
+      "producer_created_at": "2026-05-21T08:32:40.854064+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:41.710500+00:00",
+      "validation_latency_ms": 0.111,
+      "worker_completed_at": "2026-05-21T08:32:41.710500+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:41.679983+00:00",
+      "worker_processing_latency_ms": 30.551,
+      "worker_received_at": "2026-05-21T08:32:41.679949+00:00",
+      "worker_validated_at": "2026-05-21T08:32:41.680060+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:41.994203997Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:41.709820Z"
+  },
+  {
+    "insertId": "6a0ec3280009bedcf3a17404",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:40.639916+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:40.606018+00:00",
+      "db_write_latency_ms": 33.898,
+      "end_to_end_latency_ms": 820.141,
+      "event_id": "25c050b3-5b85-4e72-be8e-8e588dd5ffa5",
+      "operation": "process_message",
+      "processing_time_ms": 34.033,
+      "producer_created_at": "2026-05-21T08:32:39.819801+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:40.639942+00:00",
+      "validation_latency_ms": 0.085,
+      "worker_completed_at": "2026-05-21T08:32:40.639942+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:40.605955+00:00",
+      "worker_processing_latency_ms": 34.013,
+      "worker_received_at": "2026-05-21T08:32:40.605929+00:00",
+      "worker_validated_at": "2026-05-21T08:32:40.606014+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:40.663431630Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:40.638684Z"
+  },
+  {
+    "insertId": "6a0ec327000913e3541a50e9",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:39.595377+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:39.563495+00:00",
+      "db_write_latency_ms": 31.882,
+      "end_to_end_latency_ms": 828.484,
+      "event_id": "9e3a686f-2f5c-4431-a380-a783ae371ae1",
+      "operation": "process_message",
+      "processing_time_ms": 32.03,
+      "producer_created_at": "2026-05-21T08:32:38.766904+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:39.595388+00:00",
+      "validation_latency_ms": 0.127,
+      "worker_completed_at": "2026-05-21T08:32:39.595388+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:39.563415+00:00",
+      "worker_processing_latency_ms": 32.025,
+      "worker_received_at": "2026-05-21T08:32:39.563363+00:00",
+      "worker_validated_at": "2026-05-21T08:32:39.563490+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:39.659793260Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:39.594915Z"
+  },
+  {
+    "insertId": "6a0ec32600086d7e752412ec",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:38.552775+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:38.509108+00:00",
+      "db_write_latency_ms": 43.667,
+      "end_to_end_latency_ms": 868.16,
+      "event_id": "c8c594e3-2e00-40ac-b391-7c63aff27036",
+      "operation": "process_message",
+      "processing_time_ms": 43.805,
+      "producer_created_at": "2026-05-21T08:32:37.684637+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:38.552797+00:00",
+      "validation_latency_ms": 0.101,
+      "worker_completed_at": "2026-05-21T08:32:38.552797+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:38.509031+00:00",
+      "worker_processing_latency_ms": 43.795,
+      "worker_received_at": "2026-05-21T08:32:38.509002+00:00",
+      "worker_validated_at": "2026-05-21T08:32:38.509103+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:38.661077399Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:38.552318Z"
+  },
+  {
+    "insertId": "6a0ec3250007808bf0edc311",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:37.492484+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:37.459936+00:00",
+      "db_write_latency_ms": 32.548,
+      "end_to_end_latency_ms": 824.154,
+      "event_id": "5575b937-dd95-42f0-973f-41497002ec43",
+      "operation": "process_message",
+      "processing_time_ms": 32.732,
+      "producer_created_at": "2026-05-21T08:32:36.668397+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:37.492551+00:00",
+      "validation_latency_ms": 0.092,
+      "worker_completed_at": "2026-05-21T08:32:37.492551+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:37.459868+00:00",
+      "worker_processing_latency_ms": 32.711,
+      "worker_received_at": "2026-05-21T08:32:37.459840+00:00",
+      "worker_validated_at": "2026-05-21T08:32:37.459932+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:37.663986231Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:37.491659Z"
+  },
+  {
+    "insertId": "6a0ec3240006bbd19b71ebdf",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:36.442896+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:36.409778+00:00",
+      "db_write_latency_ms": 33.118,
+      "end_to_end_latency_ms": 823.991,
+      "event_id": "b0bc9ab6-8dc9-414b-864e-61d7824da937",
+      "operation": "process_message",
+      "processing_time_ms": 33.272,
+      "producer_created_at": "2026-05-21T08:32:35.618928+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:36.442919+00:00",
+      "validation_latency_ms": 0.116,
+      "worker_completed_at": "2026-05-21T08:32:36.442919+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:36.409704+00:00",
+      "worker_processing_latency_ms": 33.261,
+      "worker_received_at": "2026-05-21T08:32:36.409658+00:00",
+      "worker_validated_at": "2026-05-21T08:32:36.409774+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:36.663737798Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:36.441297Z"
+  },
+  {
+    "insertId": "6a0ec3230005fb7a2a11c599",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:35.393250+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:35.360350+00:00",
+      "db_write_latency_ms": 32.9,
+      "end_to_end_latency_ms": 810.617,
+      "event_id": "34e8b4b1-7424-4c63-ada3-3d08b6b74db9",
+      "operation": "process_message",
+      "processing_time_ms": 33.031,
+      "producer_created_at": "2026-05-21T08:32:34.582652+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:35.393269+00:00",
+      "validation_latency_ms": 0.104,
+      "worker_completed_at": "2026-05-21T08:32:35.393269+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:35.360274+00:00",
+      "worker_processing_latency_ms": 33.027,
+      "worker_received_at": "2026-05-21T08:32:35.360242+00:00",
+      "worker_validated_at": "2026-05-21T08:32:35.360346+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:35.672992837Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:35.392058Z"
+  },
+  {
+    "insertId": "6a0ec32200059e12d47ef5bc",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:34.369381+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:34.336925+00:00",
+      "db_write_latency_ms": 32.456,
+      "end_to_end_latency_ms": 844.734,
+      "event_id": "6c5dba9c-961a-4f19-aeae-5e71b69f11b8",
+      "operation": "process_message",
+      "processing_time_ms": 32.564,
+      "producer_created_at": "2026-05-21T08:32:33.524658+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:34.369392+00:00",
+      "validation_latency_ms": 0.085,
+      "worker_completed_at": "2026-05-21T08:32:34.369392+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:34.336864+00:00",
+      "worker_processing_latency_ms": 32.556,
+      "worker_received_at": "2026-05-21T08:32:34.336836+00:00",
+      "worker_validated_at": "2026-05-21T08:32:34.336921+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:34.666028513Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:34.368146Z"
+  },
+  {
+    "insertId": "6a0ec3210004921bd884e5ab",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:33.300881+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:33.267161+00:00",
+      "db_write_latency_ms": 33.72,
+      "end_to_end_latency_ms": 793.22,
+      "event_id": "6aefc4c8-c28d-4fc2-91ad-e219c39324a3",
+      "operation": "process_message",
+      "processing_time_ms": 33.867,
+      "producer_created_at": "2026-05-21T08:32:32.507693+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:33.300913+00:00",
+      "validation_latency_ms": 0.094,
+      "worker_completed_at": "2026-05-21T08:32:33.300913+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:33.267093+00:00",
+      "worker_processing_latency_ms": 33.849,
+      "worker_received_at": "2026-05-21T08:32:33.267064+00:00",
+      "worker_validated_at": "2026-05-21T08:32:33.267158+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:33.333861828Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:33.299547Z"
+  },
+  {
+    "insertId": "6a0ec320000573b80a4e74e4",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:32.358666+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:32.326172+00:00",
+      "db_write_latency_ms": 32.494,
+      "end_to_end_latency_ms": 908.304,
+      "event_id": "52fc2c6f-a106-4634-b3f3-ec5ba3db12d2",
+      "operation": "process_message",
+      "processing_time_ms": 32.623,
+      "producer_created_at": "2026-05-21T08:32:31.450385+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:32.358689+00:00",
+      "validation_latency_ms": 0.089,
+      "worker_completed_at": "2026-05-21T08:32:32.358689+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:32.326109+00:00",
+      "worker_processing_latency_ms": 32.609,
+      "worker_received_at": "2026-05-21T08:32:32.326080+00:00",
+      "worker_validated_at": "2026-05-21T08:32:32.326169+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:32.668493829Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:32.357304Z"
+  },
+  {
+    "insertId": "6a0ec31f0003c883971cd64c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:31.248754+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:31.217847+00:00",
+      "db_write_latency_ms": 30.907,
+      "end_to_end_latency_ms": 867.274,
+      "event_id": "e96efc7f-7e16-4938-abc4-bd9675b590ad",
+      "operation": "process_message",
+      "processing_time_ms": 31.047,
+      "producer_created_at": "2026-05-21T08:32:30.381505+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:31.248779+00:00",
+      "validation_latency_ms": 0.106,
+      "worker_completed_at": "2026-05-21T08:32:31.248779+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:31.217773+00:00",
+      "worker_processing_latency_ms": 31.042,
+      "worker_received_at": "2026-05-21T08:32:31.217737+00:00",
+      "worker_validated_at": "2026-05-21T08:32:31.217843+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:31.334587453Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:31.247939Z"
+  },
+  {
+    "insertId": "6a0ec31e0002e0127766076d",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:30.188508+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:30.157821+00:00",
+      "db_write_latency_ms": 30.687,
+      "end_to_end_latency_ms": 859.859,
+      "event_id": "d23ba298-0cf3-48aa-abcc-ebd3d72b896a",
+      "operation": "process_message",
+      "processing_time_ms": 30.831,
+      "producer_created_at": "2026-05-21T08:32:29.328673+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:30.188532+00:00",
+      "validation_latency_ms": 0.104,
+      "worker_completed_at": "2026-05-21T08:32:30.188532+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:30.157743+00:00",
+      "worker_processing_latency_ms": 30.819,
+      "worker_received_at": "2026-05-21T08:32:30.157713+00:00",
+      "worker_validated_at": "2026-05-21T08:32:30.157817+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:30.335046207Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:30.188434Z"
+  },
+  {
+    "insertId": "6a0ec31d0001e7ac7325dd1b",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:29.125379+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:29.091421+00:00",
+      "db_write_latency_ms": 33.958,
+      "end_to_end_latency_ms": 838.489,
+      "event_id": "1e9588af-ffcb-4530-9b13-19c7b71cf56c",
+      "operation": "process_message",
+      "processing_time_ms": 34.096,
+      "producer_created_at": "2026-05-21T08:32:28.286915+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:29.125404+00:00",
+      "validation_latency_ms": 0.097,
+      "worker_completed_at": "2026-05-21T08:32:29.125404+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:29.091351+00:00",
+      "worker_processing_latency_ms": 34.084,
+      "worker_received_at": "2026-05-21T08:32:29.091320+00:00",
+      "worker_validated_at": "2026-05-21T08:32:29.091417+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:29.338513739Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:29.124844Z"
+  },
+  {
+    "insertId": "6a0ec31c0000b709db413d36",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:28.047473+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:28.013679+00:00",
+      "db_write_latency_ms": 33.794,
+      "end_to_end_latency_ms": 820.095,
+      "event_id": "693c0379-7e80-4899-b121-563a1be6572c",
+      "operation": "process_message",
+      "processing_time_ms": 33.933,
+      "producer_created_at": "2026-05-21T08:32:27.227402+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:28.047497+00:00",
+      "validation_latency_ms": 0.102,
+      "worker_completed_at": "2026-05-21T08:32:28.047497+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:28.013605+00:00",
+      "worker_processing_latency_ms": 33.924,
+      "worker_received_at": "2026-05-21T08:32:28.013573+00:00",
+      "worker_validated_at": "2026-05-21T08:32:28.013675+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:28.338252204Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:28.046857Z"
+  },
+  {
+    "insertId": "6a0ec31b000094e46b983b26",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:27.038314+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:27.006125+00:00",
+      "db_write_latency_ms": 32.189,
+      "end_to_end_latency_ms": 851.351,
+      "event_id": "b7915fdf-f54a-4aac-a28a-5615f14d8e86",
+      "operation": "process_message",
+      "processing_time_ms": 32.338,
+      "producer_created_at": "2026-05-21T08:32:26.186989+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:27.038340+00:00",
+      "validation_latency_ms": 0.107,
+      "worker_completed_at": "2026-05-21T08:32:27.038340+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:27.006049+00:00",
+      "worker_processing_latency_ms": 32.326,
+      "worker_received_at": "2026-05-21T08:32:27.006014+00:00",
+      "worker_validated_at": "2026-05-21T08:32:27.006121+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:27.339778087Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:27.038116Z"
+  },
+  {
+    "insertId": "6a0ec319000ece3e9602a506",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:25.970535+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:25.938322+00:00",
+      "db_write_latency_ms": 32.213,
+      "end_to_end_latency_ms": 836.394,
+      "event_id": "1eeb29e0-12ff-4b14-a72c-9e130998a7a0",
+      "operation": "process_message",
+      "processing_time_ms": 32.336,
+      "producer_created_at": "2026-05-21T08:32:25.134151+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:25.970545+00:00",
+      "validation_latency_ms": 0.101,
+      "worker_completed_at": "2026-05-21T08:32:25.970545+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:25.938244+00:00",
+      "worker_processing_latency_ms": 32.329,
+      "worker_received_at": "2026-05-21T08:32:25.938216+00:00",
+      "worker_validated_at": "2026-05-21T08:32:25.938317+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:26.007676966Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:25.970302Z"
+  },
+  {
+    "insertId": "6a0ec318000e2bf5dd3bf458",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:24.930276+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:24.896632+00:00",
+      "db_write_latency_ms": 33.644,
+      "end_to_end_latency_ms": 846.582,
+      "event_id": "69842cd0-ee43-4f68-a5ff-1dc9fcf99df1",
+      "operation": "process_message",
+      "processing_time_ms": 33.769,
+      "producer_created_at": "2026-05-21T08:32:24.083705+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:24.930287+00:00",
+      "validation_latency_ms": 0.099,
+      "worker_completed_at": "2026-05-21T08:32:24.930287+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:24.896555+00:00",
+      "worker_processing_latency_ms": 33.759,
+      "worker_received_at": "2026-05-21T08:32:24.896528+00:00",
+      "worker_validated_at": "2026-05-21T08:32:24.896627+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:25.007814960Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:24.928757Z"
+  },
+  {
+    "insertId": "6a0ec317000d0e2e1bd85330",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:23.857073+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:23.825287+00:00",
+      "db_write_latency_ms": 31.786,
+      "end_to_end_latency_ms": 824.034,
+      "event_id": "10317950-2b24-4eb2-a5c1-46bff6f6365b",
+      "operation": "process_message",
+      "processing_time_ms": 31.935,
+      "producer_created_at": "2026-05-21T08:32:23.033084+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:23.857118+00:00",
+      "validation_latency_ms": 0.087,
+      "worker_completed_at": "2026-05-21T08:32:23.857118+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:23.825225+00:00",
+      "worker_processing_latency_ms": 31.921,
+      "worker_received_at": "2026-05-21T08:32:23.825197+00:00",
+      "worker_validated_at": "2026-05-21T08:32:23.825284+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:24.008720943Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:23.855598Z"
+  },
+  {
+    "insertId": "6a0ec316000c55faa08a8135",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:22.809025+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:22.775978+00:00",
+      "db_write_latency_ms": 33.047,
+      "end_to_end_latency_ms": 817.645,
+      "event_id": "b340f63d-c622-4ca9-ab35-e308e56a4851",
+      "operation": "process_message",
+      "processing_time_ms": 33.181,
+      "producer_created_at": "2026-05-21T08:32:21.991403+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:22.809048+00:00",
+      "validation_latency_ms": 0.091,
+      "worker_completed_at": "2026-05-21T08:32:22.809048+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:22.775913+00:00",
+      "worker_processing_latency_ms": 33.165,
+      "worker_received_at": "2026-05-21T08:32:22.775883+00:00",
+      "worker_validated_at": "2026-05-21T08:32:22.775974+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:23.016754474Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:22.808442Z"
+  },
+  {
+    "insertId": "6a0ec315000ba24e78260db9",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:21.762994+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:21.728973+00:00",
+      "db_write_latency_ms": 34.021,
+      "end_to_end_latency_ms": 778.424,
+      "event_id": "9bb0cbc3-ad03-4ad1-8b9c-3993787cf73e",
+      "operation": "process_message",
+      "processing_time_ms": 34.149,
+      "producer_created_at": "2026-05-21T08:32:20.984583+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:21.763007+00:00",
+      "validation_latency_ms": 0.106,
+      "worker_completed_at": "2026-05-21T08:32:21.763007+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:21.728896+00:00",
+      "worker_processing_latency_ms": 34.145,
+      "worker_received_at": "2026-05-21T08:32:21.728862+00:00",
+      "worker_validated_at": "2026-05-21T08:32:21.728968+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:22.011908744Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:21.762446Z"
+  },
+  {
+    "insertId": "6a0ec314000bdd2924cffeaa",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:20.778472+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:20.737305+00:00",
+      "db_write_latency_ms": 41.167,
+      "end_to_end_latency_ms": 852.901,
+      "event_id": "1d7ff5bb-9751-404a-82e7-96b3a560815a",
+      "operation": "process_message",
+      "processing_time_ms": 41.282,
+      "producer_created_at": "2026-05-21T08:32:19.925581+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:20.778482+00:00",
+      "validation_latency_ms": 0.094,
+      "worker_completed_at": "2026-05-21T08:32:20.778482+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:20.737234+00:00",
+      "worker_processing_latency_ms": 41.276,
+      "worker_received_at": "2026-05-21T08:32:20.737206+00:00",
+      "worker_validated_at": "2026-05-21T08:32:20.737300+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:21.011450397Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:20.777513Z"
+  },
+  {
+    "insertId": "6a0ec313000ac38d09dbcca7",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:19.705575+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:19.663190+00:00",
+      "db_write_latency_ms": 42.385,
+      "end_to_end_latency_ms": 873.901,
+      "event_id": "8761e80e-868b-4f43-8857-dd9cfe324a0c",
+      "operation": "process_message",
+      "processing_time_ms": 42.508,
+      "producer_created_at": "2026-05-21T08:32:18.831684+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:19.705585+00:00",
+      "validation_latency_ms": 0.101,
+      "worker_completed_at": "2026-05-21T08:32:19.705585+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:19.663115+00:00",
+      "worker_processing_latency_ms": 42.501,
+      "worker_received_at": "2026-05-21T08:32:19.663084+00:00",
+      "worker_validated_at": "2026-05-21T08:32:19.663185+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:20.010494704Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:19.705421Z"
+  },
+  {
+    "insertId": "6a0ec3120009d26774f50e48",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:18.644010+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:18.612875+00:00",
+      "db_write_latency_ms": 31.135,
+      "end_to_end_latency_ms": 810.378,
+      "event_id": "4dcbaa6a-e186-40c7-9f20-34188957dfbf",
+      "operation": "process_message",
+      "processing_time_ms": 31.243,
+      "producer_created_at": "2026-05-21T08:32:17.833643+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:18.644021+00:00",
+      "validation_latency_ms": 0.083,
+      "worker_completed_at": "2026-05-21T08:32:18.644021+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:18.612814+00:00",
+      "worker_processing_latency_ms": 31.233,
+      "worker_received_at": "2026-05-21T08:32:18.612788+00:00",
+      "worker_validated_at": "2026-05-21T08:32:18.612871+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:18.683648273Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:18.643687Z"
+  },
+  {
+    "insertId": "6a0ec311000939386041d825",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:17.605457+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:17.573597+00:00",
+      "db_write_latency_ms": 31.86,
+      "end_to_end_latency_ms": 804.764,
+      "event_id": "975ada71-3f3b-4e40-9689-52be1054669b",
+      "operation": "process_message",
+      "processing_time_ms": 31.995,
+      "producer_created_at": "2026-05-21T08:32:16.800704+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:17.605468+00:00",
+      "validation_latency_ms": 0.09,
+      "worker_completed_at": "2026-05-21T08:32:17.605468+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:17.573532+00:00",
+      "worker_processing_latency_ms": 31.966,
+      "worker_received_at": "2026-05-21T08:32:17.573502+00:00",
+      "worker_validated_at": "2026-05-21T08:32:17.573592+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:17.679926894Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:17.604472Z"
+  },
+  {
+    "insertId": "6a0ec3100009d307fc0759c1",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:16.645175+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:16.610667+00:00",
+      "db_write_latency_ms": 34.508,
+      "end_to_end_latency_ms": 887.146,
+      "event_id": "670efff1-807f-4b61-b2e2-e7486df3b3e7",
+      "operation": "process_message",
+      "processing_time_ms": 34.644,
+      "producer_created_at": "2026-05-21T08:32:15.758054+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:16.645200+00:00",
+      "validation_latency_ms": 0.093,
+      "worker_completed_at": "2026-05-21T08:32:16.645200+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:16.610600+00:00",
+      "worker_processing_latency_ms": 34.629,
+      "worker_received_at": "2026-05-21T08:32:16.610571+00:00",
+      "worker_validated_at": "2026-05-21T08:32:16.610664+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:16.682438011Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:16.643847Z"
+  },
+  {
+    "insertId": "6a0ec30f0007878e04b4ec2b",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:15.494642+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:15.463060+00:00",
+      "db_write_latency_ms": 31.582,
+      "end_to_end_latency_ms": 793.075,
+      "event_id": "4a8d067f-e1c3-4136-a79f-9a1367ebbe3f",
+      "operation": "process_message",
+      "processing_time_ms": 31.725,
+      "producer_created_at": "2026-05-21T08:32:14.701584+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:15.494659+00:00",
+      "validation_latency_ms": 0.112,
+      "worker_completed_at": "2026-05-21T08:32:15.494659+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:15.462969+00:00",
+      "worker_processing_latency_ms": 31.717,
+      "worker_received_at": "2026-05-21T08:32:15.462942+00:00",
+      "worker_validated_at": "2026-05-21T08:32:15.463054+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:15.681612078Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:15.493454Z"
+  },
+  {
+    "insertId": "6a0ec30e000733c0b91e87c0",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:14.472843+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:14.437084+00:00",
+      "db_write_latency_ms": 35.759,
+      "end_to_end_latency_ms": 870.72,
+      "event_id": "065e4933-2ea8-40d1-9bc5-20b390ed5e87",
+      "operation": "process_message",
+      "processing_time_ms": 35.914,
+      "producer_created_at": "2026-05-21T08:32:13.602169+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:14.472889+00:00",
+      "validation_latency_ms": 0.089,
+      "worker_completed_at": "2026-05-21T08:32:14.472889+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:14.437020+00:00",
+      "worker_processing_latency_ms": 35.897,
+      "worker_received_at": "2026-05-21T08:32:14.436992+00:00",
+      "worker_validated_at": "2026-05-21T08:32:14.437081+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:14.687338110Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:14.472Z"
+  },
+  {
+    "insertId": "6a0ec30d0005e5c2d58ef084",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:13.386671+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:13.352655+00:00",
+      "db_write_latency_ms": 34.016,
+      "end_to_end_latency_ms": 901.679,
+      "event_id": "bfba81fc-498d-4bf4-809e-5eb32e722842",
+      "operation": "process_message",
+      "processing_time_ms": 34.147,
+      "producer_created_at": "2026-05-21T08:32:12.485018+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:13.386697+00:00",
+      "validation_latency_ms": 0.09,
+      "worker_completed_at": "2026-05-21T08:32:13.386697+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:13.352591+00:00",
+      "worker_processing_latency_ms": 34.135,
+      "worker_received_at": "2026-05-21T08:32:13.352562+00:00",
+      "worker_validated_at": "2026-05-21T08:32:13.352652+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:13.682754727Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:13.386498Z"
+  },
+  {
+    "insertId": "6a0ec30c00040c524515b6c6",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:12.266261+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:12.228735+00:00",
+      "db_write_latency_ms": 37.526,
+      "end_to_end_latency_ms": 872.106,
+      "event_id": "fd35d824-e8d4-4866-921f-f5f36e0f9c4a",
+      "operation": "process_message",
+      "processing_time_ms": 37.663,
+      "producer_created_at": "2026-05-21T08:32:11.394187+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:12.266293+00:00",
+      "validation_latency_ms": 0.089,
+      "worker_completed_at": "2026-05-21T08:32:12.266293+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:12.228671+00:00",
+      "worker_processing_latency_ms": 37.651,
+      "worker_received_at": "2026-05-21T08:32:12.228642+00:00",
+      "worker_validated_at": "2026-05-21T08:32:12.228731+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:12.351821947Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:12.265298Z"
+  },
+  {
+    "insertId": "6a0ec30b0003022b398b34ed",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:11.198694+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:11.159296+00:00",
+      "db_write_latency_ms": 39.398,
+      "end_to_end_latency_ms": 919.138,
+      "event_id": "88c949ec-a1df-4c87-8352-0805adae604e",
+      "operation": "process_message",
+      "processing_time_ms": 39.53,
+      "producer_created_at": "2026-05-21T08:32:10.279582+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:11.198720+00:00",
+      "validation_latency_ms": 0.091,
+      "worker_completed_at": "2026-05-21T08:32:11.198720+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:11.159231+00:00",
+      "worker_processing_latency_ms": 39.518,
+      "worker_received_at": "2026-05-21T08:32:11.159202+00:00",
+      "worker_validated_at": "2026-05-21T08:32:11.159293+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:11.356638730Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:11.197163Z"
+  },
+  {
+    "insertId": "6a0ec30a0001588124cb1270",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:10.089390+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:10.056675+00:00",
+      "db_write_latency_ms": 32.715,
+      "end_to_end_latency_ms": 922.424,
+      "event_id": "9f014a5f-3f69-43cf-9a40-411fd34976c7",
+      "operation": "process_message",
+      "processing_time_ms": 32.838,
+      "producer_created_at": "2026-05-21T08:32:09.166989+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:10.089413+00:00",
+      "validation_latency_ms": 0.087,
+      "worker_completed_at": "2026-05-21T08:32:10.089413+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:10.056612+00:00",
+      "worker_processing_latency_ms": 32.828,
+      "worker_received_at": "2026-05-21T08:32:10.056585+00:00",
+      "worker_validated_at": "2026-05-21T08:32:10.056672+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:10.355314747Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:10.088193Z"
+  },
+  {
+    "insertId": "6a0ec308000eea9c3f9be2b7",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:08.978907+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:08.945042+00:00",
+      "db_write_latency_ms": 33.865,
+      "end_to_end_latency_ms": 890.392,
+      "event_id": "afca93e9-447c-4e7b-9540-132eb917b00e",
+      "operation": "process_message",
+      "processing_time_ms": 34.02,
+      "producer_created_at": "2026-05-21T08:32:08.088549+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:08.978941+00:00",
+      "validation_latency_ms": 0.101,
+      "worker_completed_at": "2026-05-21T08:32:08.978941+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:08.944969+00:00",
+      "worker_processing_latency_ms": 34.004,
+      "worker_received_at": "2026-05-21T08:32:08.944937+00:00",
+      "worker_validated_at": "2026-05-21T08:32:08.945038+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:09.022296936Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:08.977564Z"
+  },
+  {
+    "insertId": "6a0ec307000ddce666e7a105",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:07.909384+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:07.877952+00:00",
+      "db_write_latency_ms": 31.432,
+      "end_to_end_latency_ms": 900.385,
+      "event_id": "54b0dccc-1d13-4d10-b01c-af338e3e8948",
+      "operation": "process_message",
+      "processing_time_ms": 31.565,
+      "producer_created_at": "2026-05-21T08:32:07.009016+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:07.909401+00:00",
+      "validation_latency_ms": 0.107,
+      "worker_completed_at": "2026-05-21T08:32:07.909401+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:07.877876+00:00",
+      "worker_processing_latency_ms": 31.561,
+      "worker_received_at": "2026-05-21T08:32:07.877840+00:00",
+      "worker_validated_at": "2026-05-21T08:32:07.877947+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:08.023013722Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:07.908518Z"
+  },
+  {
+    "insertId": "6a0ec306000b15212dae87ad",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:06.727766+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:06.673469+00:00",
+      "db_write_latency_ms": 54.297,
+      "end_to_end_latency_ms": 986.197,
+      "event_id": "8ebff7e5-862b-4f9f-835f-c58da6c040b9",
+      "operation": "process_message",
+      "processing_time_ms": 54.43,
+      "producer_created_at": "2026-05-21T08:32:05.741592+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:06.727789+00:00",
+      "validation_latency_ms": 0.096,
+      "worker_completed_at": "2026-05-21T08:32:06.727789+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:06.673402+00:00",
+      "worker_processing_latency_ms": 54.42,
+      "worker_received_at": "2026-05-21T08:32:06.673369+00:00",
+      "worker_validated_at": "2026-05-21T08:32:06.673465+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:07.027135204Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:06.726305Z"
+  },
+  {
+    "insertId": "6a0ec30500080ced0ad18f0b",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:05.528995+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:05.495720+00:00",
+      "db_write_latency_ms": 33.275,
+      "end_to_end_latency_ms": 862.15,
+      "event_id": "9ab01bf0-8501-4092-92db-2bedc9d69801",
+      "operation": "process_message",
+      "processing_time_ms": 33.411,
+      "producer_created_at": "2026-05-21T08:32:04.666871+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:05.529021+00:00",
+      "validation_latency_ms": 0.091,
+      "worker_completed_at": "2026-05-21T08:32:05.529021+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:05.495657+00:00",
+      "worker_processing_latency_ms": 33.396,
+      "worker_received_at": "2026-05-21T08:32:05.495625+00:00",
+      "worker_validated_at": "2026-05-21T08:32:05.495716+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:05.693229820Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:05.527597Z"
+  },
+  {
+    "insertId": "6a0ec30400075efbc4da97fc",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:04.484481+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:04.435873+00:00",
+      "db_write_latency_ms": 48.608,
+      "end_to_end_latency_ms": 837.029,
+      "event_id": "3316dd07-4ec1-4bd0-a55a-801be8218ca6",
+      "operation": "process_message",
+      "processing_time_ms": 48.738,
+      "producer_created_at": "2026-05-21T08:32:03.647476+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:04.484505+00:00",
+      "validation_latency_ms": 0.09,
+      "worker_completed_at": "2026-05-21T08:32:04.484505+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:04.435807+00:00",
+      "worker_processing_latency_ms": 48.726,
+      "worker_received_at": "2026-05-21T08:32:04.435779+00:00",
+      "worker_validated_at": "2026-05-21T08:32:04.435869+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:04.692462021Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:04.483067Z"
+  },
+  {
+    "insertId": "6a0ec3030006c814df889c9b",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:03.445500+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:03.412307+00:00",
+      "db_write_latency_ms": 33.193,
+      "end_to_end_latency_ms": 839.947,
+      "event_id": "7b89318e-78da-4969-bf89-56c916623e6b",
+      "operation": "process_message",
+      "processing_time_ms": 33.31,
+      "producer_created_at": "2026-05-21T08:32:02.605565+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:03.445512+00:00",
+      "validation_latency_ms": 0.094,
+      "worker_completed_at": "2026-05-21T08:32:03.445512+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:03.412238+00:00",
+      "worker_processing_latency_ms": 33.303,
+      "worker_received_at": "2026-05-21T08:32:03.412209+00:00",
+      "worker_validated_at": "2026-05-21T08:32:03.412303+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:03.697193302Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:03.444436Z"
+  },
+  {
+    "insertId": "6a0ec302000614a5f5a0addc",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:02.399008+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:02.366853+00:00",
+      "db_write_latency_ms": 32.155,
+      "end_to_end_latency_ms": 772.686,
+      "event_id": "f3d9cbff-a06d-4d9a-af81-fb765874a64a",
+      "operation": "process_message",
+      "processing_time_ms": 32.273,
+      "producer_created_at": "2026-05-21T08:32:01.626332+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:02.399018+00:00",
+      "validation_latency_ms": 0.102,
+      "worker_completed_at": "2026-05-21T08:32:02.399018+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:02.366780+00:00",
+      "worker_processing_latency_ms": 32.271,
+      "worker_received_at": "2026-05-21T08:32:02.366747+00:00",
+      "worker_validated_at": "2026-05-21T08:32:02.366849+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:02.696612674Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:02.398501Z"
+  },
+  {
+    "insertId": "6a0ec3010006892bc186fdfe",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:01.428855+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:01.386891+00:00",
+      "db_write_latency_ms": 41.964,
+      "end_to_end_latency_ms": 904.551,
+      "event_id": "1e09e2ad-b806-4097-9f5e-d21c7eae34b6",
+      "operation": "process_message",
+      "processing_time_ms": 42.078,
+      "producer_created_at": "2026-05-21T08:32:00.524317+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:01.428868+00:00",
+      "validation_latency_ms": 0.09,
+      "worker_completed_at": "2026-05-21T08:32:01.428868+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:01.386823+00:00",
+      "worker_processing_latency_ms": 42.071,
+      "worker_received_at": "2026-05-21T08:32:01.386797+00:00",
+      "worker_validated_at": "2026-05-21T08:32:01.386887+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:01.695294783Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:01.428331Z"
+  },
+  {
+    "insertId": "6a0ec30000047a5289e7f8bb",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:32:00.293801+00:00",
+      "db_insert_started_at": "2026-05-21T08:32:00.257174+00:00",
+      "db_write_latency_ms": 36.627,
+      "end_to_end_latency_ms": 848.399,
+      "event_id": "806b5058-97d8-414a-8ffe-90e4dc3c4756",
+      "operation": "process_message",
+      "processing_time_ms": 36.78,
+      "producer_created_at": "2026-05-21T08:31:59.445433+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:32:00.293832+00:00",
+      "validation_latency_ms": 0.1,
+      "worker_completed_at": "2026-05-21T08:32:00.293832+00:00",
+      "worker_decoded_at": "2026-05-21T08:32:00.257100+00:00",
+      "worker_processing_latency_ms": 36.763,
+      "worker_received_at": "2026-05-21T08:32:00.257069+00:00",
+      "worker_validated_at": "2026-05-21T08:32:00.257169+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:32:00.362790245Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:32:00.293458Z"
+  },
+  {
+    "insertId": "6a0ec2ff000367bee51dfe46",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:59.224365+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:59.192985+00:00",
+      "db_write_latency_ms": 31.38,
+      "end_to_end_latency_ms": 811.82,
+      "event_id": "cdb657eb-fe93-4277-8650-2bb37b449103",
+      "operation": "process_message",
+      "processing_time_ms": 31.533,
+      "producer_created_at": "2026-05-21T08:31:58.412576+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:59.224396+00:00",
+      "validation_latency_ms": 0.104,
+      "worker_completed_at": "2026-05-21T08:31:59.224396+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:59.192911+00:00",
+      "worker_processing_latency_ms": 31.519,
+      "worker_received_at": "2026-05-21T08:31:59.192877+00:00",
+      "worker_validated_at": "2026-05-21T08:31:59.192981+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:59.364657543Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:59.223166Z"
+  },
+  {
+    "insertId": "6a0ec2fe000311965ef000b1",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:58.201729+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:58.170473+00:00",
+      "db_write_latency_ms": 31.256,
+      "end_to_end_latency_ms": 844.963,
+      "event_id": "da5e220b-06cb-4b12-8738-1dc740e0f2cd",
+      "operation": "process_message",
+      "processing_time_ms": 31.39,
+      "producer_created_at": "2026-05-21T08:31:57.356790+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:58.201753+00:00",
+      "validation_latency_ms": 0.098,
+      "worker_completed_at": "2026-05-21T08:31:58.201753+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:58.170402+00:00",
+      "worker_processing_latency_ms": 31.382,
+      "worker_received_at": "2026-05-21T08:31:58.170371+00:00",
+      "worker_validated_at": "2026-05-21T08:31:58.170469+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:58.371390122Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:58.201110Z"
+  },
+  {
+    "insertId": "6a0ec2fd000276ca6fc89b92",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:57.161817+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:57.129263+00:00",
+      "db_write_latency_ms": 32.554,
+      "end_to_end_latency_ms": 847.875,
+      "event_id": "a7aa3b61-4faa-47d5-a347-399da65a2e2e",
+      "operation": "process_message",
+      "processing_time_ms": 32.675,
+      "producer_created_at": "2026-05-21T08:31:56.313963+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:57.161838+00:00",
+      "validation_latency_ms": 0.088,
+      "worker_completed_at": "2026-05-21T08:31:57.161838+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:57.129201+00:00",
+      "worker_processing_latency_ms": 32.667,
+      "worker_received_at": "2026-05-21T08:31:57.129171+00:00",
+      "worker_validated_at": "2026-05-21T08:31:57.129259+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:57.364499358Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:57.161482Z"
+  },
+  {
+    "insertId": "6a0ec2fc0001a9b551ad77e2",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:56.110189+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:56.078251+00:00",
+      "db_write_latency_ms": 31.938,
+      "end_to_end_latency_ms": 812.715,
+      "event_id": "99b96ee0-f981-40e7-8e30-25450a6f64e0",
+      "operation": "process_message",
+      "processing_time_ms": 32.077,
+      "producer_created_at": "2026-05-21T08:31:55.297499+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:56.110214+00:00",
+      "validation_latency_ms": 0.095,
+      "worker_completed_at": "2026-05-21T08:31:56.110214+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:56.078182+00:00",
+      "worker_processing_latency_ms": 32.062,
+      "worker_received_at": "2026-05-21T08:31:56.078152+00:00",
+      "worker_validated_at": "2026-05-21T08:31:56.078247+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:56.368452352Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:56.108981Z"
+  },
+  {
+    "insertId": "6a0ec2fb0001571a6ffbbafd",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:55.089104+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:55.058597+00:00",
+      "db_write_latency_ms": 30.507,
+      "end_to_end_latency_ms": 862.125,
+      "event_id": "72604da9-298c-4ede-b844-061f892c723a",
+      "operation": "process_message",
+      "processing_time_ms": 30.642,
+      "producer_created_at": "2026-05-21T08:31:54.227004+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:55.089129+00:00",
+      "validation_latency_ms": 0.097,
+      "worker_completed_at": "2026-05-21T08:31:55.089129+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:55.058531+00:00",
+      "worker_processing_latency_ms": 30.633,
+      "worker_received_at": "2026-05-21T08:31:55.058496+00:00",
+      "worker_validated_at": "2026-05-21T08:31:55.058593+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:55.368343730Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:55.087834Z"
+  },
+  {
+    "insertId": "6a0ec2fa00001ccfa7a83d13",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:54.007591+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:53.976508+00:00",
+      "db_write_latency_ms": 31.083,
+      "end_to_end_latency_ms": 875.906,
+      "event_id": "271a5fe9-a8e9-4075-9b65-664e7ea6c046",
+      "operation": "process_message",
+      "processing_time_ms": 31.22,
+      "producer_created_at": "2026-05-21T08:31:53.131698+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:54.007604+00:00",
+      "validation_latency_ms": 0.114,
+      "worker_completed_at": "2026-05-21T08:31:54.007604+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:53.976432+00:00",
+      "worker_processing_latency_ms": 31.214,
+      "worker_received_at": "2026-05-21T08:31:53.976390+00:00",
+      "worker_validated_at": "2026-05-21T08:31:53.976504+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:54.036438832Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:54.007375Z"
+  },
+  {
+    "insertId": "6a0ec2f8000e2cc01aed95bb",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:52.930078+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:52.898522+00:00",
+      "db_write_latency_ms": 31.556,
+      "end_to_end_latency_ms": 823.525,
+      "event_id": "db963f73-c8a0-4c68-b1b3-b0e1345ca790",
+      "operation": "process_message",
+      "processing_time_ms": 31.682,
+      "producer_created_at": "2026-05-21T08:31:52.106575+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:52.930100+00:00",
+      "validation_latency_ms": 0.091,
+      "worker_completed_at": "2026-05-21T08:31:52.930100+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:52.898457+00:00",
+      "worker_processing_latency_ms": 31.673,
+      "worker_received_at": "2026-05-21T08:31:52.898427+00:00",
+      "worker_validated_at": "2026-05-21T08:31:52.898518+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:53.038600084Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:52.928960Z"
+  },
+  {
+    "insertId": "6a0ec2f7000da79996a21d02",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:51.894943+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:51.863838+00:00",
+      "db_write_latency_ms": 31.105,
+      "end_to_end_latency_ms": 844.127,
+      "event_id": "225cfa6c-1889-4758-a73b-5d29f3d1ca44",
+      "operation": "process_message",
+      "processing_time_ms": 31.217,
+      "producer_created_at": "2026-05-21T08:31:51.050827+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:51.894954+00:00",
+      "validation_latency_ms": 0.09,
+      "worker_completed_at": "2026-05-21T08:31:51.894954+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:51.863773+00:00",
+      "worker_processing_latency_ms": 31.209,
+      "worker_received_at": "2026-05-21T08:31:51.863745+00:00",
+      "worker_validated_at": "2026-05-21T08:31:51.863835+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:52.038521448Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:51.894873Z"
+  },
+  {
+    "insertId": "6a0ec2f6000cd11f80693f84",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:50.841539+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:50.808554+00:00",
+      "db_write_latency_ms": 32.985,
+      "end_to_end_latency_ms": 863.51,
+      "event_id": "02d3b1fe-dafe-4485-baa5-e77aeca5c9c2",
+      "operation": "process_message",
+      "processing_time_ms": 33.136,
+      "producer_created_at": "2026-05-21T08:31:49.978054+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:50.841564+00:00",
+      "validation_latency_ms": 0.092,
+      "worker_completed_at": "2026-05-21T08:31:50.841564+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:50.808489+00:00",
+      "worker_processing_latency_ms": 33.106,
+      "worker_received_at": "2026-05-21T08:31:50.808458+00:00",
+      "worker_validated_at": "2026-05-21T08:31:50.808550+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:51.041042266Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:50.839967Z"
+  },
+  {
+    "insertId": "6a0ec2f5000bff45f57530bf",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:49.786709+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:49.754273+00:00",
+      "db_write_latency_ms": 32.436,
+      "end_to_end_latency_ms": 764.414,
+      "event_id": "0212b905-5b5c-4e52-a0be-96eb77609438",
+      "operation": "process_message",
+      "processing_time_ms": 32.584,
+      "producer_created_at": "2026-05-21T08:31:49.022324+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:49.786738+00:00",
+      "validation_latency_ms": 0.104,
+      "worker_completed_at": "2026-05-21T08:31:49.786738+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:49.754201+00:00",
+      "worker_processing_latency_ms": 32.573,
+      "worker_received_at": "2026-05-21T08:31:49.754165+00:00",
+      "worker_validated_at": "2026-05-21T08:31:49.754269+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:50.037599652Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:49.786245Z"
+  },
+  {
+    "insertId": "6a0ec2f4000c4ec244b2e49b",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:48.807351+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:48.775185+00:00",
+      "db_write_latency_ms": 32.166,
+      "end_to_end_latency_ms": 910.157,
+      "event_id": "6de945ad-06ab-4cdc-9fb9-db62c1921f91",
+      "operation": "process_message",
+      "processing_time_ms": 32.279,
+      "producer_created_at": "2026-05-21T08:31:47.897206+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:48.807363+00:00",
+      "validation_latency_ms": 0.09,
+      "worker_completed_at": "2026-05-21T08:31:48.807363+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:48.775118+00:00",
+      "worker_processing_latency_ms": 32.272,
+      "worker_received_at": "2026-05-21T08:31:48.775091+00:00",
+      "worker_validated_at": "2026-05-21T08:31:48.775181+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:49.040734494Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:48.806594Z"
+  },
+  {
+    "insertId": "6a0ec2f40002e4660075429e",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:48.190808+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:48.154514+00:00",
+      "db_write_latency_ms": 36.294,
+      "end_to_end_latency_ms": 1329.299,
+      "event_id": "34604123-4ac4-4cb8-a469-722051aa2b18",
+      "operation": "process_message",
+      "processing_time_ms": 36.414,
+      "producer_created_at": "2026-05-21T08:31:46.861523+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:48.190822+00:00",
+      "validation_latency_ms": 0.094,
+      "worker_completed_at": "2026-05-21T08:31:48.190822+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:48.154447+00:00",
+      "worker_processing_latency_ms": 36.406,
+      "worker_received_at": "2026-05-21T08:31:48.154416+00:00",
+      "worker_validated_at": "2026-05-21T08:31:48.154510+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:48.373789768Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:48.189542Z"
+  },
+  {
+    "insertId": "6a0ec2f2000a4c879720c22f",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:46.674911+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:46.630227+00:00",
+      "db_write_latency_ms": 44.684,
+      "end_to_end_latency_ms": 864.53,
+      "event_id": "21d2d5ff-8757-4499-ab13-b61d0f06be40",
+      "operation": "process_message",
+      "processing_time_ms": 44.802,
+      "producer_created_at": "2026-05-21T08:31:45.810393+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:46.674923+00:00",
+      "validation_latency_ms": 0.094,
+      "worker_completed_at": "2026-05-21T08:31:46.674923+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:46.630156+00:00",
+      "worker_processing_latency_ms": 44.795,
+      "worker_received_at": "2026-05-21T08:31:46.630128+00:00",
+      "worker_validated_at": "2026-05-21T08:31:46.630222+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:46.710216923Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:46.674951Z"
+  },
+  {
+    "insertId": "6a0ec2f10009a52698da777c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:45.632445+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:45.578666+00:00",
+      "db_write_latency_ms": 53.779,
+      "end_to_end_latency_ms": 842.283,
+      "event_id": "081e66d6-e86c-47eb-89d5-5eeffc7d2b14",
+      "operation": "process_message",
+      "processing_time_ms": 53.928,
+      "producer_created_at": "2026-05-21T08:31:44.790203+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:45.632486+00:00",
+      "validation_latency_ms": 0.088,
+      "worker_completed_at": "2026-05-21T08:31:45.632486+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:45.578602+00:00",
+      "worker_processing_latency_ms": 53.912,
+      "worker_received_at": "2026-05-21T08:31:45.578574+00:00",
+      "worker_validated_at": "2026-05-21T08:31:45.578662+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:45.711106473Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:45.632102Z"
+  },
+  {
+    "insertId": "6a0ec2f10002aeaf77af4fd8",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:45.176139+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:45.141859+00:00",
+      "db_write_latency_ms": 34.28,
+      "end_to_end_latency_ms": 1414.122,
+      "event_id": "fd8354e6-efc1-4fa0-b666-ad1df46310a0",
+      "operation": "process_message",
+      "processing_time_ms": 34.415,
+      "producer_created_at": "2026-05-21T08:31:43.762039+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:45.176161+00:00",
+      "validation_latency_ms": 0.098,
+      "worker_completed_at": "2026-05-21T08:31:45.176161+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:45.141788+00:00",
+      "worker_processing_latency_ms": 34.404,
+      "worker_received_at": "2026-05-21T08:31:45.141757+00:00",
+      "worker_validated_at": "2026-05-21T08:31:45.141855+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:45.380581041Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:45.175791Z"
+  },
+  {
+    "insertId": "6a0ec2ef0007fb566763cb6e",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:43.524039+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:43.490821+00:00",
+      "db_write_latency_ms": 33.218,
+      "end_to_end_latency_ms": 880.701,
+      "event_id": "3e5a47ec-d204-449f-a61e-79d4e35e852d",
+      "operation": "process_message",
+      "processing_time_ms": 33.343,
+      "producer_created_at": "2026-05-21T08:31:42.643356+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:43.524057+00:00",
+      "validation_latency_ms": 0.095,
+      "worker_completed_at": "2026-05-21T08:31:43.524057+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:43.490752+00:00",
+      "worker_processing_latency_ms": 33.336,
+      "worker_received_at": "2026-05-21T08:31:43.490721+00:00",
+      "worker_validated_at": "2026-05-21T08:31:43.490816+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:43.712931007Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:43.523094Z"
+  },
+  {
+    "insertId": "6a0ec2ee0007540a18f5980c",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:42.481114+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:42.447870+00:00",
+      "db_write_latency_ms": 33.244,
+      "end_to_end_latency_ms": 846.125,
+      "event_id": "1c074960-7c10-4970-bb5a-6f5e7a45fa9a",
+      "operation": "process_message",
+      "processing_time_ms": 33.392,
+      "producer_created_at": "2026-05-21T08:31:41.635019+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:42.481144+00:00",
+      "validation_latency_ms": 0.102,
+      "worker_completed_at": "2026-05-21T08:31:42.481144+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:42.447797+00:00",
+      "worker_processing_latency_ms": 33.379,
+      "worker_received_at": "2026-05-21T08:31:42.447765+00:00",
+      "worker_validated_at": "2026-05-21T08:31:42.447867+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:42.713733904Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:42.480266Z"
+  },
+  {
+    "insertId": "6a0ec2ed0006bdbdd0a6e9c2",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:41.443215+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:41.409429+00:00",
+      "db_write_latency_ms": 33.786,
+      "end_to_end_latency_ms": 867.944,
+      "event_id": "087bf1f2-d23a-4525-8acf-e083c25e2d52",
+      "operation": "process_message",
+      "processing_time_ms": 33.929,
+      "producer_created_at": "2026-05-21T08:31:40.575298+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:41.443242+00:00",
+      "validation_latency_ms": 0.1,
+      "worker_completed_at": "2026-05-21T08:31:41.443242+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:41.409355+00:00",
+      "worker_processing_latency_ms": 33.917,
+      "worker_received_at": "2026-05-21T08:31:41.409325+00:00",
+      "worker_validated_at": "2026-05-21T08:31:41.409425+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:41.712491001Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:41.441789Z"
+  },
+  {
+    "insertId": "6a0ec2ec0005c4125821f47a",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:40.378913+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:40.346545+00:00",
+      "db_write_latency_ms": 32.368,
+      "end_to_end_latency_ms": 895.559,
+      "event_id": "991ba1cb-5291-4403-ac1f-14eb89864da0",
+      "operation": "process_message",
+      "processing_time_ms": 32.489,
+      "producer_created_at": "2026-05-21T08:31:39.483370+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:40.378929+00:00",
+      "validation_latency_ms": 0.096,
+      "worker_completed_at": "2026-05-21T08:31:40.378929+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:40.346477+00:00",
+      "worker_processing_latency_ms": 32.483,
+      "worker_received_at": "2026-05-21T08:31:40.346446+00:00",
+      "worker_validated_at": "2026-05-21T08:31:40.346542+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:40.713367277Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:40.377874Z"
+  },
+  {
+    "insertId": "6a0ec2eb0004a7ec5f49c574",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:39.306105+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:39.272195+00:00",
+      "db_write_latency_ms": 33.91,
+      "end_to_end_latency_ms": 813.268,
+      "event_id": "44d4a5e8-183c-45dc-ab0e-9d1550623f99",
+      "operation": "process_message",
+      "processing_time_ms": 34.121,
+      "producer_created_at": "2026-05-21T08:31:38.492926+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:39.306194+00:00",
+      "validation_latency_ms": 0.102,
+      "worker_completed_at": "2026-05-21T08:31:39.306194+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:39.272122+00:00",
+      "worker_processing_latency_ms": 34.106,
+      "worker_received_at": "2026-05-21T08:31:39.272088+00:00",
+      "worker_validated_at": "2026-05-21T08:31:39.272190+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:39.381197157Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:39.305132Z"
+  },
+  {
+    "insertId": "6a0ec2ea0004409eb637887b",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:38.280165+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:38.247816+00:00",
+      "db_write_latency_ms": 32.349,
+      "end_to_end_latency_ms": 866.777,
+      "event_id": "53c23e1a-7d25-41dd-afb0-6e7dc19cf081",
+      "operation": "process_message",
+      "processing_time_ms": 32.489,
+      "producer_created_at": "2026-05-21T08:31:37.413415+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:38.280192+00:00",
+      "validation_latency_ms": 0.095,
+      "worker_completed_at": "2026-05-21T08:31:38.280192+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:38.247747+00:00",
+      "worker_processing_latency_ms": 32.475,
+      "worker_received_at": "2026-05-21T08:31:38.247717+00:00",
+      "worker_validated_at": "2026-05-21T08:31:38.247812+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:38.385650809Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:38.278686Z"
+  },
+  {
+    "insertId": "6a0ec2e9000389aefcb75519",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:37.232329+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:37.200576+00:00",
+      "db_write_latency_ms": 31.753,
+      "end_to_end_latency_ms": 860.599,
+      "event_id": "7a8652d1-d595-4741-9f72-8cce8c3d1b6e",
+      "operation": "process_message",
+      "processing_time_ms": 31.883,
+      "producer_created_at": "2026-05-21T08:31:36.371742+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:37.232341+00:00",
+      "validation_latency_ms": 0.11,
+      "worker_completed_at": "2026-05-21T08:31:37.232341+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:37.200498+00:00",
+      "worker_processing_latency_ms": 31.879,
+      "worker_received_at": "2026-05-21T08:31:37.200462+00:00",
+      "worker_validated_at": "2026-05-21T08:31:37.200572+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:37.385605982Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:37.231854Z"
+  },
+  {
+    "insertId": "6a0ec2e80002b349db4d8d92",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:36.176920+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:36.140509+00:00",
+      "db_write_latency_ms": 36.411,
+      "end_to_end_latency_ms": 855.793,
+      "event_id": "f663c794-9e8d-4f6e-908d-ab9170b5019e",
+      "operation": "process_message",
+      "processing_time_ms": 36.541,
+      "producer_created_at": "2026-05-21T08:31:35.321137+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:36.176930+00:00",
+      "validation_latency_ms": 0.108,
+      "worker_completed_at": "2026-05-21T08:31:36.176930+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:36.140427+00:00",
+      "worker_processing_latency_ms": 36.535,
+      "worker_received_at": "2026-05-21T08:31:36.140395+00:00",
+      "worker_validated_at": "2026-05-21T08:31:36.140503+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:36.385033691Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:36.176969Z"
+  },
+  {
+    "insertId": "6a0ec2e70001e2a8f85883ee",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:35.123880+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:35.090551+00:00",
+      "db_write_latency_ms": 33.329,
+      "end_to_end_latency_ms": 891.571,
+      "event_id": "99adb953-0400-4305-a686-c0cd0af41b8e",
+      "operation": "process_message",
+      "processing_time_ms": 33.45,
+      "producer_created_at": "2026-05-21T08:31:34.232325+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:35.123896+00:00",
+      "validation_latency_ms": 0.093,
+      "worker_completed_at": "2026-05-21T08:31:35.123896+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:35.090484+00:00",
+      "worker_processing_latency_ms": 33.444,
+      "worker_received_at": "2026-05-21T08:31:35.090452+00:00",
+      "worker_validated_at": "2026-05-21T08:31:35.090545+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:35.386682413Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:35.123560Z"
+  },
+  {
+    "insertId": "6a0ec2e600006fdfa81adcad",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:34.030031+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:33.998862+00:00",
+      "db_write_latency_ms": 31.169,
+      "end_to_end_latency_ms": 906.157,
+      "event_id": "1a154e19-0be9-4f22-9e02-140978b15677",
+      "operation": "process_message",
+      "processing_time_ms": 31.297,
+      "producer_created_at": "2026-05-21T08:31:33.123894+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:34.030051+00:00",
+      "validation_latency_ms": 0.097,
+      "worker_completed_at": "2026-05-21T08:31:34.030051+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:33.998791+00:00",
+      "worker_processing_latency_ms": 31.29,
+      "worker_received_at": "2026-05-21T08:31:33.998761+00:00",
+      "worker_validated_at": "2026-05-21T08:31:33.998858+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:34.059370543Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:34.028639Z"
+  },
+  {
+    "insertId": "6a0ec2e5000782c3b77018f8",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:33.493127+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:33.460891+00:00",
+      "db_write_latency_ms": 32.236,
+      "end_to_end_latency_ms": 1481.299,
+      "event_id": "ddf0f764-1568-4bbe-a76c-997dcafe734c",
+      "operation": "process_message",
+      "processing_time_ms": 32.378,
+      "producer_created_at": "2026-05-21T08:31:32.011854+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:33.493153+00:00",
+      "validation_latency_ms": 0.1,
+      "worker_completed_at": "2026-05-21T08:31:33.493153+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:33.460819+00:00",
+      "worker_processing_latency_ms": 32.366,
+      "worker_received_at": "2026-05-21T08:31:33.460787+00:00",
+      "worker_validated_at": "2026-05-21T08:31:33.460887+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:33.719565914Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:33.492227Z"
+  },
+  {
+    "insertId": "6a0ec2e50006f4a579a83c31",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:33.456521+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:33.426525+00:00",
+      "db_write_latency_ms": 29.996,
+      "end_to_end_latency_ms": 2551.645,
+      "event_id": "3fe94324-198c-4b14-87a2-f07949939f71",
+      "operation": "process_message",
+      "processing_time_ms": 30.116,
+      "producer_created_at": "2026-05-21T08:31:30.904903+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:33.456548+00:00",
+      "validation_latency_ms": 0.065,
+      "worker_completed_at": "2026-05-21T08:31:33.456548+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:33.426473+00:00",
+      "worker_processing_latency_ms": 30.093,
+      "worker_received_at": "2026-05-21T08:31:33.426455+00:00",
+      "worker_validated_at": "2026-05-21T08:31:33.426520+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:33.719565914Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:33.455845Z"
+  },
+  {
+    "insertId": "6a0ec2e5000673c85ea32162",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:33.423702+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:33.393163+00:00",
+      "db_write_latency_ms": 30.539,
+      "end_to_end_latency_ms": 3647.81,
+      "event_id": "a4cf5727-58d1-4c8a-9490-ab2e4973c9f9",
+      "operation": "process_message",
+      "processing_time_ms": 30.648,
+      "producer_created_at": "2026-05-21T08:31:29.775902+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:33.423712+00:00",
+      "validation_latency_ms": 0.084,
+      "worker_completed_at": "2026-05-21T08:31:33.423712+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:33.393096+00:00",
+      "worker_processing_latency_ms": 30.639,
+      "worker_received_at": "2026-05-21T08:31:33.393073+00:00",
+      "worker_validated_at": "2026-05-21T08:31:33.393157+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:33.719565914Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:33.422856Z"
+  },
+  {
+    "insertId": "6a0ec2e50005d75881f247eb",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "db_insert_completed_at": "2026-05-21T08:31:33.383460+00:00",
+      "db_insert_started_at": "2026-05-21T08:31:32.636966+00:00",
+      "db_write_latency_ms": 746.494,
+      "end_to_end_latency_ms": 4924.04,
+      "event_id": "237ccc79-684a-4b36-9bd2-d9df554b0a5a",
+      "operation": "process_message",
+      "processing_time_ms": 746.939,
+      "producer_created_at": "2026-05-21T08:31:28.459443+00:00",
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "ok",
+      "symbol": "BTCUSDT",
+      "timestamp_utc": "2026-05-21T08:31:33.383483+00:00",
+      "validation_latency_ms": 0.384,
+      "worker_completed_at": "2026-05-21T08:31:33.383483+00:00",
+      "worker_decoded_at": "2026-05-21T08:31:32.636604+00:00",
+      "worker_processing_latency_ms": 746.912,
+      "worker_received_at": "2026-05-21T08:31:32.636571+00:00",
+      "worker_validated_at": "2026-05-21T08:31:32.636955+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d92b6fc464e7af4a552d3a19c5f79e3d8ae4b104db59775555c6d2880c03ab3f6c6011436d7c17de9d0ba9625dc05f38b70f9bc59bf80ce36b9927d0e503a8e2a4b3c18476fee76df1"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-21T08:31:33.390032005Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-21T08:31:33.382808Z"
+  }
+]
