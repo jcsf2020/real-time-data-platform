@@ -1,0 +1,20 @@
+{
+  "artifact_path": "docs/evidence/latency-artifact-100-cloud-validation/latency-publisher-20260521083127.jsonl",
+  "end_to_end_latency_ms": {
+    "avg": 949.554,
+    "max": 4924.04,
+    "min": 764.414,
+    "p50": 846.353,
+    "p95": 1333.54,
+    "p99": 3660.572
+  },
+  "latency_sample_count": 100,
+  "logs_path": "docs/evidence/latency-artifact-100-cloud-validation/worker-logs-20260521083127.json",
+  "matched_event_count": 100,
+  "matched_worker_log_count": 100,
+  "missing_event_count": 0,
+  "missing_event_ids": [],
+  "publisher_count": 100,
+  "status": "ok",
+  "worker_log_count_raw": 100
+}
