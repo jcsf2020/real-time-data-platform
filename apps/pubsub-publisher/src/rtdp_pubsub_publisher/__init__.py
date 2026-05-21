@@ -13,6 +13,10 @@ from google.cloud import pubsub_v1
 from rtdp_contracts import MarketEvent
 
 
+def utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
 def build_sample_event() -> MarketEvent:
     return MarketEvent(
         event_id=str(uuid.uuid4()),
@@ -23,8 +27,12 @@ def build_sample_event() -> MarketEvent:
     )
 
 
-def serialize_event(event: MarketEvent) -> bytes:
-    return event.model_dump_json().encode("utf-8")
+def serialize_event(event: MarketEvent, extra_fields: dict | None = None) -> bytes:
+    if extra_fields is None:
+        return event.model_dump_json().encode("utf-8")
+    payload = json.loads(event.model_dump_json())
+    payload.update(extra_fields)
+    return json.dumps(payload).encode("utf-8")
 
 
 def publish_event(
@@ -32,9 +40,10 @@ def publish_event(
     project_id: str,
     topic_name: str,
     event: MarketEvent,
+    extra_fields: dict | None = None,
 ) -> str:
     topic_path = publisher.topic_path(project_id, topic_name)
-    data = serialize_event(event)
+    data = serialize_event(event, extra_fields)
     future = publisher.publish(topic_path, data=data)
     return future.result()
 
@@ -51,6 +60,17 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=os.environ.get("PUBSUB_TOPIC", "market-events-raw"),
         help="Pub/Sub topic name (default: market-events-raw)",
     )
+    parser.add_argument(
+        "--latency-artifact-path",
+        default=None,
+        help="If set, append a JSONL row with publish timestamps to this file.",
+    )
+    parser.add_argument(
+        "--include-latency-metadata",
+        action="store_true",
+        default=False,
+        help="Include producer_created_at in the published payload.",
+    )
     return parser.parse_args(argv)
 
 
@@ -62,8 +82,32 @@ def main(argv: list[str] | None = None) -> None:
         sys.exit(1)
 
     event = build_sample_event()
+
+    extra_fields: dict | None = None
+    producer_created_at: str | None = None
+    if args.include_latency_metadata:
+        producer_created_at = utc_now_iso()
+        extra_fields = {"producer_created_at": producer_created_at}
+
     publisher = pubsub_v1.PublisherClient()
-    message_id = publish_event(publisher, args.project_id, args.topic, event)
+    topic_path = publisher.topic_path(args.project_id, args.topic)
+    data = serialize_event(event, extra_fields)
+    future = publisher.publish(topic_path, data=data)
+    message_id = future.result()
+    pubsub_publish_ack_at = utc_now_iso()
+
+    if args.latency_artifact_path:
+        row = {
+            "status": "published",
+            "event_id": event.event_id,
+            "message_id": message_id,
+            "symbol": event.symbol,
+            "topic": topic_path,
+            "producer_created_at": producer_created_at,
+            "pubsub_publish_ack_at": pubsub_publish_ack_at,
+        }
+        with open(args.latency_artifact_path, "a") as f:
+            f.write(json.dumps(row) + "\n")
 
     print(
         json.dumps(
@@ -72,7 +116,7 @@ def main(argv: list[str] | None = None) -> None:
                 "message_id": message_id,
                 "event_id": event.event_id,
                 "symbol": event.symbol,
-                "topic": publisher.topic_path(args.project_id, args.topic),
+                "topic": topic_path,
             }
         )
     )

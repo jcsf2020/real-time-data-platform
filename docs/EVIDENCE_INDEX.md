@@ -235,6 +235,7 @@ are verified across the evidence base:
 | [docs/gap-closure-snapshot-after-dlq.md](gap-closure-snapshot-after-dlq.md) | SNAPSHOT -- post-50k and post-DLQ gap closure snapshot; summarizes closed gaps, remaining gaps, production-likeness, safe interview positioning, and next branch priorities; Dataflow not implemented; sustained throughput not claimed; exactly-once DLQ semantics not claimed. |
 | [docs/steady-state-throughput-test-plan.md](steady-state-throughput-test-plan.md) | PLAN -- steady-state throughput test plan after 50k bounded load; defines a safe 10 events/sec for 30 minutes validation, acceptance criteria, instrumentation, preflight checks, scale-up path, and explicit non-claims; no events published; no Cloud SQL start; no Terraform apply; sustained throughput NOT YET PROVEN. |
 | [docs/latency-instrumentation-plan.md](latency-instrumentation-plan.md) | PLAN -- latency instrumentation plan; defines producer, worker, and database timestamps required for p50/p95/p99 latency evidence; no events published; no Cloud SQL start; no schema migration; no Terraform apply; latency percentiles NOT YET PROVEN. |
+| [docs/latency-artifact-instrumentation-evidence.md](latency-artifact-instrumentation-evidence.md) | LOCAL VALIDATION -- latency artifact/log instrumentation implemented for Option B; producer artifact and worker stage timestamps are unit-tested; no events published; no Cloud SQL start; no schema migration; no Terraform apply; cloud p50/p95/p99 latency NOT YET PROVEN. |
 
 ---
 
