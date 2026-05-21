@@ -1,0 +1,56 @@
+{
+  "acknowledged_count": 18000,
+  "artifact_path": "docs/evidence/steady-state-10eps-30min-cloud-validation/steady-state-publisher-20260521095522.jsonl",
+  "db_write_latency_ms": {
+    "avg": 29.096,
+    "count": 18000,
+    "max": 500.308,
+    "min": 23.575,
+    "p50": 27.911,
+    "p95": 35.807,
+    "p99": 45.208
+  },
+  "end_to_end_latency_ms": {
+    "avg": 276.863,
+    "count": 18000,
+    "max": 960263.973,
+    "min": 101.877,
+    "p50": 154.385,
+    "p95": 227.59,
+    "p99": 693.995
+  },
+  "expected_total_events": 18000,
+  "latency_sample_count": 18000,
+  "logs_path": "docs/evidence/steady-state-10eps-30min-cloud-validation/worker-logs-20260521095522.json",
+  "matched_event_count": 18000,
+  "matched_worker_log_count": 18001,
+  "missing_event_count": 0,
+  "missing_event_ids_sample": [],
+  "observed_events_per_second": 10.0,
+  "publish_error_count": 0,
+  "publisher_count": 18000,
+  "run_ts": "20260521095522",
+  "status": "ok",
+  "target_duration_seconds": 1800,
+  "target_events_per_second": 10,
+  "test_prefix": "steady10eps-20260521095522",
+  "validation_latency_ms": {
+    "avg": 0.105,
+    "count": 18000,
+    "max": 8.783,
+    "min": 0.052,
+    "p50": 0.097,
+    "p95": 0.143,
+    "p99": 0.222
+  },
+  "worker_log_count_raw": 18001,
+  "worker_processing_latency_ms": {
+    "avg": 29.231,
+    "count": 18000,
+    "max": 500.969,
+    "min": 23.659,
+    "p50": 28.037,
+    "p95": 35.948,
+    "p99": 45.357
+  }
+}

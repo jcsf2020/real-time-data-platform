@@ -1,0 +1,23 @@
+{
+  "acknowledged_count": 18000,
+  "artifact_path": "docs/evidence/steady-state-10eps-30min-cloud-validation/steady-state-publisher-20260521095522.jsonl",
+  "attempted_count": 18000,
+  "avg_publish_interval_ms": 100.002,
+  "elapsed_seconds": 1799.969,
+  "errors_sample": [],
+  "expected_total_events": 18000,
+  "max_publish_interval_ms": 2253.804,
+  "min_publish_interval_ms": 36.405,
+  "observed_events_per_second": 10.0,
+  "project_id": "project-42987e01-2123-446b-ac7",
+  "publish_end_time_utc": "2026-05-21T10:52:35.597149+00:00",
+  "publish_error_count": 0,
+  "publish_start_time_utc": "2026-05-21T09:55:23.981843+00:00",
+  "run_ts": "20260521095522",
+  "status": "ok",
+  "target_duration_seconds": 1800,
+  "target_events_per_second": 10,
+  "test_prefix": "steady10eps-20260521095522",
+  "topic": "projects/project-42987e01-2123-446b-ac7/topics/market-events-raw",
+  "unique_message_ids": 18000
+}
