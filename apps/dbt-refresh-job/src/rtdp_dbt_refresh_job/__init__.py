@@ -13,6 +13,21 @@ _SERVICE = "rtdp-dbt-refresh-job"
 _COMPONENT = "dbt-refresh"
 
 VALID_MODES = frozenset({"compile", "run", "test", "run-and-test"})
+_TRUE_VALUES = frozenset({"1", "true", "yes", "y", "on"})
+_FALSE_VALUES = frozenset({"0", "false", "no", "n", "off"})
+
+
+def _env_bool(name: str, default: bool) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    value = raw.strip().lower()
+    if value in _TRUE_VALUES:
+        return True
+    if value in _FALSE_VALUES:
+        return False
+    raise ValueError(f"{name} must be a boolean-like value, got: {raw!r}")
+
 
 
 def utc_now_iso() -> str:
@@ -99,6 +114,14 @@ def _resolve_config() -> dict:
     if resolved_profiles_dir == repo_dbt_dir or resolved_profiles_dir.is_relative_to(repo_dbt_dir):
         raise ValueError("DBT_PROFILES_DIR must not point inside the repository dbt/ directory")
 
+    project_dir = os.getenv("DBT_PROJECT_DIR", "/app/dbt")
+    metrics_project_id = (
+        os.getenv("DBT_METRICS_PROJECT_ID")
+        or os.getenv("GOOGLE_CLOUD_PROJECT")
+        or os.getenv("GCP_PROJECT")
+        or "project-42987e01-2123-446b-ac7"
+    )
+
     return {
         "mode": mode,
         "host": host,
@@ -107,8 +130,19 @@ def _resolve_config() -> dict:
         "password": password,
         "dbname": dbname,
         "target": os.getenv("DBT_TARGET", "cloudsql"),
-        "project_dir": os.getenv("DBT_PROJECT_DIR", "/app/dbt"),
+        "project_dir": project_dir,
         "profiles_dir": profiles_dir,
+        "metrics_enabled": _env_bool("DBT_METRICS_ENABLED", False),
+        "metrics_dry_run": _env_bool("DBT_METRICS_DRY_RUN", True),
+        "metrics_project_id": metrics_project_id,
+        "metrics_script_path": os.getenv(
+            "DBT_METRICS_SCRIPT_PATH",
+            "/app/scripts/push_dbt_metrics.py",
+        ),
+        "metrics_run_results_path": os.getenv(
+            "DBT_METRICS_RUN_RESULTS_PATH",
+            str(Path(project_dir) / "target" / "run_results.json"),
+        ),
     }
 
 
@@ -142,6 +176,73 @@ def _dbt_cmd(name: str, project_dir: str, profiles_dir: str, target: str, extra:
     if extra:
         cmd += extra
     return cmd
+
+
+def _push_dbt_metrics(
+    cfg: dict,
+    command_name: str,
+    operation: str,
+    mode: str,
+    target: str,
+) -> int:
+    """Push or dry-run dbt artifact metrics after dbt run/test steps."""
+    if not cfg.get("metrics_enabled", False):
+        return 0
+
+    script_path = cfg["metrics_script_path"]
+    run_results_path = cfg["metrics_run_results_path"]
+
+    cmd = [
+        sys.executable,
+        script_path,
+        "--run-results-path",
+        run_results_path,
+        "--project-id",
+        cfg["metrics_project_id"],
+        "--job-name",
+        _SERVICE,
+        "--environment",
+        target,
+    ]
+    if cfg.get("metrics_dry_run", True):
+        cmd.append("--dry-run")
+
+    t0 = time.monotonic()
+    result = subprocess.run(cmd)
+    duration_ms = round((time.monotonic() - t0) * 1000, 3)
+
+    if result.returncode == 0:
+        emit_log({
+            "command": "push dbt metrics",
+            "component": _COMPONENT,
+            "dbt_command": command_name,
+            "dry_run": cfg.get("metrics_dry_run", True),
+            "duration_ms": duration_ms,
+            "mode": mode,
+            "operation": f"{operation}_metrics",
+            "service": _SERVICE,
+            "status": "success",
+            "target": target,
+            "timestamp_utc": utc_now_iso(),
+        })
+    else:
+        emit_log({
+            "command": "push dbt metrics",
+            "component": _COMPONENT,
+            "dbt_command": command_name,
+            "dry_run": cfg.get("metrics_dry_run", True),
+            "duration_ms": duration_ms,
+            "error_message": f"push dbt metrics exited with code {result.returncode}",
+            "error_type": "SubprocessError",
+            "mode": mode,
+            "operation": f"{operation}_metrics",
+            "service": _SERVICE,
+            "status": "error",
+            "target": target,
+            "timestamp_utc": utc_now_iso(),
+        })
+
+    return result.returncode
 
 
 def _run_dbt_step(
@@ -238,6 +339,18 @@ def run(cfg: dict) -> int:
             if rc != 0:
                 exit_code = rc
                 break
+
+            if dbt_name in {"run", "test"}:
+                metrics_rc = _push_dbt_metrics(
+                    cfg,
+                    cmd_name,
+                    operation,
+                    mode,
+                    target,
+                )
+                if metrics_rc != 0:
+                    exit_code = metrics_rc
+                    break
 
     except Exception as exc:
         caught_exc = exc
