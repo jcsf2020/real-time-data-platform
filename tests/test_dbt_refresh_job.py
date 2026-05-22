@@ -593,3 +593,89 @@ def test_resolve_config_explicit_host_overrides_socket_query_host(monkeypatch, t
     cfg = _resolve_config()
 
     assert cfg["host"] == "/cloudsql/other-project:us-central1:other-db"
+
+
+# --- dbt metrics runtime integration ---
+
+
+def test_metrics_disabled_by_default_does_not_call_metrics_script(monkeypatch, tmp_path):
+    _base_env(monkeypatch, tmp_path, mode="run-and-test")
+
+    calls = []
+
+    def capturing_run(cmd, **kwargs):
+        calls.append(cmd)
+        m = MagicMock()
+        m.returncode = 0
+        return m
+
+    with patch("rtdp_dbt_refresh_job.subprocess.run", side_effect=capturing_run):
+        cfg = _resolve_config()
+        rc = run(cfg)
+
+    assert rc == 0
+    assert [cmd[1] for cmd in calls if cmd[0] == "dbt"] == ["deps", "compile", "run", "test"]
+    assert not any("push_dbt_metrics.py" in " ".join(cmd) for cmd in calls)
+
+
+def test_metrics_enabled_dry_run_pushes_after_run_and_test(monkeypatch, tmp_path, capsys):
+    _base_env(monkeypatch, tmp_path, mode="run-and-test")
+    monkeypatch.setenv("DBT_METRICS_ENABLED", "true")
+    monkeypatch.setenv("DBT_METRICS_DRY_RUN", "true")
+    monkeypatch.setenv("DBT_METRICS_SCRIPT_PATH", "/app/scripts/push_dbt_metrics.py")
+    monkeypatch.setenv("DBT_METRICS_RUN_RESULTS_PATH", "/app/dbt/target/run_results.json")
+
+    calls = []
+
+    def capturing_run(cmd, **kwargs):
+        calls.append(cmd)
+        m = MagicMock()
+        m.returncode = 0
+        return m
+
+    with patch("rtdp_dbt_refresh_job.subprocess.run", side_effect=capturing_run):
+        cfg = _resolve_config()
+        rc = run(cfg)
+
+    assert rc == 0
+
+    metrics_calls = [cmd for cmd in calls if "/app/scripts/push_dbt_metrics.py" in cmd]
+    assert len(metrics_calls) == 2
+    assert all("--dry-run" in cmd for cmd in metrics_calls)
+    assert all("--run-results-path" in cmd for cmd in metrics_calls)
+    assert all("/app/dbt/target/run_results.json" in cmd for cmd in metrics_calls)
+
+    logs = _capture_logs(capsys)
+    metric_logs = [lg for lg in logs if lg.get("command") == "push dbt metrics"]
+    assert len(metric_logs) == 2
+    assert all(lg["status"] == "success" for lg in metric_logs)
+    assert {lg["operation"] for lg in metric_logs} == {"dbt_run_metrics", "dbt_test_metrics"}
+
+
+def test_metrics_failure_returns_nonzero_when_enabled(monkeypatch, tmp_path, capsys):
+    _base_env(monkeypatch, tmp_path, mode="run")
+    monkeypatch.setenv("DBT_METRICS_ENABLED", "true")
+    monkeypatch.setenv("DBT_METRICS_DRY_RUN", "true")
+
+    def capturing_run(cmd, **kwargs):
+        m = MagicMock()
+        if "push_dbt_metrics.py" in " ".join(cmd):
+            m.returncode = 3
+        else:
+            m.returncode = 0
+        return m
+
+    with patch("rtdp_dbt_refresh_job.subprocess.run", side_effect=capturing_run):
+        cfg = _resolve_config()
+        rc = run(cfg)
+
+    assert rc == 3
+
+    logs = _capture_logs(capsys)
+    final = logs[-1]
+    assert final["status"] == "error"
+    metric_errors = [
+        lg for lg in logs
+        if lg.get("command") == "push dbt metrics" and lg.get("status") == "error"
+    ]
+    assert len(metric_errors) == 1

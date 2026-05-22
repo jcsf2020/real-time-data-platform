@@ -11,6 +11,7 @@ COPY --from=ghcr.io/astral-sh/uv:0.5.31 /uv /uvx /bin/
 COPY pyproject.toml uv.lock ./
 COPY apps ./apps
 COPY packages ./packages
+COPY scripts ./scripts
 COPY dbt ./dbt
 
 RUN uv sync --package rtdp-dbt-refresh-job --frozen --no-dev
