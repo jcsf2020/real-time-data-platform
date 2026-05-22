@@ -981,7 +981,8 @@ def test_push_calls_gcloud_auth(monkeypatch):
                 "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
                              "value": {"int64Value": "2"}}],
             }
-        ]
+        ],
+        auth_mode="gcloud",
     )
 
     assert len(subprocess_calls) == 1
@@ -1017,7 +1018,7 @@ def test_push_token_in_authorization_header_not_in_subprocess_args(monkeypatch):
                         "value": {"int64Value": "1"}}],
         }
     ]
-    module.push_time_series(ts)
+    module.push_time_series(ts, auth_mode="gcloud")
 
     assert captured_req[0].get_header("Authorization") == "Bearer my_secret_token_xyz"
     # Token must not appear in any subprocess call args
@@ -1056,7 +1057,8 @@ def test_push_raises_on_gcloud_failure(monkeypatch):
                     "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
                                 "value": {"int64Value": "1"}}],
                 }
-            ]
+            ],
+            auth_mode="gcloud",
         )
     except RuntimeError as exc:
         assert "gcloud auth print-access-token failed" in str(exc)
@@ -1087,7 +1089,8 @@ def test_push_raises_on_http_error(monkeypatch):
                     "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
                                 "value": {"int64Value": "1"}}],
                 }
-            ]
+            ],
+            auth_mode="gcloud",
         )
     except RuntimeError as exc:
         assert "Cloud Monitoring push failed" in str(exc)
@@ -1116,7 +1119,8 @@ def test_push_raises_on_url_error(monkeypatch):
                     "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
                                 "value": {"int64Value": "1"}}],
                 }
-            ]
+            ],
+            auth_mode="gcloud",
         )
     except RuntimeError as exc:
         assert "Cloud Monitoring push failed" in str(exc)
@@ -1157,3 +1161,309 @@ def test_no_secrets_in_stdout_during_dry_run(monkeypatch, capsys, tmp_path):
     captured = capsys.readouterr()
     assert fake_token not in captured.out
     assert fake_token not in captured.err
+
+
+# ---------------------------------------------------------------------------
+# _get_metadata_token — metadata server ADC
+# ---------------------------------------------------------------------------
+
+
+def _meta_response(token: str = "meta_tok", expires_in: int = 3600) -> _FakeResponse:
+    body = json.dumps({"access_token": token, "expires_in": expires_in}).encode()
+    return _FakeResponse(body)
+
+
+def _fake_monitoring_urlopen(req, timeout=None):
+    return _FakeResponse()
+
+
+def test_get_metadata_token_returns_access_token(monkeypatch):
+    module = load_module()
+
+    def fake_urlopen(req, timeout=None):
+        return _meta_response("tok_xyz_123")
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    token = module._get_metadata_token()
+    assert token == "tok_xyz_123"
+
+
+def test_get_metadata_token_sends_metadata_flavor_header(monkeypatch):
+    module = load_module()
+    captured: list = []
+
+    def fake_urlopen(req, timeout=None):
+        captured.append(req)
+        return _meta_response()
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+    module._get_metadata_token()
+
+    assert len(captured) == 1
+    assert "metadata.google.internal" in captured[0].full_url
+    assert captured[0].get_header("Metadata-flavor") == "Google"
+
+
+def test_get_metadata_token_raises_on_http_error(monkeypatch):
+    module = load_module()
+
+    def fake_urlopen(req, timeout=None):
+        raise urllib.error.HTTPError(
+            url=req.full_url, code=404, msg="Not Found", hdrs={}, fp=io.BytesIO(b"")
+        )
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    try:
+        module._get_metadata_token()
+    except RuntimeError as exc:
+        assert "Metadata server token acquisition failed" in str(exc)
+    else:
+        raise AssertionError("Expected RuntimeError")
+
+
+def test_get_metadata_token_raises_on_url_error(monkeypatch):
+    module = load_module()
+
+    def fake_urlopen(req, timeout=None):
+        raise urllib.error.URLError(reason="no route to host")
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    try:
+        module._get_metadata_token()
+    except RuntimeError as exc:
+        assert "Metadata server token acquisition failed" in str(exc)
+    else:
+        raise AssertionError("Expected RuntimeError")
+
+
+def test_push_metadata_mode_uses_metadata_token_in_auth_header(monkeypatch):
+    module = load_module()
+    monitoring_reqs: list = []
+    meta_token = "metadata_secret_xyz"
+
+    def fake_urlopen(req, timeout=None):
+        if "metadata.google.internal" in req.full_url:
+            return _meta_response(meta_token)
+        monitoring_reqs.append(req)
+        return _FakeResponse()
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    module.push_time_series(
+        [
+            {
+                "metric": {"type": "custom.googleapis.com/rtdp/dbt/dbt_run_success_count"},
+                "resource": {"type": "global", "labels": {"project_id": PROJECT_ID}},
+                "metricKind": "GAUGE",
+                "valueType": "INT64",
+                "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
+                            "value": {"int64Value": "1"}}],
+            }
+        ],
+        auth_mode="metadata",
+    )
+
+    assert len(monitoring_reqs) == 1
+    assert monitoring_reqs[0].get_header("Authorization") == f"Bearer {meta_token}"
+
+
+def test_push_metadata_mode_does_not_call_gcloud(monkeypatch):
+    module = load_module()
+    subprocess_calls: list = []
+
+    monkeypatch.setattr(
+        module.subprocess, "run", lambda *a, **k: subprocess_calls.append(a)
+    )
+
+    def fake_urlopen(req, timeout=None):
+        if "metadata.google.internal" in req.full_url:
+            return _meta_response()
+        return _FakeResponse()
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    module.push_time_series(
+        [
+            {
+                "metric": {"type": "custom.googleapis.com/rtdp/dbt/dbt_run_success_count"},
+                "resource": {"type": "global", "labels": {"project_id": PROJECT_ID}},
+                "metricKind": "GAUGE",
+                "valueType": "INT64",
+                "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
+                            "value": {"int64Value": "1"}}],
+            }
+        ],
+        auth_mode="metadata",
+    )
+
+    assert len(subprocess_calls) == 0
+
+
+def test_auto_mode_falls_back_to_gcloud_when_metadata_unavailable(monkeypatch):
+    module = load_module()
+    subprocess_calls: list = []
+
+    def fake_urlopen(req, timeout=None):
+        if "metadata.google.internal" in req.full_url:
+            raise urllib.error.URLError(reason="no route to host")
+        return _FakeResponse()
+
+    def fake_run(args, **kwargs):
+        subprocess_calls.append(list(args))
+        return subprocess.CompletedProcess(
+            args=args, returncode=0, stdout="gcloud_fallback_tok\n", stderr=""
+        )
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+
+    module.push_time_series(
+        [
+            {
+                "metric": {"type": "custom.googleapis.com/rtdp/dbt/dbt_run_success_count"},
+                "resource": {"type": "global", "labels": {"project_id": PROJECT_ID}},
+                "metricKind": "GAUGE",
+                "valueType": "INT64",
+                "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
+                            "value": {"int64Value": "1"}}],
+            }
+        ],
+        auth_mode="auto",
+    )
+
+    assert len(subprocess_calls) == 1
+    assert subprocess_calls[0] == ["gcloud", "auth", "print-access-token"]
+
+
+def test_auto_mode_uses_metadata_when_available_skips_gcloud(monkeypatch):
+    module = load_module()
+    subprocess_calls: list = []
+
+    def fake_urlopen(req, timeout=None):
+        if "metadata.google.internal" in req.full_url:
+            return _meta_response("auto_meta_tok")
+        return _FakeResponse()
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.setattr(
+        module.subprocess, "run", lambda *a, **k: subprocess_calls.append(a)
+    )
+
+    module.push_time_series(
+        [
+            {
+                "metric": {"type": "custom.googleapis.com/rtdp/dbt/dbt_run_success_count"},
+                "resource": {"type": "global", "labels": {"project_id": PROJECT_ID}},
+                "metricKind": "GAUGE",
+                "valueType": "INT64",
+                "points": [{"interval": {"endTime": "2026-05-22T12:00:00Z"},
+                            "value": {"int64Value": "1"}}],
+            }
+        ],
+        auth_mode="auto",
+    )
+
+    assert len(subprocess_calls) == 0
+
+
+def test_main_dry_run_does_not_call_metadata_server(monkeypatch, tmp_path):
+    module = load_module()
+    urlopen_calls: list = []
+
+    monkeypatch.setattr(
+        module.urllib.request,
+        "urlopen",
+        lambda *a, **k: urlopen_calls.append(a),
+    )
+
+    f = tmp_path / "run_results.json"
+    f.write_text(json.dumps(_make_run_results()))
+
+    module.main(
+        [
+            "--run-results-path", str(f),
+            "--project-id", PROJECT_ID,
+            "--dry-run",
+        ]
+    )
+
+    assert len(urlopen_calls) == 0
+
+
+def test_metadata_token_not_printed_to_stdout_stderr(monkeypatch, capsys, tmp_path):
+    module = load_module()
+    meta_token = "metadata_secret_token_never_print_xyz"
+
+    def fake_urlopen(req, timeout=None):
+        if "metadata.google.internal" in req.full_url:
+            return _meta_response(meta_token)
+        return _FakeResponse()
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    f = tmp_path / "run_results.json"
+    f.write_text(json.dumps(_make_run_results()))
+
+    module.main(
+        [
+            "--run-results-path", str(f),
+            "--project-id", PROJECT_ID,
+            "--auth-mode", "metadata",
+        ]
+    )
+
+    captured = capsys.readouterr()
+    assert meta_token not in captured.out
+    assert meta_token not in captured.err
+
+def test_get_metadata_token_raises_when_access_token_missing(monkeypatch):
+    module = load_module()
+
+    def fake_urlopen(req, timeout=None):
+        return _FakeResponse(json.dumps({"expires_in": 3600}).encode())
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    try:
+        module._get_metadata_token()
+    except RuntimeError as exc:
+        assert "Metadata server token acquisition failed" in str(exc)
+        assert "missing access_token" in str(exc)
+    else:
+        raise AssertionError("Expected RuntimeError")
+
+
+def test_get_gcloud_token_raises_when_binary_missing(monkeypatch):
+    module = load_module()
+
+    def fake_run(*args, **kwargs):
+        raise FileNotFoundError("gcloud not found")
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+
+    try:
+        module._get_gcloud_token()
+    except RuntimeError as exc:
+        assert "gcloud auth print-access-token failed" in str(exc)
+        assert "gcloud not found" in str(exc)
+    else:
+        raise AssertionError("Expected RuntimeError")
+
+
+def test_get_gcloud_token_raises_on_empty_token(monkeypatch):
+    module = load_module()
+
+    def fake_run(args, **kwargs):
+        return subprocess.CompletedProcess(args=args, returncode=0, stdout="\n", stderr="")
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+
+    try:
+        module._get_gcloud_token()
+    except RuntimeError as exc:
+        assert "empty token" in str(exc)
+    else:
+        raise AssertionError("Expected RuntimeError")

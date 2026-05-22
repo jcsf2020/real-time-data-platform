@@ -1,6 +1,6 @@
 # dbt Metrics Runtime Proof Runbook
 
-Branch: `docs/dbt-metrics-runtime-proof-runbook`
+Branch: `feat/dbt-metrics-metadata-server-auth`
 
 ---
 
@@ -29,7 +29,7 @@ Pure Python script (no third-party dependencies) that:
 - builds Cloud Monitoring time series payloads under the metric prefix `custom.googleapis.com/rtdp/dbt/*`;
 - emits one JSON summary to stdout;
 - **when `--dry-run` is set** (the default), skips all Cloud Monitoring writes and prints a dry-run confirmation to stderr;
-- **when `--dry-run` is not set**, obtains a short-lived access token via `gcloud auth print-access-token` (one subprocess call), posts the time series via `urllib.request`, and never exposes the token in process arguments or stdout.
+- **when `--dry-run` is not set**, obtains a short-lived access token using the configured auth mode (default: `auto`), posts the time series via `urllib.request`, and never exposes the token in process arguments or stdout.
 
 Metrics emitted:
 
@@ -81,7 +81,7 @@ Unit and integration tests for the metrics script itself:
 
 - all tests use `--dry-run` or call pure functions directly;
 - `push_time_series()` is exercised only with mocked `subprocess` and `urllib`;
-- 75 dedicated tests covering parsing, metric construction, dry-run safety, and error paths.
+- tests cover parsing, metric construction, dry-run safety, metadata ADC path, gcloud fallback, and error paths.
 
 ---
 
@@ -388,14 +388,40 @@ Expected: both jobs `PAUSED`. Do not resume them as part of this proof.
 
 The following conditions must be satisfied and explicitly verified before setting `DBT_METRICS_DRY_RUN=false` on any production or production-like execution:
 
-1. **Auth strategy inside the container is confirmed.**
-   The current script obtains a token via `gcloud auth print-access-token`. This works when a user-authenticated `gcloud` context is available (e.g., local development with `gcloud auth login`, or a Cloud Run execution context where `gcloud` is configured with the service account). Inside a containerised Cloud Run job, `gcloud` will use Application Default Credentials (ADC) from the metadata server only if the `gcloud` binary is present in the image and the ADC path is reachable.
-   - **Action required:** Before any live write attempt, verify that `gcloud auth print-access-token` succeeds inside the container. A `DBT_METRICS_DRY_RUN=true` execution does not call `gcloud`, so it is not sufficient to prove live-write authentication.
-   - **Alternative:** Rewrite `push_time_series()` to use the metadata server ADC directly (`http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token`) via `urllib.request`, eliminating the `gcloud` subprocess dependency. This is the recommended path for production container execution.
+1. **Auth strategy is confirmed — metadata server ADC path is now implemented.**
+   `scripts/push_dbt_metrics.py` (PR from branch `feat/dbt-metrics-metadata-server-auth`)
+   replaces the `gcloud auth print-access-token` subprocess with a direct HTTP call to the
+   GCP instance metadata server:
+
+   ```http
+   GET http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token
+   Header: Metadata-Flavor: Google
+   ```
+
+   This call is made entirely via `urllib.request` with a 2-second timeout, requires no
+   additional binaries, and works with the current `python:3.12-slim` base image.
+   The token is parsed from the JSON response and carried in memory only — it is never
+   printed to stdout or stderr.
+
+   The `--auth-mode` flag controls token acquisition:
+
+   | Mode | Behaviour | Suitable for |
+   | --- | --- | --- |
+   | `auto` (default) | Metadata server first; gcloud fallback | Cloud Run (metadata succeeds) or local (gcloud fallback) |
+   | `metadata` | Metadata server only; fails outside GCP | Production Cloud Run |
+   | `gcloud` | gcloud subprocess only | Local development |
+
+   **Note:** The metadata server is only reachable inside GCP runtimes (Cloud Run, GCE, GKE).
+   When running locally, `auto` mode falls back to `gcloud`. When running on Cloud Run,
+   `auto` mode uses the metadata server without requiring `gcloud` in the container image.
+
+   A `DBT_METRICS_DRY_RUN=true` execution bypasses all token acquisition — neither the
+   metadata server nor `gcloud` is called in dry-run mode.
 
 2. **IAM `monitoring.metricWriter` is confirmed on the Cloud Run job's service account.**
    The job runs as a service account. That service account must hold `roles/monitoring.metricWriter` on the project to write to `custom.googleapis.com/rtdp/dbt/*`.
    - **Action required:** Check and apply via Terraform if missing:
+
      ```bash
      gcloud projects get-iam-policy project-42987e01-2123-446b-ac7 \
        --flatten="bindings[].members" \
@@ -403,19 +429,15 @@ The following conditions must be satisfied and explicitly verified before settin
        --format="table(bindings.members)"
      ```
 
-3. **Decision: `gcloud auth print-access-token` or metadata server ADC.**
-   The current implementation uses `gcloud` for portability across local and Cloud Run contexts. Before enabling live writes:
-   - Decide whether the `gcloud` binary will be present in production images (it is not in the current `python:3.12-slim` base).
-   - If not present, the script must switch to metadata server ADC before live writes are enabled.
-   - This decision affects the Dockerfile (adding `google-cloud-cli` layer or replacing the token acquisition logic).
+3. **Only then set `DBT_METRICS_DRY_RUN=false`.**
+   Once steps 1–2 are satisfied, set the variable:
 
-4. **Only then set `DBT_METRICS_DRY_RUN=false`.**
-   Once steps 1–3 are satisfied, set the variable:
    ```bash
    gcloud run jobs update rtdp-dbt-refresh-job \
      --region europe-west1 \
      --update-env-vars DBT_METRICS_ENABLED=true,DBT_METRICS_DRY_RUN=false
    ```
+
    And confirm the first live run by checking Cloud Monitoring for new data points under `custom.googleapis.com/rtdp/dbt/*`.
 
 ---
@@ -467,7 +489,7 @@ Transformation pipelines without metrics are black boxes. This feature adds per-
 
 ### Cloud Monitoring integration design
 
-The metrics script is deliberately written with no third-party dependencies (only `urllib.request`) and communicates with the Cloud Monitoring REST API directly. The access token is obtained in-process via `gcloud` and carried in an HTTP `Authorization` header in memory, never printed to stdout or exposed in subprocess arguments. This follows the same token-handling pattern as `push_bigquery_quality_metrics.py` and demonstrates understanding of secure credential management inside containers.
+The metrics script is deliberately written with no third-party dependencies (only `urllib.request`) and communicates with the Cloud Monitoring REST API directly. The token acquisition supports three modes via `--auth-mode`: `metadata` (GCP instance metadata server — no binary required, works in `python:3.12-slim`), `gcloud` (subprocess fallback for local development), and `auto` (metadata first, gcloud fallback). The token is carried in an HTTP `Authorization` header in memory, never printed to stdout or exposed in subprocess arguments. This follows the same token-handling pattern as `push_bigquery_quality_metrics.py` and demonstrates understanding of secure, container-safe credential management.
 
 ### Safe production rollout
 
@@ -511,4 +533,38 @@ $ gcloud scheduler jobs list --location=europe-west1 \
 ID                              STATE
 rtdp-silver-refresh-scheduler   PAUSED
 rtdp-bigquery-append-scheduler  PAUSED
+```
+
+## Validation Output — feat/dbt-metrics-metadata-server-auth
+
+```
+$ uv run pytest -q
+348 passed in 4.96s
+
+$ uv run ruff check .
+All checks passed!
+
+$ terraform fmt -check -recursive infra/terraform/gcp
+FMT_EXIT=0
+
+$ terraform -chdir=infra/terraform/gcp validate
+Success! The configuration is valid.
+
+$ terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false
+No changes. Your infrastructure matches the configuration.
+PLAN_EXIT=0
+
+$ gcloud sql instances describe rtdp-postgres \
+    --project=project-42987e01-2123-446b-ac7 \
+    --format="table(name,state,settings.activationPolicy)"
+NAME           STATE    ACTIVATION_POLICY
+rtdp-postgres  STOPPED  NEVER
+
+$ gcloud scheduler jobs list \
+    --project=project-42987e01-2123-446b-ac7 \
+    --location=europe-west1 \
+    --format="table(id,state,schedule)"
+ID  STATE   SCHEDULE
+    PAUSED  */15 * * * *
+    PAUSED  0 * * * *
 ```
