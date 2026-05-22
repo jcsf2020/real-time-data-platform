@@ -348,33 +348,85 @@ def build_summary(
     }
 
 
-def push_time_series(time_series: list[dict[str, Any]]) -> None:
+def _get_metadata_token(timeout: float = 2.0) -> str:
+    """Return an ADC token from the GCP instance metadata server.
+
+    Only works inside GCP runtimes (Cloud Run, GCE, GKE). Raises RuntimeError
+    if the server is unreachable or returns an unparseable response — callers
+    in auto mode should catch this and fall back to gcloud.
+    """
+    url = (
+        "http://metadata.google.internal"
+        "/computeMetadata/v1/instance/service-accounts/default/token"
+    )
+    req = urllib.request.Request(url, headers={"Metadata-Flavor": "Google"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read())
+    except (urllib.error.URLError, json.JSONDecodeError, OSError) as exc:
+        raise RuntimeError(f"Metadata server token acquisition failed: {exc}") from exc
+    token = data.get("access_token")
+    if not token:
+        raise RuntimeError("Metadata server token acquisition failed: missing access_token")
+    return token
+
+
+def _get_gcloud_token() -> str:
+    """Return an access token via gcloud CLI (local development only)."""
+    try:
+        result = subprocess.run(
+            ["gcloud", "auth", "print-access-token"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError as exc:
+        raise RuntimeError(f"gcloud auth print-access-token failed: {exc}") from exc
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"gcloud auth print-access-token failed: {result.stderr.strip()}"
+        )
+    token = result.stdout.strip()
+    if not token:
+        raise RuntimeError("gcloud auth print-access-token failed: empty token")
+    return token
+
+
+def _get_token(auth_mode: str) -> str:
+    """Acquire an access token using the specified auth mode.
+
+    'metadata' — GCP metadata server; works in Cloud Run without gcloud in image.
+    'gcloud'   — gcloud CLI subprocess; works locally with gcloud auth login.
+    'auto'     — metadata first, gcloud fallback.
+    """
+    if auth_mode == "metadata":
+        return _get_metadata_token()
+    if auth_mode == "gcloud":
+        return _get_gcloud_token()
+    if auth_mode == "auto":
+        try:
+            return _get_metadata_token()
+        except RuntimeError:
+            return _get_gcloud_token()
+    raise ValueError(f"Unsupported auth_mode: {auth_mode!r}. Use 'metadata', 'gcloud', or 'auto'.")
+
+
+def push_time_series(
+    time_series: list[dict[str, Any]], auth_mode: str = "auto"
+) -> None:
     """Push time series to Cloud Monitoring via the REST API.
 
-    Obtains a short-lived access token via gcloud (one subprocess call), then
-    sends the payload using urllib.request in-process. The token is carried in
-    an HTTP Authorization header in memory and is never exposed in process
-    arguments or printed to stdout/stderr.
+    Acquires a short-lived access token using auth_mode, then sends the payload
+    via urllib.request. The token is kept in memory and never printed.
 
-    This function is isolated from the parsing logic and is never called when
-    --dry-run is set. Tests must not call this function directly.
+    Not called when --dry-run is set. Tests must mock urllib.request.urlopen
+    (and subprocess when auth_mode includes gcloud).
     """
     if not time_series:
         return
 
     project_id = time_series[0]["resource"]["labels"]["project_id"]
-
-    token_result = subprocess.run(
-        ["gcloud", "auth", "print-access-token"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    if token_result.returncode != 0:
-        raise RuntimeError(
-            f"gcloud auth print-access-token failed: {token_result.stderr.strip()}"
-        )
-    token = token_result.stdout.strip()
+    token = _get_token(auth_mode)
 
     url = f"https://monitoring.googleapis.com/v3/projects/{project_id}/timeSeries"
     payload_bytes = json.dumps({"timeSeries": time_series}).encode("utf-8")
@@ -427,6 +479,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--output-json", help="Path to write the JSON summary (also printed to stdout)."
     )
+    parser.add_argument(
+        "--auth-mode",
+        choices=["metadata", "gcloud", "auto"],
+        default="auto",
+        help=(
+            "Token acquisition mode for live Cloud Monitoring writes. "
+            "'metadata' uses the GCP instance metadata server (Cloud Run, GCE). "
+            "'gcloud' uses the gcloud CLI subprocess (local development). "
+            "'auto' tries metadata first, then gcloud. "
+            "Ignored when --dry-run is set."
+        ),
+    )
     args = parser.parse_args(argv)
 
     try:
@@ -471,7 +535,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     try:
-        push_time_series(time_series)
+        push_time_series(time_series, auth_mode=args.auth_mode)
         print(
             f"Pushed {len(time_series)} time series to Cloud Monitoring.",
             file=sys.stderr,
