@@ -25,6 +25,12 @@ resource "google_project_iam_member" "worker_cloudsql_client" {
   member  = local.rtdp_worker_service_account
 }
 
+resource "google_project_iam_member" "worker_monitoring_metric_writer" {
+  project = var.project_id
+  role    = "roles/monitoring.metricWriter"
+  member  = local.rtdp_worker_service_account
+}
+
 resource "google_project_iam_member" "compute_logging_log_writer" {
   project = var.project_id
   role    = "roles/logging.logWriter"
