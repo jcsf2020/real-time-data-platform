@@ -13,7 +13,7 @@ future execution only.
 
 ## 1. Purpose
 
-This plan addresses **Devil's Advocate gap #1**: the existing end-to-end validation evidence
+This plan addresses **critical technical gap #1**: the existing end-to-end validation evidence
 ([docs/gcp-end-to-end-validation.md](gcp-end-to-end-validation.md)) covers only a single
 published event per run. It does not demonstrate that the pipeline can ingest, process, and
 serve a meaningful volume of events under observed conditions.

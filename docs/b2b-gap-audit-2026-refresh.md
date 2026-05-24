@@ -51,7 +51,7 @@ are implemented and evidenced:
 | Scale | 5,000-event bounded bursts validated | Sustained streaming throughput not validated above 5,000 |
 | Data | Synthetic deterministic events | No real-world data variability exercised |
 | dbt | Operationally scheduled via Cloud Scheduler (PAUSED by default); dbt run and test accepted; stored functions preserved as rollback | Scheduler paused by default; not continuously running; incremental models not yet implemented |
-| BigQuery | Analytical tier scaffold implemented (Terraform-managed dataset + 3 tables); bounded backfill of 6,104 rows accepted; analytical query confirmed | No continuous streaming to BigQuery; incremental append path not yet implemented; Dataflow not implemented |
+| BigQuery | Analytical tier scaffold implemented (Terraform-managed dataset + 3 tables); bounded backfill of 6,104 rows accepted; analytical query confirmed | No continuous streaming to BigQuery; incremental append path not yet implemented; no production streaming Dataflow; bounded DataflowRunner proof validated (see dataflow-bounded-runner-proof-evidence.md) |
 | CI/CD | CI green on every push; manual deploys tested | No automatic deploy-on-merge |
 | Multi-environment | Single GCP project / environment | No staging, no canary, no multi-region |
 | SLO | Defined and documented | Aspirational targets; no continuous measurement |
@@ -227,7 +227,7 @@ Ranked by technical relevance, implementation risk, and recommended priority.
 | 1 | BigQuery incremental append / recurring data movement | BigQuery scaffold and bounded backfill are accepted (6,104 rows; PLAN_EXIT=0). Remaining gap: continuous or scheduled incremental data movement from Pub/Sub or Cloud SQL to BigQuery; new events must appear in BigQuery without a full reload | High | Medium | P0 |
 | 2 | Automatic deploy-on-merge | Convert at least one deploy workflow from `workflow_dispatch` to `push` trigger on `main`, with a documented rollback path | Medium | Low | P1 |
 | 3 | Incremental dbt models | Convert silver and gold from full-refresh table materialization to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` | Medium | Low | P2 |
-| 4 | Dataflow / streaming enrichment | Replace or augment the Cloud Run worker with a Dataflow pipeline for windowed aggregations | Medium | High | P2 |
+| 4 | Dataflow / streaming enrichment | Bounded Apache Beam / DataflowRunner proof validated (JOB_STATE_DRAINED; 10 proof rows to rtdp_analytics.market_events_beam_proof; see dataflow-bounded-runner-proof-evidence.md). Remaining gap: production windowed/stateful Dataflow streaming. No sustained always-on Dataflow pipeline exists. | Medium | High | P2 |
 | 5 | Sustained throughput validation | Validate steady-state streaming above 5,000 events (e.g. a 10-minute continuous publish at 50 msg/s ≈ 30,000 events) | Medium | Low | P2 |
 | 6 | dbt observability metrics | Add Cloud Monitoring metrics specific to the dbt refresh job (run duration, test pass/fail count) | Low | Low | P3 |
 | 7 | Stored-function retirement | Remove `silver.refresh_market_event_minute_aggregates()` and `gold.refresh_market_event_daily_aggregates()` from `infra/postgres/init.sql` once operational confidence in the dbt path is established | Low | Low | P3 |
@@ -410,8 +410,8 @@ production deployment would require.
 
 | Dimension | Score (0–10) | Basis |
 |---|---|---|
-| GCP alignment | 9 | Pub/Sub, Cloud Run (services + jobs), Cloud SQL, Secret Manager, Artifact Registry, Workload Identity, Cloud Monitoring, Cloud Scheduler all deployed and IaC-managed. BigQuery analytical tier scaffold implemented (rtdp_analytics dataset, 3 Terraform-managed tables; bounded backfill of 6,104 rows accepted; analytical query confirmed). Dataflow absent. |
-| Real-time / event-driven architecture | 7 | Full Pub/Sub → Cloud Run → PostgreSQL path validated at 5,000 events. DLQ configured. No Dataflow / windowed streaming. Bounded bursts only. No continuous streaming to BigQuery. |
+| GCP alignment | 9 | Pub/Sub, Cloud Run (services + jobs), Cloud SQL, Secret Manager, Artifact Registry, Workload Identity, Cloud Monitoring, Cloud Scheduler all deployed and IaC-managed. BigQuery analytical tier scaffold implemented (rtdp_analytics dataset, 3 Terraform-managed tables; bounded backfill of 6,104 rows accepted; analytical query confirmed). Bounded DataflowRunner proof validated; no production windowed Dataflow streaming. |
+| Real-time / event-driven architecture | 7 | Full Pub/Sub → Cloud Run → PostgreSQL path validated at 5,000 events. DLQ configured. Bounded DataflowRunner proof validated (10 proof rows, JOB_STATE_DRAINED); no production windowed Dataflow streaming. Bounded bursts only. No continuous streaming to BigQuery. |
 | IaC maturity | 8 | 100% of GCP resources in Terraform with zero-diff plans and GCS remote state. Workload Identity for CI auth. All resources applied; no `terraform apply` executed without a scoped evidence branch. |
 | dbt / transformation maturity | 8 | Silver and gold models with 22 tests. CI validates on every push. Cloud SQL parity confirmed. `rtdp-dbt-refresh-job` deployed, executed, and scheduler-triggered execution accepted. dbt is the operational scheduled transformation path; stored functions preserved as rollback. Incremental models not yet implemented. |
 | Observability | 7 | 4 logs-based metrics with datapoints, 4-panel dashboard, 2 alert policies, email notification channel, DLQ. No distributed tracing. No BigQuery-specific metrics. |

@@ -257,7 +257,7 @@ value and implementation feasibility.
 | 5 | Analytics layer depth — distribution anomalies | Current checks cover row count, nulls, uniqueness, accepted values, freshness, staging empty, and volume threshold. Distribution anomalies and advanced freshness SLA enforcement are not yet implemented. | Medium | Low | P2 |
 | 6 | Automatic deploy-on-merge (CD) | Both deploy workflows require manual `workflow_dispatch`. No deploy happens automatically on merge to main. | Medium | Low | P2 |
 | 7 | Incremental dbt models | Silver and gold models use full-refresh table materialization. Conversion to incremental merge on `(symbol, window_start)` / `(symbol, event_date)` is not yet done. | Medium | Low | P2 |
-| 8 | Dataflow / streaming enrichment | Pub/Sub → BigQuery via Dataflow for windowed aggregations is not implemented. Cloud Run is the worker; no stateful streaming. | Low | High | P3 |
+| 8 | Dataflow / streaming enrichment | Bounded Apache Beam / DataflowRunner proof validated (JOB_STATE_DRAINED; 10 proof rows to rtdp_analytics.market_events_beam_proof; see dataflow-bounded-runner-proof-evidence.md). The previous binary gap "no Dataflow evidence" is closed. Remaining gap: production windowed/stateful Dataflow streaming. No sustained always-on Dataflow pipeline exists. | Low | High | P3 |
 | 9 | Sustained throughput above 5,000 events | Load tests are bounded bursts only. Sustained steady-state streaming throughput is not validated. | Low | Low | P3 |
 | 10 | Multi-environment (staging) | Single GCP project. No staging environment, no canary, no multi-region. | Low | High | P3 |
 
@@ -316,8 +316,8 @@ candidate from a junior one:
 
 | Dimension | Score (0–10) | Basis |
 |---|---|---|
-| GCP breadth | 9 | Pub/Sub, Cloud Run (services + jobs), Cloud SQL, BigQuery, Secret Manager, Artifact Registry, Workload Identity, Cloud Monitoring, Cloud Scheduler all deployed and IaC-managed. Dataflow absent. |
-| Real-time / event-driven architecture | 7 | Full Pub/Sub → Cloud Run → Cloud SQL path at 5,000 events. DLQ configured. Incremental append to BigQuery proven. No Dataflow / windowed streaming. Bounded bursts only. |
+| GCP breadth | 9 | Pub/Sub, Cloud Run (services + jobs), Cloud SQL, BigQuery, Secret Manager, Artifact Registry, Workload Identity, Cloud Monitoring, Cloud Scheduler all deployed and IaC-managed. Bounded DataflowRunner proof validated; no production streaming Dataflow. |
+| Real-time / event-driven architecture | 7 | Full Pub/Sub → Cloud Run → Cloud SQL path at 5,000 events. DLQ configured. Incremental append to BigQuery proven. Bounded DataflowRunner proof validated; no production windowed Dataflow streaming. Bounded bursts only. |
 | IaC maturity | 8 | 100% resources in Terraform. GCS remote state. Zero-diff plans. Workload Identity for CI. Phased import approach documented. |
 | dbt / transformation | 8 | 22 dbt tests. CI on every push. Cloud SQL parity confirmed. Scheduler-triggered execution accepted. Stored functions preserved as rollback. Incremental models not yet implemented. |
 | Data quality | 8 | 8-check quality script (`row_count_minimum` always included; `freshness_max_age_hours` skipped when 0). Manual CI workflow proven (Run ID 25982120058). Controlled failure proven (Run ID 26007909020). Artifact preserved on failure. GitHub Actions UI failure surface observable. `freshness_max_age_hours` live validation and email/bell/Cloud Monitoring NOT PROVEN. Scheduled execution NOT YET PROVEN. |
@@ -412,7 +412,7 @@ The following claims must NOT be made from the current evidence:
 | "Schedulers were executed during the quality workflow proofs" | No schedulers were executed during Run ID 26007825072 or Run ID 26007909020. |
 | "BigQuery data was modified by quality checks" | All quality check SQL is read-only SELECT only. No mutation. |
 | "Platform handles production-scale continuous traffic" | Platform operates in bounded validation windows. Cloud SQL is NEVER/STOPPED by default. Not a continuously running production service. |
-| "Dataflow is implemented" | Dataflow is not implemented. Cloud Run is the worker; no stateful windowed streaming. |
+| "Production streaming Dataflow is implemented" | Bounded Apache Beam / DataflowRunner proof validated (10 proof rows, JOB_STATE_DRAINED; see dataflow-bounded-runner-proof-evidence.md). Production streaming Dataflow is not claimed. No windowed or stateful production Dataflow pipeline exists. No sustained always-on Dataflow pipeline. |
 | "Automated deploy on merge" | Both deploy workflows require manual workflow_dispatch. |
 
 ---

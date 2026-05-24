@@ -73,7 +73,7 @@ run IDs. Claims that cannot be evidenced are not made.
 
 | Item | Correct Statement |
 |---|---|
-| Dataflow / stateful windowed streaming | Not implemented. Cloud Run is the worker. No Dataflow pipeline exists in this repository. |
+| Dataflow / stateful windowed streaming | Bounded Apache Beam / DataflowRunner proof validated (10 proof rows, JOB_STATE_DRAINED; see dataflow-bounded-runner-proof-evidence.md). No production streaming Dataflow. No sustained always-on Dataflow pipeline. Windowed aggregations and late-event handling are not claimed. |
 | Continuous production traffic | Not a continuously running production service. Compute is inactive outside bounded validation windows. |
 | Sustained throughput above 5,000 events | Bounded burst tests only. Steady-state streaming throughput is not validated. |
 | Automatic deploy-on-merge (CD) | Both deploy workflows require explicit manual `workflow_dispatch`. No deploy happens automatically on merge. |
@@ -147,9 +147,7 @@ expected in a senior data or platform engineering role.
 | IaC-first engineering | 100% Terraform; GCS remote state; zero-diff plans; phased import documentation |
 | Evidence-based delivery | 60+ evidence documents; EVIDENCE_INDEX; ARCHITECTURE_REVIEW; explicit gap tracking with NOT YET PROVEN markers |
 
-**Biggest positioning gap for real-time roles:** Dataflow is not implemented. Cloud Run is
-the current worker; no stateful windowed aggregations exist. This is the most visible gap
-against a job description requiring Dataflow or Apache Beam experience.
+**Biggest positioning gap for real-time roles:** Bounded Apache Beam / DataflowRunner proof validated (see dataflow-bounded-runner-proof-evidence.md). The previous binary "no Dataflow evidence" gap is closed. Remaining gap against streaming-first job descriptions: production windowed/stateful Dataflow streaming; no sustained always-on Dataflow pipeline exists.
 
 **Biggest dbt gap for senior roles:** Incremental materialization is not yet implemented.
 Models use full-refresh table materialization. Converting to incremental merge is the
@@ -166,7 +164,7 @@ Confirmed as of 2026-05-19, ranked by B2B / recruiter value:
 | GitHub notification bell delivery | Not yet proven | Prove bell delivery on a quality failure -- no code change required |
 | Incremental dbt models | Not yet implemented | Convert silver and gold to incremental merge materialization |
 | Automatic deploy-on-merge | Manual `workflow_dispatch` only | Add push trigger on `main` scoped to the worker service |
-| Dataflow streaming enrichment | Not implemented | Implement Pub/Sub to Dataflow to BigQuery for windowed aggregations; largest step-change in real-time credibility; highest implementation cost |
+| Dataflow production windowed streaming | Bounded proof validated; production streaming not implemented | Bounded DataflowRunner proof validated (see dataflow-bounded-runner-proof-evidence.md); remaining step is production windowed/stateful Dataflow streaming for streaming-first JDs |
 | Sustained throughput above 5,000 events | Not validated | Validate steady-state streaming at 50 msg/s sustained over a timed window |
 
 The platform is at a stage where the evidence base supports a senior Data Engineer or Data

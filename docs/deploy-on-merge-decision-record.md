@@ -772,7 +772,7 @@ evidence artifact uploaded
 
 ---
 
-## 14. Devil's Advocate Review
+## 14. Critical Technical Review
 
 The following challenges are stated as they would actually be raised by a senior technical
 interviewer or hiring manager. Each answer is evidence-based, not apologetic.
@@ -1001,7 +1001,7 @@ terraform fmt -check -recursive infra/terraform/gcp
 terraform -chdir=infra/terraform/gcp validate
 terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false; echo "PLAN_EXIT=$?"
 grep -En "deploy-on-merge-decision-record|DECISION RECORD -- deploy-on-merge" docs/EVIDENCE_INDEX.md
-grep -En "Deploy|Promotion|GitHub Environments|Validation Gates|Rollback|Terraform Apply|Staging|Recruitment|Devil|Explicit Non-Claims|Final Recommendation" docs/deploy-on-merge-decision-record.md
+grep -En "Deploy|Promotion|GitHub Environments|Validation Gates|Rollback|Terraform Apply|Staging|Recruitment|Critical|Explicit Non-Claims|Final Recommendation" docs/deploy-on-merge-decision-record.md
 gcloud sql instances describe rtdp-postgres --project=project-42987e01-2123-446b-ac7 --format="table(name,state,settings.activationPolicy)"
 gcloud scheduler jobs list --project=project-42987e01-2123-446b-ac7 --location=europe-west1 --format="table(id,state,schedule)"
 git status --short --branch

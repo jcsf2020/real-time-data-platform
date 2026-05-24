@@ -753,7 +753,7 @@ precisely because unexpected Cloud SQL activity incurs immediate and unbounded c
 
 ---
 
-## 16. Devil's Advocate Review
+## 16. Critical Technical Review
 
 ### "Are these real SLOs or just documentation?"
 
@@ -906,7 +906,7 @@ on the Real-Time Data Platform. It:
 - Documents the relationship to all 5 related plans with explicit implementation dependencies.
 - Provides a 6-phase implementation roadmap (P0–P6).
 - Provides an honest production-likeness assessment.
-- Includes 6 devil's advocate answers.
+- Includes 6 Critical Technical Review answers.
 - States 13 explicit non-claims.
 - Provides honest and accurate recruitment positioning.
 
@@ -962,7 +962,7 @@ terraform fmt -check -recursive infra/terraform/gcp
 terraform -chdir=infra/terraform/gcp validate
 terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false; echo "PLAN_EXIT=$?"
 grep -En "slo-burn-rate-monitoring-plan|PLAN -- SLO burn-rate" docs/EVIDENCE_INDEX.md
-grep -En "SLO|SLI|Error Budget|Burn-Rate|Burn Rate|Alerting|Page|Ticket|Dashboard|Incident|Devil|Explicit Non-Claims|Final Recommendation" docs/slo-burn-rate-monitoring-plan.md
+grep -En "SLO|SLI|Error Budget|Burn-Rate|Burn Rate|Alerting|Page|Ticket|Dashboard|Incident|Critical|Explicit Non-Claims|Final Recommendation" docs/slo-burn-rate-monitoring-plan.md
 gcloud sql instances describe rtdp-postgres --project=project-42987e01-2123-446b-ac7 --format="table(name,state,settings.activationPolicy)"
 gcloud scheduler jobs list --project=project-42987e01-2123-446b-ac7 --location=europe-west1 --format="table(id,state,schedule)"
 git status --short --branch

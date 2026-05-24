@@ -14,7 +14,7 @@ dbt, Terraform, CI, structured logs, Cloud Monitoring metrics, and alerting.
 The platform was validated at 50,000 events in a controlled cloud run with zero errors
 and zero duplicate rows.
 This is bounded evidence, not a sustained production benchmark.
-Dataflow is not implemented.
+Bounded Apache Beam / DataflowRunner proof validated (JOB_STATE_DRAINED; 10 proof rows to rtdp_analytics.market_events_beam_proof). Production streaming Dataflow is not implemented.
 
 ---
 
@@ -101,8 +101,7 @@ Evidence document: [docs/load-test-50000-cloud-evidence.md](load-test-50000-clou
 
 > "I validated a GCP event-processing path at 50,000 events with Pub/Sub, Cloud Run,
 > Cloud SQL, structured logs, Cloud Monitoring metrics, Terraform zero-diff checks, and
-> indexed evidence. I do not claim sustained production throughput or Dataflow
-> implementation; I present it as bounded, evidence-backed platform work."
+> indexed evidence. A bounded Apache Beam / DataflowRunner proof is validated. I do not claim sustained production throughput, production streaming Dataflow, or windowed streaming aggregations; I present it as bounded, evidence-backed platform work."
 
 ---
 
@@ -110,8 +109,7 @@ Evidence document: [docs/load-test-50000-cloud-evidence.md](load-test-50000-clou
 
 The following items are explicitly not part of this project's evidence base:
 
-- **Dataflow implemented.** Cloud Run is the worker. No Apache Beam or Dataflow pipeline
-  exists. Windowed aggregations, stateful streaming, and late-event handling are not proven.
+- **Production streaming Dataflow.** Bounded Apache Beam / DataflowRunner proof validated (see dataflow-bounded-runner-proof-evidence.md). Production streaming Dataflow is not claimed. No windowed or stateful production Dataflow pipeline exists. No sustained always-on Dataflow pipeline.
 
 - **Sustained production throughput.** All load tests are bounded, deterministic bursts.
   No steady-state streaming at constant throughput over an extended window is validated.
@@ -150,7 +148,7 @@ The following items are explicitly not part of this project's evidence base:
 
 | Document | What It Contains |
 |---|---|
-| [docs/executive-platform-audit-after-50k.md](executive-platform-audit-after-50k.md) | Full post-50k platform audit with devil-advocate review, gap tracking, and recruiter translation |
+| [docs/executive-platform-audit-after-50k.md](executive-platform-audit-after-50k.md) | Full post-50k platform audit with critical technical review, gap tracking, and recruiter translation |
 | [docs/load-test-50000-cloud-evidence.md](load-test-50000-cloud-evidence.md) | Primary 50,000-event cloud load test evidence with all acceptance criteria |
 | [docs/EVIDENCE_INDEX.md](EVIDENCE_INDEX.md) | Master evidence catalog -- 60+ documents by category |
 | [docs/gcp-architecture.md](gcp-architecture.md) | GCP service mapping and validated event-processing path |

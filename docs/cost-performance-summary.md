@@ -205,7 +205,7 @@ The following are explicitly not claimed by this document or this branch:
 - Saturation point is not claimed.
 - Multi-day production stability is not claimed.
 - Exactly-once production semantics are not claimed.
-- Dataflow is not implemented.
+- Bounded Apache Beam / DataflowRunner proof validated (see dataflow-bounded-runner-proof-evidence.md). No sustained production Dataflow pipeline exists; no production Dataflow cost is claimed.
 - Enterprise-grade latency SLO enforcement is not claimed.
 
 ---

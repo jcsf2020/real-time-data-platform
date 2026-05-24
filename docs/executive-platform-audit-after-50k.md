@@ -221,7 +221,7 @@ The following gaps are confirmed as of 2026-05-20. They are stated precisely, no
 
 ---
 
-## 7. Devil Advocate Review
+## 7. Critical Technical Review
 
 A senior technical reviewer evaluating this platform for a data engineering role may raise
 the following challenges. Each challenge has an evidence-backed answer and should not be
