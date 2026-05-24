@@ -542,3 +542,57 @@ def test_proof_topic_and_subscription_are_distinct_resources() -> None:
     assert "/topics/" in DATAFLOW_PROOF_TOPIC
     assert "/subscriptions/" in DATAFLOW_PROOF_SUBSCRIPTION
     assert "/topics/" not in DATAFLOW_PROOF_SUBSCRIPTION
+
+
+# --- Dataflow packaging: extra_packages wheel staging ---
+
+
+def test_no_setup_py_at_repo_root() -> None:
+    # setup.py must NOT exist: running it from repo root reads root pyproject.toml,
+    # overwrites name to real-time-data-platform and install_requires to [], and stages
+    # the wrong artifact with no pydantic dependency.
+    assert not (_PROJECT_ROOT / "setup.py").exists(), (
+        "setup.py must not exist at repo root. It reads root pyproject.toml and produces "
+        "a broken sdist (wrong name, empty install_requires). Use --extra_packages instead."
+    )
+
+
+def test_contracts_wheel_can_be_built_and_contains_rtdp_contracts(tmp_path: Path) -> None:
+    import zipfile
+
+    result = subprocess.run(
+        [
+            "uv",
+            "build",
+            str(_PROJECT_ROOT / "packages" / "contracts"),
+            "--wheel",
+            "--out-dir",
+            str(tmp_path),
+        ],
+        cwd=str(_PROJECT_ROOT),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, f"uv build failed:\n{result.stdout}\n{result.stderr}"
+    wheels = list(tmp_path.glob("rtdp_contracts-*.whl"))
+    assert wheels, f"No rtdp_contracts wheel found. uv output:\n{result.stdout}"
+    with zipfile.ZipFile(wheels[0]) as zf:
+        names = zf.namelist()
+        meta_files = [n for n in names if n.endswith("/METADATA")]
+        assert meta_files, f"No METADATA in wheel: {names}"
+        metadata = zf.read(meta_files[0]).decode()
+    assert any("rtdp_contracts" in n for n in names), f"rtdp_contracts not in wheel: {names}"
+    assert "pydantic" in metadata.lower(), f"pydantic missing from wheel METADATA:\n{metadata[:800]}"
+
+
+def test_run_dataflow_source_uses_extra_packages_not_setup_file() -> None:
+    import pipelines.beam_market_events as m
+
+    source = inspect.getsource(m)
+    assert "extra_packages" in source, (
+        "run_dataflow() must set extra_packages to stage rtdp_contracts wheel to workers"
+    )
+    assert "setup_opts.setup_file" not in source, (
+        "setup_opts.setup_file must not be set: setup.py from repo root reads pyproject.toml "
+        "and produces a broken sdist (wrong name, empty install_requires)"
+    )

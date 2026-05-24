@@ -1,8 +1,208 @@
 # Dataflow Bounded Runner Proof Evidence
 
-**Branch:** `feat/dataflow-bounded-market-events-proof`
+**Branch:** `feat/dataflow-bounded-market-events-proof` → execution branch `exec/dataflow-bounded-runner-proof`
 **Date:** 2026-05-24
-**Status:** IMPLEMENTED -- DataflowRunner code path and bounded runbook added; proof-only topic isolation applied (first apply: 2 added, 0 changed, 1 destroyed; second apply: 2 added, 0 changed, 0 destroyed; post-apply PLAN_EXIT=0); GCP execution pending operator approval.
+**Status:** PACKAGING FIX v2 APPLIED -- first Dataflow execution attempt failed (JOB_STATE_CANCELLED; ModuleNotFoundError: No module named 'rtdp_contracts'); initial fix (setup.py + --setup_file) was broken (setuptools read root pyproject.toml, overwrote name and install_requires); corrected to --extra_packages with wheel built from packages/contracts via uv build; second execution pending operator approval.
+
+---
+
+## Failed Execution Run (2026-05-24) — Packaging Failure
+
+### Run summary
+
+| Field | Value |
+|---|---|
+| Dataflow job ID | `2026-05-23_23_00_38-6447348894342053834` |
+| Final job state | `JOB_STATE_CANCELLED` |
+| Run ID (advisory) | `beam-proof-20260524T055218Z` |
+| BigQuery proof table rows written | **0** |
+| Cloud SQL state | STOPPED / NEVER (unchanged) |
+| Schedulers state | PAUSED (unchanged) |
+| Dataflow API | Enabled — API enablement confirmed |
+| Production resources mutated | None |
+
+### Root cause
+
+The Dataflow worker failed during startup with:
+
+```text
+ModuleNotFoundError: No module named 'rtdp_contracts'
+```
+
+`rtdp_contracts` is a local uv workspace package (`packages/contracts/src/rtdp_contracts/`).
+`save_main_session=True` pickles the main session's global namespace but does **not** install
+missing Python packages on workers. Workers booted with only the standard Beam SDK packages
+and could not import `rtdp_contracts`.
+
+This is a **packaging failure only**. It is not a Pub/Sub, BigQuery, IAM, or Dataflow API failure.
+The proof topic, subscription, and BigQuery table were all correctly configured.
+
+### Pre-run local failure (GCP dependencies missing)
+
+Before the Dataflow job was submitted, the local launch failed because the GCP extras for
+Apache Beam were not installed:
+
+```text
+cannot import name 'storage' from 'google.cloud'
+TypeError: isinstance() arg 2 must be a type...
+```
+
+Fix: `uv add "apache-beam[gcp]==2.70.0"` — this resolved local GCP imports:
+
+```text
+from google.cloud import storage        # OK
+from apache_beam.io.gcp import bigquery # OK
+GCP_BEAM_IMPORTS_OK=true
+```
+
+The `uv add` incorrectly placed `apache-beam[gcp]==2.70.0` in `[project].dependencies`
+(root-package runtime deps). This is corrected in the packaging fix below.
+
+---
+
+## Packaging Fix v1 (2026-05-24) — setup.py + --setup_file — BROKEN
+
+### Why setup.py at repo root does not work
+
+The first fix attempt created `setup.py` at the repo root and set `setup_opts.setup_file`
+in `run_dataflow()`. This approach is **broken** and has been superseded.
+
+When Beam runs `python setup.py sdist` from the repo root, `setuptools` reads the root
+`pyproject.toml` and silently overwrites the metadata declared in `setup.py`:
+
+```text
+SetuptoolsWarning: `install_requires` overwritten in `pyproject.toml` (dependencies)
+```
+
+The resulting sdist has:
+
+| Field | Declared in setup.py | Actual value (read from pyproject.toml) |
+| --- | --- | --- |
+| `name` | `rtdp-pipeline-deps` | `real-time-data-platform` |
+| `install_requires` | `["pydantic>=2.13.3"]` | `[]` (empty — root has no runtime deps) |
+| Contents | `packages/contracts/src/rtdp_contracts` | Same, but wrong metadata |
+
+Workers receive a tarball named `real-time-data-platform-0.1.0.tar.gz` with no `pydantic`
+dependency. Even if `rtdp_contracts` is importable, any `pydantic` import inside it would
+fail on workers that do not have `pydantic` pre-installed.
+
+The `setup.py` has been removed. `setuptools>=75.0` has been removed from dev deps.
+
+---
+
+## Packaging Fix v2 (2026-05-24) — --extra_packages with uv-built wheel — CORRECT
+
+### Chosen solution
+
+Use Apache Beam's `--extra_packages` mechanism with a wheel built from `packages/contracts`
+via `uv build`. Beam stages the wheel to GCS; workers `pip install` it on boot.
+
+**Why this works:** `uv build packages/contracts --wheel` runs the `uv_build` backend
+defined in `packages/contracts/pyproject.toml` — not in the root. The resulting wheel has:
+
+```text
+Name: rtdp-contracts
+Version: 0.1.0
+Requires-Dist: pydantic>=2.13.3
+```
+
+The wheel contains `rtdp_contracts/__init__.py` with the correct `MarketEvent` model and
+declares `pydantic` as its dependency. Workers receive and install this wheel at boot.
+
+### Rejected options
+
+| Option | Why rejected |
+|---|---|
+| `--setup_file` with repo-root `setup.py` | setuptools reads root `pyproject.toml`, overwrites name and `install_requires`; staged artifact has wrong name and empty deps |
+| `--requirements_file` | Only works for PyPI packages; cannot install local workspace packages |
+| Custom Dataflow container | Heavy overhead; overkill for a proof; requires Docker build pipeline |
+| Inline validation (no import) | Duplicates `MarketEvent` validation logic; violates DRY; increases maintenance surface |
+| Pre-built wheel committed to repo | Binaries should not be committed; wheel is trivially reproducible from source |
+
+### Implementation
+
+**New function `_build_contracts_wheel()` in `pipelines/beam_market_events.py`:**
+
+```python
+def _build_contracts_wheel() -> str:
+    wheel_dir = _REPO_ROOT / "dist" / "beam-staging"
+    wheel_dir.mkdir(parents=True, exist_ok=True)
+    for old in wheel_dir.glob("rtdp_contracts-*.whl"):
+        old.unlink()
+    subprocess.run(
+        ["uv", "build", str(_REPO_ROOT / "packages" / "contracts"),
+         "--wheel", "--out-dir", str(wheel_dir)],
+        cwd=str(_REPO_ROOT),
+        check=True,
+    )
+    wheels = sorted(wheel_dir.glob("rtdp_contracts-*.whl"))
+    if not wheels:
+        raise RuntimeError(...)
+    return str(wheels[-1])
+```
+
+**`run_dataflow()` change:**
+
+```python
+# Before (broken --setup_file):
+setup_opts.save_main_session = True
+setup_opts.setup_file = str(_REPO_ROOT / "setup.py")
+
+# After (correct --extra_packages):
+setup_opts.save_main_session = True
+contracts_wheel = _build_contracts_wheel()
+setup_opts.extra_packages = [contracts_wheel]
+```
+
+### Fix v2 — `pyproject.toml` dependency placement corrected
+
+`apache-beam[gcp]==2.70.0` was incorrectly placed in `[project].dependencies` by `uv add`.
+`setuptools>=75.0` was added by fix v1 for `python setup.py sdist` (no longer needed).
+Both are corrected in fix v2.
+
+| Field | Before (broken) | After (correct) |
+|---|---|---|
+| `[project].dependencies` | `apache-beam[gcp]==2.70.0` | `[]` (empty) |
+| `[dependency-groups].dev` | `apache-beam>=2.60.0` + `setuptools>=75.0` | `apache-beam[gcp]==2.70.0` (only) |
+
+**Trade-off**: `apache-beam[gcp]` is a dev/tooling dependency (pipeline submission, local tests).
+It is NOT a runtime dependency of the workspace root package. `uv run pytest` and
+`uv run python -m pipelines.beam_market_events` both work because `uv run` includes dev
+dependencies by default.
+
+### Packaging fix v2 files changed
+
+| File | Change |
+|---|---|
+| `setup.py` | DELETED — was broken; replaced by `_build_contracts_wheel()` + `--extra_packages` |
+| `pyproject.toml` | `apache-beam[gcp]==2.70.0` moved from `[project].dependencies` to `dev`; `setuptools>=75.0` removed |
+| `.gitignore` | `dist/` and `*.egg-info/` added (wheel output dir and stray egg-info artifacts) |
+| `pipelines/beam_market_events.py` | Added `subprocess` import, `_build_contracts_wheel()` function, `extra_packages` in `run_dataflow()` |
+| `tests/test_beam_market_events.py` | 3 new packaging tests: no setup.py, wheel builds correctly with pydantic dep, source uses extra_packages |
+
+### Wheel contents verified locally
+
+```text
+Files: rtdp_contracts/__init__.py, rtdp_contracts-0.1.0.dist-info/METADATA, ...
+Name: rtdp-contracts
+Version: 0.1.0
+Requires-Dist: pydantic>=2.13.3
+Requires-Python: >=3.12
+```
+
+### Local venv note
+
+After `uv add "apache-beam[gcp]==2.70.0"` modified `pyproject.toml` and `uv.lock`, the
+workspace member packages (`rtdp_contracts`, etc.) were not installed in the local venv by
+plain `uv sync`. The correct command to install ALL workspace members is:
+
+```bash
+uv sync --all-packages
+```
+
+This is required because `uv sync` without `--all-packages` only installs the root package
+and its direct dependencies (not all workspace members). The `uv sync --all-packages` command
+is idempotent and safe to re-run.
 
 ---
 
