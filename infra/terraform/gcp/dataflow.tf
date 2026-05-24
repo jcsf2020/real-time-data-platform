@@ -36,14 +36,27 @@ resource "google_storage_bucket" "rtdp_dataflow_staging" {
 }
 
 # ---------------------------------------------------------------------------
+# Pub/Sub Proof Topic (proof-only)
+# Isolated from the production topic market-events-raw.
+# Publishing test events here does NOT fan out to the production push
+# subscription market-events-raw-worker-push.
+# ---------------------------------------------------------------------------
+
+resource "google_pubsub_topic" "market_events_raw_beam_proof" {
+  name    = "market-events-raw-beam-proof"
+  project = var.project_id
+}
+
+# ---------------------------------------------------------------------------
 # Pub/Sub Proof Subscription (pull only)
-# Separate from the production worker push subscription.
-# Does not affect existing market-events-raw-worker-push.
+# Attached to the proof-only topic above, not to the production topic.
+# The production worker-push subscription and the production topic are
+# completely unaffected.
 # ---------------------------------------------------------------------------
 
 resource "google_pubsub_subscription" "market_events_raw_beam_proof_sub" {
   name    = "market-events-raw-beam-proof-sub"
-  topic   = google_pubsub_topic.market_events_raw.name
+  topic   = google_pubsub_topic.market_events_raw_beam_proof.name
   project = var.project_id
 
   ack_deadline_seconds       = 60
