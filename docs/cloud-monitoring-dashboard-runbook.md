@@ -31,7 +31,7 @@ The dashboard will expose the four validated logs-based metrics as visual panels
 operational observability that is visible to B2B reviewers and recruiters — not only queryable
 via the Cloud Monitoring REST API.
 
-This closes the dashboard gap identified in the Devil's Advocate audit:
+This closes the dashboard gap identified in the critical technical audit:
 
 - Metrics exist ✓
 - Datapoints exist ✓

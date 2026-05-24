@@ -151,7 +151,7 @@ docs/evidence/api-manual-deploy/workflow-run-25638169193.txt
 
 ## Production Readiness Impact
 
-This closes the API deployment automation evidence gap identified in the Devil Advocate audit.
+This closes the API deployment automation evidence gap identified in the critical technical audit.
 
 The API now has a validated manual deployment path using immutable commit-SHA image tags instead of relying on the previous Cloud Run source deployment path.
 

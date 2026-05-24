@@ -560,7 +560,7 @@ Even after successful completion:
 | Dashboard and alerting | Blocked — requires load-test evidence | Future |
 
 This runbook is the immediate next safe step after the local pre-publish sample evidence.
-It advances Devil's Advocate gap #1 (single-event end-to-end does not demonstrate meaningful
+It advances critical technical gap #1 (single-event end-to-end does not demonstrate meaningful
 volume). The run intentionally excludes DLQ / retry risk: the production push subscription
 has no DLQ configured (confirmed in
 [docs/pubsub-retry-dlq-inspection.md](pubsub-retry-dlq-inspection.md)), and only valid

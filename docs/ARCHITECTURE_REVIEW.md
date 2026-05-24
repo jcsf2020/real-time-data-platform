@@ -206,6 +206,8 @@ service.
 | Scheduler switched to dbt refresh job; scheduler-triggered execution accepted | dbt-scheduler-switch-evidence.md |
 | BigQuery analytical tier scaffold: dataset rtdp_analytics + 3 tables + IAM (6 Terraform resources applied; PLAN_EXIT=0) | bigquery-terraform-apply-evidence.md |
 | BigQuery bounded backfill: 6,104 rows from Cloud SQL bronze.market_events to BigQuery market_events_raw; source/target count match accepted; analytical query by symbol/event_type confirmed; PLAN_EXIT=0; Cloud SQL NEVER / STOPPED | bigquery-bounded-backfill-evidence.md |
+| Apache Beam DirectRunner local proof: JSONL input pipeline; valid/dead-letter routing; 13 pipeline tests; DataflowRunner guard; 361 total pytest pass | beam-directrunner-pipeline-evidence.md |
+| Apache Beam / DataflowRunner bounded proof: job ID 2026-05-24_03_59_31-13978483355822818690; JOB_STATE_DRAINED; 10 proof rows to rtdp_analytics.market_events_beam_proof; proof-only topic market-events-raw-beam-proof used; production topic/table NOT used; production streaming NOT claimed | dataflow-bounded-runner-proof-evidence.md |
 
 ---
 
@@ -217,7 +219,7 @@ service.
   clustered tables. A bounded backfill of 6,104 rows from `bronze.market_events` to
   `market_events_raw` has been executed and validated with source-to-target count match and
   an analytical query by symbol/event_type. Continuous streaming from Pub/Sub to BigQuery
-  is not yet implemented. Dataflow remains a future architectural target.
+  is not yet implemented. A bounded Apache Beam / DataflowRunner proof has been validated (see dataflow-bounded-runner-proof-evidence.md); production streaming Dataflow is not claimed.
 - **Pub/Sub + Cloud Run instead of Dataflow**: serverless and lower operational overhead
   for bounded event volumes; Dataflow would be appropriate for windowed aggregations and
   stateful streaming at higher scale.
@@ -245,8 +247,7 @@ service.
   bounded backfill of 6,104 rows from `bronze.market_events` has been accepted
   (bigquery-bounded-backfill-evidence.md). The remaining gap is the incremental append path:
   Pub/Sub fan-out, native BigQuery subscription, or scheduled batch export for continuous
-  data movement. No continuous streaming to BigQuery exists. Dataflow remains future and is
-  not implemented.
+  data movement. No continuous streaming to BigQuery exists. Bounded Apache Beam / DataflowRunner proof validated (JOB_STATE_DRAINED; 10 proof rows to rtdp_analytics.market_events_beam_proof; see dataflow-bounded-runner-proof-evidence.md). Production streaming Dataflow is not implemented; no windowed or stateful production Dataflow pipeline exists.
 - **Automatic deploy-on-merge**: both deploy workflows require explicit manual dispatch;
   CI/CD pipeline automation is a planned next step.
 - **Incremental dbt models**: silver and gold models use full-refresh table materialization;

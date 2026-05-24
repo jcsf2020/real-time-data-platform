@@ -625,7 +625,7 @@ Even after successful completion:
 | Dashboard and alerting | Blocked — requires load-test evidence | Future |
 
 The 1000-event run is the immediate next safe step after the accepted 100-event cloud
-evidence. It advances Devil's Advocate gap #1 (scale and throughput evidence) beyond the
+evidence. It advances critical technical gap #1 (scale and throughput evidence) beyond the
 100-event baseline. This run publishes only valid messages and excludes DLQ / retry risk
 (the production push subscription has no DLQ configured, confirmed in
 [docs/pubsub-retry-dlq-inspection.md](pubsub-retry-dlq-inspection.md)).

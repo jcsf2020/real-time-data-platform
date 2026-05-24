@@ -17,9 +17,7 @@ is backed by indexed, verifiable evidence with run IDs and commit SHAs.
 
 Where it is exposed:
 
-- **Dataflow / Apache Beam is absent.** This is the most visible architectural gap for
-  streaming-first roles. The correct next step is a decision record, not immediate
-  implementation.
+- **Bounded Apache Beam / DataflowRunner proof is validated (see dataflow-bounded-runner-proof-evidence.md).** Production windowed Dataflow streaming remains absent. The previous binary lack-of-evidence gap is closed; the remaining gap is production-like Dataflow streaming semantics for streaming-first roles.
 - **No staging/production separation.** A single GCP project with manual deploy triggers
   limits production-likeness credibility.
 - **No deploy-on-merge.** CI is automated; CD is not.
@@ -71,7 +69,7 @@ are included.
 
 ### Explicit Non-Claims (unchanged from prior audits)
 
-- Dataflow / Apache Beam: NOT implemented.
+- Bounded Apache Beam / DataflowRunner proof: VALIDATED (see dataflow-bounded-runner-proof-evidence.md). Production streaming Dataflow: not claimed. Windowed/stateful Dataflow streaming: not implemented.
 - Exactly-once production semantics: NOT claimed.
 - Maximum throughput / saturation point: NOT characterized.
 - Multi-day continuous production stability: NOT proven.
@@ -97,7 +95,7 @@ patterns observed as of mid-2026. This is not live job-market scraping.
 | dbt | Good: 22 tests; incremental models; Cloud SQL live execution | High -- analytics engineering is a required skill for 2026-2027 data platforms | Low-Medium (no dbt observability metrics) | Close dbt observability metrics gap: plan document |
 | Terraform / IaC | Strong: 100% coverage; zero-diff discipline; GCS state; Workload Identity | Very High -- IaC ownership is a hard requirement in most platform JDs | Minimal | Maintain zero-diff discipline |
 | Cloud Monitoring / incident response | Strong: 4 logs-based metrics; alert policies; email delivery proven | High -- end-to-end alerting loop is a genuine differentiator | Low (SLO burn-rate not implemented) | Write SLO burn-rate monitoring plan |
-| Dataflow / Apache Beam | NOT IMPLEMENTED | High for streaming-first roles; Medium for platform generalist roles | **Critical for streaming-specific JDs; Medium for broad GCP roles** | Write decision record FIRST; evaluate implementation after |
+| Dataflow / Apache Beam | Bounded proof validated (see dataflow-bounded-runner-proof-evidence.md); production streaming not claimed | High for streaming-first roles; Medium for platform generalist roles | **Partial: bounded proof closes the binary evidence gap; production windowed streaming remains the gap for streaming-specific JDs** | Claim bounded Beam proof; be explicit that production windowed Dataflow streaming is not implemented |
 | Replay / backfill | Partial (cursor-based BigQuery append proven; no streaming replay) | High -- often asked in data platform interviews | Medium | Write replay/backfill strategy document |
 | Data quality automation | Strong: 8-check BigQuery workflow; Cloud Monitoring metrics; incident email proven | High -- data quality ownership is a differentiator in 2026-2027 | Low-Medium (no dbt-level quality metrics) | Close via dbt observability metrics plan |
 | Cost / performance ownership | Good: Cloud SQL STOPPED/NEVER; schedulers PAUSED; cost model documented | Medium-High -- cost discipline separates senior from junior candidates | Low (no exact billing export analysis) | Write billing export / cost-per-event plan |
@@ -114,7 +112,7 @@ All gaps listed. Priority score: 5 = highest urgency, 1 = lowest.
 
 | Gap | Current Status | Recruitment Impact | Production-Likeness Impact | Risk if Ignored | Effort | Priority (1-5) | Recommended Branch |
 |---|---|---|---|---|---|---|---|
-| Dataflow / Apache Beam decision or implementation | NOT implemented; Cloud Run worker handles all processing | **Critical for streaming-specific roles; Medium for broad GCP roles** | Medium (Cloud Run is a valid architectural choice; windowed aggregations not required) | Streaming-first JDs cannot be addressed; senior reviewers may question architectural awareness | Low (decision record) / High (implementation) | **5** | `docs/dataflow-decision-record` |
+| Dataflow / Apache Beam production streaming | Bounded proof validated; production windowed streaming not implemented | **Critical for streaming-specific roles requiring windowed/stateful Dataflow; Medium for broad GCP roles** | Low (bounded proof closes the binary gap; windowed semantics not yet proven) | Streaming-first JDs requiring windowed Dataflow cannot be fully addressed; bounded proof is significant progress | High (production windowed implementation) | **3** | `feat/dataflow-windowed-streaming-proof` |
 | Replay / backfill strategy | Partial: cursor-based BigQuery append proven; no streaming-level replay documented | High: replay semantics are a standard data platform interview topic | Medium: operational replay path is not described | Interview question about disaster recovery and data reprocessing has no written answer | Low | **4** | `docs/replay-backfill-strategy` |
 | dbt observability metrics | Missing: no Cloud Monitoring metrics emitted from dbt job execution | Medium-High: analytics engineering story is strong but lacks its own telemetry loop | Medium: dbt jobs have no observable signal beyond Cloud Run execution success | Cannot demonstrate full observability discipline for the transformation layer | Low | **4** | `docs/dbt-observability-metrics-plan` |
 | Staging / prod environment separation | MISSING: single GCP project; no staging; no isolated test environment | High: single-environment is a common red flag in production-readiness reviews | High: no ability to test changes safely before production promotion | Senior reviewers will call out the absence of environment isolation | Low (plan) / Medium (implementation) | **4** | `docs/staging-environment-plan` |
@@ -253,25 +251,24 @@ A production-credible Dataflow implementation would require:
 
 - Do not claim Dataflow is "coming soon" without a decision record.
 - Do not claim the Cloud Run path is "production-equivalent to Dataflow" -- it is not.
-- Do not claim Beam experience without implementing it.
+- Bounded Beam proof is validated; bounded Apache Beam / DataflowRunner experience can be claimed. Do not claim production windowed streaming or stateful Dataflow without additional evidence.
 - Do not claim exactly-once semantics without the Beam storage write API evidence.
-- Do not implement Dataflow before the decision record; there is a high risk of
-  producing shallow Dataflow evidence that does not satisfy a technical reviewer.
+- The decision record was written and the bounded proof executed; the bounded proof closes the binary evidence gap. Production windowed Dataflow is the remaining step.
 
 ### Comparison Table
 
 | Dimension | Current Cloud Run Worker Path | Minimal Beam/Dataflow Proof | Production-Like Dataflow Pipeline |
 |---|---|---|---|
-| Implementation status | Validated at 50,000 events + 10 eps | Not implemented | Not implemented |
+| Implementation status | Validated at 50,000 events + 10 eps | Validated (JOB_STATE_DRAINED; 10 proof rows; see dataflow-bounded-runner-proof-evidence.md) | Not implemented |
 | Windowed aggregations | Not implemented (done in dbt/PostgreSQL post-hoc) | Not implemented in beam | FixedWindows / SlidingWindows in Beam |
 | Exactly-once semantics | At-least-once with ON CONFLICT deduplication | At-least-once (minimal proof) | Beam storage write API (exactly-once in BigQuery) |
 | Late-event handling | Not implemented | Not implemented | AllowedLateness policy in Beam |
 | Autoscaling | maxScale=1 (hard cap) | Dataflow worker autoscaling | Full Dataflow autoscaling configured |
 | Cost | Very low (Cloud Run scales to zero) | Low-medium (Dataflow startup overhead) | Medium-high (sustained Dataflow workers) |
-| Interview signal | Strong for platform roles; insufficient for Dataflow-specific roles | Minimal Dataflow evidence | Credible Dataflow streaming portfolio |
-| Implementation risk | Already validated | Medium (Dataflow API + Beam SDK) | High (complex, expensive, time-consuming) |
-| Cloud cost risk | Minimal (controlled windows) | Medium (Dataflow billing starts on job launch) | High (sustained streaming workers) |
-| Recommended for next branch? | Maintain as baseline | No -- write decision record first | No -- premature; build on decision record |
+| Interview signal | Strong for platform roles; insufficient for Dataflow-specific roles | Bounded DataflowRunner proof validated; closes binary evidence gap; production windowed streaming not yet proven | Credible Dataflow streaming portfolio |
+| Implementation risk | Already validated | Completed (Beam SDK + DataflowRunner executed) | High (complex, expensive, time-consuming) |
+| Cloud cost risk | Minimal (controlled windows) | Incurred and bounded (proof-only topic; 10 rows) | High (sustained streaming workers) |
+| Recommended for next branch? | Maintain as baseline | Completed -- bounded proof accepted | Consider only if streaming-first roles require windowed evidence |
 
 ---
 
@@ -317,7 +314,7 @@ throughout.
 
 ---
 
-## 8. Devil's Advocate Review
+## 8. Critical Technical Review
 
 A senior hiring manager or technical interviewer may raise the following challenges.
 Each is stated as it would actually be raised, not softened. The defensive answer is
@@ -432,7 +429,7 @@ risk than one who articulates the gap clearly.
 > Cloud SQL, BigQuery, dbt, Terraform, and Cloud Monitoring. The full stack is Terraform-managed
 > with zero-diff discipline, 257 tests in CI, and an end-to-end alerting loop proven from
 > BigQuery quality failure to delivered email. Evidence is indexed and verifiable.
-> Dataflow is not implemented. This is bounded portfolio evidence, not a production SLA claim.
+> Bounded Apache Beam / DataflowRunner proof validated; production streaming Dataflow is not claimed. This is bounded portfolio evidence, not a production SLA claim.
 
 ### Technical Interview Paragraph
 
@@ -442,13 +439,11 @@ risk than one who articulates the gap clearly.
 > 50,000 events with zero errors and zero duplicates, and at a sustained 10 events/sec for
 > 30 minutes with p50/p95/p99 latency evidence from producer-to-worker instrumentation.
 > All infrastructure is Terraform-managed with GCS remote state and Workload Identity
-> Federation for CI. I have not implemented Dataflow; the Cloud Run path is appropriate
-> at the current validated scale, and the decision to defer is documented with explicit
-> trigger conditions for when Dataflow becomes justified.
+> Federation for CI. A bounded Apache Beam / DataflowRunner proof has been validated (JOB_STATE_DRAINED; 10 proof rows); production windowed Dataflow streaming is not claimed. The Cloud Run path remains the baseline at the current validated scale.
 
 ### Senior Engineer Caveat Paragraph
 
-> This platform does not claim: Dataflow or Apache Beam implementation; exactly-once
+> This platform does not claim: production streaming Dataflow or windowed/stateful Apache Beam pipelines; exactly-once
 > transport-layer semantics; maximum throughput or saturation characterization; multi-day
 > continuous production stability; staging/production isolation; deploy-on-merge automation;
 > or enterprise security certification. All validation runs are bounded, controlled windows.
@@ -525,7 +520,7 @@ terraform fmt -check -recursive infra/terraform/gcp
 terraform -chdir=infra/terraform/gcp validate
 terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false; echo "PLAN_EXIT=$?"
 grep -En "market-value-gap-audit-2026-2027|STRATEGIC AUDIT -- market-value" docs/EVIDENCE_INDEX.md
-grep -En "Dataflow|Apache Beam|2026-2027|Priority Ranking|Gap Register|Recommended Roadmap|Devil|Safe Recruitment Positioning|Final Recommendation" docs/market-value-gap-audit-2026-2027.md
+grep -En "Dataflow|Apache Beam|2026-2027|Priority Ranking|Gap Register|Recommended Roadmap|Critical|Safe Recruitment Positioning|Final Recommendation" docs/market-value-gap-audit-2026-2027.md
 gcloud sql instances describe rtdp-postgres --project=project-42987e01-2123-446b-ac7 --format="table(name,state,settings.activationPolicy)"
 gcloud scheduler jobs list --project=project-42987e01-2123-446b-ac7 --location=europe-west1 --format="table(id,state,schedule)"
 git status --short --branch
@@ -546,4 +541,4 @@ git status --short --branch
 | [docs/latency-artifact-100-cloud-validation-evidence.md](latency-artifact-100-cloud-validation-evidence.md) | p50/p95/p99 end-to-end latency from producer artifact and worker logs |
 | [docs/SLO_AND_INCIDENT_RESPONSE.md](SLO_AND_INCIDENT_RESPONSE.md) | Production-light SLO targets, error budget, incident runbooks |
 | [docs/recruiter-facing-platform-summary.md](recruiter-facing-platform-summary.md) | One-page hiring translation of the evidence base |
-| [docs/executive-platform-audit-after-50k.md](executive-platform-audit-after-50k.md) | Post-50k platform audit with devil-advocate review |
+| [docs/executive-platform-audit-after-50k.md](executive-platform-audit-after-50k.md) | Post-50k platform audit with critical technical review |

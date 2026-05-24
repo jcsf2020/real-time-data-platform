@@ -203,7 +203,7 @@ google_service_account_iam_member.terraform_plan_ci_workload_identity_user
 
 ---
 
-## 10. Relation to Devil Advocate Audit
+## 10. Relation to Critical Technical Review Audit
 
 This evidence closes the immediate documentation gap identified after the IAM import phase.
 

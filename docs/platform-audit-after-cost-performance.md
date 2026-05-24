@@ -45,7 +45,7 @@ enterprise-certified production readiness.
 
 | Gap | Impact | Notes |
 |---|---|---|
-| Dataflow / Apache Beam not implemented | High for streaming-first JDs | Cloud Run worker handles Pub/Sub push; Dataflow deferred pending higher-scale or replay requirements |
+| Bounded DataflowRunner proof validated; no production Dataflow streaming | High for streaming-first JDs | Bounded Apache Beam / DataflowRunner proof validated (JOB_STATE_DRAINED; 10 proof rows; see dataflow-bounded-runner-proof-evidence.md); production windowed Dataflow streaming remains deferred |
 | Replay/backfill strategy partial | Medium | Bounded backfill proven; automated replay consumer not implemented |
 | DLQ production consumer not implemented | Medium | DLQ routing proven; no automated consumer reads or reprocesses DLQ messages in production |
 | dbt-specific observability metrics open | Low-medium | No custom Cloud Monitoring metrics emitted from dbt job execution itself |
@@ -74,7 +74,7 @@ enterprise-certified production readiness.
 
 ---
 
-## 5. Devil's Advocate Review
+## 5. Critical Technical Review
 
 The following criticisms are accurate and should be understood before interviews.
 
@@ -82,9 +82,9 @@ The following criticisms are accurate and should be understood before interviews
 The platform handles bounded, controlled validation runs in a single GCP project.
 It has never processed continuous multi-day live production traffic.
 
-**Dataflow not implemented.**
-Cloud Run push-pull worker is not equivalent to Apache Beam / Dataflow.
-Roles requiring Dataflow, windowing semantics, or exactly-once streaming pipelines
+**Bounded DataflowRunner proof validated; no production windowed Dataflow.**
+A bounded Apache Beam / DataflowRunner proof has been validated (JOB_STATE_DRAINED; 10 proof rows to rtdp_analytics.market_events_beam_proof; see dataflow-bounded-runner-proof-evidence.md). The Cloud Run push-pull worker is not equivalent to a production Dataflow windowed pipeline.
+Roles requiring production windowed streaming, stateful Dataflow, or exactly-once streaming pipelines
 cannot be satisfied by this evidence.
 
 **Exactly-once production semantics not claimed.**
@@ -125,7 +125,7 @@ closely. Do not inflate it.
 > "I validated a GCP event-processing platform with Pub/Sub, Cloud Run, Cloud SQL,
 > BigQuery, dbt, Terraform, Cloud Monitoring, alerting, DLQ evidence, a 50,000-event
 > bounded load test, and a sustained 10 events/sec for 30 minutes run with p50/p95/p99
-> latency evidence. I do not claim Dataflow, exactly-once production semantics,
+> latency evidence. A bounded Apache Beam / DataflowRunner proof is validated. I do not claim production streaming Dataflow, windowed aggregations, exactly-once production semantics,
 > maximum throughput, or enterprise-certified production readiness."
 
 If pressed on cost:
