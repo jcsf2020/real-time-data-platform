@@ -10,6 +10,8 @@ __pycache__/
 target/
 logs/
 *.log
+dist/
+*.egg-info/
 
 # dbt generated artifacts and installed packages
 dbt/target/

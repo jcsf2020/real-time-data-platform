@@ -9,7 +9,9 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 import sys
+from pathlib import Path
 
 import apache_beam as beam
 from apache_beam import pvalue
@@ -17,6 +19,8 @@ from apache_beam.options.pipeline_options import PipelineOptions, SetupOptions
 from pydantic import ValidationError
 
 from rtdp_contracts import MarketEvent
+
+_REPO_ROOT = Path(__file__).parent.parent
 
 DEAD_LETTER_TAG = "dead_letter"
 
@@ -187,6 +191,35 @@ def _validate_dataflow_args(
         )
 
 
+def _build_contracts_wheel() -> str:
+    """Build rtdp_contracts wheel for Dataflow worker staging via --extra_packages.
+
+    Beam stages the wheel to GCS; workers pip-install it on boot. Building from
+    packages/contracts directly avoids root pyproject.toml interference that breaks
+    --setup_file (setuptools reads root pyproject.toml and overwrites name/install_requires).
+    """
+    wheel_dir = _REPO_ROOT / "dist" / "beam-staging"
+    wheel_dir.mkdir(parents=True, exist_ok=True)
+    for old in wheel_dir.glob("rtdp_contracts-*.whl"):
+        old.unlink()
+    subprocess.run(
+        [
+            "uv",
+            "build",
+            str(_REPO_ROOT / "packages" / "contracts"),
+            "--wheel",
+            "--out-dir",
+            str(wheel_dir),
+        ],
+        cwd=str(_REPO_ROOT),
+        check=True,
+    )
+    wheels = sorted(wheel_dir.glob("rtdp_contracts-*.whl"))
+    if not wheels:
+        raise RuntimeError(f"No rtdp_contracts wheel found in {wheel_dir} after build.")
+    return str(wheels[-1])
+
+
 def build_dataflow_pipeline(
     pipeline: beam.Pipeline,
     input_subscription: str,
@@ -254,7 +287,10 @@ def run_dataflow(
         "--job_name=rtdp-market-events-beam-proof",
     ]
     options = PipelineOptions(pipeline_args)
-    options.view_as(SetupOptions).save_main_session = True
+    setup_opts = options.view_as(SetupOptions)
+    setup_opts.save_main_session = True
+    contracts_wheel = _build_contracts_wheel()
+    setup_opts.extra_packages = [contracts_wheel]
     p = beam.Pipeline(options=options)
     build_dataflow_pipeline(p, input_subscription, output_table)
     result = p.run()
