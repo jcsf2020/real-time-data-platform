@@ -2,7 +2,7 @@
 
 **Branch:** `infra/dataflow-bounded-proof-prereqs`
 **Date:** 2026-05-23
-**Status:** VALIDATED -- 9 Dataflow proof prerequisite resources applied (APPLY_EXIT=0); CI Terraform Plan IAM fix applied (3 reader bindings; APPLY_EXIT=0); post-fix PLAN_EXIT=0.
+**Status:** VALIDATED -- 9 Dataflow proof prerequisite resources applied; CI Terraform Plan IAM custom role fix applied (2 resources; APPLY_EXIT=0); post-fix PLAN_EXIT=0.
 
 ---
 
@@ -327,6 +327,87 @@ No existing resources changed. No existing resources destroyed. The 9 originally
 Dataflow proof prerequisite resources are unchanged.
 
 #### terraform plan (post-fix)
+
+```
+terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false; echo "PLAN_EXIT=$?"
+```
+
+```
+No changes. Your infrastructure matches the configuration.
+PLAN_EXIT=0
+```
+
+### Correction (2026-05-24): resource-scoped viewer bindings insufficient — custom role required
+
+PR #211 still failed after the 3 resource-scoped viewer bindings were applied:
+
+```
+storage.buckets.getIamPolicy DENIED
+  resource: google_storage_bucket_iam_member.dataflow_sa_staging_object_admin
+
+pubsub.subscriptions.getIamPolicy DENIED
+  resources: google_pubsub_subscription_iam_member.dataflow_sa_proof_sub_subscriber
+             google_pubsub_subscription_iam_member.terraform_plan_ci_proof_sub_viewer
+```
+
+**Root cause of correction:** Resource-scoped viewer bindings cannot break the circular
+dependency. For Terraform to plan any `*_iam_member` resource, it must call `GetIamPolicy`
+on the target resource. That includes the viewer bindings themselves — so the CI SA needed
+`getIamPolicy` before those bindings could be read, which they could not grant.
+`roles/storage.legacyBucketReader` also confirmed not to include
+`storage.buckets.getIamPolicy`.
+
+**Operative fix:** A project-level custom IAM role with exactly three permissions grants
+the CI SA unconditional `getIamPolicy` on all proof resources without the circular
+dependency:
+
+| Permission | Covers |
+|---|---|
+| `pubsub.subscriptions.getIamPolicy` | `google_pubsub_subscription_iam_member.*` |
+| `storage.buckets.getIamPolicy` | `google_storage_bucket_iam_member.*` |
+| `bigquery.tables.getIamPolicy` | `google_bigquery_table_iam_member.*` |
+
+No metadata reads added: `roles/viewer` (already held project-wide) covers
+`pubsub.subscriptions.get`, `storage.buckets.get`, and `bigquery.tables.get`.
+
+Terraform resources added to `infra/terraform/gcp/dataflow.tf`:
+
+```
+google_project_iam_custom_role.terraform_plan_ci_dataflow_proof_iam_viewer
+  role_id:     rtdpTerraformPlanDataflowProofIamViewer
+  permissions: bigquery.tables.getIamPolicy
+               pubsub.subscriptions.getIamPolicy
+               storage.buckets.getIamPolicy
+
+google_project_iam_member.terraform_plan_ci_dataflow_proof_iam_viewer
+  role:   projects/project-42987e01-2123-446b-ac7/roles/rtdpTerraformPlanDataflowProofIamViewer
+  member: rtdp-terraform-plan-ci@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com
+```
+
+The three previous resource-scoped bindings (`terraform_plan_ci_proof_sub_viewer`,
+`terraform_plan_ci_staging_bucket_reader`, `terraform_plan_ci_proof_table_viewer`) are
+**retained** to avoid unplanned destroys. They are not the operative CI unblocker.
+
+#### terraform apply (custom role correction)
+
+```
+terraform -chdir=infra/terraform/gcp apply -input=false
+```
+
+```
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+APPLY_EXIT=0
+```
+
+Resources applied:
+
+- `google_project_iam_custom_role.terraform_plan_ci_dataflow_proof_iam_viewer`
+- `google_project_iam_member.terraform_plan_ci_dataflow_proof_iam_viewer`
+
+No existing resources changed. No existing resources destroyed. All 12 previously applied
+resources (9 proof prereqs + 3 CI reader bindings) are unchanged.
+
+#### terraform plan (post-custom-role-fix)
 
 ```
 terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false; echo "PLAN_EXIT=$?"
