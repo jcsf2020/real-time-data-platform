@@ -2,7 +2,7 @@
 
 **Branch:** `infra/dataflow-bounded-proof-prereqs`
 **Date:** 2026-05-23
-**Status:** VALIDATED -- Terraform prerequisites applied; 9 resources added; post-apply PLAN_EXIT=0.
+**Status:** VALIDATED -- 9 Dataflow proof prerequisite resources applied (APPLY_EXIT=0); CI Terraform Plan IAM fix applied (3 reader bindings; APPLY_EXIT=0); post-fix PLAN_EXIT=0.
 
 ---
 
@@ -268,6 +268,84 @@ ID  STATE   SCHEDULE
 ```
 
 Both schedulers confirmed PAUSED. Cloud SQL confirmed STOPPED / NEVER.
+
+---
+
+## CI Terraform Plan IAM fix
+
+### Root cause
+
+GitHub Actions Terraform Plan (PR #211) failed with:
+
+```
+permission: pubsub.subscriptions.getIamPolicy
+reason: IAM_PERMISSION_DENIED
+Failing resource: google_pubsub_subscription_iam_member.dataflow_sa_proof_sub_subscriber
+```
+
+The CI Terraform Plan service account (`rtdp-terraform-plan-ci`) holds `roles/viewer` at
+project level, which does not include `pubsub.subscriptions.getIamPolicy`. This permission
+is required for Terraform to read the current IAM policy on the Pub/Sub subscription when
+planning `google_pubsub_subscription_iam_member` resources. The plan never reached the GCS
+bucket or BigQuery table IAM resources; those are treated as precautionary cases below.
+
+### Fix
+
+Three resource-scoped IAM bindings added to `infra/terraform/gcp/dataflow.tf` for the CI
+Terraform Plan SA. All bindings are scoped to the specific proof resource only; no
+project-level roles are added.
+
+| Resource | Role | Scope | Permission rationale |
+|---|---|---|---|
+| `google_pubsub_subscription_iam_member.terraform_plan_ci_proof_sub_viewer` | `roles/pubsub.viewer` | Proof subscription only | `pubsub.subscriptions.getIamPolicy` — confirmed CI failure |
+| `google_storage_bucket_iam_member.terraform_plan_ci_staging_bucket_reader` | `roles/storage.legacyBucketReader` | Staging bucket only | `storage.buckets.get` — precautionary; GCS IAM not yet reached by CI plan |
+| `google_bigquery_table_iam_member.terraform_plan_ci_proof_table_viewer` | `roles/bigquery.dataViewer` | Proof table only | `bigquery.tables.getIamPolicy` — precautionary; BQ IAM not yet reached by CI plan |
+
+Roles explicitly NOT granted: `Owner`, `Editor`, `BigQuery Admin`, `Storage Admin`,
+`Pub/Sub Admin`, or any project-level IAM admin role.
+
+### CI fix validation
+
+#### terraform apply
+
+```
+terraform -chdir=infra/terraform/gcp apply -input=false
+```
+
+```
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+APPLY_EXIT=0
+```
+
+Resources applied:
+
+- `google_pubsub_subscription_iam_member.terraform_plan_ci_proof_sub_viewer`
+- `google_storage_bucket_iam_member.terraform_plan_ci_staging_bucket_reader`
+- `google_bigquery_table_iam_member.terraform_plan_ci_proof_table_viewer`
+
+No existing resources changed. No existing resources destroyed. The 9 originally applied
+Dataflow proof prerequisite resources are unchanged.
+
+#### terraform plan (post-fix)
+
+```
+terraform -chdir=infra/terraform/gcp plan -detailed-exitcode -input=false; echo "PLAN_EXIT=$?"
+```
+
+```
+No changes. Your infrastructure matches the configuration.
+PLAN_EXIT=0
+```
+
+### Explicit non-claims (unchanged)
+
+- **DataflowRunner NOT executed.**
+- **Dataflow job NOT launched.**
+- **No Pub/Sub messages published.**
+- **No BigQuery writes executed.**
+- **Cloud SQL NOT started.** Confirmed STOPPED / NEVER.
+- **Schedulers NOT activated.** Both remain PAUSED.
+- **No production resources modified.**
 
 ---
 

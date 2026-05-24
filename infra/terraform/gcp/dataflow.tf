@@ -124,3 +124,37 @@ resource "google_bigquery_table_iam_member" "dataflow_sa_proof_table_editor" {
   role       = "roles/bigquery.dataEditor"
   member     = "serviceAccount:${google_service_account.rtdp_dataflow_sa.email}"
 }
+
+# ---------------------------------------------------------------------------
+# IAM -- Terraform Plan CI: getIamPolicy read access on Dataflow proof resources
+#
+# The CI Terraform Plan SA (rtdp-terraform-plan-ci) holds roles/viewer at
+# project level, which does not include getIamPolicy for Pub/Sub subscriptions,
+# GCS buckets, or BigQuery tables. Service-specific viewer roles are bound at
+# resource scope so the CI plan can refresh IAM state for the three new
+# resource-level IAM member blocks defined above.
+# ---------------------------------------------------------------------------
+
+# roles/pubsub.viewer includes pubsub.subscriptions.getIamPolicy on this subscription.
+resource "google_pubsub_subscription_iam_member" "terraform_plan_ci_proof_sub_viewer" {
+  project      = var.project_id
+  subscription = google_pubsub_subscription.market_events_raw_beam_proof_sub.name
+  role         = "roles/pubsub.viewer"
+  member       = local.terraform_plan_ci_member
+}
+
+# roles/storage.legacyBucketReader grants bucket read access on the staging bucket.
+resource "google_storage_bucket_iam_member" "terraform_plan_ci_staging_bucket_reader" {
+  bucket = google_storage_bucket.rtdp_dataflow_staging.name
+  role   = "roles/storage.legacyBucketReader"
+  member = local.terraform_plan_ci_member
+}
+
+# roles/bigquery.dataViewer includes bigquery.tables.getIamPolicy on the proof table.
+resource "google_bigquery_table_iam_member" "terraform_plan_ci_proof_table_viewer" {
+  project    = var.project_id
+  dataset_id = google_bigquery_dataset.rtdp_analytics.dataset_id
+  table_id   = google_bigquery_table.market_events_beam_proof.table_id
+  role       = "roles/bigquery.dataViewer"
+  member     = local.terraform_plan_ci_member
+}
