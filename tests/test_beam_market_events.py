@@ -1,4 +1,4 @@
-"""Tests for the Apache Beam DirectRunner MarketEvent pipeline."""
+"""Tests for the Apache Beam MarketEvent pipeline (DirectRunner and DataflowRunner modes)."""
 
 from __future__ import annotations
 
@@ -14,7 +14,16 @@ import pytest
 from apache_beam.testing.test_pipeline import TestPipeline
 from apache_beam.testing.util import assert_that, equal_to
 
-from pipelines.beam_market_events import DEAD_LETTER_TAG, ParseAndValidateDoFn, run
+from pipelines.beam_market_events import (
+    DATAFLOW_PROOF_SUBSCRIPTION,
+    DATAFLOW_PROOF_TABLE,
+    DATAFLOW_PROOF_TOPIC,
+    DEAD_LETTER_TAG,
+    ParseAndValidateDoFn,
+    _validate_dataflow_args,
+    run,
+    run_dataflow,
+)
 
 
 # --- fixtures and helpers ---
@@ -149,10 +158,11 @@ def test_dead_letter_count_equals_invalid_input_count() -> None:
         )
 
 
-# --- runner guard ---
+# --- DirectRunner runner guard (unchanged behaviour) ---
 
 
 def test_runner_guard_rejects_dataflow_runner() -> None:
+    # run() is DirectRunner-only by design; DataflowRunner is handled by run_dataflow().
     with pytest.raises(ValueError, match="DataflowRunner"):
         run(
             input_path="/dev/null",
@@ -172,7 +182,7 @@ def test_runner_guard_rejects_arbitrary_runner() -> None:
         )
 
 
-# --- safety: no GCP env vars or clients ---
+# --- safety: no GCP env vars or Cloud SQL clients ---
 
 
 def test_no_gcp_env_vars_required(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -186,22 +196,23 @@ def test_no_gcp_env_vars_required(monkeypatch: pytest.MonkeyPatch) -> None:
     import pipelines.beam_market_events as m
 
     assert callable(m.run)
+    assert callable(m.run_dataflow)
     assert callable(m.main)
 
 
-def test_no_pubsub_bigquery_clients_in_module_source() -> None:
+def test_no_cloud_sql_in_module_source() -> None:
     import pipelines.beam_market_events as m
 
     source = inspect.getsource(m)
     for forbidden in [
-        "google.cloud.pubsub",
-        "google.cloud.bigquery",
-        "from google.cloud import pubsub",
-        "from google.cloud import bigquery",
-        "ReadFromPubSub",
-        "WriteToBigQuery",
+        "google.cloud.sql",
+        "sqlalchemy",
+        "psycopg2",
+        "asyncpg",
+        "pg8000",
+        "cloud_sql_connector",
     ]:
-        assert forbidden not in source, f"Forbidden reference found in source: {forbidden}"
+        assert forbidden not in source, f"Forbidden Cloud SQL reference in source: {forbidden}"
 
 
 # --- run() integration with temporary files ---
@@ -292,7 +303,8 @@ def test_cli_subprocess_valid_and_dead_letter() -> None:
         assert parsed["quantity"] == "0.25"
 
 
-def test_cli_subprocess_rejects_dataflow_runner() -> None:
+def test_cli_subprocess_rejects_dataflow_runner_missing_args() -> None:
+    # DataflowRunner without required Dataflow args → non-zero exit, "DataflowRunner" in stderr.
     with tempfile.TemporaryDirectory() as tmpdir:
         d = Path(tmpdir)
         input_path = d / "input.jsonl"
@@ -303,23 +315,18 @@ def test_cli_subprocess_rejects_dataflow_runner() -> None:
                 sys.executable,
                 "-m",
                 "pipelines.beam_market_events",
-                "--input-jsonl",
-                str(input_path),
-                "--output-jsonl",
-                str(d / "out.jsonl"),
-                "--dead-letter-jsonl",
-                str(d / "dl.jsonl"),
                 "--runner",
                 "DataflowRunner",
+                # Deliberately omitting --project, --input-subscription, --output-table etc.
             ],
             capture_output=True,
             text=True,
             cwd=_PROJECT_ROOT,
         )
 
-        assert result.returncode != 0, "CLI must exit non-zero when DataflowRunner is requested"
+        assert result.returncode != 0, "CLI must exit non-zero when required Dataflow args are missing"
         assert "DataflowRunner" in result.stderr, (
-            f"stderr must name the rejected runner.\nstderr: {result.stderr}"
+            f"stderr must reference DataflowRunner.\nstderr: {result.stderr}"
         )
 
 
@@ -344,3 +351,194 @@ def test_directrunner_output_is_deterministic() -> None:
 
         assert len(runs[0]) == 5
         assert runs[0] == runs[1], "DirectRunner output must be deterministic across runs"
+
+
+# --- _validate_dataflow_args unit tests (no GCP calls) ---
+
+_VALID_DATAFLOW_KWARGS = dict(
+    project="project-42987e01-2123-446b-ac7",
+    region="europe-west1",
+    service_account_email="rtdp-dataflow-sa@project-42987e01-2123-446b-ac7.iam.gserviceaccount.com",
+    staging_location="gs://rtdp-dataflow-staging-project-42987e01-2123-446b-ac7/staging",
+    temp_location="gs://rtdp-dataflow-staging-project-42987e01-2123-446b-ac7/tmp",
+    input_subscription=DATAFLOW_PROOF_SUBSCRIPTION,
+    output_table=DATAFLOW_PROOF_TABLE,
+)
+
+
+def test_validate_dataflow_args_accepts_valid_proof_args() -> None:
+    # Must not raise for fully-specified proof args.
+    _validate_dataflow_args(**_VALID_DATAFLOW_KWARGS)
+
+
+def test_validate_dataflow_args_rejects_missing_project() -> None:
+    args = {**_VALID_DATAFLOW_KWARGS, "project": ""}
+    with pytest.raises(ValueError, match="Missing"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_missing_region() -> None:
+    args = {**_VALID_DATAFLOW_KWARGS, "region": ""}
+    with pytest.raises(ValueError, match="Missing"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_missing_service_account() -> None:
+    args = {**_VALID_DATAFLOW_KWARGS, "service_account_email": ""}
+    with pytest.raises(ValueError, match="Missing"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_missing_staging_location() -> None:
+    args = {**_VALID_DATAFLOW_KWARGS, "staging_location": ""}
+    with pytest.raises(ValueError, match="Missing"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_missing_temp_location() -> None:
+    args = {**_VALID_DATAFLOW_KWARGS, "temp_location": ""}
+    with pytest.raises(ValueError, match="Missing"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_missing_input_subscription() -> None:
+    args = {**_VALID_DATAFLOW_KWARGS, "input_subscription": ""}
+    with pytest.raises(ValueError, match="Missing"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_missing_output_table() -> None:
+    args = {**_VALID_DATAFLOW_KWARGS, "output_table": ""}
+    with pytest.raises(ValueError, match="Missing"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_production_push_subscription() -> None:
+    # Defensive check: worker-push is caught by the explicit fragment guard.
+    args = {
+        **_VALID_DATAFLOW_KWARGS,
+        "input_subscription": "projects/myproject/subscriptions/market-events-raw-worker-push",
+    }
+    with pytest.raises(ValueError, match="worker-push"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_any_non_proof_subscription() -> None:
+    # Exact-match guard: a non-worker-push subscription that is not the proof subscription.
+    # This covers the case where someone points at market-events-raw-based subscriptions
+    # or any other arbitrary subscription.
+    for bad_sub in [
+        "projects/project-42987e01-2123-446b-ac7/subscriptions/market-events-raw-something",
+        "projects/project-42987e01-2123-446b-ac7/subscriptions/other-sub",
+        "projects/otherproject/subscriptions/market-events-raw-beam-proof-sub",
+    ]:
+        args = {**_VALID_DATAFLOW_KWARGS, "input_subscription": bad_sub}
+        with pytest.raises(ValueError, match="proof subscription"):
+            _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_production_table() -> None:
+    args = {
+        **_VALID_DATAFLOW_KWARGS,
+        "output_table": "project-42987e01-2123-446b-ac7:rtdp_analytics.market_events_raw",
+    }
+    with pytest.raises(ValueError, match="market_events_beam_proof"):
+        _validate_dataflow_args(**args)
+
+
+def test_validate_dataflow_args_rejects_any_non_proof_table() -> None:
+    # Exact-match guard: any table that is not DATAFLOW_PROOF_TABLE is rejected.
+    for bad_table in [
+        "myproject:mydataset.some_other_table",
+        "project-42987e01-2123-446b-ac7:rtdp_analytics.market_events_raw",
+        "project-42987e01-2123-446b-ac7:rtdp_analytics.market_events_beam_proof_extra",
+    ]:
+        args = {**_VALID_DATAFLOW_KWARGS, "output_table": bad_table}
+        with pytest.raises(ValueError, match="market_events_beam_proof"):
+            _validate_dataflow_args(**args)
+
+
+# --- run_dataflow() rejects invalid args without GCP calls ---
+
+
+def test_run_dataflow_rejects_missing_project() -> None:
+    with pytest.raises(ValueError, match="Missing"):
+        run_dataflow(
+            project="",
+            region="europe-west1",
+            service_account_email="sa@example.iam.gserviceaccount.com",
+            staging_location="gs://bucket/staging",
+            temp_location="gs://bucket/tmp",
+            input_subscription=DATAFLOW_PROOF_SUBSCRIPTION,
+            output_table=DATAFLOW_PROOF_TABLE,
+        )
+
+
+def test_run_dataflow_rejects_production_push_subscription() -> None:
+    with pytest.raises(ValueError, match="worker-push"):
+        run_dataflow(
+            project="myproject",
+            region="europe-west1",
+            service_account_email="sa@example.iam.gserviceaccount.com",
+            staging_location="gs://bucket/staging",
+            temp_location="gs://bucket/tmp",
+            input_subscription="projects/myproject/subscriptions/market-events-raw-worker-push",
+            output_table=DATAFLOW_PROOF_TABLE,
+        )
+
+
+def test_run_dataflow_rejects_non_proof_subscription() -> None:
+    # Exact-match: a subscription that looks similar but is not the proof subscription.
+    with pytest.raises(ValueError, match="proof subscription"):
+        run_dataflow(
+            project="myproject",
+            region="europe-west1",
+            service_account_email="sa@example.iam.gserviceaccount.com",
+            staging_location="gs://bucket/staging",
+            temp_location="gs://bucket/tmp",
+            input_subscription="projects/project-42987e01-2123-446b-ac7/subscriptions/market-events-raw-something",
+            output_table=DATAFLOW_PROOF_TABLE,
+        )
+
+
+def test_run_dataflow_rejects_production_table() -> None:
+    with pytest.raises(ValueError, match="market_events_beam_proof"):
+        run_dataflow(
+            project="myproject",
+            region="europe-west1",
+            service_account_email="sa@example.iam.gserviceaccount.com",
+            staging_location="gs://bucket/staging",
+            temp_location="gs://bucket/tmp",
+            input_subscription=DATAFLOW_PROOF_SUBSCRIPTION,
+            output_table="project-42987e01-2123-446b-ac7:rtdp_analytics.market_events_raw",
+        )
+
+
+# --- proof constants sanity ---
+
+
+def test_proof_topic_constant_is_proof_only() -> None:
+    assert "market-events-raw-beam-proof" in DATAFLOW_PROOF_TOPIC
+    # Must NOT reference the production topic name directly (no suffix confusion).
+    assert DATAFLOW_PROOF_TOPIC.endswith("/topics/market-events-raw-beam-proof")
+    # Must NOT be the production topic.
+    assert "market-events-raw-worker-push" not in DATAFLOW_PROOF_TOPIC
+
+
+def test_proof_subscription_constant_references_proof_sub() -> None:
+    assert "market-events-raw-beam-proof-sub" in DATAFLOW_PROOF_SUBSCRIPTION
+    assert "worker-push" not in DATAFLOW_PROOF_SUBSCRIPTION
+    # Subscription path must not reference the production topic name.
+    assert DATAFLOW_PROOF_SUBSCRIPTION.endswith("/subscriptions/market-events-raw-beam-proof-sub")
+
+
+def test_proof_table_constant_references_proof_table() -> None:
+    assert "market_events_beam_proof" in DATAFLOW_PROOF_TABLE
+    assert DATAFLOW_PROOF_TABLE.endswith(".market_events_beam_proof")
+
+
+def test_proof_topic_and_subscription_are_distinct_resources() -> None:
+    # Topic and subscription have different resource types in their paths.
+    assert "/topics/" in DATAFLOW_PROOF_TOPIC
+    assert "/subscriptions/" in DATAFLOW_PROOF_SUBSCRIPTION
+    assert "/topics/" not in DATAFLOW_PROOF_SUBSCRIPTION

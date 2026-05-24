@@ -55,12 +55,24 @@ The proof table schema is defined in `infra/terraform/gcp/schemas/market_events_
 ### Pub/Sub Subscription Details
 
 - Name: `market-events-raw-beam-proof-sub`
-- Topic: `market-events-raw` (existing production topic; read-only attachment)
+- Topic at apply time: `market-events-raw` (production topic; see correction below)
 - Type: **pull** (no push_config block)
 - ack_deadline_seconds: 60
 - message_retention_duration: 600s
-- This subscription is entirely separate from `market-events-raw-worker-push`.
-  The production Cloud Run worker is not affected.
+
+**Correction (2026-05-24, branch `feat/dataflow-bounded-market-events-proof`):**
+The original design attached the proof subscription to the production topic
+`market-events-raw`. This was identified as unsafe during code review: Pub/Sub topic
+fan-out means publishing test messages to `market-events-raw` would also make them
+available to the production push subscription `market-events-raw-worker-push`, triggering
+the production Cloud Run worker.
+
+The corrected design introduces a proof-only topic `market-events-raw-beam-proof` and
+re-attaches the proof subscription to it. See
+[docs/dataflow-bounded-runner-proof-evidence.md](dataflow-bounded-runner-proof-evidence.md)
+for the full correction record and Terraform apply details (first apply: 2 added, 1 destroyed;
+second apply: 2 added; post-apply PLAN_EXIT=0; applied on `feat/dataflow-bounded-market-events-proof`,
+2026-05-24).
 
 ### BigQuery Proof Table Details
 
