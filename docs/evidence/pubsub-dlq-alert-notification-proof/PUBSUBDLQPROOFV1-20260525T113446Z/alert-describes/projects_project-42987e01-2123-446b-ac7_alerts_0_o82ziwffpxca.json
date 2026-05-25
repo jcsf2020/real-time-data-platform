@@ -1,0 +1,19 @@
+{
+  "closeTime": "2026-05-20T17:15:15Z",
+  "metric": {
+    "type": "logging.googleapis.com/user/worker_message_error_count"
+  },
+  "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o82ziwffpxca",
+  "openTime": "2026-05-20T16:59:48Z",
+  "policy": {
+    "displayName": "RTDP Worker Message Error Alert",
+    "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/5769368960767699129"
+  },
+  "resource": {
+    "labels": {
+      "project_id": "project-42987e01-2123-446b-ac7"
+    },
+    "type": "cloud_run_revision"
+  },
+  "state": "CLOSED"
+}

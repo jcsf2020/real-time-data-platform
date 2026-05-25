@@ -1,0 +1,19 @@
+{
+  "closeTime": "2026-05-19T10:11:00Z",
+  "metric": {
+    "type": "custom.googleapis.com/rtdp/bigquery_quality/failed_checks_count"
+  },
+  "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o81br4aj3ps8",
+  "openTime": "2026-05-19T09:46:58Z",
+  "policy": {
+    "displayName": "RTDP BigQuery Quality Failure",
+    "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8645165149135590665"
+  },
+  "resource": {
+    "labels": {
+      "project_id": "project-42987e01-2123-446b-ac7"
+    },
+    "type": "global"
+  },
+  "state": "CLOSED"
+}

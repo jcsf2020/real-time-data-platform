@@ -1,0 +1,43 @@
+{
+  "alertStrategy": {
+    "autoClose": "604800s"
+  },
+  "combiner": "OR",
+  "conditions": [
+    {
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "crossSeriesReducer": "REDUCE_MAX",
+            "perSeriesAligner": "ALIGN_MAX"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "120s",
+        "filter": "metric.type=\"pubsub.googleapis.com/subscription/oldest_unacked_message_age\" resource.type=\"pubsub_subscription\" resource.labels.subscription_id=\"market-events-raw-worker-push\"",
+        "thresholdValue": 120.0
+      },
+      "displayName": "oldest_unacked_message_age > 120s",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8034401405279476713/conditions/8034401405279475418"
+    }
+  ],
+  "creationRecord": {
+    "mutateTime": "2026-05-25T05:49:01.277944512Z",
+    "mutatedBy": "crsetsolutions@gmail.com"
+  },
+  "displayName": "RTDP PubSub Worker Oldest Unacked Message Age",
+  "documentation": {
+    "content": "Pub/Sub worker subscription has an oldest unacked message older than 120 seconds. Investigate Cloud Run worker health, Cloud SQL state, request latency, and backlog growth before changing scaling.",
+    "mimeType": "text/markdown"
+  },
+  "enabled": true,
+  "mutationRecord": {
+    "mutateTime": "2026-05-25T05:49:01.277944512Z",
+    "mutatedBy": "crsetsolutions@gmail.com"
+  },
+  "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8034401405279476713",
+  "notificationChannels": [
+    "projects/project-42987e01-2123-446b-ac7/notificationChannels/1439157631105258885"
+  ]
+}

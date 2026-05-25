@@ -1,0 +1,606 @@
+[
+  {
+    "timestamp": "2026-05-25T12:04:17.108282Z",
+    "severity": null,
+    "textPayload": "INFO:     Finished server process [1]",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T12:04:17.108176Z",
+    "severity": null,
+    "textPayload": "INFO:     Application shutdown complete.",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T12:04:17.107959Z",
+    "severity": null,
+    "textPayload": "INFO:     Waiting for application shutdown.",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T12:04:17.006548Z",
+    "severity": null,
+    "textPayload": "INFO:     Shutting down",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:49:13.465020Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:35040 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:49:13.464732Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:49:13.465354+00:00",
+      "worker_completed_at": "2026-05-25T11:49:13.465354+00:00",
+      "worker_received_at": "2026-05-25T11:49:13.465311+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:49:13.444940Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:48:27.475344Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:23402 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:48:27.475086Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.036,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:48:27.475396+00:00",
+      "worker_completed_at": "2026-05-25T11:48:27.475396+00:00",
+      "worker_received_at": "2026-05-25T11:48:27.475351+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:48:27.455156Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:47:35.370090Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:59712 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:47:35.369824Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.029,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:47:35.370228+00:00",
+      "worker_completed_at": "2026-05-25T11:47:35.370228+00:00",
+      "worker_received_at": "2026-05-25T11:47:35.370186+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:47:35.350386Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:46:45.262557Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:34728 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:46:45.262336Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:46:45.262878+00:00",
+      "worker_completed_at": "2026-05-25T11:46:45.262878+00:00",
+      "worker_received_at": "2026-05-25T11:46:45.262837+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:46:45.244011Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:45:53.374083Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:37866 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:45:53.373757Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.033,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:45:53.374342+00:00",
+      "worker_completed_at": "2026-05-25T11:45:53.374342+00:00",
+      "worker_received_at": "2026-05-25T11:45:53.374294+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:45:53.353983Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:44:53.369962Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:29526 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:44:53.369707Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.047,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:44:53.370308+00:00",
+      "worker_completed_at": "2026-05-25T11:44:53.370308+00:00",
+      "worker_received_at": "2026-05-25T11:44:53.370251+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:44:53.350392Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:44:03.169918Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:46064 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:44:03.169461Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.029,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:44:03.170256+00:00",
+      "worker_completed_at": "2026-05-25T11:44:03.170256+00:00",
+      "worker_received_at": "2026-05-25T11:44:03.170216+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:44:03.150372Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:43:09.261699Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:47662 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:43:09.261369Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:43:09.261995+00:00",
+      "worker_completed_at": "2026-05-25T11:43:09.261995+00:00",
+      "worker_received_at": "2026-05-25T11:43:09.261952+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:43:09.242422Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:42:12.062474Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:4976 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:42:12.062152Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:42:12.062432+00:00",
+      "worker_completed_at": "2026-05-25T11:42:12.062432+00:00",
+      "worker_received_at": "2026-05-25T11:42:12.062391+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:42:12.044203Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:41:24.965588Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:45112 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:41:24.965369Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.03,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:41:24.965689+00:00",
+      "worker_completed_at": "2026-05-25T11:41:24.965689+00:00",
+      "worker_received_at": "2026-05-25T11:41:24.965647+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:41:24.947559Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:40:33.053021Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:61594 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:40:33.052691Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:40:33.052976+00:00",
+      "worker_completed_at": "2026-05-25T11:40:33.052976+00:00",
+      "worker_received_at": "2026-05-25T11:40:33.052937+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:40:33.044215Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:40:01.098346Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:61620 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:40:01.098124Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.03,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:40:01.098764+00:00",
+      "worker_completed_at": "2026-05-25T11:40:01.098764+00:00",
+      "worker_received_at": "2026-05-25T11:40:01.098724+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:40:01.087810Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:39:37.584955Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:50818 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:39:37.584656Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.033,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:39:37.585279+00:00",
+      "worker_completed_at": "2026-05-25T11:39:37.585279+00:00",
+      "worker_received_at": "2026-05-25T11:39:37.585230+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:39:37.574011Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:39:12.571376Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:48358 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:39:12.571041Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:39:12.571319+00:00",
+      "worker_completed_at": "2026-05-25T11:39:12.571319+00:00",
+      "worker_received_at": "2026-05-25T11:39:12.571275+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:39:12.561436Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:51.750698Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:9314 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:51.750416Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:38:51.750981+00:00",
+      "worker_completed_at": "2026-05-25T11:38:51.750981+00:00",
+      "worker_received_at": "2026-05-25T11:38:51.750938+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:38:51.740166Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:34.691838Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:54786 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:34.691586Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:38:34.692122+00:00",
+      "worker_completed_at": "2026-05-25T11:38:34.692122+00:00",
+      "worker_received_at": "2026-05-25T11:38:34.692078+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:38:34.679114Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:21.091394Z",
+    "severity": null,
+    "textPayload": "INFO:     169.254.169.126:40780 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:21.091087Z",
+    "severity": null,
+    "textPayload": null,
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.045,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:38:21.091158+00:00",
+      "worker_completed_at": "2026-05-25T11:38:21.091158+00:00",
+      "worker_received_at": "2026-05-25T11:38:21.091100+00:00"
+    }
+  },
+  {
+    "timestamp": "2026-05-25T11:38:21.002516Z",
+    "severity": "INFO",
+    "textPayload": "Default STARTUP TCP probe succeeded after 1 attempt for container \"rtdp-pubsub-worker-1\" on port 8080.",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:21.002027Z",
+    "severity": null,
+    "textPayload": "INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:21.000690Z",
+    "severity": null,
+    "textPayload": "INFO:     Application startup complete.",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:21.000324Z",
+    "severity": null,
+    "textPayload": "INFO:     Waiting for application startup.",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:21.000213Z",
+    "severity": null,
+    "textPayload": "INFO:     Started server process [1]",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:17.675838Z",
+    "severity": "INFO",
+    "textPayload": "Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU utilization, request throughput, etc.) or no existing capacity for current traffic.",
+    "jsonPayload": null
+  },
+  {
+    "timestamp": "2026-05-25T11:38:17.626134Z",
+    "severity": "ERROR",
+    "textPayload": null,
+    "jsonPayload": null
+  }
+]

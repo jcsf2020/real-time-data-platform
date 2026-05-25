@@ -1,0 +1,19 @@
+{
+  "closeTime": "2026-05-25T12:00:23Z",
+  "metric": {
+    "type": "pubsub.googleapis.com/topic/send_message_operation_count"
+  },
+  "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89psxh4x1xh",
+  "openTime": "2026-05-25T11:46:22Z",
+  "policy": {
+    "displayName": "RTDP PubSub DLQ Message Count",
+    "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/3401029857159467149"
+  },
+  "resource": {
+    "labels": {
+      "project_id": "project-42987e01-2123-446b-ac7"
+    },
+    "type": "pubsub_topic"
+  },
+  "state": "CLOSED"
+}

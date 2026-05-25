@@ -1,0 +1,10 @@
+Google Cloud Alerting emails observed in Gmail inbox for this proof window:
+
+1. ALERT - market-events-raw-dlq messages > 0 - received 2026-05-25T04:46:22-07:00
+2. RESOLVED - market-events-raw-dlq messages > 0 - received 2026-05-25T05:00:23-07:00
+3. ALERT - oldest_unacked_message_age > 120s - received 2026-05-25T04:48:35-07:00
+4. RESOLVED - oldest_unacked_message_age > 120s - received 2026-05-25T04:55:35-07:00
+5. ALERT - worker_message_error_count > 0 - received 2026-05-25T04:41:16-07:00
+6. RESOLVED - worker_message_error_count > 0 - received 2026-05-25T04:57:42-07:00
+
+Note: Gmail evidence confirms email delivery for the DLQ alert and oldest-unacked alert. Screenshot evidence should be captured manually before final documentation if required.

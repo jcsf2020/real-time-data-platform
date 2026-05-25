@@ -1,0 +1,19 @@
+{
+  "closeTime": "2026-05-25T11:55:35Z",
+  "metric": {
+    "type": "pubsub.googleapis.com/subscription/oldest_unacked_message_age"
+  },
+  "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89pur2wwvpl",
+  "openTime": "2026-05-25T11:48:35Z",
+  "policy": {
+    "displayName": "RTDP PubSub Worker Oldest Unacked Message Age",
+    "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8034401405279476713"
+  },
+  "resource": {
+    "labels": {
+      "project_id": "project-42987e01-2123-446b-ac7"
+    },
+    "type": "pubsub_subscription"
+  },
+  "state": "CLOSED"
+}

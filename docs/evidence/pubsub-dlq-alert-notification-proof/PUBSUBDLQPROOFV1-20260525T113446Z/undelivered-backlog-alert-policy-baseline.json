@@ -1,0 +1,43 @@
+{
+  "alertStrategy": {
+    "autoClose": "604800s"
+  },
+  "combiner": "OR",
+  "conditions": [
+    {
+      "conditionThreshold": {
+        "aggregations": [
+          {
+            "alignmentPeriod": "60s",
+            "crossSeriesReducer": "REDUCE_MAX",
+            "perSeriesAligner": "ALIGN_MAX"
+          }
+        ],
+        "comparison": "COMPARISON_GT",
+        "duration": "300s",
+        "filter": "metric.type=\"pubsub.googleapis.com/subscription/num_undelivered_messages\" resource.type=\"pubsub_subscription\" resource.labels.subscription_id=\"market-events-raw-worker-push\"",
+        "thresholdValue": 500.0
+      },
+      "displayName": "num_undelivered_messages > 500",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/9931906580558855386/conditions/9931906580558852985"
+    }
+  ],
+  "creationRecord": {
+    "mutateTime": "2026-05-25T05:49:03.011753128Z",
+    "mutatedBy": "crsetsolutions@gmail.com"
+  },
+  "displayName": "RTDP PubSub Worker Undelivered Messages Backlog",
+  "documentation": {
+    "content": "Pub/Sub worker subscription backlog has more than 500 undelivered messages for 5 minutes. Check publish rate, Cloud Run worker processing rate, Cloud SQL availability, and DLQ routing.",
+    "mimeType": "text/markdown"
+  },
+  "enabled": true,
+  "mutationRecord": {
+    "mutateTime": "2026-05-25T05:49:03.011753128Z",
+    "mutatedBy": "crsetsolutions@gmail.com"
+  },
+  "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/9931906580558855386",
+  "notificationChannels": [
+    "projects/project-42987e01-2123-446b-ac7/notificationChannels/1439157631105258885"
+  ]
+}
