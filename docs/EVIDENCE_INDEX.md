@@ -41,6 +41,7 @@ Recommended deep technical review path:
 | Manual deploy workflow -- API | api-manual-deploy-evidence.md | workflow_dispatch validated |
 | Cloud Monitoring metrics | cloud-logs-based-metrics-datapoint-validation.md | 4 metrics, datapoints confirmed |
 | Alert policies | cloud-alert-policies-evidence.md | 2 policies, email channel attached |
+| Pub/Sub backlog and DLQ alert policies | pubsub-backlog-dlq-alert-policies-evidence.md | 3 Cloud Monitoring policies applied; live policies enabled; post-apply PLAN_EXIT=0 |
 | Monitoring dashboard | cloud-monitoring-dashboard-evidence.md | 4-panel dashboard, GCP-created |
 | Load test evidence | load-test-100/1000/5000-cloud-evidence.md | 100 / 1,000 / 5,000 events accepted |
 | DLQ and retry configuration | production-pubsub-dlq-evidence.md | deadLetterPolicy, maxDeliveryAttempts=5 |
@@ -171,6 +172,7 @@ Neither deploy workflow triggers automatically on merge to main; both require ex
 | [docs/cloud-logs-based-metrics-validation.md](cloud-logs-based-metrics-validation.md) | Four logs-based metrics created and configured in Cloud Monitoring |
 | [docs/cloud-logs-based-metrics-datapoint-validation.md](cloud-logs-based-metrics-datapoint-validation.md) | timeSeries datapoints confirmed for worker and silver refresh success counters |
 | [docs/cloud-alert-policies-evidence.md](cloud-alert-policies-evidence.md) | Two alert policies enabled; email notification channel attached |
+| [docs/pubsub-backlog-dlq-alert-policies-evidence.md](pubsub-backlog-dlq-alert-policies-evidence.md) | Three Terraform-managed Pub/Sub backlog and DLQ alert policies applied and verified: oldest unacked message age, undelivered messages backlog, and DLQ message count; APPLY_EXIT=0; post-apply PLAN_EXIT=0; live policies enabled and attached to the existing operator notification channel; alert incident/email delivery for these new policies not yet proven. |
 | [docs/cloud-monitoring-dashboard-evidence.md](cloud-monitoring-dashboard-evidence.md) | 4-panel RTDP Pipeline Overview dashboard created in GCP and exported to JSON |
 | [docs/notification-channels-evidence.md](notification-channels-evidence.md) | Email notification channel created and attached to both alert policies |
 
