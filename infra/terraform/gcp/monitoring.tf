@@ -231,3 +231,124 @@ resource "google_monitoring_alert_policy" "bigquery_quality_failure" {
     prevent_destroy = true
   }
 }
+
+resource "google_monitoring_alert_policy" "pubsub_worker_oldest_unacked_message_age" {
+  display_name = "RTDP PubSub Worker Oldest Unacked Message Age"
+  combiner     = "OR"
+  enabled      = true
+
+  conditions {
+    display_name = "oldest_unacked_message_age > 120s"
+
+    condition_threshold {
+      filter     = "metric.type=\"pubsub.googleapis.com/subscription/oldest_unacked_message_age\" resource.type=\"pubsub_subscription\" resource.labels.subscription_id=\"market-events-raw-worker-push\""
+      comparison = "COMPARISON_GT"
+      duration   = "120s"
+
+      threshold_value = 120
+
+      aggregations {
+        alignment_period     = "60s"
+        per_series_aligner   = "ALIGN_MAX"
+        cross_series_reducer = "REDUCE_MAX"
+      }
+    }
+  }
+
+  documentation {
+    content = "Pub/Sub worker subscription has an oldest unacked message older than 120 seconds. Investigate Cloud Run worker health, Cloud SQL state, request latency, and backlog growth before changing scaling."
+  }
+
+  notification_channels = [
+    "projects/project-42987e01-2123-446b-ac7/notificationChannels/1439157631105258885",
+  ]
+
+  alert_strategy {
+    auto_close = "604800s"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "google_monitoring_alert_policy" "pubsub_worker_num_undelivered_messages" {
+  display_name = "RTDP PubSub Worker Undelivered Messages Backlog"
+  combiner     = "OR"
+  enabled      = true
+
+  conditions {
+    display_name = "num_undelivered_messages > 500"
+
+    condition_threshold {
+      filter     = "metric.type=\"pubsub.googleapis.com/subscription/num_undelivered_messages\" resource.type=\"pubsub_subscription\" resource.labels.subscription_id=\"market-events-raw-worker-push\""
+      comparison = "COMPARISON_GT"
+      duration   = "300s"
+
+      threshold_value = 500
+
+      aggregations {
+        alignment_period     = "60s"
+        per_series_aligner   = "ALIGN_MAX"
+        cross_series_reducer = "REDUCE_MAX"
+      }
+    }
+  }
+
+  documentation {
+    content = "Pub/Sub worker subscription backlog has more than 500 undelivered messages for 5 minutes. Check publish rate, Cloud Run worker processing rate, Cloud SQL availability, and DLQ routing."
+  }
+
+  notification_channels = [
+    "projects/project-42987e01-2123-446b-ac7/notificationChannels/1439157631105258885",
+  ]
+
+  alert_strategy {
+    auto_close = "604800s"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "google_monitoring_alert_policy" "pubsub_dlq_message_count" {
+  display_name = "RTDP PubSub DLQ Message Count"
+  combiner     = "OR"
+  enabled      = true
+
+  conditions {
+    display_name = "market-events-raw-dlq messages > 0"
+
+    condition_threshold {
+      filter     = "metric.type=\"pubsub.googleapis.com/topic/send_message_operation_count\" resource.type=\"pubsub_topic\" resource.labels.topic_id=\"market-events-raw-dlq\""
+      comparison = "COMPARISON_GT"
+      duration   = "0s"
+
+      threshold_value = 0
+
+      aggregations {
+        alignment_period     = "300s"
+        per_series_aligner   = "ALIGN_DELTA"
+        cross_series_reducer = "REDUCE_SUM"
+      }
+    }
+  }
+
+  documentation {
+    content = "One or more messages were routed to the Pub/Sub DLQ topic market-events-raw-dlq. Inspect the DLQ before acknowledging or replaying messages."
+  }
+
+  notification_channels = [
+    "projects/project-42987e01-2123-446b-ac7/notificationChannels/1439157631105258885",
+  ]
+
+  alert_strategy {
+    auto_close = "604800s"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
