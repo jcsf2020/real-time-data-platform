@@ -1,0 +1,42 @@
+[
+  {
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89pur2wwvpl",
+    "state": "CLOSED",
+    "openTime": "2026-05-25T11:48:35Z",
+    "closeTime": "2026-05-25T11:55:35Z",
+    "policy": "RTDP PubSub Worker Oldest Unacked Message Age",
+    "policyName": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8034401405279476713",
+    "metric": "pubsub.googleapis.com/subscription/oldest_unacked_message_age",
+    "resourceType": "pubsub_subscription"
+  },
+  {
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89psxh4x1xh",
+    "state": "CLOSED",
+    "openTime": "2026-05-25T11:46:22Z",
+    "closeTime": "2026-05-25T12:00:23Z",
+    "policy": "RTDP PubSub DLQ Message Count",
+    "policyName": "projects/project-42987e01-2123-446b-ac7/alertPolicies/3401029857159467149",
+    "metric": "pubsub.googleapis.com/topic/send_message_operation_count",
+    "resourceType": "pubsub_topic"
+  },
+  {
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89poqj9sutc",
+    "state": "CLOSED",
+    "openTime": "2026-05-25T11:41:16Z",
+    "closeTime": "2026-05-25T11:57:42Z",
+    "policy": "RTDP Worker Message Error Alert",
+    "policyName": "projects/project-42987e01-2123-446b-ac7/alertPolicies/5769368960767699129",
+    "metric": "logging.googleapis.com/user/worker_message_error_count",
+    "resourceType": "cloud_run_revision"
+  },
+  {
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o82ziwffpxca",
+    "state": "CLOSED",
+    "openTime": "2026-05-20T16:59:48Z",
+    "closeTime": "2026-05-20T17:15:15Z",
+    "policy": "RTDP Worker Message Error Alert",
+    "policyName": "projects/project-42987e01-2123-446b-ac7/alertPolicies/5769368960767699129",
+    "metric": "logging.googleapis.com/user/worker_message_error_count",
+    "resourceType": "cloud_run_revision"
+  }
+]

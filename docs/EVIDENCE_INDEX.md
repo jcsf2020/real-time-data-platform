@@ -43,6 +43,7 @@ Recommended deep technical review path:
 | Alert policies | cloud-alert-policies-evidence.md | 2 policies, email channel attached |
 | Pub/Sub backlog and DLQ alert policies | pubsub-backlog-dlq-alert-policies-evidence.md | 3 Cloud Monitoring policies applied; live policies enabled; post-apply PLAN_EXIT=0 |
 | Pub/Sub alert notification proof plan | pubsub-alert-notification-proof-plan.md | Controlled future proof plan for Pub/Sub/DLQ incident and email delivery; execution not yet performed |
+| Pub/Sub DLQ alert notification proof | pubsub-dlq-alert-notification-proof-evidence.md | VALIDATED -- bounded malformed-message proof produced DLQ and oldest-unacked Cloud Monitoring incidents; Gmail delivery observed; Cloud SQL NEVER/STOPPED; schedulers PAUSED; PLAN_EXIT=0 |
 | Monitoring dashboard | cloud-monitoring-dashboard-evidence.md | 4-panel dashboard, GCP-created |
 | Load test evidence | load-test-100/1000/5000-cloud-evidence.md | 100 / 1,000 / 5,000 events accepted |
 | DLQ and retry configuration | production-pubsub-dlq-evidence.md | deadLetterPolicy, maxDeliveryAttempts=5 |
@@ -175,6 +176,7 @@ Neither deploy workflow triggers automatically on merge to main; both require ex
 | [docs/cloud-alert-policies-evidence.md](cloud-alert-policies-evidence.md) | Two alert policies enabled; email notification channel attached |
 | [docs/pubsub-backlog-dlq-alert-policies-evidence.md](pubsub-backlog-dlq-alert-policies-evidence.md) | Three Terraform-managed Pub/Sub backlog and DLQ alert policies applied and verified: oldest unacked message age, undelivered messages backlog, and DLQ message count; APPLY_EXIT=0; post-apply PLAN_EXIT=0; live policies enabled and attached to the existing operator notification channel; alert incident/email delivery for these new policies not yet proven. |
 | [docs/pubsub-alert-notification-proof-plan.md](pubsub-alert-notification-proof-plan.md) | PLAN -- controlled proof plan for validating Cloud Monitoring incident creation and email notification delivery for the Pub/Sub backlog and DLQ alert policies; docs-only; no alert triggered; no Pub/Sub messages published; no Cloud SQL start; no scheduler change; recommends `exec/pubsub-dlq-alert-notification-proof` as the next execution branch. |
+| [docs/pubsub-dlq-alert-notification-proof-evidence.md](pubsub-dlq-alert-notification-proof-evidence.md) | VALIDATED -- bounded Pub/Sub malformed-message proof produced Cloud Monitoring incidents for `RTDP PubSub DLQ Message Count`, `RTDP PubSub Worker Oldest Unacked Message Age`, and `RTDP Worker Message Error Alert`; Gmail notification delivery observed for alert and resolved emails; final Cloud SQL state `NEVER STOPPED`; schedulers `PAUSED`; post-test Terraform `PLAN_EXIT=0`; undelivered backlog alert not triggered. |
 | [docs/cloud-monitoring-dashboard-evidence.md](cloud-monitoring-dashboard-evidence.md) | 4-panel RTDP Pipeline Overview dashboard created in GCP and exported to JSON |
 | [docs/notification-channels-evidence.md](notification-channels-evidence.md) | Email notification channel created and attached to both alert policies |
 

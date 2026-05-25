@@ -1,0 +1,1718 @@
+[
+  {
+    "insertId": "6a143ac10001a6fa14e1e00e",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T12:04:17.347816545Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Finished server process [1]",
+    "timestamp": "2026-05-25T12:04:17.108282Z"
+  },
+  {
+    "insertId": "6a143ac10001a690fe5666a6",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T12:04:17.347816545Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Application shutdown complete.",
+    "timestamp": "2026-05-25T12:04:17.108176Z"
+  },
+  {
+    "insertId": "6a143ac10001a5b7cfda1f36",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T12:04:17.347816545Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Waiting for application shutdown.",
+    "timestamp": "2026-05-25T12:04:17.107959Z"
+  },
+  {
+    "insertId": "6a143ac1000019945af85ab4",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T12:04:17.015397306Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Shutting down",
+    "timestamp": "2026-05-25T12:04:17.006548Z"
+  },
+  {
+    "insertId": "6a1437390007187c95972522",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:49:13.804890404Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:35040 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:49:13.465020Z"
+  },
+  {
+    "insertId": "6a1437390007175c1e48f64f",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:49:13.465354+00:00",
+      "worker_completed_at": "2026-05-25T11:49:13.465354+00:00",
+      "worker_received_at": "2026-05-25T11:49:13.465311+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:49:13.470266642Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:49:13.464732Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003507931s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.67",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.73.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a14373900071b99cb5d2c7e",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:49:13.471357739Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "7442330ca401ab89",
+    "timestamp": "2026-05-25T11:49:13.444940Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/864e32073879eab068b5d6cbe9c177ef",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a14370b000740d0afa42a8b",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:48:27.813481569Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:23402 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:48:27.475344Z"
+  },
+  {
+    "insertId": "6a14370b00073fce37f82a2e",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.036,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:48:27.475396+00:00",
+      "worker_completed_at": "2026-05-25T11:48:27.475396+00:00",
+      "worker_received_at": "2026-05-25T11:48:27.475351+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:48:27.481597287Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:48:27.475086Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003395790s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.66",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.74.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a14370b00074439a27490d7",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:48:27.482355329Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "9afb43a9278f8870",
+    "timestamp": "2026-05-25T11:48:27.455156Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/d5378ae5b71f84f24fd6b4e8e4bca9da",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1436d70005a5aad470c912",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:47:35.709749675Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:59712 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:47:35.370090Z"
+  },
+  {
+    "insertId": "6a1436d70005a4a09497ec68",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.029,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:47:35.370228+00:00",
+      "worker_completed_at": "2026-05-25T11:47:35.370228+00:00",
+      "worker_received_at": "2026-05-25T11:47:35.370186+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:47:35.376364431Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:47:35.369824Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003428309s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.68",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.74.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1436d70005a859752289d9",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:47:35.376259415Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "1c874339d452f1e2",
+    "timestamp": "2026-05-25T11:47:35.350386Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/cb87d21c478d5ada52f1307c84a133e0",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1436a50004019dde7d279d",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:46:45.602223274Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:34728 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:46:45.262557Z"
+  },
+  {
+    "insertId": "6a1436a5000400c0e40ad965",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:46:45.262878+00:00",
+      "worker_completed_at": "2026-05-25T11:46:45.262878+00:00",
+      "worker_received_at": "2026-05-25T11:46:45.262837+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:46:45.267454483Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:46:45.262336Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003052008s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.67",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.74.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1436a500040499cc0837c2",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:46:45.270750320Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "bc29e35a1c50ae5e",
+    "timestamp": "2026-05-25T11:46:45.244011Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/a6d2ddf0887a6030c70a7b48c1ebe60f",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1436710005b543c0669e6c",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:45:53.714185505Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:37866 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:45:53.374083Z"
+  },
+  {
+    "insertId": "6a1436710005b3fd00047a34",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.033,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:45:53.374342+00:00",
+      "worker_completed_at": "2026-05-25T11:45:53.374342+00:00",
+      "worker_received_at": "2026-05-25T11:45:53.374294+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:45:53.381996932Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:45:53.373757Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.004202249s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.3",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.75.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1436710005b882e2abd5f5",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:45:53.381540474Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "0b4a738d03501da8",
+    "timestamp": "2026-05-25T11:45:53.353983Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/b21b43e1964b79d55aa9e8175f329ac7",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1436350005a52a896ecea4",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:44:53.709212106Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:29526 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:44:53.369962Z"
+  },
+  {
+    "insertId": "6a1436350005a42b07dba88a",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.047,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:44:53.370308+00:00",
+      "worker_completed_at": "2026-05-25T11:44:53.370308+00:00",
+      "worker_received_at": "2026-05-25T11:44:53.370251+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:44:53.377449953Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:44:53.369707Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003073580s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.36",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.73.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1436350005a838bc39c33a",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:44:53.380141364Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "c473ee9c0c64febe",
+    "timestamp": "2026-05-25T11:44:53.350392Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/8058aa1dc899d2b7c918041b2e2fb182",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a143603000297befcbce0ee",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:44:03.507508231Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:46064 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:44:03.169918Z"
+  },
+  {
+    "insertId": "6a143603000295f563cbaa15",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.029,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:44:03.170256+00:00",
+      "worker_completed_at": "2026-05-25T11:44:03.170256+00:00",
+      "worker_received_at": "2026-05-25T11:44:03.170216+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:44:03.175183207Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:44:03.169461Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003236590s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.64",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.73.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a14360300029a863d703eaa",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:44:03.177486972Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "b95f930054683240",
+    "timestamp": "2026-05-25T11:44:03.150372Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/a6ab438d36d1fd35cf95185c53d5b12f",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1435cd0003fe4347d83777",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:43:09.602420706Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:47662 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:43:09.261699Z"
+  },
+  {
+    "insertId": "6a1435cd0003fcf9abea214f",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:43:09.261995+00:00",
+      "worker_completed_at": "2026-05-25T11:43:09.261995+00:00",
+      "worker_received_at": "2026-05-25T11:43:09.261952+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:43:09.268942654Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:43:09.261369Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.004280850s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.5",
+      "requestMethod": "POST",
+      "requestSize": "1738",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.73.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1435cd000402530c7a7ac7",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:43:09.271226942Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "f5e77dc92033f700",
+    "timestamp": "2026-05-25T11:43:09.242422Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/25324388ce6ac4b63ebc3cdbb77502eb",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1435940000f40a2fceaf1e",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:42:12.402253997Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:4976 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:42:12.062474Z"
+  },
+  {
+    "insertId": "6a1435940000f2c8a6a1e9c3",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:42:12.062432+00:00",
+      "worker_completed_at": "2026-05-25T11:42:12.062432+00:00",
+      "worker_received_at": "2026-05-25T11:42:12.062391+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:42:12.069018585Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:42:12.062152Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003348066s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.33",
+      "requestMethod": "POST",
+      "requestSize": "1736",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.73.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1435940000f66a1afa80c5",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:42:12.070549228Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "4c2fc51294aa9727",
+    "timestamp": "2026-05-25T11:42:12.044203Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/5d045c426c0a9de4131f11cff0906277",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a143564000ebbd4dad0b7db",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:41:25.303916310Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:45112 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:41:24.965588Z"
+  },
+  {
+    "insertId": "6a143564000ebaf90d243130",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.03,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:41:24.965689+00:00",
+      "worker_completed_at": "2026-05-25T11:41:24.965689+00:00",
+      "worker_received_at": "2026-05-25T11:41:24.965647+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:41:24.971906440Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:41:24.965369Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.002997819s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.1",
+      "requestMethod": "POST",
+      "requestSize": "1736",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.75.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a143564000ebe5b7f97d427",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:41:24.972336865Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "f7e952a20ffc54d9",
+    "timestamp": "2026-05-25T11:41:24.947559Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/9d1d6b99d887af3766d59b7fc0ef65f6",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1435310000cf1d309d1d59",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:40:33.391744916Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:61594 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:40:33.053021Z"
+  },
+  {
+    "insertId": "6a1435310000cdd34a90c221",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.031,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:40:33.052976+00:00",
+      "worker_completed_at": "2026-05-25T11:40:33.052976+00:00",
+      "worker_received_at": "2026-05-25T11:40:33.052937+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:40:33.058042284Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:40:33.052691Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003325690s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.32",
+      "requestMethod": "POST",
+      "requestSize": "1736",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.76.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1435310000d2cbdfa5ea5a",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:40:33.059283938Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "d7eece5f4510af1d",
+    "timestamp": "2026-05-25T11:40:33.044215Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/4b1877d39b4856ae3dc6325f1dee0251",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1435110001802a3a15c356",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:40:01.438340870Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:61620 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:40:01.098346Z"
+  },
+  {
+    "insertId": "6a14351100017f4cc61672de",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.03,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:40:01.098764+00:00",
+      "worker_completed_at": "2026-05-25T11:40:01.098764+00:00",
+      "worker_received_at": "2026-05-25T11:40:01.098724+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:40:01.101274560Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:40:01.098124Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.002961810s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.4",
+      "requestMethod": "POST",
+      "requestSize": "1736",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.75.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a143511000182dc27a8a6c4",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:40:01.106167368Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "82a56686c8989c73",
+    "timestamp": "2026-05-25T11:40:01.087810Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/bdaa455d2952d80f6583373238e08f3f",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1434f90008ecfb95c54c98",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:39:37.923827241Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:50818 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:39:37.584955Z"
+  },
+  {
+    "insertId": "6a1434f90008ebd061fe799a",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.033,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:39:37.585279+00:00",
+      "worker_completed_at": "2026-05-25T11:39:37.585279+00:00",
+      "worker_received_at": "2026-05-25T11:39:37.585230+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:39:37.595137147Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:39:37.584656Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003338641s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.68",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.76.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1434f90008ef627e5f6873",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:39:37.592182964Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "a3b2b4c2d8542961",
+    "timestamp": "2026-05-25T11:39:37.574011Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/c672c9a8db6d21409ee0316d2aea56e6",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1434e00008b7f03ac4dde2",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:39:12.909160462Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:48358 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:39:12.571376Z"
+  },
+  {
+    "insertId": "6a1434e00008b6a157f8fb8d",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:39:12.571319+00:00",
+      "worker_completed_at": "2026-05-25T11:39:12.571319+00:00",
+      "worker_received_at": "2026-05-25T11:39:12.571275+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:39:12.578294717Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:39:12.571041Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003136879s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.32",
+      "requestMethod": "POST",
+      "requestSize": "1736",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.74.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1434e00008baf377d5133d",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:39:12.577712172Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "56d579e26cdca8a4",
+    "timestamp": "2026-05-25T11:39:12.561436Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/04eadfde61eb7ef750517c7635ec92f8",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1434cb000b746a53cc30cb",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:38:52.089665767Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:9314 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:38:51.750698Z"
+  },
+  {
+    "insertId": "6a1434cb000b735047c6728f",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:38:51.750981+00:00",
+      "worker_completed_at": "2026-05-25T11:38:51.750981+00:00",
+      "worker_received_at": "2026-05-25T11:38:51.750938+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:38:51.754743815Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:38:51.750416Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003209030s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.3",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.74.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1434cb000b772015140258",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:38:51.756605971Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "ead2865525b5d00d",
+    "timestamp": "2026-05-25T11:38:51.740166Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/2c0e9e2efa5870c09c6b22765a11c347",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1434ba000a8e7e4f2880a5",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:38:35.030044904Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:54786 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:38:34.691838Z"
+  },
+  {
+    "insertId": "6a1434ba000a8d824443d5bb",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.032,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:38:34.692122+00:00",
+      "worker_completed_at": "2026-05-25T11:38:34.692122+00:00",
+      "worker_received_at": "2026-05-25T11:38:34.692078+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:38:34.695983531Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:38:34.691586Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "0.003153050s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.65",
+      "requestMethod": "POST",
+      "requestSize": "1737",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.75.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1434ba000a918d462410da",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:38:34.698129760Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "8781c2283d6e642f",
+    "timestamp": "2026-05-25T11:38:34.679114Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/a862b73cd32c9d95275c4dc77841a1ae",
+    "traceSampled": true
+  },
+  {
+    "insertId": "6a1434ad00016502cd52cdbd",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:38:21.430358496Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     169.254.169.126:40780 - \"POST /pubsub/push HTTP/1.1\" 500 Internal Server Error",
+    "timestamp": "2026-05-25T11:38:21.091394Z"
+  },
+  {
+    "insertId": "6a1434ad000163cf29fa708a",
+    "jsonPayload": {
+      "component": "pubsub-worker",
+      "error_message": "Expecting value: line 1 column 1 (char 0)",
+      "error_type": "JSONDecodeError",
+      "event_id": null,
+      "operation": "process_message",
+      "processing_time_ms": 0.045,
+      "service": "rtdp-pubsub-worker",
+      "source_topic": "market-events-raw",
+      "status": "error",
+      "symbol": null,
+      "timestamp_utc": "2026-05-25T11:38:21.091158+00:00",
+      "worker_completed_at": "2026-05-25T11:38:21.091158+00:00",
+      "worker_received_at": "2026-05-25T11:38:21.091100+00:00"
+    },
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstdout",
+    "receiveTimestamp": "2026-05-25T11:38:21.096526136Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "timestamp": "2026-05-25T11:38:21.091087Z"
+  },
+  {
+    "insertId": "6a1434ad000009d41044c3f8",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-05-25T11:38:21.017687730Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Default STARTUP TCP probe succeeded after 1 attempt for container \"rtdp-pubsub-worker-1\" on port 8080.",
+    "timestamp": "2026-05-25T11:38:21.002516Z"
+  },
+  {
+    "insertId": "6a1434ad000007eb574b3c99",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T11:38:21.339886146Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)",
+    "timestamp": "2026-05-25T11:38:21.002027Z"
+  },
+  {
+    "insertId": "6a1434ad000002b2d54c8eb2",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T11:38:21.339886146Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Application startup complete.",
+    "timestamp": "2026-05-25T11:38:21.000690Z"
+  },
+  {
+    "insertId": "6a1434ad00000144d2dfd266",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T11:38:21.339886146Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Waiting for application startup.",
+    "timestamp": "2026-05-25T11:38:21.000324Z"
+  },
+  {
+    "insertId": "6a1434ad000000d5a13b6801",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fstderr",
+    "receiveTimestamp": "2026-05-25T11:38:21.008887816Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "textPayload": "INFO:     Started server process [1]",
+    "timestamp": "2026-05-25T11:38:21.000213Z"
+  },
+  {
+    "insertId": "6a1434a9000a4ffe58e80c0f",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3",
+      "scaling_reason": "AUTOSCALING"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Fvarlog%2Fsystem",
+    "receiveTimestamp": "2026-05-25T11:38:17.682544802Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "INFO",
+    "textPayload": "Starting new instance. Reason: AUTOSCALING - Instance started due to configured scaling factors (e.g. CPU utilization, request throughput, etc.) or no existing capacity for current traffic.",
+    "timestamp": "2026-05-25T11:38:17.675838Z"
+  },
+  {
+    "httpRequest": {
+      "latency": "3.237551073s",
+      "protocol": "HTTP/1.1",
+      "remoteIp": "34.116.34.34",
+      "requestMethod": "POST",
+      "requestSize": "1736",
+      "requestUrl": "https://rtdp-pubsub-worker-892892382088.europe-west1.run.app/pubsub/push",
+      "responseSize": "170",
+      "serverIp": "34.143.73.2",
+      "status": 500,
+      "userAgent": "APIs-Google; (+https://developers.google.com/webmasters/APIs-Google.html)"
+    },
+    "insertId": "6a1434ad00018113e41988f5",
+    "labels": {
+      "instanceId": "0007b734d976f35b73033d57a1bd80e01f0bc00c49814dfb7af9e9cf605db82b0b77e2b6e39473c537932655838c83e3e8869daad76ca53dc37d958dad9715aa5d9ced3ea572ec98119478e4e44eb3"
+    },
+    "logName": "projects/project-42987e01-2123-446b-ac7/logs/run.googleapis.com%2Frequests",
+    "receiveTimestamp": "2026-05-25T11:38:21.102221297Z",
+    "resource": {
+      "labels": {
+        "configuration_name": "rtdp-pubsub-worker",
+        "location": "europe-west1",
+        "project_id": "project-42987e01-2123-446b-ac7",
+        "revision_name": "rtdp-pubsub-worker-00006-4hf",
+        "service_name": "rtdp-pubsub-worker"
+      },
+      "type": "cloud_run_revision"
+    },
+    "severity": "ERROR",
+    "spanId": "7e710ee47c340440",
+    "timestamp": "2026-05-25T11:38:17.626134Z",
+    "trace": "projects/project-42987e01-2123-446b-ac7/traces/37df70f77214cff5735015575e11e978",
+    "traceSampled": true
+  }
+]

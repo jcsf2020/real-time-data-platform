@@ -1,0 +1,116 @@
+[
+  {
+    "closeTime": "2026-05-25T11:55:35Z",
+    "metric": {
+      "type": "pubsub.googleapis.com/subscription/oldest_unacked_message_age"
+    },
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89pur2wwvpl",
+    "openTime": "2026-05-25T11:48:35Z",
+    "policy": {
+      "displayName": "RTDP PubSub Worker Oldest Unacked Message Age",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8034401405279476713"
+    },
+    "resource": {
+      "labels": {
+        "project_id": "project-42987e01-2123-446b-ac7"
+      },
+      "type": "pubsub_subscription"
+    },
+    "state": "CLOSED"
+  },
+  {
+    "closeTime": "2026-05-25T12:00:23Z",
+    "metric": {
+      "type": "pubsub.googleapis.com/topic/send_message_operation_count"
+    },
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89psxh4x1xh",
+    "openTime": "2026-05-25T11:46:22Z",
+    "policy": {
+      "displayName": "RTDP PubSub DLQ Message Count",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/3401029857159467149"
+    },
+    "resource": {
+      "labels": {
+        "project_id": "project-42987e01-2123-446b-ac7"
+      },
+      "type": "pubsub_topic"
+    },
+    "state": "CLOSED"
+  },
+  {
+    "closeTime": "2026-05-25T11:57:42Z",
+    "metric": {
+      "type": "logging.googleapis.com/user/worker_message_error_count"
+    },
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o89poqj9sutc",
+    "openTime": "2026-05-25T11:41:16Z",
+    "policy": {
+      "displayName": "RTDP Worker Message Error Alert",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/5769368960767699129"
+    },
+    "resource": {
+      "labels": {
+        "project_id": "project-42987e01-2123-446b-ac7"
+      },
+      "type": "cloud_run_revision"
+    },
+    "state": "CLOSED"
+  },
+  {
+    "closeTime": "2026-05-20T17:15:15Z",
+    "metric": {
+      "type": "logging.googleapis.com/user/worker_message_error_count"
+    },
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o82ziwffpxca",
+    "openTime": "2026-05-20T16:59:48Z",
+    "policy": {
+      "displayName": "RTDP Worker Message Error Alert",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/5769368960767699129"
+    },
+    "resource": {
+      "labels": {
+        "project_id": "project-42987e01-2123-446b-ac7"
+      },
+      "type": "cloud_run_revision"
+    },
+    "state": "CLOSED"
+  },
+  {
+    "closeTime": "2026-05-19T10:11:00Z",
+    "metric": {
+      "type": "custom.googleapis.com/rtdp/bigquery_quality/failed_checks_count"
+    },
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o81br4aj3ps8",
+    "openTime": "2026-05-19T09:46:58Z",
+    "policy": {
+      "displayName": "RTDP BigQuery Quality Failure",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8645165149135590665"
+    },
+    "resource": {
+      "labels": {
+        "project_id": "project-42987e01-2123-446b-ac7"
+      },
+      "type": "global"
+    },
+    "state": "CLOSED"
+  },
+  {
+    "closeTime": "2026-05-19T00:48:05Z",
+    "metric": {
+      "type": "custom.googleapis.com/rtdp/bigquery_quality/failed_checks_count"
+    },
+    "name": "projects/project-42987e01-2123-446b-ac7/alerts/0.o80gcc6mhnoc",
+    "openTime": "2026-05-18T23:16:03Z",
+    "policy": {
+      "displayName": "RTDP BigQuery Quality Failure",
+      "name": "projects/project-42987e01-2123-446b-ac7/alertPolicies/8645165149135590665"
+    },
+    "resource": {
+      "labels": {
+        "project_id": "project-42987e01-2123-446b-ac7"
+      },
+      "type": "global"
+    },
+    "state": "CLOSED"
+  }
+]
