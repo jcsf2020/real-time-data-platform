@@ -36,3 +36,6 @@ dbt/.user.yml
 
 # dbt local profile with credentials
 dbt/profiles.yml
+
+# Local credential / secret files
+.gcp-db-password
