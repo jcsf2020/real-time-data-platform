@@ -5,7 +5,9 @@
 **For deep technical review:** see [docs/EVIDENCE_INDEX.md](EVIDENCE_INDEX.md) and
 [docs/ARCHITECTURE_REVIEW.md](ARCHITECTURE_REVIEW.md).
 
-**Date:** 2026-05-19
+**For a quick recruiter scan:** see [docs/recruiter-facing-platform-summary.md](recruiter-facing-platform-summary.md).
+
+**Date:** 2026-05-28 (updated from 2026-05-19)
 
 ---
 
@@ -30,12 +32,12 @@ run IDs. Claims that cannot be evidenced are not made.
 - Pub/Sub topic and push subscription to Cloud Run worker (`rtdp-pubsub-worker`): validated end-to-end
 - Idempotent bronze writes: `ON CONFLICT(event_id) DO NOTHING` confirmed at persistence layer
 - FastAPI serving layer (`rtdp-api`) on Cloud Run: health, readiness, events, aggregates endpoints
-- Bounded load tests: 100, 1,000, and 5,000 events -- all acceptance criteria met; metric sums confirmed
+- Bounded load tests: 100, 1,000, 5,000, 10,000, and 50,000 events -- all acceptance criteria met; 50,000-event run is the latest validated milestone (2026-05-20; 0 errors; 0 duplicate rows)
 - Configured dead-letter policy: `deadLetterPolicy`, `maxDeliveryAttempts=5`, 10s/60s backoff, DLQ topic
 
 ### Transformation and Analytics
 
-- dbt silver and gold models on Cloud Run Job (`rtdp-dbt-refresh-job`): 22 dbt tests, Cloud SQL parity confirmed
+- dbt silver and gold incremental models on Cloud Run Job (`rtdp-dbt-refresh-job`): `delete+insert` strategy with lookback windows; 22 dbt tests; Cloud SQL live incremental execution proven (`rtdp-dbt-refresh-job-gqrl8`; dbt run PASS=2; gold INSERT 0 7; silver INSERT 0 13; dbt test PASS=22)
 - Scheduler-triggered dbt execution: `rtdp-dbt-refresh-job` dispatched by Cloud Scheduler (`PAUSED` by default)
 - BigQuery analytical tier: dataset `rtdp_analytics` (europe-west1); three Terraform-managed, DAY-partitioned tables
 - BigQuery bounded backfill: 6,120 rows from `bronze.market_events`; source/target count match accepted
@@ -75,9 +77,8 @@ run IDs. Claims that cannot be evidenced are not made.
 |---|---|
 | Dataflow / stateful windowed streaming | Bounded Apache Beam / DataflowRunner proof validated (10 proof rows, JOB_STATE_DRAINED; see dataflow-bounded-runner-proof-evidence.md). No production streaming Dataflow. No sustained always-on Dataflow pipeline. Windowed aggregations and late-event handling are not claimed. |
 | Continuous production traffic | Not a continuously running production service. Compute is inactive outside bounded validation windows. |
-| Sustained throughput above 5,000 events | Bounded burst tests only. Steady-state streaming throughput is not validated. |
+| Sustained production throughput | Bounded burst tests up to 50,000 events and a 10 eps steady-state validation completed. Maximum throughput ceiling and sustained multi-hour streaming are not claimed. |
 | Automatic deploy-on-merge (CD) | Both deploy workflows require explicit manual `workflow_dispatch`. No deploy happens automatically on merge. |
-| Incremental dbt models | Silver and gold models use full-refresh table materialization. Incremental merge is not yet implemented. |
 | GitHub notification bell delivery | Email delivery is proven (PR #169). GitHub notification bell delivery is not yet proven. |
 | Multi-environment deployment | Single GCP project. No staging environment, no canary deployment, no multi-region. |
 | Real-world data variability | All events are synthetic deterministic records with predictable event-ID prefixes. |
@@ -88,14 +89,14 @@ run IDs. Claims that cannot be evidenced are not made.
 
 Recommended reading path for a technical reviewer:
 
-1. [docs/ARCHITECTURE_REVIEW.md](ARCHITECTURE_REVIEW.md) -- architecture overview, validated capabilities, key trade-offs, and known gaps
-2. [docs/EVIDENCE_INDEX.md](EVIDENCE_INDEX.md) -- complete catalog of 60+ evidence documents by category
-3. [docs/gcp-end-to-end-validation.md](gcp-end-to-end-validation.md) -- Pub/Sub to Cloud Run to Cloud SQL to API path
-4. [docs/bigquery-quality-incident-notification-delivery-proof.md](bigquery-quality-incident-notification-delivery-proof.md) -- most recent end-to-end proof: incident creation and email delivery (PR #169)
-5. [docs/load-test-5000-cloud-evidence.md](load-test-5000-cloud-evidence.md) -- bounded throughput evidence (5,000 events)
+1. [docs/recruiter-facing-platform-summary.md](recruiter-facing-platform-summary.md) -- recruiter one-page summary: role fit, safe positioning, explicit non-claims
+2. [docs/ARCHITECTURE_REVIEW.md](ARCHITECTURE_REVIEW.md) -- architecture overview, validated capabilities, key trade-offs, and known gaps
+3. [docs/EVIDENCE_INDEX.md](EVIDENCE_INDEX.md) -- complete catalog of 60+ evidence documents by category
+4. [docs/load-test-50000-cloud-evidence.md](load-test-50000-cloud-evidence.md) -- latest bounded throughput proof: 50,000 events, 0 errors, 0 duplicates
+5. [docs/bigquery-quality-incident-notification-delivery-proof.md](bigquery-quality-incident-notification-delivery-proof.md) -- most recent end-to-end proof: incident creation and email delivery (PR #169)
 6. [infra/terraform/gcp/](../infra/terraform/gcp/) -- Terraform resource definitions for all deployed GCP services
 
-For a time-bounded review, steps 1 through 3 cover the full capability scope and take
+For a time-bounded review, steps 1 through 4 cover the full capability scope and take
 approximately 20 minutes.
 
 ---
@@ -162,10 +163,9 @@ Confirmed as of 2026-05-19, ranked by B2B / recruiter value:
 | Gap | Status | Next Step |
 |---|---|---|
 | GitHub notification bell delivery | Not yet proven | Prove bell delivery on a quality failure -- no code change required |
-| Incremental dbt models | Not yet implemented | Convert silver and gold to incremental merge materialization |
 | Automatic deploy-on-merge | Manual `workflow_dispatch` only | Add push trigger on `main` scoped to the worker service |
-| Dataflow production windowed streaming | Bounded proof validated; production streaming not implemented | Bounded DataflowRunner proof validated (see dataflow-bounded-runner-proof-evidence.md); remaining step is production windowed/stateful Dataflow streaming for streaming-first JDs |
-| Sustained throughput above 5,000 events | Not validated | Validate steady-state streaming at 50 msg/s sustained over a timed window |
+| Dataflow production windowed streaming | Bounded DataflowRunner proof validated (JOB_STATE_DRAINED; 10 proof rows); production always-on streaming not implemented | Production windowed/stateful Dataflow streaming for streaming-first JDs is the remaining high-value step |
+| Live dbt metrics write proof | `DBT_METRICS_ENABLED` still `false`; `roles/monitoring.metricWriter` for `rtdp-worker-sa` is already applied | Enable and prove live dbt metric writes to Cloud Monitoring in a controlled branch |
 
 The platform is at a stage where the evidence base supports a senior Data Engineer or Data
 Platform Engineer portfolio review. The controlled failure proof, threshold quality checks,

@@ -1,6 +1,46 @@
 # Real-Time Data Platform
 
-A local-first, event-driven data platform built with Python, Redpanda (Kafka-compatible), PostgreSQL, and FastAPI. Designed to demonstrate modern Data Engineering practices: versioned event contracts, medallion data layers, idempotent persistence, operational observability, and a documented GCP target architecture.
+[![CI](https://github.com/jcsf2020/real-time-data-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/jcsf2020/real-time-data-platform/actions/workflows/ci.yml)
+
+An evidence-first Data Engineering portfolio platform demonstrating real-time streaming, GCP cloud operations, Terraform IaC, governed dbt transformations, BigQuery analytics, and end-to-end observability. Every claimed capability is backed by a scoped runbook and an accepted evidence document with verifiable run IDs. This is production-light portfolio work -- bounded, reproducible proofs rather than a continuously running production service.
+
+---
+
+## Recruiter Quick Scan
+
+| Question | Answer |
+|---|---|
+| What is this? | An evidence-first GCP Data Engineering portfolio covering streaming ingestion, transformations, analytics, alerting, and IaC -- all linked to verifiable run IDs |
+| What stack does it prove? | Python, Pub/Sub, Cloud Run, Cloud SQL, BigQuery, dbt, Terraform, FastAPI, GitHub Actions CI, Cloud Monitoring |
+| Where to start reviewing? | [Recruiter summary](docs/recruiter-facing-platform-summary.md) → [Evidence index](docs/EVIDENCE_INDEX.md) → [50k load test evidence](docs/load-test-50000-cloud-evidence.md) |
+| Which roles does it support? | Data Engineer, Analytics Engineer, Cloud Data Engineer, Platform/DataOps Engineer |
+| What is intentionally not claimed? | Sustained production throughput, production windowed Dataflow, exactly-once semantics, automatic deploy-on-merge, multi-region deployment |
+
+---
+
+## Evidence-First Highlights
+
+- **384 pytest tests** passing on every push; ruff clean throughout
+- **dbt compile/run/test in CI**: 22 dbt tests against an ephemeral pgvector container on every push
+- **Terraform Plan CI**: Workload Identity OIDC-authenticated plan on every infra change; no stored service account keys in CI
+- **50,000-event bounded cloud run**: Pub/Sub → Cloud Run worker → Cloud SQL; 0 errors; 0 duplicate rows
+- **BigQuery analytical tier**: Terraform-managed; cursor-based incremental append; quality checks with scheduled execution proven
+- **End-to-end alerting loop**: BigQuery quality failure → Cloud Monitoring incident → email notification delivery proven end-to-end (PR #169)
+- **Pub/Sub DLQ alert notification**: bounded malformed-message proof produced Cloud Monitoring incidents and Gmail notification delivery (PR #218)
+- **60+ indexed evidence documents**: every claim linked to a specific GCP run ID, commit SHA, and resource name
+- **Evidence-first non-claims posture**: NOT YET PROVEN markers throughout; Dataflow production streaming and automatic CD not claimed
+
+---
+
+## Evidence Navigation
+
+| Document | Purpose |
+|---|---|
+| [docs/recruiter-facing-platform-summary.md](docs/recruiter-facing-platform-summary.md) | Recruiter and hiring-manager one-page summary: role fit, safe interview positioning, explicit non-claims |
+| [docs/portfolio-b2b-narrative.md](docs/portfolio-b2b-narrative.md) | B2B and technical front-door narrative: validated capabilities and 2026-2027 market relevance |
+| [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) | Master evidence catalog: 60+ documents indexed by category with a recruiter start path |
+| [docs/cost-performance-summary.md](docs/cost-performance-summary.md) | Cost-control posture, resource sizing, and performance evidence (p50/p95/p99 latency, 10 eps steady-state) |
+| [docs/gcp-architecture.md](docs/gcp-architecture.md) | GCP service mapping and validated event-processing architecture |
 
 ---
 
@@ -41,7 +81,7 @@ Evidence: [docs/load-test-50000-cloud-evidence.md](docs/load-test-50000-cloud-ev
 - dbt incremental models (silver, gold): delete+insert strategy; 22 dbt tests; Cloud SQL live execution proven
 - Terraform IaC: 100% GCP resource coverage; GCS remote state; PLAN_EXIT=0 throughout; Workload Identity for CI
 - Cloud Monitoring and Cloud Logging: 4 logs-based metrics with datapoints; 4-panel dashboard; alert policies; structured JSON logs per event
-- CI validation: pytest (241 tests), ruff, Terraform plan CI, dbt compile/run/test on every push via GitHub Actions
+- CI validation: pytest (384 tests), ruff, Terraform plan CI, dbt compile/run/test on every push via GitHub Actions
 - Data quality checks: 8-check BigQuery quality workflow; scheduled and manual execution proven; controlled failure and pass runs both evidenced
 - Alerting and incident delivery: quality failure -> Cloud Monitoring incident -> email notification proven end-to-end
 - Cost control: Cloud SQL NEVER/STOPPED verified across 60+ evidence docs; schedulers PAUSED by default
@@ -462,8 +502,8 @@ GitHub Actions runs on every push to `main` and on pull requests:
 
 ```
 uv sync --all-packages     # Install full workspace
-ruff check .               # Lint
-pytest -q                  # Run test suite
+ruff check .               # Lint (ruff clean on every push)
+pytest -q                  # Run test suite (384 tests)
 python -c "import rtdp_api, rtdp_consumer, rtdp_producer, rtdp_pubsub_publisher"  # Import smoke test
 ```
 

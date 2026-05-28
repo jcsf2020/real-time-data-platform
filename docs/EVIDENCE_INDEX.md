@@ -8,11 +8,20 @@ documents contain.
 
 ---
 
-## Review Path
+## Recruiter Start Here
 
-For a recruiter or B2B entry point, start with
-[docs/portfolio-b2b-narrative.md](portfolio-b2b-narrative.md) for an executive summary,
-validated capabilities, intentional non-claims, and 2026-2027 relevance.
+Recommended path for a recruiter or hiring manager reviewing this project for the first time:
+
+1. [README.md](../README.md) -- project overview, CI badge, recruiter quick scan, and evidence-first highlights
+2. [docs/recruiter-facing-platform-summary.md](recruiter-facing-platform-summary.md) -- one-page hiring translation: role fit, safe interview positioning, non-claims
+3. [docs/portfolio-b2b-narrative.md](portfolio-b2b-narrative.md) -- B2B narrative: validated capabilities, 2026-2027 market relevance, talking points
+4. [docs/cost-performance-summary.md](cost-performance-summary.md) -- cost-control posture, resource sizing, performance evidence
+5. [docs/gcp-architecture.md](gcp-architecture.md) -- GCP service mapping and validated event-processing path
+6. Selected proof documents: [load-test-50000-cloud-evidence.md](load-test-50000-cloud-evidence.md), [bigquery-quality-incident-notification-delivery-proof.md](bigquery-quality-incident-notification-delivery-proof.md), [dbt-cloud-sql-incremental-execution-proof.md](dbt-cloud-sql-incremental-execution-proof.md)
+
+---
+
+## Technical Review Path
 
 Recommended deep technical review path:
 
@@ -20,7 +29,7 @@ Recommended deep technical review path:
 2. [docs/gcp-architecture.md](gcp-architecture.md) -- GCP service mapping and target flow
 3. [docs/EVIDENCE_INDEX.md](EVIDENCE_INDEX.md) -- this document (evidence categories and links)
 4. [docs/gcp-end-to-end-validation.md](gcp-end-to-end-validation.md) -- end-to-end cloud validation
-5. [docs/load-test-5000-cloud-evidence.md](load-test-5000-cloud-evidence.md) -- bounded throughput evidence
+5. [docs/load-test-50000-cloud-evidence.md](load-test-50000-cloud-evidence.md) -- latest bounded throughput evidence (50,000 events; latest validated milestone)
 
 ---
 
