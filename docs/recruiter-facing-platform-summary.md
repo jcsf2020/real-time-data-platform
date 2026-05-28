@@ -1,6 +1,6 @@
 # Recruiter-Facing Platform Summary
 
-**Date:** 2026-05-20
+**Date:** 2026-05-28 (updated from 2026-05-20)
 **Audience:** Recruiters, hiring managers, non-deep-technical stakeholders
 **Purpose:** One-page hiring and B2B translation of the Real-Time Data Platform evidence
 
@@ -31,7 +31,7 @@ Bounded Apache Beam / DataflowRunner proof validated (JOB_STATE_DRAINED; 10 proo
 | dbt incremental models | Silver and gold models; delete+insert strategy; 22 dbt tests; Cloud SQL live execution proven | Governed transformation layer, not just local testing |
 | Terraform IaC | 100% GCP resource coverage; GCS remote state; PLAN_EXIT=0 throughout; Workload Identity for CI | Infrastructure-as-code discipline across the full stack |
 | Cloud Monitoring / logs | 4 logs-based metrics with datapoints; 12 BigQuery quality time series per run; 4-panel dashboard | Observability wired and data-backed, not aspirational |
-| CI validation | pytest (241 tests), ruff, Terraform plan CI on every push; dbt compile/run/test in CI | Automated quality gate at every merge |
+| CI validation | pytest (384 tests), ruff, Terraform plan CI on every push; dbt compile/run/test in CI | Automated quality gate at every merge |
 | Data quality checks | 8-check BigQuery quality workflow; scheduled execution proven; controlled failure and pass runs both evidenced | Quality-first engineering with verifiable pass/fail signal |
 | Incident / email notification | Cloud Monitoring alert -> OPEN incident -> email delivery; proven by CLI output and Gmail inbox screenshot | Full alerting loop closed end-to-end |
 | Cost control | Cloud SQL NEVER/STOPPED verified in 60+ evidence docs; schedulers PAUSED by default; no idle compute | Demonstrates operational discipline and cloud cost awareness |
@@ -138,9 +138,46 @@ The following items are explicitly not part of this project's evidence base:
 | Data Engineer | Strong -- Pub/Sub, Cloud Run, Cloud SQL, BigQuery, dbt, Terraform, CI, observability all evidenced |
 | Data Platform Engineer | Strong -- full IaC coverage, Workload Identity, cost-control discipline, alerting loop proven |
 | Analytics Engineer with cloud / platform exposure | Good -- dbt incremental models, BigQuery quality workflow, scheduled execution, Cloud Monitoring custom metrics |
-| GCP-focused Data Engineer | Strong -- every major GCP data service deployed, Terraform-managed, and evidenced |
-| Junior / Mid Data Engineer with strong portfolio evidence | Strong -- 60+ indexed evidence docs, 241 tests, clean CI, honest limitation statements |
+| Cloud Data Engineer | Strong -- every major GCP data service deployed, Terraform-managed, and evidenced |
+| Platform/DataOps Engineer | Strong -- Workload Identity, Terraform 100% coverage, GCS remote state, OIDC keyless CI, cost-safe infrastructure discipline |
+| Junior / Mid Data Engineer with strong portfolio evidence | Strong -- 60+ indexed evidence docs, 384 tests, clean CI, honest limitation statements |
 | B2B / freelance data platform delivery | Good -- bounded milestone delivery model; runbook-driven execution; cost-safe state maintained throughout |
+
+---
+
+## Role-Specific Evidence Guide
+
+### Data Engineer
+
+Key evidence: streaming ingestion at scale, idempotent writes, dbt transformation layer, BigQuery analytical tier, CI discipline.
+
+- [docs/load-test-50000-cloud-evidence.md](load-test-50000-cloud-evidence.md) -- 50,000-event Pub/Sub → Cloud Run → Cloud SQL run with 0 errors and 0 duplicate rows
+- [docs/dbt-cloud-sql-incremental-execution-proof.md](dbt-cloud-sql-incremental-execution-proof.md) -- dbt incremental run against Cloud SQL; PASS=2; dbt test PASS=22
+- [docs/bigquery-incremental-append-evidence.md](bigquery-incremental-append-evidence.md) -- cursor-based MERGE into BigQuery; idempotent second run confirmed
+
+### Analytics Engineer
+
+Key evidence: dbt models, BigQuery quality checks, Cloud Monitoring custom metrics, scheduled execution.
+
+- [docs/dbt-cloud-sql-incremental-execution-proof.md](dbt-cloud-sql-incremental-execution-proof.md) -- governed dbt transformation on Cloud Run with Cloud SQL live execution
+- [docs/bigquery-quality-incident-notification-delivery-proof.md](bigquery-quality-incident-notification-delivery-proof.md) -- quality failure → Cloud Monitoring → email delivery proven end-to-end
+- [docs/bigquery-quality-scheduled-event-execution-evidence.md](bigquery-quality-scheduled-event-execution-evidence.md) -- scheduled quality check execution (cron `15 6 * * *`) proven
+
+### Cloud Data Engineer
+
+Key evidence: GCP service breadth, Terraform IaC, Workload Identity, cost-control discipline.
+
+- [docs/gcp-architecture.md](gcp-architecture.md) -- full GCP service mapping (Pub/Sub, Cloud Run, Cloud SQL, BigQuery, Secret Manager, Artifact Registry, Cloud Monitoring, Cloud Scheduler)
+- [docs/iam-members-terraform-import-plan-evidence.md](iam-members-terraform-import-plan-evidence.md) -- Terraform IAM management with zero-diff plans
+- [docs/cost-performance-summary.md](cost-performance-summary.md) -- cost-control posture verified across 60+ evidence documents
+
+### Platform/DataOps Engineer
+
+Key evidence: Workload Identity Federation, Terraform 100% coverage, CI pipeline, alerting and incident response.
+
+- [docs/workload-identity-terraform-import-plan-evidence.md](workload-identity-terraform-import-plan-evidence.md) -- keyless CI: GitHub Actions OIDC, no stored service account keys
+- [docs/cloud-alert-policies-evidence.md](cloud-alert-policies-evidence.md) -- infrastructure alert policies with email notification channel attached
+- [docs/SLO_AND_INCIDENT_RESPONSE.md](SLO_AND_INCIDENT_RESPONSE.md) -- production-light SLOs, error budget definition, incident severity and response runbooks
 
 ---
 
