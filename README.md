@@ -133,6 +133,130 @@ flowchart LR
 
 ---
 
+## Business Context
+
+This project exists to prove a specific thing: that a solo data engineer can design,
+build, and deploy a production-grade event-driven GCP data platform from first principles —
+with full infrastructure-as-code, CI, automated testing, and cloud observability in place.
+
+**For recruiters:** This is the strongest public evidence of senior data engineering capability
+in this portfolio. It demonstrates GCP architecture, IaC discipline, streaming patterns, data
+warehouse design, and engineering maturity — not just code.
+
+**For B2B/consulting buyers:** This platform represents the pattern applied in the
+[Data Stack Sprint](commercial/track-a/) offer — fixed-scope
+GCP data engineering engagements from EUR 3,500 (diagnostic) to EUR 15,000+ (advanced build).
+If your company has broken pipelines, stale dashboards, or a missing data layer, this is the
+kind of work that gets done.
+
+**Score:** 85/100 ATTACK — at the ATTACK threshold (Factory audit, 2026-05-29).
+
+---
+
+## What This Project Proves
+
+| Capability | Evidence |
+|------------|----------|
+| GCP infrastructure-as-code | Terraform state matches deployed infra: `No changes. PLAN_EXIT=0` |
+| 12 GCP services provisioned | BigQuery, Pub/Sub, Cloud Run, Dataflow, Cloud Storage, Cloud Scheduler, Cloud Build, Artifact Registry, Cloud SQL, Secret Manager, Cloud Logging, Cloud Monitoring |
+| Pub/Sub event ingestion with DLQ | `pubsub.tf` — topics, subscriptions, dead-letter queue, retry policy |
+| BigQuery analytical layer | Schemas, partitioning, clustering, Terraform-managed metadata |
+| Cloud Run Jobs for processing | BigQuery append, dbt refresh, silver-layer refresh — three confirmed jobs |
+| Dataflow / Apache Beam | Streaming proof: 2 historical Dataflow jobs in project history |
+| dbt transformation layer | Bronze → silver → gold; 2 production models |
+| Workload Identity CI | No static keys in CI; Workload Identity Federation pattern in `.github/workflows` |
+| Automated test suite | 384 tests pass; 10 non-blocking warnings |
+| Monitoring and alerting | Cloud Monitoring dashboards provisioned via Terraform |
+| Security and secrets hygiene | `.gcp-db-password` in `.gitignore`; MIT LICENSE; no secrets in repo |
+| IaC reproducibility | Terraform remote state in GCS; `.terraform.lock.hcl` versioned |
+
+---
+
+## Evidence Map
+
+The following evidence documents exist in this repository and the AI Factory:
+
+- **GCP CLI read-only capture** — confirms 12 services, Pub/Sub topics, BigQuery tables, Cloud Run Jobs
+  - Source: `docs/evidence/` (if present) or AI Factory: `wiki/reports/gcp-rtdp-readonly-evidence-capture-2026-06-01.md`
+- **Terraform plan evidence** — `PLAN_EXIT=0`; infrastructure matches configuration
+- **Test suite output** — 384 passed
+- **Architecture decision records** — `docs/adr/` — 3 confirmed decision records
+
+---
+
+## Cloud Architecture Proof
+
+```
+Event source
+    │
+    ▼
+Pub/Sub (topic + DLQ + retry policy)
+    │
+    ▼
+Cloud Run Job (event processor → BigQuery append)
+    │         └─► Cloud Run Job (silver refresh)
+    ▼
+BigQuery (bronze → silver → gold, dbt-managed)
+    │
+    ├── Cloud Run Job (dbt refresh)
+    ├── Cloud Scheduler (orchestration)
+    └── Cloud Monitoring (dashboards + alerts)
+
+IaC: Terraform (GCS remote state, Workload Identity CI)
+CI:  GitHub Actions (Workload Identity, 384 test suite)
+Sec: Secret Manager, `.gitignore` hygiene, MIT LICENSE
+```
+
+GCP Project: `project-42987e01-2123-446b-ac7`
+Billing account: Active at time of evidence capture.
+
+---
+
+## What This Project Does Not Claim
+
+| Claim | Status |
+|-------|--------|
+| Sustained production throughput with live customer data | **NOT CLAIMED** — bounded proof only |
+| Always-on 24/7 streaming | **NOT CLAIMED** — NEVER/STOPPED cost discipline; resources provisioned but not continuously running |
+| Exactly-once delivery guarantee | **NOT CLAIMED** — Pub/Sub at-least-once delivery; deduplication not fully implemented |
+| Enterprise-scale data volumes | **NOT CLAIMED** — bounded load test only |
+| Live customer production deployment | **NOT CLAIMED** — personal portfolio project; no production client workload |
+| Finished product | **NOT CLAIMED** — planned improvements remain (production Dataflow path, dbt scope expansion, staging environment) |
+
+This non-claims table is part of the evidence-first discipline applied throughout this project.
+Recruiters and buyers: the honest scope is more valuable than an overclaimed one.
+
+---
+
+## Recruiter Evaluation Path
+
+If you are evaluating João Fonseca for a senior data engineering role:
+
+1. **Architecture review** — start with this README and the `infra/terraform/gcp/` directory
+2. **IaC quality** — check `pubsub.tf`, `bigquery.tf`, `cloud_run.tf` for production patterns (DLQ, Workload Identity, prevent_destroy lifecycle)
+3. **CI/CD** — check `.github/workflows/` for Workload Identity Federation, test execution, and deployment patterns
+4. **Data quality** — check `dbt/` models and the automated test structure
+5. **Evidence** — check `docs/` for architecture decision records and evidence documents
+6. **Score context** — 85/100 ATTACK (Factory audit). Expected 88–90/100 after business framing and dbt expansion are complete.
+
+**Target roles:** GCP Data Engineer · Cloud Data Engineer · DataOps / Platform Engineer · Senior Data Engineer (remote, EU/UK/international)
+
+---
+
+## Data Stack Sprint Relevance
+
+This project is the primary proof asset for João's [Data Stack Sprint](commercial/track-a/) offer:
+
+> Fixed-scope GCP data engineering engagements — from diagnostic audit to full pipeline build.
+> EUR 3,500 (diagnostic) → EUR 15,000+ (advanced build).
+> Remote delivery. Evidence-first. Every component documented and verifiable.
+
+If your company needs something similar — event-driven pipelines, BigQuery data warehouse,
+dbt transformation layer, Terraform-managed infrastructure, or a full audit of your existing
+data stack — contact CRSET Solutions.
+
+---
+
 ## Implemented Features
 
 ### Streaming pipeline
