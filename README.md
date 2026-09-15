@@ -2,53 +2,37 @@
 
 [![CI](https://github.com/jcsf2020/real-time-data-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/jcsf2020/real-time-data-platform/actions/workflows/ci.yml)
 
-An evidence-first Data Engineering portfolio platform demonstrating real-time streaming, GCP cloud operations, Terraform IaC, governed dbt transformations, BigQuery analytics, and end-to-end observability. Every claimed capability is backed by a scoped runbook and an accepted evidence document with verifiable run IDs. This is production-light portfolio work -- bounded, reproducible proofs rather than a continuously running production service.
+Evidence-first GCP Data Engineering portfolio platform demonstrating event ingestion, cloud processing, analytics, infrastructure-as-code, data quality and observability.
 
----
+This is **bounded, reproducible portfolio evidence**. It is not presented as a continuously running customer production system.
 
 ## Recruiter Quick Scan
 
 | Question | Answer |
 |---|---|
-| What is this? | An evidence-first GCP Data Engineering portfolio covering streaming ingestion, transformations, analytics, alerting, and IaC -- all linked to verifiable run IDs |
-| What stack does it prove? | Python, Pub/Sub, Cloud Run, Cloud SQL, BigQuery, dbt, Terraform, FastAPI, GitHub Actions CI, Cloud Monitoring |
-| Where to start reviewing? | [Recruiter summary](docs/recruiter-facing-platform-summary.md) → [Evidence index](docs/EVIDENCE_INDEX.md) → [50k load test evidence](docs/load-test-50000-cloud-evidence.md) |
-| Which roles does it support? | Data Engineer, Analytics Engineer, Cloud Data Engineer, Platform/DataOps Engineer |
-| What is intentionally not claimed? | Sustained production throughput, production windowed Dataflow, exactly-once semantics, automatic deploy-on-merge, multi-region deployment |
+| What is this? | A GCP Data Engineering proof asset with verifiable run IDs and committed evidence |
+| Core stack | Python, Pub/Sub, Cloud Run, Cloud SQL, BigQuery, dbt, Terraform, FastAPI, GitHub Actions, Cloud Monitoring |
+| Best-fit roles | Data Engineer, Data Platform Engineer, Analytics Engineer with platform exposure, Cloud Data Engineer, DataOps / Platform Engineer |
+| Where to start | [Recruiter summary](docs/recruiter-facing-platform-summary.md) -> [Evidence index](docs/EVIDENCE_INDEX.md) -> [50k load-test evidence](docs/load-test-50000-cloud-evidence.md) |
+| What is not claimed | Sustained production throughput, always-on streaming, exactly-once production semantics, multi-region customer deployment |
 
----
+## Evidence Highlights
 
-## Evidence-First Highlights
+- **384 pytest tests** passing; ruff clean
+- **dbt compile/run/test in CI** with 22 dbt tests against an ephemeral PostgreSQL/pgvector service
+- **Terraform Plan CI** using Workload Identity / OIDC; no stored service-account key in CI
+- **50,000-event bounded GCP run**: 50,000 events published, 0 worker errors, 0 duplicate `event_id` rows
+- **BigQuery analytical tier** with incremental append and quality-check workflow
+- **Cloud Monitoring / alerting** with controlled quality-failure incident and email-notification evidence
+- **Pub/Sub DLQ evidence** with bounded malformed-message testing and alert delivery
+- **60+ indexed evidence documents** linking claims to run IDs, commit SHAs and resource names
+- **Cost-control posture**: Cloud SQL returned to STOPPED / NEVER and schedulers PAUSED after bounded proofs
 
-- **384 pytest tests** passing on every push; ruff clean throughout
-- **dbt compile/run/test in CI**: 22 dbt tests against an ephemeral pgvector container on every push
-- **Terraform Plan CI**: Workload Identity OIDC-authenticated plan on every infra change; no stored service account keys in CI
-- **50,000-event bounded cloud run**: Pub/Sub → Cloud Run worker → Cloud SQL; 0 errors; 0 duplicate rows
-- **BigQuery analytical tier**: Terraform-managed; cursor-based incremental append; quality checks with scheduled execution proven
-- **End-to-end alerting loop**: BigQuery quality failure → Cloud Monitoring incident → email notification delivery proven end-to-end (PR #169)
-- **Pub/Sub DLQ alert notification**: bounded malformed-message proof produced Cloud Monitoring incidents and Gmail notification delivery (PR #218)
-- **60+ indexed evidence documents**: every claim linked to a specific GCP run ID, commit SHA, and resource name
-- **Evidence-first non-claims posture**: NOT YET PROVEN markers throughout; Dataflow production streaming and automatic CD not claimed
+## Latest Validated Milestone
 
----
+**50,000-event bounded GCP cloud load test — 2026-05-20**
 
-## Evidence Navigation
-
-| Document | Purpose |
-|---|---|
-| [docs/recruiter-facing-platform-summary.md](docs/recruiter-facing-platform-summary.md) | Recruiter and hiring-manager one-page summary: role fit, safe interview positioning, explicit non-claims |
-| [docs/portfolio-b2b-narrative.md](docs/portfolio-b2b-narrative.md) | B2B and technical front-door narrative: validated capabilities and 2026-2027 market relevance |
-| [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) | Master evidence catalog: 60+ documents indexed by category with a recruiter start path |
-| [docs/cost-performance-summary.md](docs/cost-performance-summary.md) | Cost-control posture, resource sizing, and performance evidence (p50/p95/p99 latency, 10 eps steady-state) |
-| [docs/gcp-architecture.md](docs/gcp-architecture.md) | GCP service mapping and validated event-processing architecture |
-
----
-
-## Latest Milestone: 50,000-Event Bounded GCP Load Test
-
-**Date:** 2026-05-20 | **Branch:** `exec/cloud-load-test-50000-evidence`
-
-Validated path: Pub/Sub -> Cloud Run worker -> Cloud SQL
+Validated path: `Pub/Sub -> Cloud Run worker -> Cloud SQL`
 
 | Metric | Value |
 |---|---:|
@@ -57,674 +41,83 @@ Validated path: Pub/Sub -> Cloud Run worker -> Cloud SQL
 | Publish errors | 0 |
 | Worker OK logs | 50,000 |
 | Worker errors | 0 |
-| Cloud SQL rows (prefix match) | 50,000 |
-| Duplicate event_id count | 0 |
-| Cloud Monitoring processed metric | 50,002 |
-| Cloud Monitoring error metric | 0 |
-| Terraform PLAN_EXIT | 0 |
+| Cloud SQL rows | 50,000 |
+| Duplicate `event_id` count | 0 |
+| Terraform plan | `PLAN_EXIT=0` |
 | Cloud SQL final state | STOPPED / NEVER |
 | Schedulers final state | PAUSED |
 
-Cloud Monitoring showed 50,002 due to DELTA window alignment; structured logs and Cloud SQL rows are authoritative for the exact 50,000 proof.
+Cloud Monitoring showed 50,002 processed due to DELTA window alignment; structured worker logs and Cloud SQL rows are authoritative for the exact 50,000-event proof.
 
 Evidence: [docs/load-test-50000-cloud-evidence.md](docs/load-test-50000-cloud-evidence.md)
 
----
+## What the Platform Demonstrates
 
-## What This Project Demonstrates
-
-- GCP event processing: Pub/Sub, Cloud Run, Cloud SQL, BigQuery -- deployed, Terraform-managed, and evidenced
-- Python workers on Cloud Run: event worker, API, dbt refresh job, BigQuery append job
-- Pub/Sub ingestion with DLQ (deadLetterPolicy, maxDeliveryAttempts=5) and idempotent event delivery
-- Cloud SQL / Postgres: idempotent writes via `ON CONFLICT`; 50,000 rows written with 0 duplicate event_id
-- BigQuery analytical tier: DAY-partitioned tables; cursor-based incremental append; bounded backfill proven
-- dbt incremental models (silver, gold): delete+insert strategy; 22 dbt tests; Cloud SQL live execution proven
-- Terraform IaC: 100% GCP resource coverage; GCS remote state; PLAN_EXIT=0 throughout; Workload Identity for CI
-- Cloud Monitoring and Cloud Logging: 4 logs-based metrics with datapoints; 4-panel dashboard; alert policies; structured JSON logs per event
-- CI validation: pytest (384 tests), ruff, Terraform plan CI, dbt compile/run/test on every push via GitHub Actions
-- Data quality checks: 8-check BigQuery quality workflow; scheduled and manual execution proven; controlled failure and pass runs both evidenced
-- Alerting and incident delivery: quality failure -> Cloud Monitoring incident -> email notification proven end-to-end
-- Cost control: Cloud SQL NEVER/STOPPED verified across 60+ evidence docs; schedulers PAUSED by default
-- Versioned, validated event contracts using Pydantic (MarketEvent schema, schema_version field)
-- Medallion architecture: bronze / silver / gold / observability / ai schemas in PostgreSQL; BigQuery analytical tier
-
----
+- Pub/Sub ingestion with dead-letter policy and retry handling
+- Python workers running on Cloud Run
+- idempotent Cloud SQL / PostgreSQL writes using `ON CONFLICT`
+- BigQuery analytical tier with partitioning and incremental append
+- dbt silver/gold transformations and automated tests
+- Terraform-managed GCP resources with GCS remote state
+- Workload Identity Federation for keyless CI authentication
+- Cloud Logging / Cloud Monitoring metrics, dashboards and alert policies
+- BigQuery data-quality workflow with pass/fail evidence
+- bounded alerting / incident-notification proof
+- cost-safe operating discipline after test execution
 
 ## Evidence-First Positioning
 
-This project is positioned as bounded, evidence-backed GCP data platform work. It does not claim sustained production throughput, Dataflow implementation, exactly-once production semantics, or enterprise-certified security.
+This project is presented as **bounded, evidence-backed Data Engineering / Platform Engineering work**.
 
-All validated milestones include specific run IDs, commit SHAs, GCP resource names, and machine-readable evidence artifacts. Every claim is verifiable by an independent technical reviewer.
+Professional Data Engineering positioning starts in **2023**. The project should be evaluated on the technical evidence and scope shown here rather than on an inflated title or backdated tenure.
 
----
+### Safe interview positioning
 
-## Architecture
+> I validated a GCP event-processing path at 50,000 events with Pub/Sub, Cloud Run, Cloud SQL, structured logs, Cloud Monitoring, Terraform zero-diff checks and indexed evidence. I present it as bounded platform work and do not claim sustained customer-production throughput or always-on streaming.
 
-```mermaid
-flowchart LR
-    subgraph Ingestion
-        P[Producer<br/>rtdp-producer]
-        RP[Redpanda<br/>market.events.raw]
-    end
+## Explicit Non-Claims
 
-    subgraph Processing
-        C[Consumer<br/>rtdp-consumer]
-    end
+- no sustained customer-production throughput benchmark
+- no 24/7 always-on customer streaming workload
+- no end-to-end exactly-once production guarantee
+- no enterprise-scale customer volume claim
+- no multi-region customer production deployment
+- no security/compliance certification claim
 
-    subgraph Storage["Storage (PostgreSQL)"]
-        B[bronze.market_events]
-        S[silver.market_event_minute_aggregates]
-        O[observability.pipeline_metrics]
-    end
+## Evidence Navigation
 
-    subgraph Serving
-        A[FastAPI<br/>rtdp-api]
-    end
-
-    P -->|publish| RP
-    RP -->|consume| C
-    C -->|idempotent write| B
-    C -->|write metrics| O
-    B -->|SQL function| S
-    B --> A
-    S --> A
-    O --> A
-```
-
----
-
-## Business Context
-
-This project exists to prove a specific thing: that a solo data engineer can design,
-build, and deploy a production-grade event-driven GCP data platform from first principles —
-with full infrastructure-as-code, CI, automated testing, and cloud observability in place.
-
-**For recruiters:** This is the strongest public evidence of senior data engineering capability
-in this portfolio. It demonstrates GCP architecture, IaC discipline, streaming patterns, data
-warehouse design, and engineering maturity — not just code.
-
-**For B2B/consulting buyers:** This platform represents the pattern applied in the
-[Data Stack Sprint](commercial/track-a/) offer — fixed-scope
-GCP data engineering engagements from EUR 3,500 (diagnostic) to EUR 15,000+ (advanced build).
-If your company has broken pipelines, stale dashboards, or a missing data layer, this is the
-kind of work that gets done.
-
-**Score:** 85/100 ATTACK — at the ATTACK threshold (Factory audit, 2026-05-29).
-
----
-
-## What This Project Proves
-
-| Capability | Evidence |
-|------------|----------|
-| GCP infrastructure-as-code | Terraform state matches deployed infra: `No changes. PLAN_EXIT=0` |
-| 12 GCP services provisioned | BigQuery, Pub/Sub, Cloud Run, Dataflow, Cloud Storage, Cloud Scheduler, Cloud Build, Artifact Registry, Cloud SQL, Secret Manager, Cloud Logging, Cloud Monitoring |
-| Pub/Sub event ingestion with DLQ | `pubsub.tf` — topics, subscriptions, dead-letter queue, retry policy |
-| BigQuery analytical layer | Schemas, partitioning, clustering, Terraform-managed metadata |
-| Cloud Run Jobs for processing | BigQuery append, dbt refresh, silver-layer refresh — three confirmed jobs |
-| Dataflow / Apache Beam | Streaming proof: 2 historical Dataflow jobs in project history |
-| dbt transformation layer | Bronze → silver → gold; 2 production models |
-| Workload Identity CI | No static keys in CI; Workload Identity Federation pattern in `.github/workflows` |
-| Automated test suite | 384 tests pass; 10 non-blocking warnings |
-| Monitoring and alerting | Cloud Monitoring dashboards provisioned via Terraform |
-| Security and secrets hygiene | `.gcp-db-password` in `.gitignore`; MIT LICENSE; no secrets in repo |
-| IaC reproducibility | Terraform remote state in GCS; `.terraform.lock.hcl` versioned |
-
----
-
-## Evidence Map
-
-The following evidence documents exist in this repository and the AI Factory:
-
-- **GCP CLI read-only capture** — confirms 12 services, Pub/Sub topics, BigQuery tables, Cloud Run Jobs
-  - Source: `docs/evidence/` (if present) or AI Factory: `wiki/reports/gcp-rtdp-readonly-evidence-capture-2026-06-01.md`
-- **Terraform plan evidence** — `PLAN_EXIT=0`; infrastructure matches configuration
-- **Test suite output** — 384 passed
-- **Architecture decision records** — `docs/adr/` — 3 confirmed decision records
-
----
-
-## Cloud Architecture Proof
-
-```
-Event source
-    │
-    ▼
-Pub/Sub (topic + DLQ + retry policy)
-    │
-    ▼
-Cloud Run Job (event processor → BigQuery append)
-    │         └─► Cloud Run Job (silver refresh)
-    ▼
-BigQuery (bronze → silver → gold, dbt-managed)
-    │
-    ├── Cloud Run Job (dbt refresh)
-    ├── Cloud Scheduler (orchestration)
-    └── Cloud Monitoring (dashboards + alerts)
-
-IaC: Terraform (GCS remote state, Workload Identity CI)
-CI:  GitHub Actions (Workload Identity, 384 test suite)
-Sec: Secret Manager, `.gitignore` hygiene, MIT LICENSE
-```
-
-GCP Project: `project-42987e01-2123-446b-ac7`
-Billing account: Active at time of evidence capture.
-
----
-
-## What This Project Does Not Claim
-
-| Claim | Status |
-|-------|--------|
-| Sustained production throughput with live customer data | **NOT CLAIMED** — bounded proof only |
-| Always-on 24/7 streaming | **NOT CLAIMED** — NEVER/STOPPED cost discipline; resources provisioned but not continuously running |
-| Exactly-once delivery guarantee | **NOT CLAIMED** — Pub/Sub at-least-once delivery; deduplication not fully implemented |
-| Enterprise-scale data volumes | **NOT CLAIMED** — bounded load test only |
-| Live customer production deployment | **NOT CLAIMED** — personal portfolio project; no production client workload |
-| Finished product | **NOT CLAIMED** — planned improvements remain (production Dataflow path, dbt scope expansion, staging environment) |
-
-This non-claims table is part of the evidence-first discipline applied throughout this project.
-Recruiters and buyers: the honest scope is more valuable than an overclaimed one.
-
----
-
-## Recruiter Evaluation Path
-
-If you are evaluating João Fonseca for a senior data engineering role:
-
-1. **Architecture review** — start with this README and the `infra/terraform/gcp/` directory
-2. **IaC quality** — check `pubsub.tf`, `bigquery.tf`, `cloud_run.tf` for production patterns (DLQ, Workload Identity, prevent_destroy lifecycle)
-3. **CI/CD** — check `.github/workflows/` for Workload Identity Federation, test execution, and deployment patterns
-4. **Data quality** — check `dbt/` models and the automated test structure
-5. **Evidence** — check `docs/` for architecture decision records and evidence documents
-6. **Score context** — 85/100 ATTACK (Factory audit). Expected 88–90/100 after business framing and dbt expansion are complete.
-
-**Target roles:** GCP Data Engineer · Cloud Data Engineer · DataOps / Platform Engineer · Senior Data Engineer (remote, EU/UK/international)
-
----
-
-## Data Stack Sprint Relevance
-
-This project is the primary proof asset for João's [Data Stack Sprint](commercial/track-a/) offer:
-
-> Fixed-scope GCP data engineering engagements — from diagnostic audit to full pipeline build.
-> EUR 3,500 (diagnostic) → EUR 15,000+ (advanced build).
-> Remote delivery. Evidence-first. Every component documented and verifiable.
-
-If your company needs something similar — event-driven pipelines, BigQuery data warehouse,
-dbt transformation layer, Terraform-managed infrastructure, or a full audit of your existing
-data stack — contact CRSET Solutions.
-
----
-
-## Implemented Features
-
-### Streaming pipeline
-
-- Python producer publishes `MarketEvent` records to `market.events.raw`
-- Python consumer reads, validates (Pydantic), and persists events to PostgreSQL
-- Shared versioned `MarketEvent` contract in `packages/contracts`
-- Idempotent writes using `ON CONFLICT(event_id) DO NOTHING`
-
-### Storage
-
-- PostgreSQL with medallion schemas: `bronze`, `silver`, `gold`, `observability`, `ai`
-- `bronze.market_events` — raw validated events
-- `silver.market_event_minute_aggregates` — per-symbol, per-minute rollups
-- `observability.pipeline_metrics` — consumer metric time-series
-- `ai.market_event_embeddings` — pgvector-enabled table for future embedding workloads
-
-### Serving
-
-- FastAPI application with health, readiness, version, events, metrics, aggregates, and Prometheus endpoints
-
-### Observability
-
-- Consumer writes structured metrics to `observability.pipeline_metrics`
-- `/metrics-prometheus` exposes a Prometheus-format gauge endpoint
-- Structured JSON logs with graceful shutdown for producer and consumer
-
-### Infrastructure
-
-- Full Docker Compose stack: `redpanda`, `postgres`, `api`, `producer`, `consumer`
-- GitHub Actions CI: install, lint, test, import smoke test
-
----
+- [Recruiter-facing platform summary](docs/recruiter-facing-platform-summary.md)
+- [Evidence index](docs/EVIDENCE_INDEX.md)
+- [50k load-test evidence](docs/load-test-50000-cloud-evidence.md)
+- [GCP architecture](docs/gcp-architecture.md)
+- [Cost / performance summary](docs/cost-performance-summary.md)
+- [BigQuery quality incident notification proof](docs/bigquery-quality-incident-notification-delivery-proof.md)
+- [dbt Cloud SQL incremental execution proof](docs/dbt-cloud-sql-incremental-execution-proof.md)
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Event broker | Redpanda (Kafka-compatible) |
-| Stream producer | Python, `kafka-python` |
-| Stream consumer | Python, `kafka-python` |
-| Event contract | Pydantic v2, shared `rtdp-contracts` package |
-| Storage | PostgreSQL 16, pgvector |
-| ORM / driver | psycopg v3 |
-| Serving | FastAPI, Uvicorn |
-| Package manager | uv (workspace mode) |
-| Linter | Ruff |
-| Tests | pytest |
-| Container runtime | Docker Compose |
-| CI | GitHub Actions |
-| Target cloud | GCP (Pub/Sub, Cloud Run, Cloud SQL, BigQuery) |
-
----
-
-## Data Flow
-
-```
-Producer
-  → publishes MarketEvent (JSON, schema_version=1.0) to Redpanda topic: market.events.raw
-
-Consumer
-  → polls market.events.raw
-  → validates each message via Pydantic MarketEvent model
-  → writes to bronze.market_events (idempotent, event_id as PK)
-  → writes pipeline metrics to observability.pipeline_metrics
-
-silver.refresh_market_event_minute_aggregates()
-  → aggregates bronze.market_events by symbol and minute window
-  → upserts into silver.market_event_minute_aggregates
-
-FastAPI
-  → /events          → queries bronze.market_events
-  → /aggregates/minute → queries silver.market_event_minute_aggregates
-  → /aggregates/daily  → queries gold.market_event_daily_aggregates
-  → /metrics         → queries observability.pipeline_metrics
-  → /metrics-prometheus → formats latest metrics as Prometheus gauge text
-```
-
----
-
-## Local Quickstart
-
-**Prerequisites:** Docker and Docker Compose.
-
-```bash
-git clone <repo-url>
-cd real-time-data-platform
-docker compose up --build -d
-```
-
-This starts:
-- `rtdp-redpanda` on ports `9092` (internal) and `19092` (external)
-- `rtdp-postgres` on port `15432`
-- `rtdp-producer` — publishes events continuously
-- `rtdp-consumer` — consumes and persists events
-- `rtdp-api` on port `8000`
-
-Once running:
-
-```bash
-# Health check
-curl http://localhost:8000/health
-
-# Recent events (bronze layer)
-curl http://localhost:8000/events
-
-# Minute aggregates (silver layer)
-curl http://localhost:8000/aggregates/minute
-
-# Pipeline metrics
-curl http://localhost:8000/metrics
-
-# Prometheus-format metrics
-curl http://localhost:8000/metrics-prometheus
-```
-
-**Running minute aggregates refresh manually (psql):**
-
-```bash
-docker exec -it rtdp-postgres psql -U rtdp -d realtime_platform \
-  -c "SELECT silver.refresh_market_event_minute_aggregates();"
-```
-
----
-
-## API Endpoints
-
-| Method | Path | Description |
-|---|---|---|
-| GET | `/health` | Liveness check |
-| GET | `/readiness` | Readiness check (database connectivity verified) |
-| GET | `/version` | Service name, version, environment |
-| GET | `/events` | Recent events from `bronze.market_events` (default: 20, max: 100) |
-| GET | `/metrics` | Pipeline metric time-series (default: 50, max: 200) |
-| GET | `/metrics-prometheus` | Latest metrics as Prometheus gauge text (MIME: `text/plain`) |
-| GET | `/aggregates/minute` | Per-symbol per-minute rollups from `silver` (default: 20, max: 200) |
-| GET | `/aggregates/daily` | Per-symbol per-day rollups from `gold` (default: 20, max: 200) |
-
----
-
-## Observability and Metrics
-
-The consumer emits structured metrics to `observability.pipeline_metrics` after each processing cycle.
-
-**Tracked metrics:**
-
-| Metric | Description |
-|---|---|
-| `events_processed_total` | Cumulative count of events written to bronze |
-| `latest_processed_offset` | Most recent Kafka offset consumed |
-| `processing_lag_seconds` | Time delta between event timestamp and ingestion |
-| `consumer_errors_total` | Count of validation or persistence errors |
-
-The `/metrics-prometheus` endpoint exposes these as a Prometheus gauge family (`rtdp_pipeline_metric_value`) with a `metric_name` label, compatible with Prometheus scrape and Managed Prometheus on GCP.
-
-Logs are emitted as structured JSON to stdout for both producer and consumer, with graceful shutdown handling in the application runtime.
-
----
-
-## Data Contracts
-
-The `MarketEvent` schema is defined once in `packages/contracts` and imported by both the producer and consumer.
-
-```python
-class MarketEvent(BaseModel):
-    schema_version: Literal["1.0"] = "1.0"
-    event_id: str
-    symbol: str
-    event_type: Literal["trade"]
-    price: Decimal       # > 0
-    quantity: Decimal    # > 0
-    event_timestamp: datetime
-```
-
-**Design properties:**
-- `schema_version` field enables forward-compatible evolution
-- `event_id` is the idempotency key — duplicate messages are safely discarded
-- Pydantic validation is enforced at consumer ingestion time before any write
-- Contract is versioned as a separate workspace package (`rtdp-contracts`) for independent update and testing
-
----
-
-## Medallion Data Layers
-
-| Schema | Role | Status |
-|---|---|---|
-| `bronze` | Raw validated events — append-only, full fidelity | Implemented |
-| `silver` | Cleaned, aggregated — minute-level rollups by symbol | Implemented |
-| `gold` | Business-level aggregates (e.g. daily, weekly summaries) | Local implementation |
-| `observability` | Pipeline health metrics time-series | Implemented |
-| `ai` | Embedding storage for vector search (pgvector) | Schema created |
-
-The `silver` layer is populated by calling `silver.refresh_market_event_minute_aggregates()`, a PostgreSQL function that upserts from `bronze.market_events`.
-
----
-
-## GCP Target Architecture
-
-> **Status:** The GCP MVP is operationally validated. The FastAPI serving layer is deployed to Cloud Run and connected to Cloud SQL PostgreSQL through Secret Manager. Pub/Sub ingestion is validated through `market-events-raw`, the deployed Cloud Run worker, and idempotent writes into `bronze.market_events`. Observability is validated with logs-based metrics, a Cloud Monitoring dashboard, alert policies, an email notification channel, a production Pub/Sub DLQ, Cloud Scheduler configuration, and accepted 100 / 1,000 / 5,000 / 10,000 / 50,000-event bounded cloud load tests (50,000 is the latest validated milestone, 2026-05-20). All GCP resources are Terraform-managed with a GCS-backed remote state and zero-diff plans. A BigQuery analytical tier (dataset `rtdp_analytics`, three Terraform-managed tables) is live: bounded backfill accepted (6,120 rows), cursor-based incremental append proven, and a read-only quality workflow running on a daily schedule with Cloud Monitoring alert policies, incident creation, and email notification delivery proven. Dataflow and automatic deploy-on-merge remain open roadmap items.
-
-| Local Component | GCP Target | Notes |
-|---|---|---|
-| Redpanda / Kafka | Pub/Sub | Managed event ingestion, fan-out, replay |
-| Python producer | Cloud Run job or external source | Stateless event publishing |
-| Python consumer | Cloud Run worker; Dataflow is future roadmap | Consumer processing is currently Cloud Run-based |
-| PostgreSQL container | Cloud SQL for PostgreSQL | Implemented as managed operational store |
-| FastAPI container | Cloud Run service | Already containerised, Cloud Run-compatible |
-| `/metrics-prometheus` | Cloud Monitoring / Managed Prometheus | Metric scrape target |
-| `silver` / analytical layer | BigQuery | Long-horizon analytics over event history |
-| Docker Compose | Cloud Run + managed services | Production runtime replacement |
-| GitHub Actions | GitHub Actions + GCP deployment pipeline | CI/CD extension |
-
-**Target GCP data flow:**
-
-```
-Event source
-  → Pub/Sub: market-events-raw
-      → Cloud Run worker (current); Dataflow pipeline is future roadmap
-          → Cloud SQL (operational storage)
-          → BigQuery (analytical reporting)
-          → Cloud Monitoring (metrics and alerting)
-              → Cloud Run API (operational access)
-```
-
-See [docs/gcp-architecture.md](docs/gcp-architecture.md) for the full GCP architecture document.
-
-See [docs/gcp-worker-deployment-plan.md](docs/gcp-worker-deployment-plan.md) for the original step-by-step worker deployment plan. The deployed worker path is now validated through the Pub/Sub push subscription, Cloud Run worker, Cloud SQL ingest, and accepted cloud load-test evidence.
-
-See [docs/silver-refresh-job-deployment-plan.md](docs/silver-refresh-job-deployment-plan.md) for the silver refresh Cloud Run Job deployment plan.
-
-See [docs/silver-refresh-job-validation.md](docs/silver-refresh-job-validation.md) for the validated execution evidence.
-
-See [docs/cloud-observability-evidence.md](docs/cloud-observability-evidence.md) for Cloud Logging observability evidence across the deployed services and jobs.
-
-See [docs/worker-structured-logs-validation.md](docs/worker-structured-logs-validation.md) for the worker structured `jsonPayload` log validation evidence (closes the known gap from the observability evidence doc).
-
-See [docs/cloud-observability-metrics-plan.md](docs/cloud-observability-metrics-plan.md) for the logs-based metrics, alerting policies, and Cloud Monitoring dashboard plan (plan only — not executed).
-
-See [docs/cloud-logs-based-metrics-validation.md](docs/cloud-logs-based-metrics-validation.md) for the creation and configuration-level validation of the first four Cloud Monitoring logs-based metrics.
-
-See [docs/cloud-logs-based-metrics-datapoint-validation.md](docs/cloud-logs-based-metrics-datapoint-validation.md) for the Cloud Monitoring API timeSeries datapoint evidence for the worker and silver refresh success counters.
-
-See [docs/cloud-error-counter-validation-plan.md](docs/cloud-error-counter-validation-plan.md) for the original plan to safely validate error-counter datapoints for `worker_message_error_count` and `silver_refresh_error_count`. Follow-up evidence documents now validate the error-counter paths.
-
-See [docs/pubsub-retry-dlq-inspection.md](docs/pubsub-retry-dlq-inspection.md) for the read-only Pub/Sub retry and DLQ configuration inspection performed before any malformed-message validation — establishes that no DLQ/deadLetterPolicy is configured on the production push subscription and blocks unsafe message publishing until an isolated bounded path exists.
-
-See [docs/load-test-plan.md](docs/load-test-plan.md) for the controlled load and throughput validation plan covering 100 / 1 000 / 5 000 event test sizes, deterministic event-ID prefixes, Cloud SQL start/stop protocol, Pub/Sub backlog observation, and acceptance criteria per test size.
-
-See [docs/load-test-local-sample-evidence.md](docs/load-test-local-sample-evidence.md) for local pre-publish sample evidence: deterministic 100-event JSONL generated and validated locally with no Pub/Sub publishing and no Cloud SQL access.
-
-See [docs/load-test-100-cloud-runbook.md](docs/load-test-100-cloud-runbook.md) for the operational runbook for the first controlled live 100-event cloud load test.
-
-See [docs/load-test-100-cloud-evidence.md](docs/load-test-100-cloud-evidence.md) for the accepted 100-event cloud evidence (all acceptance criteria met: 100 publish acknowledgements, 100 worker status=ok logs, metric sum = 100, API readback 100/100, Cloud SQL NEVER / STOPPED).
-
-See [docs/load-test-1000-cloud-runbook.md](docs/load-test-1000-cloud-runbook.md) for the operational runbook for the 1,000-event cloud load test.
-
-See [docs/api-events-pagination-deploy-evidence.md](docs/api-events-pagination-deploy-evidence.md) for the production deployment and validation evidence for the `/events` pagination fix (PR #42): disjoint two-page readback confirmed on live data, Cloud SQL `NEVER / STOPPED`.
-
-See [docs/cloud-monitoring-dashboard-runbook.md](docs/cloud-monitoring-dashboard-runbook.md) for the operational runbook to create the **RTDP Pipeline Overview** Cloud Monitoring dashboard using the four validated logs-based metrics.
-
-See [docs/cloud-monitoring-dashboard-evidence.md](docs/cloud-monitoring-dashboard-evidence.md) for the dashboard creation and export evidence: 4-panel dashboard created in GCP, exported to `infra/monitoring/dashboards/rtdp-pipeline-overview.json`, Cloud SQL `NEVER / STOPPED`.
-
-See [docs/isolated-error-counter-validation-runbook.md](docs/isolated-error-counter-validation-runbook.md) for the operational runbook to safely validate `worker_message_error_count` and `silver_refresh_error_count` datapoints using isolated Pub/Sub resources and a temporary Cloud Run Job — avoiding any mutation of the production topic or push subscription.
-
-See [docs/isolated-error-counter-validation-evidence.md](docs/isolated-error-counter-validation-evidence.md) for the partial validation evidence: `worker_message_error_count` accepted with real Cloud Monitoring timeSeries datapoints (TOTAL=13); `silver_refresh_error_count` blocked by a hardcoded `job_name` condition in the metric filter — **partial validation only, not full acceptance**.
-
-See [docs/silver-refresh-error-metric-filter-runbook.md](docs/silver-refresh-error-metric-filter-runbook.md) for the runbook to safely fix the `silver_refresh_error_count` metric filter — removes the hardcoded `resource.labels.job_name` condition so an isolated temporary Cloud Run Job can produce a matching timeSeries datapoint (pending execution).
-
-See [docs/silver-refresh-error-metric-filter-evidence.md](docs/silver-refresh-error-metric-filter-evidence.md) for the validated execution evidence: metric filter updated, `silver_refresh_error_count` Cloud Monitoring timeSeries confirmed (`TOTAL=1`), all four logs-based metrics now have validated datapoints, Cloud SQL `NEVER / STOPPED`.
-
-See [docs/cloud-alert-policies-runbook.md](docs/cloud-alert-policies-runbook.md) for the operational runbook to create Cloud Monitoring alert policies on top of all four validated logs-based metrics — moving from passive observability to active operational alerting.
-
-See [docs/cloud-alert-policies-evidence.md](docs/cloud-alert-policies-evidence.md) for the creation and validation evidence for the two Cloud Monitoring alert policies: RTDP Worker Message Error Alert and RTDP Silver Refresh Error Alert — both enabled, both referencing validated logs-based metrics, Cloud SQL `NEVER / STOPPED`.
-
-See [docs/production-pubsub-dlq-runbook.md](docs/production-pubsub-dlq-runbook.md) for the operational runbook to add a production dead-letter policy (`deadLetterPolicy`) to the `market-events-raw-worker-push` push subscription — bounding failed delivery attempts to 5, adding explicit retry backoff (10s/60s), and routing unprocessable messages to a new `market-events-raw-dlq` topic.
-
-See [docs/production-pubsub-dlq-evidence.md](docs/production-pubsub-dlq-evidence.md) for the execution evidence: DLQ topic created, Pub/Sub service agent IAM granted, production subscription updated in-place with `deadLetterPolicy` (maxDeliveryAttempts=5, 10s/60s backoff), all fields validated, Cloud SQL `NEVER / STOPPED`.
-
-See [docs/silver-refresh-scheduler-runbook.md](docs/silver-refresh-scheduler-runbook.md) for the runbook to create a Cloud Scheduler job (`rtdp-silver-refresh-scheduler`) that triggers `rtdp-silver-refresh-job` on a `*/15 * * * *` UTC cadence — moving silver refresh from manual execution to scheduled automation.
-
-See [docs/silver-refresh-scheduler-evidence.md](docs/silver-refresh-scheduler-evidence.md) for the Cloud Scheduler configuration evidence: API enabled, dedicated service account created, `roles/run.invoker` granted, scheduler job created and paused intentionally (Cloud SQL `NEVER / STOPPED`, configuration only — scheduled execution not yet validated).
-
-See [docs/silver-refresh-scheduler-execution-proof-runbook.md](docs/silver-refresh-scheduler-execution-proof-runbook.md) for the controlled end-to-end scheduled execution proof runbook: a step-by-step plan to validate that `rtdp-silver-refresh-scheduler` can dispatch `rtdp-silver-refresh-job` successfully, confirm the success log and metric increment, and return Cloud SQL and the Scheduler to their safe resting states.
-
-See [docs/silver-refresh-scheduler-execution-proof-evidence.md](docs/silver-refresh-scheduler-execution-proof-evidence.md) for the validated scheduled execution proof evidence: Scheduler dispatched `rtdp-silver-refresh-job` via fallback resume/run/pause path, execution `rtdp-silver-refresh-job-npcl6` succeeded (38.22s, run by `rtdp-scheduler-sa`), `silver_refresh_success_count` incremented (`TOTAL=1`), Scheduler final state `PAUSED`, Cloud SQL `NEVER / STOPPED`.
-
-See [docs/notification-channels-runbook.md](docs/notification-channels-runbook.md) for the operational runbook to create an email notification channel and attach it to both existing Cloud Monitoring alert policies — moving from alerts visible only in the console to operator-delivered email notifications.
-
-See [docs/notification-channels-evidence.md](docs/notification-channels-evidence.md) for the validated execution evidence: email notification channel `RTDP Operator Email Alerts` created via Cloud Monitoring REST API, channel ID `1439157631105258885` attached to both RTDP Worker Message Error Alert and RTDP Silver Refresh Error Alert, both policies remain enabled with metric filters unchanged, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
-
-See [docs/load-test-5000-cloud-runbook.md](docs/load-test-5000-cloud-runbook.md) for the operational runbook for the 5,000-event cloud load test: the final tier of the bounded throughput validation plan.
-
-See [docs/load-test-5000-cloud-evidence.md](docs/load-test-5000-cloud-evidence.md) for the accepted 5,000-event cloud evidence: 5,000 publish acknowledgements, 5,000 worker `status=ok` logs, `worker_message_processed_count` metric sum 4,963, DLQ empty, API readback confirmed, silver refresh succeeded, Cloud SQL `NEVER / STOPPED`, Scheduler `PAUSED`.
-
-See [docs/load-test-10000-cloud-evidence.md](docs/load-test-10000-cloud-evidence.md) for the accepted 10,000-event cloud evidence: 10,000 publish acknowledgements, 10,000 worker `status=ok` logs, 0 worker errors, 10,000 Cloud SQL rows, 0 duplicate event_id, Cloud Monitoring processed metric=10,000, Cloud SQL `NEVER / STOPPED`, Schedulers `PAUSED`.
-
-See [docs/load-test-50000-cloud-evidence.md](docs/load-test-50000-cloud-evidence.md) for the accepted 50,000-event cloud evidence (latest milestone, 2026-05-20): 50,000 publish acknowledgements, 50,000 worker `status=ok` logs, 0 worker errors, 50,000 Cloud SQL rows, 0 duplicate event_id, Cloud Monitoring processed metric=50,002 (DELTA window alignment; structured logs and Cloud SQL rows are authoritative), Cloud SQL `NEVER / STOPPED`, Schedulers `PAUSED`.
-
-See [docs/terraform-iac-baseline-runbook.md](docs/terraform-iac-baseline-runbook.md) for the Terraform / IaC baseline runbook: a phased, safety-first migration strategy for bringing existing validated GCP resources under Terraform state management without destroying or drifting live infrastructure (runbook only — no Terraform files created, no GCP writes performed).
-
-See [infra/terraform/gcp/README.md](infra/terraform/gcp/README.md) for the initial Terraform GCP skeleton covering low-risk Pub/Sub and Scheduler resources. Skeleton only — no terraform init/plan/apply/import executed.
-
-See [docs/terraform-pubsub-scheduler-import-plan-evidence.md](docs/terraform-pubsub-scheduler-import-plan-evidence.md) for the validated Terraform import/plan evidence: low-risk Pub/Sub topics, Pub/Sub push subscription, and Cloud Scheduler imported into local Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
-
-See [docs/terraform-monitoring-import-runbook.md](docs/terraform-monitoring-import-runbook.md) for the Terraform monitoring import runbook: a safety-first strategy for bringing logs-based metrics, the Cloud Monitoring dashboard, alert policies, and the email notification channel under Terraform state management after the Pub/Sub and Scheduler import succeeded (runbook only — not executed).
-
-See [infra/terraform/gcp/monitoring.tf](infra/terraform/gcp/monitoring.tf) for the monitoring Terraform skeleton: `google_logging_metric` (×4), `google_monitoring_dashboard`, and `google_monitoring_alert_policy` (×2) aligned to Phase 0 inventory. Skeleton only — must be imported and zero-diff planned before any apply.
-
-See [docs/terraform-monitoring-import-plan-evidence.md](docs/terraform-monitoring-import-plan-evidence.md) for the validated Terraform monitoring import/plan evidence: logs-based metrics, Cloud Monitoring dashboard, and alert policies imported into local Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
-
-See [docs/terraform-remote-backend-strategy.md](docs/terraform-remote-backend-strategy.md) for the GCS remote backend strategy: how to migrate local Terraform state to a GCS bucket safely before high-risk imports (Cloud Run, Cloud SQL, IAM, Secret Manager). Strategy only — no backend created, no state migrated, no GCP writes.
-
-See [docs/cloud-run-terraform-import-runbook.md](docs/cloud-run-terraform-import-runbook.md) for the Cloud Run Terraform import runbook: a safety-first plan for importing the existing `rtdp-api`, `rtdp-pubsub-worker`, and `rtdp-silver-refresh-job` resources into Terraform without replacing revisions, changing traffic, leaking secrets, or mutating production behavior. Runbook only — no imports executed, no `terraform apply`, no Cloud Run resources modified.
-
-See [docs/cloud-run-terraform-import-plan-evidence.md](docs/cloud-run-terraform-import-plan-evidence.md) for the validated Cloud Run Terraform import evidence: `rtdp-api`, `rtdp-pubsub-worker`, and `rtdp-silver-refresh-job` imported into GCS-backed Terraform state with final zero-diff plan, no `terraform apply`, Scheduler `PAUSED`, and Cloud SQL `NEVER / STOPPED`.
-
-See [docs/cloud-sql-secret-iam-terraform-import-runbook.md](docs/cloud-sql-secret-iam-terraform-import-runbook.md) for the Cloud SQL, Secret Manager, and IAM Terraform import runbook: a safety-first plan for importing `rtdp-postgres`, `rtdp-database-url`, service accounts, and member-level IAM bindings without starting Cloud SQL, exposing secrets, replacing identities, or mutating live permissions. Runbook only — no imports executed, no `terraform apply`, no GCP resources modified.
-
-See [docs/cloud-sql-terraform-import-plan-evidence.md](docs/cloud-sql-terraform-import-plan-evidence.md) for the validated Cloud SQL Terraform import evidence: `rtdp-postgres` imported into GCS-backed Terraform state with final zero-diff plan, no `terraform apply`, and Cloud SQL preserved as `NEVER / STOPPED`.
-
-See [docs/secret-manager-terraform-import-plan-evidence.md](docs/secret-manager-terraform-import-plan-evidence.md) for the validated Secret Manager Terraform import evidence: `rtdp-database-url` metadata imported into GCS-backed Terraform state with final zero-diff plan, no secret payload read, no secret versions managed, and no `terraform apply`.
-
-See [docs/service-accounts-terraform-import-plan-evidence.md](docs/service-accounts-terraform-import-plan-evidence.md) for the validated Service Accounts Terraform import evidence: custom RTDP service accounts imported into GCS-backed Terraform state with final zero-diff plan, no IAM bindings imported, no default compute service account import, and no `terraform apply`.
-
-See [docs/iam-members-terraform-import-plan-evidence.md](docs/iam-members-terraform-import-plan-evidence.md) for the validated IAM member-level Terraform import evidence: project and service-account IAM members imported into GCS-backed Terraform state with final zero-diff plan, no authoritative IAM policy or binding resources, no IAM mutation, and no `terraform apply`.
-
-See [docs/cloud-resource-manager-api-enablement-evidence.md](docs/cloud-resource-manager-api-enablement-evidence.md) for the Cloud Resource Manager API enablement evidence: `cloudresourcemanager.googleapis.com` enabled after Terraform Plan CI failed to refresh IAM member resources, with CI rerun green, no IAM permission mutation, and Cloud SQL preserved as `NEVER / STOPPED`.
-
-See [docs/workload-identity-terraform-import-plan-evidence.md](docs/workload-identity-terraform-import-plan-evidence.md) for the Workload Identity Federation Terraform import evidence: GitHub Actions Workload Identity Pool and OIDC Provider imported into GCS-backed Terraform state with zero-diff plan, no IAM permission mutation, no GitHub Actions workflow change, and no `terraform apply`.
-
-See [docs/artifact-registry-terraform-import-plan-evidence.md](docs/artifact-registry-terraform-import-plan-evidence.md) for the Artifact Registry Terraform import evidence: project-specific Docker repository `rtdp` imported into GCS-backed Terraform state with zero-diff plan, no IAM mutation, no Container Scanning enablement, and no `terraform apply`.
-
-See [docs/cloud-run-deploy-ci-runbook.md](docs/cloud-run-deploy-ci-runbook.md) for the Cloud Run deploy CI runbook: a controlled plan for adding manual GitHub Actions deployment of the Pub/Sub worker using commit-SHA image tags in Artifact Registry, while preserving existing Cloud Run runtime configuration.
-
-**Current GCP MVP:**
-
-```text
-https://rtdp-api-fpy4of3i5a-ew.a.run.app
-```
-
-Validated public endpoints:
-
-```bash
-curl https://rtdp-api-fpy4of3i5a-ew.a.run.app/health
-curl https://rtdp-api-fpy4of3i5a-ew.a.run.app/version
-curl https://rtdp-api-fpy4of3i5a-ew.a.run.app/readiness
-curl 'https://rtdp-api-fpy4of3i5a-ew.a.run.app/events?limit=3'
-```
-
-Cloud SQL status:
-
-```text
-Instance: rtdp-postgres
-Database: realtime_platform
-PostgreSQL: 16
-Region: europe-west1
-Secret Manager: rtdp-database-url
-```
-
-The database contains validated cloud-ingested events from accepted bounded load tests (100 / 1,000 / 5,000 / 10,000 / 50,000 events; 50,000 is the latest validated milestone). Cloud SQL is normally kept `NEVER / STOPPED` for cost control and started only during bounded validation windows.
-
----
-
-## Validation and CI
-
-GitHub Actions runs on every push to `main` and on pull requests:
-
-```
-uv sync --all-packages     # Install full workspace
-ruff check .               # Lint (ruff clean on every push)
-pytest -q                  # Run test suite (384 tests)
-python -c "import rtdp_api, rtdp_consumer, rtdp_producer, rtdp_pubsub_publisher"  # Import smoke test
-```
-
-**Test coverage areas:**
-- `MarketEvent` contract validation (field types, constraints, schema version)
-- API operational endpoints (`/health`, `/readiness`, `/version`)
-- API data endpoints (`/events`, `/aggregates/minute`)
-- Prometheus metrics endpoint format
-
-**Running locally:**
-
-```bash
-uv sync --all-packages
-uv run ruff check .
-uv run pytest -q
-```
-
----
-
-## Key Evidence Links
-
-| Document | What It Contains |
-|---|---|
-| [docs/recruiter-facing-platform-summary.md](docs/recruiter-facing-platform-summary.md) | One-page hiring translation: proven capabilities, non-claims, safe interview positioning |
-| [docs/executive-platform-audit-after-50k.md](docs/executive-platform-audit-after-50k.md) | Post-50k platform audit: devil-advocate review, gap tracking, recruiter translation |
-| [docs/load-test-50000-cloud-evidence.md](docs/load-test-50000-cloud-evidence.md) | 50,000-event bounded cloud load test: all acceptance criteria met |
-| [docs/EVIDENCE_INDEX.md](docs/EVIDENCE_INDEX.md) | Master evidence catalog: 60+ documents indexed by category |
-| [docs/gcp-architecture.md](docs/gcp-architecture.md) | GCP service mapping and validated event-processing path |
-| [docs/dbt-cloud-sql-incremental-execution-proof.md](docs/dbt-cloud-sql-incremental-execution-proof.md) | dbt incremental execution against live Cloud SQL; dbt run PASS=2; dbt test PASS=22 |
-| [docs/bigquery-quality-incident-notification-delivery-proof.md](docs/bigquery-quality-incident-notification-delivery-proof.md) | End-to-end alerting loop: quality failure -> Cloud Monitoring incident -> email delivery |
-
-See [docs/ARCHITECTURE_REVIEW.md](docs/ARCHITECTURE_REVIEW.md) for the consolidated architecture review: implemented capabilities, operational controls, trade-offs, and remaining gaps.
-
-See [docs/dbt-transformation-governance-plan.md](docs/dbt-transformation-governance-plan.md) for the dbt transformation governance plan: proposed project structure, model mapping, tests, and migration strategy from stored functions to dbt-managed models.
-
-See [docs/dbt-ci-validation-evidence.md](docs/dbt-ci-validation-evidence.md) for the dbt implementation and CI validation evidence: silver and gold models, 22 dbt tests, 117 pytest, ruff clean, ephemeral pgvector CI container; Cloud SQL not touched.
-
-See [docs/dbt-cloud-sql-migration-runbook.md](docs/dbt-cloud-sql-migration-runbook.md) for the controlled runbook for validating dbt silver and gold models against Cloud SQL and reconciling output with the stored-function baseline.
-
-See [docs/dbt-cloud-sql-validation-evidence.md](docs/dbt-cloud-sql-validation-evidence.md) for executed Cloud SQL validation evidence proving dbt output parity with stored functions and API readback through `/aggregates/minute` and `/aggregates/daily`.
-
-See [docs/dbt-operational-migration-plan.md](docs/dbt-operational-migration-plan.md) for the plan to migrate the Cloud Run Job refresh path from stored functions to dbt — phases, decision matrix, credential strategy, rollback paths, and acceptance criteria (plan only — not executed).
-
-See [docs/dbt-refresh-cloud-run-job-plan.md](docs/dbt-refresh-cloud-run-job-plan.md) for the `rtdp-dbt-refresh-job` scaffold: Terraform resource definition (`google_cloud_run_v2_job.rtdp_dbt_refresh_job`) as source of truth, image build/push workflow only (no Cloud Run deployment), credential contract resolved, scheduler switch pending a future controlled evidence branch.
-
-See [docs/SLO_AND_INCIDENT_RESPONSE.md](docs/SLO_AND_INCIDENT_RESPONSE.md) for production-light SLOs and incident response procedures.
-
-This project demonstrates practical Data Engineering skills relevant to streaming platform and cloud data roles in 2026/2027:
-
-| Skill Area | Evidence |
-|---|---|
-| Streaming ingestion | Kafka-compatible producer/consumer with offset tracking |
-| Event schema design | Versioned Pydantic contract with idempotency key |
-| Medallion architecture | bronze / silver / gold / observability / ai schemas in PostgreSQL |
-| Idempotent processing | `ON CONFLICT(event_id) DO NOTHING` enforced at persistence layer |
-| Operational observability | Prometheus-format metrics endpoint, structured JSON logs |
-| Cloud architecture thinking | Documented GCP mapping: Pub/Sub, Cloud Run, BigQuery; Dataflow explicitly marked as not implemented / future roadmap |
-| API design | FastAPI with health, readiness, version, data, and metrics endpoints |
-| Containerised runtime | Docker Compose stack for full local development |
-| CI discipline | Lint + test + smoke test on every push, no manual steps |
-| Monorepo workspace | uv workspace with shared contracts package across apps |
-
----
-
-## Current Status and Next Steps
-
-**Implemented (local):**
-- Python producer, Redpanda broker, Python consumer
-- Versioned MarketEvent contract with Pydantic validation
-- Idempotent bronze persistence and minute-level silver aggregates
-- FastAPI serving layer with Prometheus metrics endpoint
-- Docker Compose full-stack runtime
-- GitHub Actions CI
-
-**Implemented and validated (GCP MVP):**
-- FastAPI deployed to Cloud Run, connected to Cloud SQL via Secret Manager
-- Pub/Sub publisher path to `market-events-raw`
-- Pub/Sub push subscription to deployed Cloud Run worker
-- Worker validation and idempotent writes into `bronze.market_events`
-- API readback from Cloud SQL
-- Cloud Logging structured logs
-- Logs-based Cloud Monitoring metrics with datapoints
-- Cloud Monitoring dashboard
-- Alert policies with email notification channel
-- Production Pub/Sub DLQ / `deadLetterPolicy`
-- Cloud Scheduler configuration for silver refresh
-- Scheduled execution proof for `rtdp-silver-refresh-job`
-- Accepted 50,000-event bounded cloud load test (2026-05-20; latest validated milestone); previously accepted 100 / 1,000 / 5,000 / 10,000-event tests
-
-**Implemented and cloud-validated:**
-
-- `gold.market_event_daily_aggregates` table, refresh function, and `/aggregates/daily` endpoint
-
-See [docs/gold-cloud-sql-deployment-evidence.md](docs/gold-cloud-sql-deployment-evidence.md) for Cloud SQL deployment evidence and API readback validation. See [docs/gold-cloud-sql-deployment-runbook.md](docs/gold-cloud-sql-deployment-runbook.md) for the controlled deployment runbook.
-
-**Planned (next phases):**
-
-- Add Dataflow streaming enrichment pipeline (stateful windowed aggregations)
-- Add automatic deploy-on-merge for the worker service
-- Prove GitHub notification bell delivery on quality failure
+| Messaging | Pub/Sub; Redpanda/Kafka-compatible local path |
+| Processing | Python, Cloud Run |
+| Storage | Cloud SQL PostgreSQL, BigQuery |
+| Transformation | dbt, SQL |
+| Infrastructure | Terraform, GCS remote state |
+| Serving | FastAPI |
+| Quality | pytest, dbt tests, BigQuery quality workflow |
+| CI | GitHub Actions, Workload Identity |
+| Observability | Cloud Logging, Cloud Monitoring |
+
+## Public Career / B2B Links
+
+- GitHub profile: https://github.com/jcsf2020
+- Portfolio: https://joao-fonseca-portfolio.vercel.app/
+- LinkedIn: https://www.linkedin.com/in/joao-fonseca-data-engineer/
+- Career Evidence: https://drive.google.com/drive/folders/1VaMTQ6gf-d_Zf_t8Oi_dhClvbCWBT1HE
+- Famous Satellite: https://famoussatellite.com
+
+For recruiter-led Data Engineering opportunities, the route is João-first. For B2B/end-client engagements, the commercial and contractual context is **Famous Satellite**.
+
+## Contact
+
+joao.fonseca@famoussatellite.com
